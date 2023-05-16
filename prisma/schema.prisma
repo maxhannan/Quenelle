@@ -1,0 +1,132 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["jsonProtocol"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid()) 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  username  String   @unique 
+  email     String   @unique
+  password  String
+  chef      Boolean  @default(false)
+  firstName String
+  lastName  String 
+  recipes   Recipe[] 
+  menus     Menu[]
+  prepLists PrepList[]
+
+}
+
+model Recipe {
+  id          String   @id @default(cuid())
+  images      String[]
+  dish        Boolean  @default(false)
+  section     MenuSection[]
+  menu        Menu[] 
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String
+  category    String
+  allergens   String[]
+  yieldAmt    String 
+  yieldUnit   String   
+  ingredients Ingredient[]
+  steps       String[]
+  Notes       String[]
+  author      User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorId    String?  
+  linkedIngredients Ingredient[] @relation("Linked Recipes")
+  taskGroups  taskGroup[]
+  tasks       tasks[]
+}
+
+model Ingredient {
+  id          String   @id @default(cuid())
+  recipe      Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  recipeId    String
+  ingredient  String
+  qty         String
+  unit        String
+  linkRecipe  Recipe?  @relation(fields: [linkId], references: [id], "Linked Recipes", onDelete: SetNull) 
+  linkId      String?  
+}
+
+model Menu {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String
+  service     String?
+  sections    MenuSection[]
+  dishes      Recipe[]
+  author      User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorId    String?  
+}
+ 
+model MenuSection {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String
+  menu        Menu    @relation(fields: [menuId], references: [id], onDelete: Cascade) 
+  menuId      String
+  dishes      Recipe[]
+}
+
+model PrepList {
+  id          String   @id @default(cuid())
+  name        String
+  date        DateTime
+  author      User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorId    String?  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  taskGroups  taskGroup[]
+  
+}
+
+
+model taskGroup {
+  id          String   @id @default(cuid())
+  name        String 
+  prepList    PrepList @relation(fields: [prepListId], references: [id], onDelete: Cascade)
+  prepListId  String
+  linkRecipe  Recipe?  @relation(fields: [linkRecipeId], references: [id],  onDelete: SetNull) 
+  linkRecipeId String? 
+  tasks       tasks[]
+  template    PrepListTemplate? @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  templateId String?
+}
+
+model tasks {
+  id          String   @id @default(cuid())
+  name        String
+  taskGroup   taskGroup @relation(fields: [taskGroupId], references: [id], onDelete: Cascade)
+  taskGroupId String
+  completed   Boolean @default(false)
+  onHand      String?  
+  prepQty     String?
+  prepUnit    String?
+  linkRecipe  Recipe?  @relation(fields: [linkRecipeId], references: [id],  onDelete: SetNull) 
+  linkRecipeId String? 
+}
+
+model PrepListTemplate {
+  id    String  @id @default(cuid())
+  name  String
+  taskGroups  taskGroup[]
+  author String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+}

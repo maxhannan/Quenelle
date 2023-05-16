@@ -1,0 +1,8 @@
+{
+  "short_name": "Quenelle",
+  "name": "Quenelle",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#f5f5f5",
+  "background_color": "#f5f5f5"
+}
