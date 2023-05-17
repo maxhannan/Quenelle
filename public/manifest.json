@@ -4,5 +4,8 @@
   "scope": "/",
   "display": "standalone",
   "theme_color": "#f5f5f5",
-  "background_color": "#f5f5f5"
+  "background_color": "#f5f5f5",
+  "mobile-web-app-capable": "yes",
+
+  "apple-touch-fullscreen": "yes"
 }
