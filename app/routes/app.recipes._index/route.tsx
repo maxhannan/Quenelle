@@ -1,20 +1,24 @@
-import React from "react";
 import { useRecipes } from "../app.recipes/route";
-import { useNavigation, useSubmit } from "@remix-run/react";
+import { useNavigation, useSearchParams, useSubmit } from "@remix-run/react";
 import Spinner from "~/components/LoadingSpinner";
 import RecipeFeed from "./components/RecipeFeed";
-import { useRouteData } from "~/hooks/useRouteData";
+
 import AppBar from "~/components/navigation/AppBar";
 import IconButton from "~/components/buttons/IconButton";
 import { DocumentPlusIcon, UserIcon } from "@heroicons/react/24/outline";
+import SearchAndFilter from "./components/SearchAndFilter";
 
 export default function RecipesIndex() {
-  const { recipes, categories } = useRecipes();
+  const { recipes, filteredRecipes, categories } = useRecipes();
   const navigation = useNavigation();
-  const user = useRouteData("routes/app");
   const submit = useSubmit();
-  console.log({ user });
-  if (navigation.state === "loading" || !recipes || !categories) {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const pageChangeLoading =
+    navigation.state === "loading" &&
+    navigation.location.pathname !== "/app/recipes";
+
+  if (navigation.state === "loading" && pageChangeLoading) {
     return (
       <div className=" mx-auto h-screen  flex items-center justify-center">
         <Spinner size={14} />
@@ -36,9 +40,20 @@ export default function RecipesIndex() {
           name="Add Recipe"
         />
       </AppBar>
-      <div className="pb-16  ">
-        {recipes && <RecipeFeed recipes={recipes} />}
-      </div>
+      <SearchAndFilter
+        categories={categories}
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
+      />
+      {navigation.state === "loading" && !pageChangeLoading ? (
+        <div className="flex h-screen justify-center mt-12">
+          <Spinner size={12} />
+        </div>
+      ) : (
+        <div className="pb-16  ">
+          {recipes && <RecipeFeed recipes={filteredRecipes} />}
+        </div>
+      )}
     </div>
   );
 }

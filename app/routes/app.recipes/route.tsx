@@ -1,20 +1,33 @@
-import { LoaderArgs, LoaderFunction } from "@remix-run/node";
+import type { LoaderArgs } from "@remix-run/node";
 import { Outlet, useLoaderData, useOutletContext } from "@remix-run/react";
-import { useDataFromLoader } from "~/hooks/useDataFromLoader";
+
+import { getFilteredRecipes } from "~/utils/filterRecipes";
 
 import { getRecipes } from "~/utils/recipes.server";
 
-export async function loader(args: LoaderArgs) {
+export async function loader({ request }: LoaderArgs) {
+  const url = new URL(request.url);
+  const params = new URLSearchParams(url.search);
+
+  const search = params.get("search");
+  const category = params.get("category");
+  const allergies = params.get("allergies");
+  const allergyArr = allergies && allergies.length ? allergies.split(",") : [];
+
   const recipes = await getRecipes();
-  return { recipes, categories: [...new Set(recipes!.map((r) => r.category))] };
+  return {
+    recipes,
+    filteredRecipes: getFilteredRecipes(recipes, search, category, allergyArr),
+    categories: [...new Set(recipes!.map((r) => r.category))],
+  };
 }
 
 type ContextType = Awaited<ReturnType<typeof loader>>;
 
 const RecipesLayout = () => {
-  const { recipes, categories } = useLoaderData<ContextType>();
+  const { recipes, filteredRecipes, categories } = useLoaderData<ContextType>();
 
-  return <Outlet context={{ recipes, categories }} />;
+  return <Outlet context={{ recipes, filteredRecipes, categories }} />;
 };
 
 export default RecipesLayout;

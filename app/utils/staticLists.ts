@@ -1,4 +1,4 @@
-export const Allergens = [
+export const allergens = [
   "Gluten",
   "Not Vegetarian",
   "Not Vegan",
