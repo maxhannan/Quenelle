@@ -1,13 +1,16 @@
 import React from "react";
 import { useRecipes } from "../app.recipes/route";
-import { useNavigation } from "@remix-run/react";
+import { useMatches, useNavigation } from "@remix-run/react";
 import Spinner from "~/components/LoadingSpinner";
 import RecipeFeed from "./components/RecipeFeed";
+import { useUser } from "../app/route";
+import { useRouteData } from "~/hooks/useRouteData";
 
 export default function RecipesIndex() {
   const { recipes, categories } = useRecipes();
   const navigation = useNavigation();
-
+  const user = useRouteData("routes/app");
+  console.log({ user });
   if (navigation.state === "loading" || !recipes || !categories) {
     return (
       <div className=" mx-auto h-screen  flex items-center justify-center">

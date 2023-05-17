@@ -2,14 +2,60 @@ import {
   ArrowLongRightIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
+import { ActionArgs, LoaderArgs, json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useNavigation } from "@remix-run/react";
 import { FC } from "react";
+import Spinner from "~/components/LoadingSpinner";
 import LoadingButton from "~/components/buttons/LoadingButton";
 import TextInput from "~/components/formInputs/TextInput";
+import { Register, getUser } from "~/utils/auth.server";
+import {
+  validateEmail,
+  validatePassword,
+  validateName,
+} from "~/utils/validators.server";
+
+export async function loader({ request }: LoaderArgs) {
+  return (await getUser(request)) ? redirect("/app/recipes") : null;
+}
+
+export async function action({ request }: ActionArgs) {
+  const form = await request.formData();
+  const email = form.get("email") as string;
+  const password = form.get("password") as string;
+  const confirmPassword = form.get("confirmPassword") as string;
+  const username = form.get("username") as string;
+  const firstName = form.get("firstName") as string;
+  const lastName = form.get("lastName") as string;
+
+  const errors = {
+    email: validateEmail(email),
+    password: validatePassword(password, confirmPassword),
+    firstName: validateName(firstName || ""),
+    lastName: validateName(lastName || ""),
+  };
+  if (Object.values(errors).some(Boolean)) {
+    console.log(errors);
+    return json(
+      {
+        errors,
+        fields: { email, password, firstName, lastName },
+        form: action,
+      },
+      { status: 400 }
+    );
+  }
+  return await Register({ email, password, username, firstName, lastName });
+}
 
 const RegisterPage: FC = () => {
   const actionData = useActionData();
   const navigation = useNavigation();
+
+  if (navigation.state === "loading") {
+    return <Spinner size={14} />;
+  }
+
   return (
     <Form
       method="post"

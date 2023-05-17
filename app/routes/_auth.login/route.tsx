@@ -2,14 +2,46 @@ import {
   ArrowLongRightIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
+import { ActionArgs, LoaderArgs, json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useNavigation } from "@remix-run/react";
-import React from "react";
+import Spinner from "~/components/LoadingSpinner";
 import LoadingButton from "~/components/buttons/LoadingButton";
 import TextInput from "~/components/formInputs/TextInput";
+import { getUser, login } from "~/utils/auth.server";
+import { validateName, validatePasswordLogin } from "~/utils/validators.server";
+
+export async function loader({ request }: LoaderArgs) {
+  return (await getUser(request)) ? redirect("/app/recipes") : null;
+}
+
+export async function action({ request }: ActionArgs) {
+  const form = await request.formData();
+  const username = form.get("username") as string;
+  const password = form.get("password") as string;
+  const errors = {
+    username: validateName(username),
+    password: validatePasswordLogin(password),
+  };
+  if (Object.values(errors).some(Boolean))
+    return json(
+      {
+        errors,
+        fields: { username, password },
+        form: action,
+      },
+      { status: 400 }
+    );
+  return await login({ username, password });
+}
 
 const LoginPage = () => {
   const navigation = useNavigation();
   const actionData = useActionData();
+
+  if (navigation.state === "loading") {
+    return <Spinner size={14} />;
+  }
+
   return (
     <Form
       method="post"

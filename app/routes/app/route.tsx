@@ -1,13 +1,29 @@
-import { Outlet, useLocation } from "@remix-run/react";
+import {
+  Outlet,
+  useLoaderData,
+  useLocation,
+  useOutletContext,
+} from "@remix-run/react";
 import { useState, useEffect } from "react";
 import BottomNav from "~/components/navigation/BottomNav";
 import ErrorBoundaryLayout from "./ErrorBoundary";
+import { LoaderArgs } from "@remix-run/node";
+import { getUser, requireUserId } from "~/utils/auth.server";
 
 export function ErrorBoundary() {
   return <ErrorBoundaryLayout />;
 }
+export async function loader({ request }: LoaderArgs) {
+  await requireUserId(request);
+  const user = await getUser(request);
+
+  return user;
+}
+
+type ContextType = Awaited<ReturnType<typeof loader>>;
 
 const AppLayout = () => {
+  const user = useLoaderData<ContextType>();
   const location = useLocation();
   const [page, setPage] = useState(location.pathname.split("/")[2]);
   useEffect(() => {
@@ -16,11 +32,15 @@ const AppLayout = () => {
   return (
     <div className=" px-3 ">
       <div className="container  mx-auto">
-        <Outlet />
+        <Outlet context={{ user }} />
       </div>
       <BottomNav page={page} setPage={setPage} />
     </div>
   );
 };
+
+export function useUser() {
+  return useOutletContext<ContextType>();
+}
 
 export default AppLayout;
