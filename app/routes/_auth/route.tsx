@@ -1,5 +1,5 @@
 import { MetaFunction } from "@remix-run/node";
-import { Meta, Outlet } from "@remix-run/react";
+import { Outlet } from "@remix-run/react";
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "Quenelle",
@@ -15,14 +15,9 @@ export const meta: MetaFunction = () => ({
 
 const AuthLayout = () => {
   return (
-    <html lang="en">
-      <head>
-        <Meta />
-      </head>
-      <div className=" container max-w-2xl mx-auto h-screen w-screen flex justify-center items-center ">
-        <Outlet />
-      </div>
-    </html>
+    <div className=" container max-w-2xl mx-auto h-screen w-screen flex justify-center items-center ">
+      <Outlet />
+    </div>
   );
 };
 
