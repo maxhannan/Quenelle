@@ -1,7 +1,7 @@
 import { Listbox, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import type { FC } from "react";
-import Chip from "../display/Chipt";
+import Chip from "../display/Chip";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 interface Props {
   name: string;

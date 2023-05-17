@@ -1,4 +1,5 @@
-import { FC, useState } from "react";
+import { useState } from "react";
+import type { FC } from "react";
 import { useRecipe } from "../app.recipes.$id/route";
 
 import NoRecipeFound from "./components/NoRecipeFound";
@@ -12,9 +13,10 @@ import {
   ScaleIcon,
 } from "@heroicons/react/24/outline";
 import { Link, useNavigate, useNavigation } from "@remix-run/react";
-import Chip from "~/components/display/Chipt";
+import Chip from "~/components/display/Chip";
 import IngredientTable from "./components/IngredientTable";
 import Spinner from "~/components/LoadingSpinner";
+import Carousel from "~/components/display/Carousel";
 
 const RecipeIndex: FC = () => {
   const recipe = useRecipe();
@@ -39,11 +41,14 @@ const RecipeIndex: FC = () => {
           name="Edit Recipe"
           onClick={() => console.log("edit")}
         />
-        <IconButton
-          Icon={PhotoIcon}
-          name="Open Gallery"
-          onClick={() => console.log("edit")}
-        />
+        {recipe.images.length > 0 && (
+          <IconButton
+            Icon={PhotoIcon}
+            name="Open Gallery"
+            onClick={() => setIsOpen(!isOpen)}
+          />
+        )}
+
         <IconButton
           Icon={ScaleIcon}
           name="Scale Recipe"
@@ -55,6 +60,14 @@ const RecipeIndex: FC = () => {
           onClick={() => navigate(-1)}
         />
       </AppBar>
+      {recipe.images.length > 0 && (
+        <Carousel
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          imgSrcs={recipe!.images}
+        />
+      )}
+
       <div className="text-3xl border border-neutral-300 dark:border-neutral-700 gap-3 bg-neutral-200 dark:bg-neutral-800 px-4 w-full mb-2 items-center flex justify-between dark:text-neutral-200 p-4  text-neutral-600 rounded-xl font-light ">
         <div>{recipe!.name}</div>
       </div>
@@ -93,7 +106,7 @@ const RecipeIndex: FC = () => {
                 key={i}
                 className=" border border-neutral-300 dark:border-neutral-700 bg-neutral-200 dark:bg-neutral-800  bg-opacity-50 dark:bg-opacity-50 transition-all duration-300 rounded-xl p-4 text-lg text-neutral-700 dark:text-neutral-100"
               >
-                <h5 className="text-xl mb-2">Step {i + 1}</h5>
+                <h5 className="text-2xl mb-2">Step {i + 1}</h5>
                 <p className="text-lg font-light ">{s}</p>
               </div>
             ))}

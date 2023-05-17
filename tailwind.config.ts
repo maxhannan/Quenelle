@@ -5,6 +5,16 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [require("@headlessui/tailwindcss")],
+  plugins: [require("@headlessui/tailwindcss"), require("daisyui"),],
+  daisyui: {
+    styled: true,
+    themes: false,
+    base: false,
+    utils: true,
+    logs: true,
+    rtl: false,
+    prefix: "",
+    darkTheme: "dark",
+  },
 } satisfies Config;
 
