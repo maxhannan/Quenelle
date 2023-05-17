@@ -12,7 +12,14 @@ import {
 } from "@remix-run/react";
 import styles from "./tailwind.css";
 
-export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: styles },
+  {
+    rel: "manifest",
+    href: "/manifest.json",
+    id: "manifest-placeholder",
+  },
+];
 
 export function ErrorBoundary() {
   const error = useRouteError();
