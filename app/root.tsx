@@ -14,11 +14,6 @@ import styles from "./tailwind.css";
 
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
 
-export const meta: MetaFunction = () => ({
-  charset: "utf-8",
-  title: "Quenelle",
-});
-
 export function ErrorBoundary() {
   const error = useRouteError();
 
@@ -49,6 +44,8 @@ export default function App() {
   return (
     <html lang="en">
       <head>
+        <meta charSet="utf-8" />
+        <meta name="title" content="Quenelle" />
         <meta
           name="theme-color"
           content="#171717"
