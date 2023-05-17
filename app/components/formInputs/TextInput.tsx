@@ -1,5 +1,5 @@
-import { ChangeEvent, FC, useEffect, useState } from "react";
-
+import { useEffect, useState } from "react";
+import type { ChangeEvent, FC } from "react";
 interface TextInputProps {
   identifier: string;
   fieldName: string;

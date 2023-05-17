@@ -1,5 +1,4 @@
-import React from "react";
-import { FullRecipes } from "~/utils/recipes.server";
+import type { FullRecipes } from "~/utils/recipes.server";
 import RecipeCard from "./RecipeCard";
 
 export default function RecipeFeed({ recipes }: { recipes: FullRecipes }) {
