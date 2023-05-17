@@ -66,36 +66,36 @@ const RegisterPage: FC = () => {
       </h2>
       <div className="w-full flex gap-2">
         <TextInput
-          identifier="firstName"
-          fieldName="First Name"
+          name="firstName"
+          placeholder="First Name"
           error={actionData?.errors?.firstName}
         />
         <TextInput
-          identifier="lastName"
-          fieldName="Last Name"
+          name="lastName"
+          placeholder="Last Name"
           error={actionData?.errors?.lastName}
         />
       </div>
       <TextInput
-        identifier="username"
-        fieldName="Username"
+        name="username"
+        placeholder="Username"
         error={actionData?.errors?.username}
       />
       <TextInput
-        identifier="email"
-        fieldName="Email"
+        name="email"
+        placeholder="Email"
         type="email"
         error={actionData?.errors?.email}
       />
       <TextInput
-        identifier="password"
-        fieldName="Password"
+        name="password"
+        placeholder="Password"
         type="password"
         error={actionData?.errors?.password}
       />
       <TextInput
-        identifier="confirmPassword"
-        fieldName="Confirm Password"
+        name="confirmPassword"
+        placeholder="Confirm Password"
         type="password"
         error={actionData?.errors?.password}
       />

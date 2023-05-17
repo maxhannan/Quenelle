@@ -54,13 +54,13 @@ const LoginPage = () => {
         {actionData?.error?.form || ""}
       </div>
       <TextInput
-        identifier="username"
-        fieldName="Username"
+        name="username"
+        placeholder="Username"
         error={actionData?.errors?.username}
       />
       <TextInput
-        identifier="password"
-        fieldName="Password"
+        name="password"
+        placeholder="Password"
         type="password"
         error={actionData?.errors?.password}
       />

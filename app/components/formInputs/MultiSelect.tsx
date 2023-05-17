@@ -32,7 +32,7 @@ const MultiSelect: FC<Props> = ({
       <input type="hidden" value={selected.join(",")} name={name} />
       <Listbox value={selected} onChange={handleChange} multiple>
         <div className="relative ">
-          <Listbox.Button className=" relative bg-opacity-50 dark:bg-opacity-50 font-light w-full cursor-default border py-2 px-2 border-gray-300 dark:border-neutral-700 rounded-xl  bg-neutral-200 dark:bg-neutral-800 pl-3 pr-10 text-left  text-lg focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300 ">
+          <Listbox.Button className=" relative bg-opacity-50 dark:bg-opacity-50 font-light w-full cursor-default border py-2 px-2 border-gray-300 dark:border-neutral-700 rounded-2xl  bg-neutral-200 dark:bg-neutral-800 pl-3 pr-10 text-left  text-lg focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300 ">
             <span className="flex flex-wrap gap-2 items-center ">
               {selected.length > 0 ? (
                 selected.map((s) => <Chip key={s} content={s} />)
@@ -59,7 +59,7 @@ const MultiSelect: FC<Props> = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute mt-2 bg-neutral-100 z-50   rounded-2xl max-h-96 w-full  overflow-auto   dark:bg-neutral-800 py-1 text-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ">
+            <Listbox.Options className="absolute mt-2 bg-neutral-100 z-50   rounded-2xl max-h-60 w-full  overflow-auto   dark:bg-neutral-800 py-1 text-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ">
               {options.map((o, i) => (
                 <Listbox.Option
                   key={i}

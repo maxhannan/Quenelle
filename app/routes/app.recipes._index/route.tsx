@@ -1,5 +1,10 @@
 import { useRecipes } from "../app.recipes/route";
-import { useNavigation, useSearchParams, useSubmit } from "@remix-run/react";
+import {
+  useNavigate,
+  useNavigation,
+  useSearchParams,
+  useSubmit,
+} from "@remix-run/react";
 import Spinner from "~/components/LoadingSpinner";
 import RecipeFeed from "./components/RecipeFeed";
 
@@ -11,6 +16,7 @@ import SearchAndFilter from "./components/SearchAndFilter";
 export default function RecipesIndex() {
   const { recipes, filteredRecipes, categories } = useRecipes();
   const navigation = useNavigation();
+  const navigate = useNavigate();
   const submit = useSubmit();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -30,14 +36,14 @@ export default function RecipesIndex() {
     <div className=" container mx-auto max-w-4xl">
       <AppBar page={"Recipes"}>
         <IconButton
-          onClick={() => console.log("clicked")}
+          onClick={() => navigate("/app/recipes/addrecipe")}
           Icon={DocumentPlusIcon}
           name="Add Recipe"
         />
         <IconButton
           onClick={() => submit(null, { action: "/logout", method: "post" })}
           Icon={UserIcon}
-          name="Add Recipe"
+          name="Logout"
         />
       </AppBar>
       <SearchAndFilter

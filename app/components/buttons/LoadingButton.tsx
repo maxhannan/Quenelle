@@ -1,7 +1,7 @@
-import type { ElementType } from "react";
+import type { ComponentPropsWithoutRef, ElementType } from "react";
 import Spinner from "../LoadingSpinner";
 
-interface Props {
+interface Props extends ComponentPropsWithoutRef<"button"> {
   loading?: boolean;
   buttonText: string;
   loadingText?: string;
@@ -17,7 +17,7 @@ const LoadingButton = (props: Props) => {
       type={props.type}
       name={props.buttonName}
       onClick={props.action ? props.action : undefined}
-      className="text-neutral-700 hover:text-neutral-200 inline-flex items-center justify-between px-4 w-full dark:text-neutral-200 bg-neutral-200 dark:bg-neutral-800 h-12 text-xl rounded-xl  border dark:border-neutral-700 border-neutral-300 hover:bg-violet-500"
+      className="text-neutral-700 hover:text-neutral-200 inline-flex items-center justify-between px-4 w-full dark:text-neutral-200 bg-neutral-200 dark:bg-neutral-800 h-12 text-xl rounded-2xl  border dark:border-neutral-700 border-neutral-300 hover:bg-violet-500"
     >
       {props.loading ? (
         <>

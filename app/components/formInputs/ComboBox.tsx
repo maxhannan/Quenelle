@@ -14,6 +14,7 @@ interface Props {
   allowCustom?: boolean;
   initValue?: ComboBoxOption;
   changeHandler?: (value: ComboBoxOption | null) => void;
+  selectedLinkId?: string;
 }
 
 const ComboBox: FC<Props> = ({
@@ -23,6 +24,7 @@ const ComboBox: FC<Props> = ({
   allowCustom = false,
   initValue,
   changeHandler,
+  selectedLinkId,
 }) => {
   const [selected, setSelected] = useState(initValue || null);
   const [query, setQuery] = useState("");
@@ -56,10 +58,14 @@ const ComboBox: FC<Props> = ({
     <Combobox value={selected} onChange={handleChange}>
       <div className="relative w-full ">
         <div className="relative ">
+          <input
+            type="hidden"
+            value={selectedLinkId || ""}
+            name={`${name}Id`}
+          />
           <Combobox.Input
-            autoComplete="off"
             name={name}
-            className="rounded-xl focus:ring-neutral-500 bg-opacity-50 dark:bg-opacity-50 font-light border relative  border-neutral-300 dark:border-neutral-700 h-12 w-full p-2 pl-4 text-xl text-neutral-800    bg-neutral-200    placeholder-neutral-500 dark:bg-neutral-800  dark:placeholder-neutral-400 dark:text-neutral-50   "
+            className="rounded-2xl focus:ring-neutral-500 bg-opacity-50 dark:bg-opacity-50 font-light border relative  border-neutral-300 dark:border-neutral-700 h-12 w-full p-2 pl-4 text-xl text-neutral-800    bg-neutral-200    placeholder-neutral-500 dark:bg-neutral-800  dark:placeholder-neutral-400 dark:text-neutral-50   "
             onChange={(event) => setQuery(event.target.value)}
             placeholder={placeholder}
             displayValue={
