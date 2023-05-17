@@ -17,14 +17,6 @@ export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "Quenelle",
-  viewport:
-    "width=device-width,initial-scale=1, maximum-scale=1.0,user-scalable=0 ",
-  "apple-mobile-web-app-capable": "yes",
-
-  display: "standalone",
-  "mobile-web-app-capable": "yes",
-
-  "apple-touch-fullscreen": "yes",
 });
 
 export function ErrorBoundary() {
