@@ -3,7 +3,6 @@ import { useRecipes } from "../app.recipes/route";
 import { useMatches, useNavigation } from "@remix-run/react";
 import Spinner from "~/components/LoadingSpinner";
 import RecipeFeed from "./components/RecipeFeed";
-import { useUser } from "../app/route";
 import { useRouteData } from "~/hooks/useRouteData";
 
 export default function RecipesIndex() {

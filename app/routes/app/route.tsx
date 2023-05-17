@@ -21,10 +21,7 @@ export async function loader({ request }: LoaderArgs) {
   return user;
 }
 
-type ContextType = Awaited<ReturnType<typeof loader>>;
-
 const AppLayout = () => {
-  const user = useLoaderData<ContextType>();
   const location = useLocation();
   const [page, setPage] = useState(location.pathname.split("/")[2]);
   useEffect(() => {
@@ -33,15 +30,11 @@ const AppLayout = () => {
   return (
     <div className=" px-3 ">
       <div className="container  mx-auto">
-        <Outlet context={{ user }} />
+        <Outlet />
       </div>
       <BottomNav page={page} setPage={setPage} />
     </div>
   );
 };
-
-export function useUser() {
-  return useOutletContext<ContextType>();
-}
 
 export default AppLayout;
