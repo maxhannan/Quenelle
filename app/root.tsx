@@ -49,8 +49,6 @@ export default function App() {
   return (
     <html lang="en">
       <head>
-        <meta charSet="utf-8" />
-        <Meta />
         <meta
           name="theme-color"
           content="#171717"
@@ -64,6 +62,8 @@ export default function App() {
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-touch-fullscreen" content="yes" />
         <meta name="display" content="standalone" />
+        <Meta />
+
         <Links />
       </head>
       <body className="bg-neutral-100 dark:bg-neutral-900">
