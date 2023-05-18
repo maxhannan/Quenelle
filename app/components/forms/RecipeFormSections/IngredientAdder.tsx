@@ -1,6 +1,7 @@
-import { FC, useState } from "react";
-import { FormIngredient } from "./IngredientsSection";
-import { FullRecipes } from "~/utils/recipes.server";
+import { useState } from "react";
+import type { FC } from "react";
+import type { FormIngredient } from "./IngredientsSection";
+import type { FullRecipes } from "~/utils/recipes.server";
 import TextInput from "~/components/formInputs/TextInput";
 import IconButton from "~/components/buttons/IconButton";
 import { XMarkIcon } from "@heroicons/react/24/outline";

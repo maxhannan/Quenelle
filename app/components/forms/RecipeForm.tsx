@@ -14,6 +14,8 @@ import MultiSelect from "../formInputs/MultiSelect";
 import LoadingButton from "../buttons/LoadingButton";
 import { useNavigation } from "@remix-run/react";
 import IngredientsSection from "./RecipeFormSections/IngredientsSection";
+import RecipeStepSection from "./RecipeFormSections/RecipeStepSection";
+import { v4 } from "uuid";
 
 interface Props {
   recipe?: FullRecipe;
@@ -24,7 +26,6 @@ interface Props {
   categories: string[];
 }
 export type FormattedRecipe = ReturnType<typeof formatRecipe>;
-type Ingredients = FormattedRecipe["ingredients"];
 
 const RecipeForm: FC<Props> = ({
   recipe,
@@ -122,11 +123,13 @@ const RecipeForm: FC<Props> = ({
           </div>
         </div>
         <IngredientsSection recipes={recipes} />
+        <RecipeStepSection stepsArr={recipeValues.steps} />
         {recipe ? (
           <LoadingButton
             loading={
               navigation.state === "submitting" ||
-              navigation.state === "loading"
+              navigation.state === "loading" ||
+              formLoading
             }
             type="submit"
             buttonName="updateRecipe"
@@ -158,11 +161,16 @@ export default RecipeForm;
 const formatRecipe = (recipe: FullRecipe) => {
   const category = { id: recipe!.category, value: recipe!.category };
   const yieldUnit = { id: recipe!.yieldUnit, value: recipe!.yieldUnit };
+  const steps = recipe!.steps.map((s, i) => ({
+    content: s,
+    orderNum: i + 1,
+    id: v4(),
+  }));
   const ingredients = recipe!.ingredients.map((i) => ({
     ...i,
     linkRecipe: i.linkRecipe
       ? { id: i.linkRecipe.id, value: i.linkRecipe.name }
       : null,
   }));
-  return { ...recipe, category, yieldUnit, ingredients };
+  return { ...recipe, category, yieldUnit, ingredients, steps };
 };
