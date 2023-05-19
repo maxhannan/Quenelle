@@ -19,7 +19,7 @@ import Spinner from "~/components/LoadingSpinner";
 import Carousel from "~/components/display/Carousel";
 
 const RecipeIndex: FC = () => {
-  const recipe = useRecipe();
+  const { recipe } = useRecipe();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const navigation = useNavigation();
@@ -39,7 +39,7 @@ const RecipeIndex: FC = () => {
         <IconButton
           Icon={PencilIcon}
           name="Edit Recipe"
-          onClick={() => console.log("edit")}
+          onClick={() => navigate("edit", { replace: true })}
         />
         {recipe.images.length > 0 && (
           <IconButton

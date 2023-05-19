@@ -68,7 +68,11 @@ const AddRecipeRoute: FC = () => {
     }
   };
 
-  if (navigation.state === "loading" || navigation.state === "submitting") {
+  if (
+    navigation.state === "loading" ||
+    navigation.state === "submitting" ||
+    imageLoading
+  ) {
     return (
       <div className="h-screen  flex items-center justify-center">
         <Spinner size={14} />

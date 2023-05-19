@@ -3,6 +3,7 @@ import type { LoaderArgs } from "@remix-run/node";
 import { Outlet, useLoaderData, useOutletContext } from "@remix-run/react";
 import type { FC } from "react";
 import { getRecipeById } from "~/utils/recipes.server";
+import { useRecipes } from "../app.recipes/route";
 
 export async function loader({ params }: LoaderArgs) {
   const { id } = params;
@@ -11,10 +12,15 @@ export async function loader({ params }: LoaderArgs) {
   if (!recipe) redirect("/app/recipes");
   return recipe;
 }
-type ContextType = Awaited<ReturnType<typeof loader>>;
+type ContextType = {
+  recipe: Awaited<ReturnType<typeof loader>>;
+  recipes: ReturnType<typeof useRecipes>["recipes"];
+  categories: ReturnType<typeof useRecipes>["categories"];
+};
 const RecipeLayout: FC = () => {
   const recipe = useLoaderData<ContextType>();
-  return <Outlet context={recipe} />;
+  const { recipes, categories } = useRecipes();
+  return <Outlet context={{ recipe, recipes, categories }} />;
 };
 
 export const useRecipe = () => {

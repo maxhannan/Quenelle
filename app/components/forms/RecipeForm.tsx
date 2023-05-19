@@ -47,7 +47,7 @@ const RecipeForm: FC<Props> = ({
         ingredients: [],
         steps: [],
       };
-
+  console.log({ recipeValues });
   return (
     <div>
       <div className="flex flex-col gap-y-2 mb-32 ">
@@ -101,7 +101,7 @@ const RecipeForm: FC<Props> = ({
                 placeholder="Yield"
                 type="number"
                 name="yieldAmt"
-                defaultValue={recipeValues.yieldAmt}
+                initValue={recipeValues.yieldAmt}
               />
             </div>
             <div className="relative col-span-4">
@@ -122,7 +122,10 @@ const RecipeForm: FC<Props> = ({
             />
           </div>
         </div>
-        <IngredientsSection recipes={recipes} />
+        <IngredientsSection
+          recipes={recipes}
+          ingredients={recipeValues.ingredients}
+        />
         <RecipeStepSection stepsArr={recipeValues.steps} />
         {recipe ? (
           <LoadingButton

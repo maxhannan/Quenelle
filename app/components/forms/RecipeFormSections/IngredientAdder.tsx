@@ -60,7 +60,7 @@ const IngredientAdder: FC<Props> = ({ handleDelete, ingredient, recipes }) => {
           name="ingredientAmt"
           type="number"
           required={false}
-          defaultValue={ingredient.qty}
+          initValue={ingredient.qty}
         />
       </div>
       <div className="col-span-3  relative ">

@@ -153,3 +153,57 @@ export const createRecipe = async (recipe: ExtractedRecipe, userId: string) => {
   });
   return newRecipe;
 };
+
+export async function updateRecipe(id: string, recipe: ExtractedRecipe) {
+  const {
+    name,
+    category,
+    allergens,
+    yieldUnit,
+    yieldAmt,
+    ingredients,
+    steps,
+    savedImages,
+  } = recipe;
+
+  try {
+    const data = await prisma.$transaction([
+      prisma.ingredient.deleteMany({ where: { recipeId: id } }),
+      prisma.recipe.update({
+        where: { id: id },
+        data: {
+          name,
+          category,
+          images: savedImages || [],
+          allergens,
+          yieldUnit,
+          yieldAmt,
+          steps,
+          ingredients: {
+            create: [...ingredients],
+          },
+        },
+        include: {
+          ingredients: true,
+          author: true,
+        },
+      }),
+    ]);
+
+    return data[1];
+  } catch (error) {
+    return null;
+  }
+}
+
+export const deleteRecipe = async (id: string) => {
+  try {
+    await prisma.recipe.delete({
+      where: {
+        id: id,
+      },
+    });
+  } catch (error) {
+    return null;
+  }
+};
