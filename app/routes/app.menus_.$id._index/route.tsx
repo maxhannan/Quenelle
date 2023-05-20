@@ -1,5 +1,4 @@
 import {
-  ArrowRightIcon,
   ArrowUturnLeftIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
