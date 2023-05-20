@@ -1,16 +1,17 @@
 import type { FullRecipes } from "~/utils/recipes.server";
-import RecipeCard from "./RecipeCard";
+
+import ListCard from "~/components/display/ListCard";
 
 export default function RecipeFeed({ recipes }: { recipes: FullRecipes }) {
   return (
     <div className="grid z-0 relative grid-flow-row  auto-rows-max gap-y-2  mx-auto mt-3 mb-16">
       {recipes && recipes.length > 0 ? (
         recipes.map((r) => (
-          <RecipeCard
+          <ListCard
             key={r.id}
-            id={r.id}
+            to={`/app/recipes/${r.id}`}
             name={r.name}
-            category={r.category}
+            subHeading={r.category}
             user={r.author!.firstName[0] + r.author!.lastName[0]}
           />
         ))

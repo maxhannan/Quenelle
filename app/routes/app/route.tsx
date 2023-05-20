@@ -1,13 +1,8 @@
-import {
-  Outlet,
-  useLoaderData,
-  useLocation,
-  useOutletContext,
-} from "@remix-run/react";
+import { Outlet, useLocation } from "@remix-run/react";
 import { useState, useEffect } from "react";
 import BottomNav from "~/components/navigation/BottomNav";
 import ErrorBoundaryLayout from "./ErrorBoundary";
-import { LoaderArgs } from "@remix-run/node";
+import type { LoaderArgs } from "@remix-run/node";
 import { getUser, requireUserId } from "~/utils/auth.server";
 
 export function ErrorBoundary() {

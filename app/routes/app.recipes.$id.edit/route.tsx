@@ -123,7 +123,6 @@ const EditRecipeRoute: FC = () => {
             }
           />
         </AppBar>
-
         <RecipeForm
           recipe={recipe}
           imageList={imageList}
