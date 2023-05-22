@@ -7,6 +7,11 @@ export const getDishes = async () => {
         dish: true,
       },
       select: {
+        section: {
+          select: {
+            id: true,
+          },
+        },
         _count: {
           select: {
             ingredients: true,

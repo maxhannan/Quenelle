@@ -76,6 +76,7 @@ const IngredientAdder: FC<Props> = ({ handleDelete, ingredient, recipes }) => {
           options={unitsList}
         />
       </div>
+      <div className="col-span-5 border-2 dark:border-neutral-700 rounded-2xl border-neutral-300"></div>
     </div>
   );
 };

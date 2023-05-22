@@ -68,7 +68,7 @@ model Menu {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   name        String
-  service     String?
+  service     String
   sections    MenuSection[]
   dishes      Recipe[]
   author      User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)

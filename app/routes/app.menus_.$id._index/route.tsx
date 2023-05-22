@@ -15,6 +15,7 @@ import { allergens } from "~/utils/staticLists";
 
 function MenuIndex() {
   const menu = useMenu();
+
   const navigate = useNavigate();
   const navigation = useNavigation();
 

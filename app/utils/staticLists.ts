@@ -31,3 +31,11 @@ export const unitsList = [
   { id: "ea", value: "ea" },
   { id: "pinch", value: "pinch" },
 ];
+
+export const serviceList = [
+  "Breakfast",
+  "Brunch",
+  "Lunch",
+  "Dinner",
+  "Dessert",
+];
