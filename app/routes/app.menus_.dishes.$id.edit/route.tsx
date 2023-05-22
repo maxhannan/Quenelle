@@ -1,43 +1,57 @@
 import { useEffect, useRef, useState } from "react";
-import type { FC, FormEventHandler } from "react";
-import { useRecipe } from "../app.recipes.$id/route";
+import type { FormEventHandler } from "react";
+import { useDish } from "../app.menus_.dishes.$id/route";
+import { getRecipes } from "~/utils/recipes.server";
+import {
+  Form,
+  useActionData,
+  useFetcher,
+  useLoaderData,
+  useNavigate,
+  useNavigation,
+  useRevalidator,
+  useSubmit,
+} from "@remix-run/react";
+import { uploadImage } from "~/utils/images";
+import Spinner from "~/components/LoadingSpinner";
 import {
   CheckCircleIcon,
   TrashIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import {
-  useNavigate,
-  useNavigation,
-  useFetcher,
-  useActionData,
-  useSubmit,
-  Form,
-  useRevalidator,
-} from "@remix-run/react";
-import RecipeForm from "~/components/forms/RecipeForm";
-import AppBar from "~/components/navigation/AppBar";
-import { uploadImage } from "~/utils/images";
 import IconButton from "~/components/buttons/IconButton";
+import AppBar from "~/components/navigation/AppBar";
+import DishForm from "~/components/forms/DishForm";
 import type { ActionFunction } from "@remix-run/node";
-import { extractRecipe, updateRecipe } from "~/utils/recipes.server";
-import Spinner from "~/components/LoadingSpinner";
+import { extractDish, updateDish } from "~/utils/dishes.server";
+
+export async function loader() {
+  const recipes = await getRecipes();
+
+  return {
+    recipes,
+    categories: recipes ? [...new Set(recipes.map((r) => r.category))] : [],
+  };
+}
 
 export const action: ActionFunction = async ({ request, params }) => {
-  const recipeId = params.id;
+  const dishId = params.id;
+  if (!dishId) return undefined;
   const form = await request.formData();
 
-  const newRecipe = extractRecipe(form);
-  const savedRecipe = await updateRecipe(recipeId!, newRecipe);
-  console.log({ savedRecipe });
-  return recipeId;
+  const newRecipe = extractDish(form);
+  const savedDish = await updateDish(dishId, newRecipe);
+  console.log({ savedDish });
+  if (savedDish) {
+    return savedDish.id;
+  } else return undefined;
 };
 
-const EditRecipeRoute: FC = () => {
-  const { recipe, recipes, categories } = useRecipe();
-
-  const navigate = useNavigate();
+function EditDishRoute() {
+  const dish = useDish();
+  const { recipes, categories } = useLoaderData<typeof loader>();
   const revalidator = useRevalidator();
+  const navigate = useNavigate();
   const navigation = useNavigation();
   const fetcher = useFetcher();
   const data = useActionData();
@@ -45,18 +59,18 @@ const EditRecipeRoute: FC = () => {
   const [imageLoading, setImageLoading] = useState(false);
   const submit = useSubmit();
   const [imageList, setImageList] = useState<string[]>(
-    recipe && recipe.images ? recipe.images : []
+    dish && dish.images ? dish.images : []
   );
   const [deleteImageList, setDeleteImageList] = useState<string[]>([]);
-
+  console.log({ imageList, deleteImageList });
   const handleDeleteImage = (path: string) => {
     setDeleteImageList([...deleteImageList, path]);
     setImageList((imageList) => imageList.filter((image) => image !== path));
   };
 
-  const handleDeleteRecipe = async () => {
+  const handleDeleteDish = async () => {
     const data = new FormData();
-    data.set("id", recipe!.id);
+    data.set("id", dish!.id);
     submit(data, { method: "delete", action: "/app/recipes/deleterecipe" });
   };
 
@@ -89,7 +103,7 @@ const EditRecipeRoute: FC = () => {
   useEffect(() => {
     if (data !== undefined) {
       revalidator.revalidate();
-      navigate(`/app/recipes/${data}`, { replace: true });
+      navigate(`/app/menus/dishes/${data}`, { replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
@@ -114,7 +128,7 @@ const EditRecipeRoute: FC = () => {
             Icon={TrashIcon}
             name="delete"
             type="button"
-            onClick={handleDeleteRecipe}
+            onClick={handleDeleteDish}
           />
           <IconButton Icon={CheckCircleIcon} name="Submit" type="submit" />
           <IconButton
@@ -122,12 +136,12 @@ const EditRecipeRoute: FC = () => {
             name="Go Back"
             type="button"
             onClick={() =>
-              navigate(`/app/recipes/${recipe!.id}`, { replace: true })
+              navigate(`/app/recipes/${dish!.id}`, { replace: true })
             }
           />
         </AppBar>
-        <RecipeForm
-          recipe={recipe}
+        <DishForm
+          dish={dish}
           imageList={imageList}
           handleDeleteImage={handleDeleteImage}
           recipes={recipes}
@@ -137,6 +151,6 @@ const EditRecipeRoute: FC = () => {
       </Form>
     </div>
   );
-};
+}
 
-export default EditRecipeRoute;
+export default EditDishRoute;

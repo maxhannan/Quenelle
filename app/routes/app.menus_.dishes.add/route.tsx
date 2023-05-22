@@ -1,54 +1,58 @@
+import { CheckCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import type { ActionFunction } from "@remix-run/node";
 import {
+  Form,
+  useActionData,
+  useLoaderData,
   useNavigate,
   useNavigation,
-  useActionData,
   useSubmit,
-  Form,
 } from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
-import type { FC, FormEventHandler } from "react";
-import IconButton from "~/components/buttons/IconButton";
-import AppBar from "~/components/navigation/AppBar";
-import { CheckCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useRecipes } from "../app.recipes/route";
-import RecipeForm from "~/components/forms/RecipeForm";
-import { uploadImage } from "~/utils/images";
-import type { ActionFunction } from "@remix-run/node";
-import { getUser } from "~/utils/auth.server";
-import { createRecipe, extractRecipe } from "~/utils/recipes.server";
+import type { FormEventHandler } from "react";
 import Spinner from "~/components/LoadingSpinner";
+import IconButton from "~/components/buttons/IconButton";
+import DishForm from "~/components/forms/DishForm";
+
+import AppBar from "~/components/navigation/AppBar";
+import { getUser } from "~/utils/auth.server";
+import { createDish, extractDish } from "~/utils/dishes.server";
+import { uploadImage } from "~/utils/images";
+import { getRecipes } from "~/utils/recipes.server";
+
+export async function loader() {
+  const recipes = await getRecipes();
+
+  return {
+    recipes,
+    categories: recipes ? [...new Set(recipes.map((r) => r.category))] : [],
+  };
+}
 
 export const action: ActionFunction = async ({ request }) => {
   const user = await getUser(request);
   const form = await request.formData();
 
-  const newRecipe = await extractRecipe(form);
+  const extractedDish = await extractDish(form);
 
   if (user) {
-    const savedRecipe = await createRecipe(newRecipe, user.id);
-    console.log({ savedRecipe });
-
-    return savedRecipe.id;
+    const savedDish = await createDish(extractedDish, user.id);
+    if (savedDish) {
+      return savedDish.id;
+    } else return undefined;
   }
 
   return undefined;
 };
 
-const AddRecipeRoute: FC = () => {
+function AddDishRoute() {
+  const { recipes, categories } = useLoaderData<typeof loader>();
+  const [imageLoading, setImageLoading] = useState(false);
   const navigate = useNavigate();
   const navigation = useNavigation();
-  const data = useActionData();
   const formRef = useRef<HTMLFormElement>(null);
-  const [imageLoading, setImageLoading] = useState(false);
   const submit = useSubmit();
-  const { recipes, categories } = useRecipes();
-
-  useEffect(() => {
-    if (data !== undefined) {
-      navigate(`/app/recipes/${data}`, { replace: true });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+  const data = useActionData();
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -68,6 +72,13 @@ const AddRecipeRoute: FC = () => {
     }
   };
 
+  useEffect(() => {
+    if (data !== undefined) {
+      navigate(`/app/menus/dishes/${data}`, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
   if (
     navigation.state === "loading" ||
     navigation.state === "submitting" ||
@@ -79,7 +90,6 @@ const AddRecipeRoute: FC = () => {
       </div>
     );
   }
-
   return (
     <div className="container mx-auto max-w-4xl">
       <Form
@@ -88,16 +98,16 @@ const AddRecipeRoute: FC = () => {
         encType="multipart/form-data"
         onSubmit={handleSubmit}
       >
-        <AppBar page="Add a Recipe">
+        <AppBar page="Add a Dish">
           <IconButton Icon={CheckCircleIcon} name="Submit" type="submit" />
           <IconButton
             Icon={XMarkIcon}
             name="Go Back"
             type="button"
-            onClick={() => navigate("/app/recipes")}
+            onClick={() => navigate(-1)}
           />
         </AppBar>
-        <RecipeForm
+        <DishForm
           categories={categories}
           recipes={recipes}
           formLoading={imageLoading}
@@ -105,6 +115,6 @@ const AddRecipeRoute: FC = () => {
       </Form>
     </div>
   );
-};
+}
 
-export default AddRecipeRoute;
+export default AddDishRoute;

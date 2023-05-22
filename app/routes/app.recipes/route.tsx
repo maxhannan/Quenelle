@@ -18,7 +18,7 @@ export async function loader({ request }: LoaderArgs) {
   return {
     recipes,
     filteredRecipes: getFilteredRecipes(recipes, search, category, allergyArr),
-    categories: [...new Set(recipes!.map((r) => r.category))],
+    categories: recipes ? [...new Set(recipes.map((r) => r.category))] : [],
   };
 }
 
