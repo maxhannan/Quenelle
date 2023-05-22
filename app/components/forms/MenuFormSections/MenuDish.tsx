@@ -1,4 +1,5 @@
-import { FC, useState } from "react";
+import { useState } from "react";
+import type { FC } from "react";
 import type { DishOption } from "./MenuDishSection";
 import type { getDishes } from "~/utils/dishes.server";
 import ComboBox from "~/components/formInputs/ComboBox";

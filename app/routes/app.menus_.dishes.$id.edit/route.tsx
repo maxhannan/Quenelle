@@ -136,7 +136,7 @@ function EditDishRoute() {
             name="Go Back"
             type="button"
             onClick={() =>
-              navigate(`/app/recipes/${dish!.id}`, { replace: true })
+              navigate(`/app/menus/dishes/${dish!.id}`, { replace: true })
             }
           />
         </AppBar>
