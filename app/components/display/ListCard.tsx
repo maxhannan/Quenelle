@@ -25,9 +25,11 @@ const ListCard: FC<Props> = ({ subHeading, user, name, to }) => {
           {name}
         </h5>
 
-        <h6 className="text-sm lg:text-lg mt-1  text-indigo-500 ">
-          {subHeading.length > 1 ? subHeading : ""}
-        </h6>
+        {subHeading && subHeading.length > 1 && (
+          <h6 className="text-sm lg:text-lg mt-1  text-indigo-500 ">
+            {subHeading}
+          </h6>
+        )}
       </div>
       <div className=" ml-auto ">
         <ArrowRightIcon className="text-neutral-800 dark:text-neutral-200 w-5 h-5" />

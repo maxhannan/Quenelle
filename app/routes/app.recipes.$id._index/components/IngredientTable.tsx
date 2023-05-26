@@ -6,21 +6,23 @@ import { useNavigate } from "@remix-run/react";
 const IngredientTable = ({ ingredients }: { ingredients: Ingredient[] }) => {
   const navigate = useNavigate();
   return (
-    <div className=" border border-neutral-300 dark:border-neutral-700 rounded-xl font-light   text-lg text-neutral-700 dark:text-neutral-100 ">
+    <div className=" border border-zinc-300 dark:border-zinc-700 rounded-xl font-light   text-lg text-zinc-700 dark:text-zinc-100 ">
       <table className="w-full mx-auto overflow-hidden table-fixed rounded-xl ">
-        <thead className="dark:bg-neutral-800 bg-neutral-200 border-b border-neutral-300 dark:border-neutral-700 ">
+        <thead className="dark:bg-zinc-900 bg-zinc-200 border-b border-zinc-300 dark:border-zinc-700 ">
           <tr className="text-left ">
-            <th className="px-6 py-4 text-lg font-semibold w-7/12 ">
-              {" "}
-              Ingredient{" "}
+            <th className="px-6 py-3 text-xl font-normal w-7/12 ">
+              Ingredient
             </th>
-            <th className="px-3 py-4 text-lg font-semibold "> Qty </th>
+            <th className="px-3 py-4 text-xl font-normal"> Qty </th>
           </tr>
         </thead>
         <tbody className="">
           {ingredients.length > 0 &&
             ingredients.map((i) => (
-              <tr className="max-w-xs break-words " key={i.id}>
+              <tr
+                className="max-w-xs break-words font-norma text-lg"
+                key={i.id}
+              >
                 <td
                   style={{ maxWidth: "100px" }}
                   className="px-6 py-4 break-all"
@@ -28,7 +30,7 @@ const IngredientTable = ({ ingredients }: { ingredients: Ingredient[] }) => {
                   {i.linkId ? (
                     <p
                       onClick={() => navigate(`/app/recipes/${i.linkId}`)}
-                      className="break-normal text-violet-500  hover:text-violet-700 cursor-pointer flex items-center gap-2"
+                      className="break-normal text-indigo-500  hover:text-indigo-700 cursor-pointer flex items-center gap-2"
                     >
                       {i.ingredient} <ArrowLongRightIcon className="w-6 h-6" />
                     </p>

@@ -33,7 +33,7 @@ function DishIndex() {
     return navigate("/app/menus/dishes");
   }
   return (
-    <main className="mb-28">
+    <main className="mb-28 container mx-auto max-w-3xl">
       <AppBar page="">
         <IconButton
           Icon={PencilIcon}
@@ -63,10 +63,10 @@ function DishIndex() {
         <Carousel isOpen={isOpen} setIsOpen={setIsOpen} imgSrcs={dish.images} />
       )}
 
-      <div className="text-3xl text-zinc-700   w-full items-center flex justify-between mb-2 pl-1 dark:text-neutral-200   rounded-xl ">
+      <div className="text-3xl   w-full items-center flex justify-between mb-4  dark:text-neutral-200  font-bold text-neutral-600 rounded-xl ">
         <div>{dish.name}</div>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 gap-2">
         <div className="flex flex-col gap-2">
           <div className="flex  gap-2 flex-wrap rounded-xl bg-neutral-100 border border-neutral-200 dark:bg-neutral-900 dark:border-neutral-700 p-2  ">
             {dish.allergens &&

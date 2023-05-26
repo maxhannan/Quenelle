@@ -34,7 +34,7 @@ const RecipeIndex: FC = () => {
   }
 
   return (
-    <main className="mb-28">
+    <main className="mb-28 container mx-auto max-w-3xl">
       <AppBar page="">
         <IconButton
           Icon={PencilIcon}
@@ -68,20 +68,20 @@ const RecipeIndex: FC = () => {
         />
       )}
 
-      <div className="text-3xl   w-full items-center flex justify-between mb-2 pl-1 dark:text-neutral-200   text-neutral-600 rounded-xl ">
+      <div className="text-3xl md:text-4xl   w-full items-center flex pl-1 justify-between mb-3  dark:text-neutral-200  font-bold text-neutral-600 rounded-xl ">
         <div>{recipe.name}</div>
       </div>
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-2">
+      <div className="grid grid-cols-1 gap-x-2">
         <div className="flex flex-col gap-2">
           {recipe.allergens.length > 0 && (
-            <div className="inline-flex  gap-2 flex-wrap rounded-xl bg-neutral-100 border border-neutral-200 dark:bg-neutral-900 dark:border-neutral-700 p-2 ">
+            <div className="inline-flex  gap-2 flex-wrap rounded-xl  border border-zinc-300  dark:border-neutral-700 p-2 ">
               {recipe.allergens.map((a, i) => (
                 <Chip content={a} key={i} />
               ))}
             </div>
           )}
           <IngredientTable ingredients={recipe.ingredients} />
-          <div className="text-lg  bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 px-3  items-center flex gap-4 justify-between dark:text-neutral-200 p-4 mb-2 text-neutral-700 rounded-xl font-light ">
+          <div className="text-lg  dark:bg-zinc-900   px-3  items-center flex gap-4 justify-between dark:text-neutral-200 p-4 mb-2 text-neutral-700 rounded-xl font-light ">
             <div>
               {" "}
               <b>Yields: </b>
@@ -92,7 +92,7 @@ const RecipeIndex: FC = () => {
                 onClick={() =>
                   navigate(`/app/recipes?category=${recipe.category}`)
                 }
-                className=" flex items-center gap-2 border  border-violet-500 cursor-pointer hover:border-neutral-700 hover:text-neutral-700 hover:dark:border-neutral-200 hover:dark:text-neutral-200 p-2 px-4 rounded-xl font-light  text-lg text-violet-700 dark:text-violet-500 "
+                className=" flex items-center gap-2 border font-bold border-indigo-500 cursor-pointer hover:border-neutral-700 hover:text-neutral-700 hover:dark:border-neutral-200 hover:dark:text-neutral-200 p-2 px-4 rounded-xl text-lg text-indigo-500 dark:text-indigo-500 "
               >
                 {recipe.category} <ArrowLongRightIcon className="w-5 h-5" />
               </div>
@@ -104,7 +104,7 @@ const RecipeIndex: FC = () => {
             recipe.steps.map((s, i) => (
               <div
                 key={i}
-                className=" border border-neutral-300 dark:border-neutral-700 bg-neutral-200 dark:bg-neutral-800  bg-opacity-50 dark:bg-opacity-50 transition-all duration-300 rounded-xl p-4 text-lg text-neutral-700 dark:text-neutral-100"
+                className=" border border-neutral-300 dark:border-neutral-700 bg-neutral-200 dark:bg-neutral-800   transition-all duration-300 rounded-xl p-4 text-lg text-neutral-700 dark:text-neutral-100"
               >
                 <h5 className="text-2xl mb-2">Step {i + 1}</h5>
                 <p className="text-lg font-light ">{s}</p>
@@ -112,9 +112,9 @@ const RecipeIndex: FC = () => {
             ))}
 
           {recipe!.linkedIngredients.length > 0 && (
-            <div className="text-xl bg-neutral-100 border border-neutral-200 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-200  p-4  text-neutral-700 rounded-xl font-light ">
+            <div className="text-2xl bg-zinc-200  border-neutral-200 dark:bg-zinc-900  dark:text-zinc-200 px-3 p-4  text-zinc-700 rounded-xl  ">
               Component of
-              <div className="flex gap-3 flex-wrap r mt-2">
+              <div className="flex gap-3 flex-wrap  mt-3">
                 {recipe!.linkedIngredients.map((li) => (
                   <div key={li.recipe.id}>
                     <Link
@@ -124,7 +124,7 @@ const RecipeIndex: FC = () => {
                           : `/app/recipes/${li.recipe.id}`
                       }
                     >
-                      <div className=" flex items-center gap-2  bg-violet-500 hover:bg-violet-600 p-2 px-4 rounded-xl font-light  text-base text-neutral-100 dark:text-neutral-100 ">
+                      <div className=" flex items-center gap-2 border border-indigo-500 hover:bg-indigo-600 hover:text-zinc-200 p-2 px-3 font-bold  rounded-xl  text-base text-indigo-500 dark:text-indigo-500 ">
                         {li.recipe.name}{" "}
                         <ArrowLongRightIcon className="w-5 h-5" />
                       </div>
@@ -134,7 +134,7 @@ const RecipeIndex: FC = () => {
               </div>
             </div>
           )}
-          <div className="text-2xl bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-200 p-4  text-neutral-700 rounded-xl font-light  ">
+          <div className="text-2xl bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 p-4  text-zinc-800 rounded-xl font-light border border-zinc-300 dark:border-zinc-700 ">
             <div>
               <b>Author: </b>
               {recipe.author?.firstName + " " + recipe.author?.lastName}
