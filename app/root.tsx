@@ -33,7 +33,7 @@ export default function App() {
         <meta name="title" content="Quenelle" />
         <meta
           name="theme-color"
-          content="#171717"
+          content="#27272a"
           media="(prefers-color-scheme: dark)"
         />
         <meta
