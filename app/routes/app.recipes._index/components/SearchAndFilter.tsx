@@ -91,7 +91,7 @@ const SearchAndFilter: FC<Props> = ({
 
   return (
     <>
-      <div className="container max-w-4xl mx-auto flex  gap-x-2 ">
+      <div className="container   mx-auto flex  gap-x-2 ">
         <div className=" grow">
           <SearchBar
             handleChange={setSearchValue}

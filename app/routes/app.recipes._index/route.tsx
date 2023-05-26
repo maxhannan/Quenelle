@@ -33,44 +33,49 @@ export default function RecipesIndex() {
   }
 
   return (
-    <div className=" container mx-auto max-w-3xl ">
-      <div className="grid grid-cols-1  gap-2 ">
-        <div>
-          <div className=" ">
-            <AppBar page={"Recipes"}>
-              <IconButton
-                onClick={() => navigate("/app/recipes/addrecipe")}
-                Icon={DocumentPlusIcon}
-                name="Add Recipe"
-              />
-              <IconButton
-                onClick={() =>
-                  submit(null, { action: "/logout", method: "post" })
-                }
-                Icon={UserIcon}
-                name="Logout"
-              />
-            </AppBar>
-          </div>
+    <>
+      <main className="mb-28 container mx-auto max-w-3xl xl:max-w-full hidden xl:flex  w-full items-center justify-center  text-2xl text-zinc-700 dark:text-zinc-200 h-screen overflow-hidden">
+        Select a recipe
+      </main>
+      <div className=" container mx-auto max-w-3xl xl:hidden">
+        <div className="grid grid-cols-1  xl:gap-2 ">
+          <div>
+            <div className=" ">
+              <AppBar page={"Recipes"}>
+                <IconButton
+                  onClick={() => navigate("/app/recipes/addrecipe")}
+                  Icon={DocumentPlusIcon}
+                  name="Add Recipe"
+                />
+                <IconButton
+                  onClick={() =>
+                    submit(null, { action: "/logout", method: "post" })
+                  }
+                  Icon={UserIcon}
+                  name="Logout"
+                />
+              </AppBar>
+            </div>
 
-          <div className=" ">
-            <SearchAndFilter
-              categories={categories}
-              searchParams={searchParams}
-              setSearchParams={setSearchParams}
-            />
+            <div className=" ">
+              <SearchAndFilter
+                categories={categories}
+                searchParams={searchParams}
+                setSearchParams={setSearchParams}
+              />
+            </div>
           </div>
+          {navigation.state === "loading" && !pageChangeLoading ? (
+            <div className="flex h-screen justify-center mt-12">
+              <Spinner size={12} />
+            </div>
+          ) : (
+            <div className="pb-1 py-2  scrollbar-none ">
+              {recipes && <RecipeFeed recipes={filteredRecipes} />}
+            </div>
+          )}
         </div>
-        {navigation.state === "loading" && !pageChangeLoading ? (
-          <div className="flex h-screen justify-center mt-12">
-            <Spinner size={12} />
-          </div>
-        ) : (
-          <div className="pb-1 py-2  scrollbar-none ">
-            {recipes && <RecipeFeed recipes={filteredRecipes} />}
-          </div>
-        )}
       </div>
-    </div>
+    </>
   );
 }

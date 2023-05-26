@@ -1,19 +1,9 @@
-import {
-  Outlet,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-  useSubmit,
-} from "@remix-run/react";
+import { Outlet, useLocation } from "@remix-run/react";
 import { useState, useEffect } from "react";
 import BottomNav from "~/components/navigation/BottomNav";
 import ErrorBoundaryLayout from "./ErrorBoundary";
 import type { LoaderArgs } from "@remix-run/node";
 import { getUser, requireUserId } from "~/utils/auth.server";
-import { DocumentPlusIcon, UserIcon } from "@heroicons/react/24/outline";
-import IconButton from "~/components/buttons/IconButton";
-import AppBar from "~/components/navigation/AppBar";
-import SearchAndFilter from "../app.recipes._index/components/SearchAndFilter";
 
 export function ErrorBoundary() {
   return <ErrorBoundaryLayout />;
@@ -29,9 +19,7 @@ export async function loader({ request }: LoaderArgs) {
 const AppLayout = () => {
   const location = useLocation();
   const [page, setPage] = useState(location.pathname.split("/")[2]);
-  const navigate = useNavigate();
-  const submit = useSubmit();
-  const [searchParams, setSearchParams] = useSearchParams();
+
   useEffect(() => {
     setPage(location.pathname.split("/")[2]);
   }, [location]);
