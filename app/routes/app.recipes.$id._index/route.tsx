@@ -68,8 +68,8 @@ const RecipeIndex: FC = () => {
         />
       )}
 
-      <div className="text-3xl border border-neutral-300 dark:border-neutral-700 gap-3 bg-neutral-200 dark:bg-neutral-800 px-4 w-full mb-2 items-center flex justify-between dark:text-neutral-200 p-4  text-neutral-600 rounded-xl font-light ">
-        <div>{recipe!.name}</div>
+      <div className="text-3xl   w-full items-center flex justify-between mb-2 pl-1 dark:text-neutral-200   text-neutral-600 rounded-xl ">
+        <div>{recipe.name}</div>
       </div>
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-2">
         <div className="flex flex-col gap-2">

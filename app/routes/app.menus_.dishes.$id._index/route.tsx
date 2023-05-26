@@ -62,7 +62,8 @@ function DishIndex() {
       {dish.images.length > 0 && (
         <Carousel isOpen={isOpen} setIsOpen={setIsOpen} imgSrcs={dish.images} />
       )}
-      <div className="text-4xl lg:text-3xl border mb-2 border-neutral-300 dark:border-neutral-700 gap-2 bg-neutral-200 dark:bg-neutral-800 px-4 w-full items-center flex justify-between dark:text-neutral-200 p-4  text-neutral-600 rounded-xl font-light ">
+
+      <div className="text-3xl text-zinc-700   w-full items-center flex justify-between mb-2 pl-1 dark:text-neutral-200   rounded-xl ">
         <div>{dish.name}</div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
