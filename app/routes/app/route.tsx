@@ -23,8 +23,8 @@ const AppLayout = () => {
     setPage(location.pathname.split("/")[2]);
   }, [location]);
   return (
-    <div className=" px-3 ">
-      <div className="container  mx-auto">
+    <div className="  ">
+      <div className="px-3">
         <Outlet />
       </div>
       <BottomNav page={page} setPage={setPage} />
