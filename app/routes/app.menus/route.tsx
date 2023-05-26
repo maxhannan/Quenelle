@@ -41,7 +41,7 @@ export default function MenusLayout() {
   return (
     <div className=" container mx-auto max-w-4xl">
       <SlideDownTransition>
-        <nav className=" flex pt-3 pb-1 mx-auto max-h-full items-center justify-between  duration-300 bg-neutral-100 dark:bg-neutral-900 font-light  w-full top-0 left-0  ">
+        <nav className=" flex pt-3 pb-1 mx-auto max-h-full items-center justify-between  duration-300 bg-zinc-100 dark:bg-zinc-900 font-light  w-full top-0 left-0  ">
           <MenuButtons activeTab={activeTab} setActiveTab={setActiveTab} />
           <div className="grow flex justify-end gap-2">
             <IconButton

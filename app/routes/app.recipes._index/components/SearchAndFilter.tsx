@@ -1,6 +1,6 @@
 import { Transition } from "@headlessui/react";
 import { FunnelIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useNavigation } from "@remix-run/react";
+import { useLocation, useNavigation } from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
 import type { FC } from "react";
 import type { ComboBoxOption } from "~/components/formInputs/ComboBox";
@@ -25,6 +25,7 @@ const SearchAndFilter: FC<Props> = ({
   const allergies = searchParams.get("allergies");
 
   const navigation = useNavigation();
+  const location = useLocation();
 
   const [loadingSearch, setLoadingSearch] = useState(false);
 

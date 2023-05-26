@@ -1,10 +1,11 @@
 import type { Ingredient } from "@prisma/client";
 
 import { ArrowLongRightIcon } from "@heroicons/react/24/outline";
-import { useNavigate } from "@remix-run/react";
+import { useLocation, useNavigate } from "@remix-run/react";
 
 const IngredientTable = ({ ingredients }: { ingredients: Ingredient[] }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   return (
     <div className=" border border-zinc-300 dark:border-zinc-700 rounded-xl font-light   text-lg text-zinc-700 dark:text-zinc-100 ">
       <table className="w-full mx-auto overflow-hidden table-fixed rounded-xl ">
@@ -29,7 +30,9 @@ const IngredientTable = ({ ingredients }: { ingredients: Ingredient[] }) => {
                 >
                   {i.linkId ? (
                     <p
-                      onClick={() => navigate(`/app/recipes/${i.linkId}`)}
+                      onClick={() =>
+                        navigate(`/app/recipes/${i.linkId}${location.search}`)
+                      }
                       className="break-normal text-indigo-500  hover:text-indigo-700 font-bold cursor-pointer flex items-center gap-2"
                     >
                       {i.ingredient} <ArrowLongRightIcon className="w-6 h-6" />

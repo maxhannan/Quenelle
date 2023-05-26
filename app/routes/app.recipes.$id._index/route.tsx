@@ -11,7 +11,13 @@ import {
   PhotoIcon,
   ScaleIcon,
 } from "@heroicons/react/24/outline";
-import { Link, useMatches, useNavigate, useNavigation } from "@remix-run/react";
+import {
+  Link,
+  useLocation,
+  useMatches,
+  useNavigate,
+  useNavigation,
+} from "@remix-run/react";
 import Chip from "~/components/display/Chip";
 import IngredientTable from "./components/IngredientTable";
 import Spinner from "~/components/LoadingSpinner";
@@ -23,10 +29,23 @@ const RecipeIndex: FC = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const navigation = useNavigation();
+  const location = useLocation();
   console.log(useMatches());
   if (!recipe) return <NoRecipeFound />;
+  const pageChangeLoading =
+    (navigation.state === "loading" &&
+      navigation.location.pathname.includes("edit")) ||
+    (navigation.state === "loading" &&
+      !(navigation.location.pathname === location.pathname));
 
-  if (navigation.state === "loading") {
+  console.log(
+    { pageChangeLoading },
+    navigation.location,
+    navigation.location?.pathname,
+    location.pathname,
+    navigation.location?.pathname === location.pathname
+  );
+  if (navigation.state === "loading" && pageChangeLoading) {
     return (
       <div className="h-screen  flex items-center justify-center">
         <Spinner size={14} />
@@ -35,7 +54,7 @@ const RecipeIndex: FC = () => {
   }
 
   return (
-    <main className="pb-32 container mx-auto max-w-3xl xl:max-w-full xl:h-screen xl:overflow-scroll scrollbar-none ">
+    <main className="pb-32 container mx-auto max-w-3xl xl:max-w-full xl:h-screen xl:overflow-scroll scrollbar-track-zinc-100   dark:scrollbar-track-zinc-800  scrollbar-thin scrollbar-rounded-2xl scrollbar-thumb-zinc-400 dark:scrollbar-thumb-zinc-700 scrollbar-thumb-rounded xl:px-4">
       <AppBar page="">
         <IconButton
           Icon={PencilIcon}
@@ -55,11 +74,13 @@ const RecipeIndex: FC = () => {
           name="Scale Recipe"
           onClick={() => console.log("edit")}
         />
-        <IconButton
-          Icon={ArrowUturnLeftIcon}
-          name="Go Back"
-          onClick={() => navigate(-1)}
-        />
+        <div className="xl:hidden">
+          <IconButton
+            Icon={ArrowUturnLeftIcon}
+            name="Go Back"
+            onClick={() => navigate(-1)}
+          />
+        </div>
       </AppBar>
       {recipe.images.length > 0 && (
         <Carousel
@@ -82,7 +103,7 @@ const RecipeIndex: FC = () => {
             </div>
           )}
           <IngredientTable ingredients={recipe.ingredients} />
-          <div className="text-lg  dark:bg-zinc-900   px-3  items-center flex gap-4 justify-between dark:text-neutral-200 p-4 mb-2 text-neutral-700 rounded-xl font-light ">
+          <div className="text-lg border dark:border-indigo-500   px-3  items-center flex gap-4 justify-between dark:text-neutral-200 p-4 mb-2 text-neutral-700 rounded-xl font-light ">
             <div>
               {" "}
               <b>Yields: </b>
@@ -105,7 +126,7 @@ const RecipeIndex: FC = () => {
             recipe.steps.map((s, i) => (
               <div
                 key={i}
-                className=" border border-neutral-300 dark:border-neutral-700 bg-zinc-200 dark:bg-zinc-800   transition-all duration-300 rounded-xl p-4 text-lg text-neutral-700 dark:text-neutral-100"
+                className=" border border-neutral-300 dark:border-neutral-700    transition-all duration-300 rounded-xl p-4 text-lg text-neutral-700 dark:text-neutral-100"
               >
                 <h5 className="text-2xl mb-2">Step {i + 1}</h5>
                 <p className="text-lg font-light ">{s}</p>
@@ -113,7 +134,7 @@ const RecipeIndex: FC = () => {
             ))}
 
           {recipe!.linkedIngredients.length > 0 && (
-            <div className="text-2xl bg-zinc-200  border-neutral-200 dark:bg-zinc-900  dark:text-zinc-200 px-3 p-4  text-zinc-700 rounded-xl  ">
+            <div className="text-2xl bg-zinc-200  border-neutral-200 dark:bg-zinc-800  dark:text-zinc-200 px-3 p-4  text-zinc-700 rounded-xl  ">
               Component of
               <div className="flex gap-3 flex-wrap  mt-3">
                 {recipe!.linkedIngredients.map((li) => (
@@ -135,12 +156,12 @@ const RecipeIndex: FC = () => {
               </div>
             </div>
           )}
-          <div className="text-2xl bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 p-4  text-zinc-800 rounded-xl font-light border border-zinc-300 dark:border-zinc-700 ">
+          <div className="text-2xl bg-zinc-200 dark:bg-indigo-500 dark:text-zinc-200 p-4  text-zinc-800 rounded-xl font-light border border-zinc-300 dark:border-zinc-700 flex flex-wrap items-center justify-between">
             <div>
               <b>Author: </b>
               {recipe.author?.firstName + " " + recipe.author?.lastName}
             </div>
-            <div className="flex gap-2 flex-wrap  mt-2 text-lg ">
+            <div className="flex gap-4 flex-wrap  mt-2 text-lg xl:text-2xl items-center">
               <div>
                 <b>Added: </b>
                 {new Date(recipe.createdAt).toLocaleDateString()}

@@ -6,18 +6,28 @@ interface Props {
   subHeading: string;
   user: string;
   name: string;
-
+  active?: boolean;
   to: string;
 }
 
-const ListCard: FC<Props> = ({ subHeading, user, name, to }) => {
+const ListCard: FC<Props> = ({ subHeading, user, name, to, active }) => {
   const navigate = useNavigate();
   return (
     <div
       onClick={() => navigate(to)}
-      className="w-full  max-h-full group border-zinc-300 border  hover:dark:bg-zinc-900 rounded-2xl p-2 pr-3 flex justify-start items-center  hover:bg-zinc-200  dark:border-zinc-700 transition-all duration-300"
+      className={`${
+        active
+          ? "border-indigo-500 dark:border-indigo-500"
+          : "border-zinc-300 dark:border-zinc-700"
+      }  w-full  max-h-full group  border  hover:dark:bg-zinc-900 rounded-2xl p-2 pr-3 flex justify-start items-center  hover:bg-zinc-300   transition-all duration-300`}
     >
-      <div className=" trasition-all duration-300 inline-flex group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center mr-4 justify-center w-14 h-14 overflow-hidden bg-zinc-100 text-zinc-800 dark:text-zinc-300 border-indigo-400 rounded-2xl  dark:bg-zinc-800 border dark:border-indigo-500">
+      <div
+        className={`${
+          active
+            ? "bg-indigo-500 text-zinc-200"
+            : "dark:bg-zinc-800 bg-zinc-100 text-zinc-800 dark:text-zinc-300 "
+        } trasition-all duration-300 inline-flex group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center mr-4 justify-center w-14 h-14 overflow-hidden  border-indigo-400 rounded-2xl  border dark:border-indigo-500`}
+      >
         <span className=" text-xl lg:text-2xl ">{user.toLowerCase()}</span>
       </div>
       <div className="  pr-2">
