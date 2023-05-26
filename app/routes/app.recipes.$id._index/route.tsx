@@ -54,7 +54,7 @@ const RecipeIndex: FC = () => {
   }
 
   return (
-    <main className="pb-32 container mx-auto max-w-3xl xl:max-w-full xl:h-screen xl:overflow-scroll scrollbar-track-zinc-100   dark:scrollbar-track-zinc-800  scrollbar-thin scrollbar-rounded-2xl scrollbar-thumb-zinc-400 dark:scrollbar-thumb-zinc-700 scrollbar-thumb-rounded xl:px-4">
+    <main className="pb-32 container mx-auto max-w-3xl ">
       <AppBar page="">
         <IconButton
           Icon={PencilIcon}
@@ -74,13 +74,11 @@ const RecipeIndex: FC = () => {
           name="Scale Recipe"
           onClick={() => console.log("edit")}
         />
-        <div className="xl:hidden">
-          <IconButton
-            Icon={ArrowUturnLeftIcon}
-            name="Go Back"
-            onClick={() => navigate(-1)}
-          />
-        </div>
+        <IconButton
+          Icon={ArrowUturnLeftIcon}
+          name="Go Back"
+          onClick={() => navigate(-1)}
+        />
       </AppBar>
       {recipe.images.length > 0 && (
         <Carousel
@@ -156,12 +154,12 @@ const RecipeIndex: FC = () => {
               </div>
             </div>
           )}
-          <div className="text-2xl bg-zinc-200 dark:bg-indigo-500 dark:text-zinc-200 p-4  text-zinc-800 rounded-xl font-light border border-zinc-300 dark:border-zinc-700 flex flex-wrap items-center justify-between">
+          <div className="text-2xl bg-zinc-200 dark:bg-indigo-500 dark:text-zinc-200 p-4  text-zinc-800 rounded-xl font-light border border-zinc-300 dark:border-zinc-700 items-center justify-between">
             <div>
               <b>Author: </b>
               {recipe.author?.firstName + " " + recipe.author?.lastName}
             </div>
-            <div className="flex gap-4 flex-wrap  mt-2 text-lg xl:text-2xl items-center">
+            <div className="flex gap-4 flex-wrap  mt-2 text-lg  items-center">
               <div>
                 <b>Added: </b>
                 {new Date(recipe.createdAt).toLocaleDateString()}

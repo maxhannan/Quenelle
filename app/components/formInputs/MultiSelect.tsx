@@ -1,5 +1,5 @@
 import { Listbox, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import type { FC } from "react";
 import Chip from "../display/Chip";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
@@ -9,6 +9,7 @@ interface Props {
   changeHandler?: (value: string[]) => void;
   placeholder?: string;
   options: string[];
+  controlledValue?: string[];
 }
 
 const MultiSelect: FC<Props> = ({
@@ -17,6 +18,7 @@ const MultiSelect: FC<Props> = ({
   changeHandler,
   placeholder = "Select Allergens",
   options,
+  controlledValue,
 }) => {
   const [selected, setSelected] = useState(initialValue || []);
 
@@ -27,6 +29,10 @@ const MultiSelect: FC<Props> = ({
     setSelected(value);
   };
 
+  useEffect(() => {
+    setSelected(controlledValue || []);
+  }, [controlledValue]);
+  console.log({ controlledValue });
   return (
     <div className="w-full z-30">
       <input type="hidden" value={selected.join(",")} name={name} />

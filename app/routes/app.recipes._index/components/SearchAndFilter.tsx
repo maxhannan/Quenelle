@@ -21,9 +21,9 @@ const SearchAndFilter: FC<Props> = ({
   searchParams,
   setSearchParams,
 }) => {
-  const category = searchParams.get("category");
-  const allergies = searchParams.get("allergies");
-
+  const [category, setCategory] = useState(searchParams.get("category"));
+  const [allergies, setAllergies] = useState(searchParams.get("allergies"));
+  console.log({ allergies });
   const navigation = useNavigation();
   const location = useLocation();
 
@@ -52,9 +52,11 @@ const SearchAndFilter: FC<Props> = ({
     if (value.length > 0) {
       searchParams.set("allergies", value.join(","));
       setSearchParams(searchParams);
+      setAllergies(value.join(","));
     } else {
       searchParams.delete("allergies");
       setSearchParams(searchParams);
+      setAllergies(null);
     }
   };
   let initialRender = useRef(true);
@@ -90,6 +92,13 @@ const SearchAndFilter: FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedQuery]);
 
+  useEffect(() => {
+    console.log({ category, allergies });
+
+    setCategory(searchParams.get("category"));
+    setAllergies(searchParams.get("allergies"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname, location.search]);
   return (
     <>
       <div className="container   mx-auto flex  gap-x-2 ">
@@ -151,6 +160,7 @@ const SearchAndFilter: FC<Props> = ({
           initialValue={allergies ? allergies.split(",") : []}
           options={allergens}
           placeholder="Filter Out Allergens"
+          controlledValue={allergies ? allergies.split(",") : []}
         />
       </Transition>
     </>

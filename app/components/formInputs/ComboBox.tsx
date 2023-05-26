@@ -1,6 +1,6 @@
 import { Combobox, Transition } from "@headlessui/react";
 import { ChevronDownIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import type { FC } from "react";
 export interface ComboBoxOption {
   id: string;
@@ -29,6 +29,9 @@ const ComboBox: FC<Props> = ({
   const [selected, setSelected] = useState(initValue || null);
   const [query, setQuery] = useState("");
 
+  useEffect(() => {
+    setSelected(initValue || null);
+  }, [initValue]);
   const filteredList =
     query === ""
       ? options

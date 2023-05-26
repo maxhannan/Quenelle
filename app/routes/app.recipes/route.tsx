@@ -49,48 +49,13 @@ const RecipesLayout = () => {
     navigation.state === "loading" &&
     navigation.location.pathname !== "/app/recipes";
   return (
-    <div className="grid  xl:grid-cols-12  ">
-      <div className=" col-span-3 gap-2 hidden xl:grid overflow-hidden xl:h-screen px-3  bg-zinc-200 dark:bg-zinc-800">
-        <div>
-          <div className=" ">
-            <AppBar page={"Recipes"}>
-              <IconButton
-                onClick={() => navigate("/app/recipes/addrecipe")}
-                Icon={DocumentPlusIcon}
-                name="Add Recipe"
-              />
-              <IconButton
-                onClick={() =>
-                  submit(null, { action: "/logout", method: "post" })
-                }
-                Icon={UserIcon}
-                name="Logout"
-              />
-            </AppBar>
-          </div>
-
-          <div className=" ">
-            <SearchAndFilter
-              categories={categories}
-              searchParams={searchParams}
-              setSearchParams={setSearchParams}
-            />
-          </div>
-        </div>
-        {navigation.state === "loading" && !pageChangeLoading ? (
-          <div className="flex h-screen justify-center mt-12">
-            <Spinner size={12} />
-          </div>
-        ) : (
-          <div className="h-[90vh]  overflow-y-scroll dark:scrollbar-track-zinc-900 scrollbar-track-zinc-200 scrollbar-thin scrollbar-rounded-2xl dark:scrollbar-thumb-zinc-700 scrollbar-thumb-zinc-400  scrollbar-thumb-rounded pr-3">
-            {recipes && <RecipeFeed recipes={filteredRecipes} />}
-          </div>
-        )}
-      </div>
-      <div className="pb-1 py-2 col-span-9  xl:h-screen  xl:px-4  xl:overflow-hidden scrollbar-track-zinc-800  scrollbar-thin scrollbar-rounded-2xl scrollbar-thumb-zinc-700 scrollbar-thumb-rounded  ">
-        <Outlet context={{ recipes, filteredRecipes, categories }} />
-      </div>
-    </div>
+    <Outlet
+      context={{
+        recipes,
+        filteredRecipes,
+        categories,
+      }}
+    />
   );
 };
 

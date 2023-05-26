@@ -19,7 +19,6 @@ export default function RecipesIndex() {
   const navigate = useNavigate();
   const submit = useSubmit();
   const [searchParams, setSearchParams] = useSearchParams();
-
   const pageChangeLoading =
     navigation.state === "loading" &&
     navigation.location.pathname !== "/app/recipes";
@@ -34,10 +33,7 @@ export default function RecipesIndex() {
 
   return (
     <>
-      <main className="mb-28 container mx-auto max-w-3xl xl:max-w-full hidden xl:flex  w-full items-center justify-center  text-2xl text-zinc-700 dark:text-zinc-200 h-screen overflow-hidden">
-        Select a recipe
-      </main>
-      <div className=" container mx-auto max-w-3xl xl:hidden">
+      <div className=" container mx-auto max-w-3xl ">
         <div className="grid grid-cols-1  xl:gap-2 ">
           <div>
             <div className=" ">
