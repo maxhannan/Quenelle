@@ -15,9 +15,9 @@ const ListCard: FC<Props> = ({ subHeading, user, name, to }) => {
   return (
     <div
       onClick={() => navigate(to)}
-      className="w-full max-h-full  border-neutral-300 border  hover:dark:bg-zinc-900 rounded-2xl p-2 pr-3 flex justify-start items-center  hover:bg-zinc-200  dark:border-zinc-700 transition-all duration-300"
+      className="w-full  max-h-full group border-zinc-300 border  hover:dark:bg-zinc-900 rounded-2xl p-2 pr-3 flex justify-start items-center  hover:bg-zinc-200  dark:border-zinc-700 transition-all duration-300"
     >
-      <div className="inline-flex flex-shrink-0 items-center mr-4 justify-center w-14 h-14 overflow-hidden bg-zinc-100 text-zinc-800 dark:text-zinc-300 border-indigo-400 rounded-2xl  dark:bg-zinc-800 border dark:border-indigo-500">
+      <div className=" trasition-all duration-300 inline-flex group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center mr-4 justify-center w-14 h-14 overflow-hidden bg-zinc-100 text-zinc-800 dark:text-zinc-300 border-indigo-400 rounded-2xl  dark:bg-zinc-800 border dark:border-indigo-500">
         <span className=" text-xl lg:text-2xl ">{user.toLowerCase()}</span>
       </div>
       <div className="  pr-2">
