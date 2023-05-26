@@ -20,7 +20,7 @@ const IngredientTable = ({ ingredients }: { ingredients: Ingredient[] }) => {
           {ingredients.length > 0 &&
             ingredients.map((i) => (
               <tr
-                className="max-w-xs break-words font-norma text-lg"
+                className="max-w-xs break-words font-normal text-lg"
                 key={i.id}
               >
                 <td
@@ -30,7 +30,7 @@ const IngredientTable = ({ ingredients }: { ingredients: Ingredient[] }) => {
                   {i.linkId ? (
                     <p
                       onClick={() => navigate(`/app/recipes/${i.linkId}`)}
-                      className="break-normal text-indigo-500  hover:text-indigo-700 cursor-pointer flex items-center gap-2"
+                      className="break-normal text-indigo-500  hover:text-indigo-700 font-bold cursor-pointer flex items-center gap-2"
                     >
                       {i.ingredient} <ArrowLongRightIcon className="w-6 h-6" />
                     </p>

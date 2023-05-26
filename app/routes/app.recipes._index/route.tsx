@@ -33,33 +33,44 @@ export default function RecipesIndex() {
   }
 
   return (
-    <div className=" container mx-auto max-w-3xl ">
-      <AppBar page={"Recipes"}>
-        <IconButton
-          onClick={() => navigate("/app/recipes/addrecipe")}
-          Icon={DocumentPlusIcon}
-          name="Add Recipe"
-        />
-        <IconButton
-          onClick={() => submit(null, { action: "/logout", method: "post" })}
-          Icon={UserIcon}
-          name="Logout"
-        />
-      </AppBar>
-      <SearchAndFilter
-        categories={categories}
-        searchParams={searchParams}
-        setSearchParams={setSearchParams}
-      />
-      {navigation.state === "loading" && !pageChangeLoading ? (
-        <div className="flex h-screen justify-center mt-12">
-          <Spinner size={12} />
+    <div className=" container mx-auto max-w-3xl 2xl:max-w-full xl:h-screen overflow-hidden">
+      <div className="grid grid-cols-1  gap-2 xl:max-h-screen">
+        <div>
+          <div className=" block 2xl:hidden">
+            <AppBar page={"Recipes"}>
+              <IconButton
+                onClick={() => navigate("/app/recipes/addrecipe")}
+                Icon={DocumentPlusIcon}
+                name="Add Recipe"
+              />
+              <IconButton
+                onClick={() =>
+                  submit(null, { action: "/logout", method: "post" })
+                }
+                Icon={UserIcon}
+                name="Logout"
+              />
+            </AppBar>
+          </div>
+
+          <div className=" 2xl:hidden">
+            <SearchAndFilter
+              categories={categories}
+              searchParams={searchParams}
+              setSearchParams={setSearchParams}
+            />
+          </div>
         </div>
-      ) : (
-        <div className="pb-16  ">
-          {recipes && <RecipeFeed recipes={filteredRecipes} />}
-        </div>
-      )}
+        {navigation.state === "loading" && !pageChangeLoading ? (
+          <div className="flex h-screen justify-center mt-12">
+            <Spinner size={12} />
+          </div>
+        ) : (
+          <div className="pb-16    2xl:mt-3 2xl:px-4 py-2 2xl:h-screen scrollbar-none ">
+            {recipes && <RecipeFeed recipes={filteredRecipes} />}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

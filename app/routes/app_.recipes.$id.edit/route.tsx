@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { FC, FormEventHandler } from "react";
-import { useRecipe } from "../app.recipes.$id/route";
+import { useRecipe } from "../app_.recipes.$id/route";
 import {
   CheckCircleIcon,
   TrashIcon,
@@ -14,14 +14,27 @@ import {
   useSubmit,
   Form,
   useRevalidator,
+  useLoaderData,
 } from "@remix-run/react";
 import RecipeForm from "~/components/forms/RecipeForm";
 import AppBar from "~/components/navigation/AppBar";
 import { uploadImage } from "~/utils/images";
 import IconButton from "~/components/buttons/IconButton";
 import type { ActionFunction } from "@remix-run/node";
-import { extractRecipe, updateRecipe } from "~/utils/recipes.server";
+import {
+  extractRecipe,
+  getRecipes,
+  updateRecipe,
+} from "~/utils/recipes.server";
 import Spinner from "~/components/LoadingSpinner";
+
+export const loader = async () => {
+  const recipes = await getRecipes();
+  return {
+    recipes,
+    categories: recipes ? [...new Set(recipes.map((r) => r.category))] : [],
+  };
+};
 
 export const action: ActionFunction = async ({ request, params }) => {
   const recipeId = params.id;
@@ -34,7 +47,8 @@ export const action: ActionFunction = async ({ request, params }) => {
 };
 
 const EditRecipeRoute: FC = () => {
-  const { recipe, recipes, categories } = useRecipe();
+  const { recipe } = useRecipe();
+  const { recipes, categories } = useLoaderData<typeof loader>();
 
   const navigate = useNavigate();
   const revalidator = useRevalidator();

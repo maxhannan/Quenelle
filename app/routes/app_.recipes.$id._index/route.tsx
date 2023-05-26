@@ -1,6 +1,5 @@
 import { useState } from "react";
 import type { FC } from "react";
-import { useRecipe } from "../app.recipes.$id/route";
 
 import NoRecipeFound from "./components/NoRecipeFound";
 import AppBar from "~/components/navigation/AppBar";
@@ -12,17 +11,19 @@ import {
   PhotoIcon,
   ScaleIcon,
 } from "@heroicons/react/24/outline";
-import { Link, useNavigate, useNavigation } from "@remix-run/react";
+import { Link, useMatches, useNavigate, useNavigation } from "@remix-run/react";
 import Chip from "~/components/display/Chip";
 import IngredientTable from "./components/IngredientTable";
 import Spinner from "~/components/LoadingSpinner";
 import Carousel from "~/components/display/Carousel";
+import { useRecipe } from "../app_.recipes.$id/route";
 
 const RecipeIndex: FC = () => {
   const { recipe } = useRecipe();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const navigation = useNavigation();
+  console.log(useMatches());
   if (!recipe) return <NoRecipeFound />;
 
   if (navigation.state === "loading") {
@@ -34,7 +35,7 @@ const RecipeIndex: FC = () => {
   }
 
   return (
-    <main className="mb-28 container mx-auto max-w-3xl">
+    <main className="mb-28 container mx-auto max-w-3xl px-3">
       <AppBar page="">
         <IconButton
           Icon={PencilIcon}
