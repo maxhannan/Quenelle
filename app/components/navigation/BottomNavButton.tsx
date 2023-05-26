@@ -19,8 +19,8 @@ const BottomNavButton = ({ handleNav, active, Icon, path }: Props) => {
       <div
         className={` transition-all duration-300 w-14 h-14 flex items-center justify-center rounded-2xl ${
           active === path
-            ? "dark:bg-indigo-500 bg-zinc-700 text-zinc-200 dark:text-zinc-900  "
-            : "dark:bg-zinc-900 bg-indigo-500 text-zinc-200 dark:text-zinc-400 "
+            ? "dark:bg-indigo-500 bg-indigo-500 text-zinc-200 dark:text-zinc-900  "
+            : "dark:bg-zinc-900 bg-zinc-800 text-zinc-200 dark:text-zinc-400 "
         } `}
       >
         <Icon className={"  w-8 h-8   "} />

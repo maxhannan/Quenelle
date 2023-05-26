@@ -33,7 +33,7 @@ export default function RecipesIndex() {
   }
 
   return (
-    <div className=" container mx-auto max-w-4xl px-3">
+    <div className=" container mx-auto max-w-4xl ">
       <AppBar page={"Recipes"}>
         <IconButton
           onClick={() => navigate("/app/recipes/addrecipe")}
