@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { FC, FormEventHandler } from "react";
-import { useRecipe } from "../app_.recipes.$id/route";
+import { useRecipe } from "../app.recipes.$id/route";
 import {
   CheckCircleIcon,
   TrashIcon,

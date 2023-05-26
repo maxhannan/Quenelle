@@ -4,7 +4,7 @@ import ListCard from "~/components/display/ListCard";
 
 export default function RecipeFeed({ recipes }: { recipes: FullRecipes }) {
   return (
-    <div className="grid z-0 relative grid-flow-row  auto-rows-max gap-y-2  mx-auto  mb-16 xl:overflow-scroll xl:h-screen scrollbar-none">
+    <div className="grid z-0 relative grid-flow-row  auto-rows-max gap-y-2  mx-auto  mb-16 ">
       {recipes && recipes.length > 0 ? (
         recipes.map((r) => (
           <ListCard

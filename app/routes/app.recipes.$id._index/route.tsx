@@ -16,7 +16,7 @@ import Chip from "~/components/display/Chip";
 import IngredientTable from "./components/IngredientTable";
 import Spinner from "~/components/LoadingSpinner";
 import Carousel from "~/components/display/Carousel";
-import { useRecipe } from "../app_.recipes.$id/route";
+import { useRecipe } from "../app.recipes.$id/route";
 
 const RecipeIndex: FC = () => {
   const { recipe } = useRecipe();
@@ -35,7 +35,7 @@ const RecipeIndex: FC = () => {
   }
 
   return (
-    <main className="mb-28 container mx-auto max-w-3xl px-3">
+    <main className="mb-28 container mx-auto max-w-3xl ">
       <AppBar page="">
         <IconButton
           Icon={PencilIcon}
@@ -105,7 +105,7 @@ const RecipeIndex: FC = () => {
             recipe.steps.map((s, i) => (
               <div
                 key={i}
-                className=" border border-neutral-300 dark:border-neutral-700 bg-neutral-200 dark:bg-neutral-800   transition-all duration-300 rounded-xl p-4 text-lg text-neutral-700 dark:text-neutral-100"
+                className=" border border-neutral-300 dark:border-neutral-700 bg-zinc-200 dark:bg-zinc-800   transition-all duration-300 rounded-xl p-4 text-lg text-neutral-700 dark:text-neutral-100"
               >
                 <h5 className="text-2xl mb-2">Step {i + 1}</h5>
                 <p className="text-lg font-light ">{s}</p>

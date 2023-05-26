@@ -38,36 +38,7 @@ const AppLayout = () => {
   return (
     <div className="  ">
       <div className="px-3 lg:px-0">
-        <div className="grid grid-cols-1 2xl:grid-cols-12 gap-2 2xl:max-h-screen">
-          <div className="lg:bg-zinc-900 col-span-12 2xl:col-span-3 2xl:p-3 2xl:h-screen hidden 2xl:block">
-            <div className="2xl:block hidden">
-              <AppBar page={"Recipes"}>
-                <IconButton
-                  onClick={() => navigate("/app/recipes/addrecipe")}
-                  Icon={DocumentPlusIcon}
-                  name="Add Recipe"
-                />
-                <IconButton
-                  onClick={() =>
-                    submit(null, { action: "/logout", method: "post" })
-                  }
-                  Icon={UserIcon}
-                  name="Logout"
-                />
-              </AppBar>
-            </div>
-            <div className="">
-              <SearchAndFilter
-                categories={["All", "Breakfast", "Lunch", "Dinner", "Snack"]}
-                searchParams={searchParams}
-                setSearchParams={setSearchParams}
-              />
-            </div>
-          </div>
-          <div className="2xl:col-span-9">
-            <Outlet />
-          </div>
-        </div>
+        <Outlet />
       </div>
       <BottomNav page={page} setPage={setPage} />
     </div>

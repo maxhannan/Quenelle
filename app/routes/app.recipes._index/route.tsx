@@ -33,10 +33,10 @@ export default function RecipesIndex() {
   }
 
   return (
-    <div className=" container mx-auto max-w-3xl 2xl:max-w-full xl:h-screen overflow-hidden">
-      <div className="grid grid-cols-1  gap-2 xl:max-h-screen">
+    <div className=" container mx-auto max-w-3xl ">
+      <div className="grid grid-cols-1  gap-2 ">
         <div>
-          <div className=" block 2xl:hidden">
+          <div className=" ">
             <AppBar page={"Recipes"}>
               <IconButton
                 onClick={() => navigate("/app/recipes/addrecipe")}
@@ -53,7 +53,7 @@ export default function RecipesIndex() {
             </AppBar>
           </div>
 
-          <div className=" 2xl:hidden">
+          <div className=" ">
             <SearchAndFilter
               categories={categories}
               searchParams={searchParams}
@@ -66,7 +66,7 @@ export default function RecipesIndex() {
             <Spinner size={12} />
           </div>
         ) : (
-          <div className="pb-16    2xl:mt-3 2xl:px-4 py-2 2xl:h-screen scrollbar-none ">
+          <div className="pb-1 py-2  scrollbar-none ">
             {recipes && <RecipeFeed recipes={filteredRecipes} />}
           </div>
         )}
