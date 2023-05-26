@@ -9,7 +9,7 @@ const IngredientTable = ({ ingredients }: { ingredients: Ingredient[] }) => {
   return (
     <div className=" border border-zinc-300 dark:border-zinc-700 rounded-xl font-light   text-lg text-zinc-700 dark:text-zinc-100 ">
       <table className="w-full mx-auto overflow-hidden table-fixed rounded-xl ">
-        <thead className="dark:bg-zinc-900 bg-zinc-200 border-b border-zinc-300 dark:border-zinc-700 ">
+        <thead className="dark:bg-zinc-950 bg-zinc-200 border-b border-zinc-300 dark:border-zinc-700 ">
           <tr className="text-left ">
             <th className="px-6 py-3 text-xl font-normal w-7/12 ">
               Ingredient

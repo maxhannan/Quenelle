@@ -1,24 +1,9 @@
-import { DocumentPlusIcon, UserIcon } from "@heroicons/react/24/outline";
 import type { LoaderArgs } from "@remix-run/node";
-import {
-  Outlet,
-  useLoaderData,
-  useNavigate,
-  useNavigation,
-  useOutletContext,
-  useSearchParams,
-  useSubmit,
-} from "@remix-run/react";
-
-import IconButton from "~/components/buttons/IconButton";
-import AppBar from "~/components/navigation/AppBar";
+import { Outlet, useLoaderData, useOutletContext } from "@remix-run/react";
 
 import { getFilteredRecipes } from "~/utils/filterRecipes";
 
 import { getRecipes } from "~/utils/recipes.server";
-import RecipeFeed from "../app.recipes._index/components/RecipeFeed";
-import SearchAndFilter from "../app.recipes._index/components/SearchAndFilter";
-import Spinner from "~/components/LoadingSpinner";
 
 export async function loader({ request }: LoaderArgs) {
   const url = new URL(request.url);
@@ -41,13 +26,7 @@ type ContextType = Awaited<ReturnType<typeof loader>>;
 
 const RecipesLayout = () => {
   const { recipes, filteredRecipes, categories } = useLoaderData<ContextType>();
-  const navigate = useNavigate();
-  const navigation = useNavigation();
-  const submit = useSubmit();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const pageChangeLoading =
-    navigation.state === "loading" &&
-    navigation.location.pathname !== "/app/recipes";
+
   return (
     <Outlet
       context={{

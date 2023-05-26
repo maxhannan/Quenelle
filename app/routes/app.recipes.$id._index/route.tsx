@@ -101,7 +101,7 @@ const RecipeIndex: FC = () => {
             </div>
           )}
           <IngredientTable ingredients={recipe.ingredients} />
-          <div className="text-lg border dark:border-indigo-500   px-3  items-center flex gap-4 justify-between dark:text-neutral-200 p-4 mb-2 text-neutral-700 rounded-xl font-light ">
+          <div className="text-lg bg-zinc-200 dark:bg-zinc-950   px-3  items-center flex gap-4 justify-between dark:text-neutral-200 p-4 mb-2 text-neutral-700 rounded-xl font-light ">
             <div>
               {" "}
               <b>Yields: </b>
@@ -132,7 +132,7 @@ const RecipeIndex: FC = () => {
             ))}
 
           {recipe!.linkedIngredients.length > 0 && (
-            <div className="text-2xl bg-zinc-200  border-neutral-200 dark:bg-zinc-800  dark:text-zinc-200 px-3 p-4  text-zinc-700 rounded-xl  ">
+            <div className="text-2xl bg-zinc-200  border-neutral-200 dark:bg-zinc-950 dark:text-zinc-200 px-3 p-4  text-zinc-700 rounded-xl  ">
               Component of
               <div className="flex gap-3 flex-wrap  mt-3">
                 {recipe!.linkedIngredients.map((li) => (

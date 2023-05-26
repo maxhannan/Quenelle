@@ -9,14 +9,12 @@ export default function RecipeFeed({ recipes }: { recipes: FullRecipes }) {
   const [active, setActive] = useState<string | undefined>(
     location.pathname.split("/").slice(-1)[0]
   );
-  console.log({ path: location.pathname.split("/").slice(-1)[0] });
-  console.log({ location });
 
   useEffect(() => {
     setActive(location.pathname.split("/").slice(-1)[0]);
   }, [location]);
   return (
-    <div className="grid z-0 relative grid-flow-row  auto-rows-max gap-y-2  mx-auto  mb-16 ">
+    <div className="grid z-0 relative grid-flow-row  auto-rows-max gap-y-2  mx-auto  mb-32 ">
       {recipes && recipes.length > 0 ? (
         recipes.map((r) => (
           <div key={r.id} onClick={() => setActive(r.id)}>
