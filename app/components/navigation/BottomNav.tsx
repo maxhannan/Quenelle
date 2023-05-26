@@ -4,6 +4,8 @@ import {
   FolderIcon,
   ClipboardDocumentCheckIcon,
   QueueListIcon,
+  ChatBubbleBottomCenterIcon,
+  HomeIcon,
 } from "@heroicons/react/24/outline";
 import type { Dispatch, SetStateAction } from "react";
 
@@ -27,8 +29,8 @@ const BottomNav = ({ page, setPage }: Props) => {
   };
 
   return (
-    <nav className="fixed z-50 w-full  h-24   bottom-0 left-0 bg-neutral-100 border-t    dark:bg-neutral-900 border-neutral-300 dark:border-neutral-700">
-      <div className="grid h-full max-w-lg  pb-4 md:p-3 mx-auto grid-cols-3 gap-0">
+    <nav className="fixed z-50 w-full sm:w-96 p-4   bottom-0 sm:bottom-6 inset-x-0 mx-auto  bg-zinc-800 rounded-tl-3xl rounded-tr-3xl sm:rounded-3xl pb-8 sm:pb-4 dark:bg-zinc-900 ">
+      <div className="grid h-full max-w-lg  mx-auto grid-cols-5 gap-0">
         <BottomNavButton
           active={page}
           handleNav={handleNav}
@@ -41,6 +43,13 @@ const BottomNav = ({ page, setPage }: Props) => {
           path="recipes"
           Icon={FolderIcon}
         />
+
+        <BottomNavButton
+          active={page}
+          handleNav={handleNav}
+          path="/"
+          Icon={HomeIcon}
+        />
         <BottomNavButton
           active={page}
           handleNav={handleNav}
@@ -48,12 +57,12 @@ const BottomNav = ({ page, setPage }: Props) => {
           Icon={QueueListIcon}
         />
 
-        {/* <BottomNavButton
+        <BottomNavButton
           active={page}
           handleNav={handleNav}
           path="chat"
           Icon={ChatBubbleBottomCenterIcon}
-  />*/}
+        />
       </div>
     </nav>
   );

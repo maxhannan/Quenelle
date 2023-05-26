@@ -30,10 +30,12 @@ const TextInput: FC<TextInputProps> = ({
       {disabled && <input type="hidden" name={rest.name} value={value} />}
       <input
         {...rest}
-        className={`rounded-2xl bg-opacity-50 dark:bg-opacity-50 font-light  dark:bg-neutral-800 bg-neutral-200  focus:ring-neutral-500  border relative h-12 w-full p-2 pl-4 text-xl  appearance-none  focus:ring-2 focus:outline-none focus:border-none     placeholder-neutral-500   dark:placeholder-neutral-400   ${
-          disabled
-            ? "border-2 border-violet-500 text-violet-500 "
-            : " text-neutral-800 dark:text-neutral-50 border-neutral-300 dark:border-neutral-700"
+        className={`rounded-2xl font-light  dark:bg-zinc-800 bg-zinc-100  focus:ring-neutral-500  border relative h-12 w-full p-2 pl-4 text-xl  appearance-none  focus:ring-2 focus:outline-none focus:border-none     placeholder-neutral-500   dark:placeholder-neutral-400   ${
+          error
+            ? "border-2 border-red-400 text-zinc-800 dark:text-zinc-50 "
+            : disabled
+            ? "border-2 border-indigo-500 text-indigo-500 "
+            : " text-neutral-800 dark:text-neutral-50 border-neutral-300 dark:border-zinc-700"
         } `}
         value={value}
         onChange={(e) => {
@@ -46,7 +48,7 @@ const TextInput: FC<TextInputProps> = ({
       />
 
       {error && (
-        <div className="text-xs font-semibold tracking-wide text-red-500 w-full">
+        <div className="text-sm font-base tracking-wide text-red-400 w-full px-1">
           {error || ""}
         </div>
       )}
