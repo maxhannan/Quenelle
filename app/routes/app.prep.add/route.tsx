@@ -44,7 +44,7 @@ function PrepListAddRoute() {
             onClick={() => navigate(-1)}
           />
         </AppBar>
-        <PrepListForm />
+        <PrepListForm recipeList={allRecipes} />
       </Form>
     </div>
   );

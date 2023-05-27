@@ -14,12 +14,18 @@ export const getRecipes = async (all: boolean = false) => {
       select: {
         id: true,
         name: true,
+        dish: true,
         category: true,
         allergens: true,
         ingredients: {
           select: {
+            id: true,
+            ingredient: true,
+            unit: true,
             linkRecipe: {
               select: {
+                id: true,
+                name: true,
                 allergens: true,
               },
             },
