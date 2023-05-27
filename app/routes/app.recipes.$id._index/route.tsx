@@ -154,12 +154,12 @@ const RecipeIndex: FC = () => {
               </div>
             </div>
           )}
-          <div className="text-2xl bg-zinc-200 dark:bg-indigo-500 dark:text-zinc-200 p-4  text-zinc-800 rounded-xl font-light border border-zinc-300 dark:border-zinc-700 items-center justify-between">
+          <div className="text-2xl bg-indigo-500 dark:bg-indigo-500 dark:text-zinc-200 p-4  text-zinc-200 rounded-xl font-light  ">
             <div>
               <b>Author: </b>
               {recipe.author?.firstName + " " + recipe.author?.lastName}
             </div>
-            <div className="flex gap-4 flex-wrap  mt-2 text-lg  items-center">
+            <div className="flex gap-2 flex-wrap  mt-2 text-lg ">
               <div>
                 <b>Added: </b>
                 {new Date(recipe.createdAt).toLocaleDateString()}

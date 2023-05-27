@@ -63,17 +63,17 @@ function DishIndex() {
         <Carousel isOpen={isOpen} setIsOpen={setIsOpen} imgSrcs={dish.images} />
       )}
 
-      <div className="text-3xl   w-full items-center flex justify-between mb-4  dark:text-neutral-200  font-bold text-neutral-600 rounded-xl ">
+      <div className="text-3xl   w-full items-center flex justify-between mb-4  dark:text-zinc-200  font-bold text-zinc-600 rounded-xl ">
         <div>{dish.name}</div>
       </div>
       <div className="grid grid-cols-1 gap-2">
         <div className="flex flex-col gap-2">
-          <div className="flex  gap-2 flex-wrap rounded-xl bg-neutral-100 border border-neutral-200 dark:bg-neutral-900 dark:border-neutral-700 p-2  ">
+          <div className="flex  gap-2 flex-wrap rounded-xl bg-zinc-100 border border-zinc-200 dark:bg-zinc-900 dark:border-zinc-700 p-2  ">
             {dish.allergens &&
               dish.allergens.length > 0 &&
               dish.allergens.map((a) => <Chip key={a} content={a} />)}
           </div>
-          <div className="text-2xl lg:text-3xl border  border-neutral-300 dark:border-neutral-700 gap-2 bg-neutral-200 dark:bg-neutral-800 px-4 w-full items-center flex justify-between dark:text-neutral-200 p-4  text-neutral-600 rounded-xl font-light ">
+          <div className="text-2xl lg:text-3xl border  border-zinc-300 dark:border-zinc-700 gap-2 bg-zinc-200 dark:bg-zinc-800 px-4 w-full items-center flex justify-between dark:text-zinc-200 p-2  text-zinc-600 rounded-xl font-light ">
             <div>Components</div>
           </div>
           {dish.ingredients.map((i) => {
@@ -94,20 +94,20 @@ function DishIndex() {
               return (
                 <div
                   key={i.id}
-                  className="  w-full max-h-full border-neutral-300 border bg-opacity-50 dark:bg-opacity-50 bg-neutral-200 dark:bg-neutral-800   rounded-xl  pl-4 pr-2 font-light py-4   flex justify-start items-center  px-4   dark:border-neutral-700"
+                  className="  w-full max-h-full border-zinc-300 border bg-opacity-50 dark:bg-opacity-50 bg-zinc-200 dark:bg-zinc-800   rounded-xl  pl-4 pr-2 font-light py-3  flex justify-start items-center  px-2  dark:border-zinc-700"
                 >
                   <div className=" ">
-                    <h5 className="text-xl lg:text-2xl text-neutral-700 dark:text-neutral-100">
+                    <h5 className="text-xl lg:text-2xl text-zinc-700 dark:text-zinc-100">
                       {i.ingredient}
                     </h5>
                     {(i.qty || i.unit) && (
-                      <h6 className="text-md lg:text-lg mt-1  text-violet-500 dark:text-violet-300">
+                      <h6 className="text-md lg:text-lg mt-1  text-indigo-500 dark:text-indigo-300">
                         {i.qty && i.qty} {i.unit && i.unit}
                       </h6>
                     )}
                   </div>
                   <div className=" ml-auto ">
-                    <PuzzlePieceIcon className="text-neutral-800 dark:text-neutral-200 w-5 h-5" />
+                    <PuzzlePieceIcon className="text-zinc-800 dark:text-zinc-200 w-5 h-5" />
                   </div>
                 </div>
               );
@@ -118,20 +118,20 @@ function DishIndex() {
             dish.steps.map((s, i) => (
               <div
                 key={i}
-                className=" border border-neutral-300 dark:border-neutral-700 bg-neutral-200 dark:bg-neutral-800  bg-opacity-50 dark:bg-opacity-50 transition-all duration-300 rounded-xl p-4 text-lg text-neutral-700 dark:text-neutral-100"
+                className=" border border-zinc-300 dark:border-zinc-700 bg-zinc-200 dark:bg-zinc-800  bg-opacity-50 dark:bg-opacity-50 transition-all duration-300 rounded-xl p-4 text-lg text-zinc-700 dark:text-zinc-100"
               >
                 <h5 className="text-2xl mb-2">Step {i + 1}</h5>
                 <p className="text-lg font-light ">{s}</p>
               </div>
             ))}
           {dish.menu && dish.menu.length > 0 && (
-            <div className="text-xl bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-200  p-4  text-neutral-700 rounded-xl font-light  ">
+            <div className="text-xl bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200  p-4  text-zinc-700 rounded-xl font-light  ">
               Menus
               <div className="flex gap-3 flex-wrap r mt-2">
                 {dish.menu.map((m) => (
                   <div key={m.id}>
                     <Link to={`/app/menus/${m.id}`}>
-                      <div className=" flex items-center gap-2  bg-violet-500 hover:bg-violet-600 p-2 px-4  font-light rounded-xl text-base text-neutral-100 dark:text-neutral-100 ">
+                      <div className=" flex items-center gap-2  bg-indigo-500 hover:bg-indigo-600 p-2 px-4  font-light rounded-xl text-base text-zinc-100 dark:text-zinc-100 ">
                         {m.name} <ArrowLongRightIcon className="w-5 h-5" />
                       </div>
                     </Link>
@@ -140,7 +140,7 @@ function DishIndex() {
               </div>
             </div>
           )}
-          <div className="text-2xl bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-200 p-4  text-neutral-700 rounded-xl font-light  ">
+          <div className="text-2xl bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 p-4  text-zinc-700 rounded-xl font-light  ">
             <div>
               <b>Author: </b>
               {dish.author?.firstName + " " + dish.author?.lastName}
