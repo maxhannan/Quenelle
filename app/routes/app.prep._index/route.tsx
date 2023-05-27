@@ -91,7 +91,7 @@ function PrepListsRoute() {
                 <LoadingButton
                   buttonText="Create Custom List"
                   Icon={ArrowRightIcon}
-                  action={() => setOpenDialog(true)}
+                  action={() => navigate("add")}
                   buttonName="Add list"
                 />
               </div>

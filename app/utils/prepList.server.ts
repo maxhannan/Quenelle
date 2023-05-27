@@ -3,6 +3,87 @@ import { prisma } from "./prisma.server";
 
 export type PrepListSummaries = Prisma.PromiseReturnType<typeof getPrepLists>;
 
+export async function ExtractListData(data: FormData) {
+  const prepListData = {
+    name: data.get("name") as string,
+    date: new Date(data.get("date") as string),
+    taskGroup: [
+      {
+        name: "string",
+      },
+    ],
+    tasks: [
+      {
+        onHand: "string",
+        prepQty: "string",
+        completed: false,
+        name: "string",
+        linkRecipeId: "string",
+        taskGroup: {
+          name: "name",
+        },
+      },
+    ],
+  };
+  return prepListData;
+}
+
+export type listData = Awaited<ReturnType<typeof ExtractListData>>;
+
+export async function CreatePrepList(prepListData: listData, authorId: string) {
+  try {
+    const prepList = await prisma.prepList.create({
+      data: {
+        name: prepListData.name,
+        date: prepListData.date,
+        author: {
+          connect: {
+            id: authorId,
+          },
+        },
+      },
+    });
+    const taskGroups = await prisma.$transaction(
+      prepListData.taskGroup.map((tg) =>
+        prisma.taskGroup.create({
+          data: {
+            name: tg.name,
+            prepList: {
+              connect: {
+                id: prepList.id,
+              },
+            },
+          },
+        })
+      )
+    );
+    await prisma.$transaction(
+      prepListData.tasks.map((task) =>
+        prisma.tasks.create({
+          data: {
+            name: task.name,
+            onHand: task.onHand,
+            prepQty: task.prepQty,
+            completed: task.completed,
+            linkRecipe: {
+              connect: {
+                id: task.linkRecipeId,
+              },
+            },
+            taskGroup: {
+              connect: {
+                id: taskGroups.find((tg) => tg.name === task.taskGroup.name)
+                  ?.id,
+              },
+            },
+          },
+        })
+      )
+    );
+    return prepList;
+  } catch (error) {}
+}
+
 export async function getPrepLists() {
   try {
     const prepLists = await prisma.prepList.findMany({
