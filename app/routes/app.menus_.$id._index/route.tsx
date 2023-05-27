@@ -48,7 +48,7 @@ function MenuIndex() {
   });
 
   const filteredMenu = { ...menu, sections: filteredSections };
-  console.log(filteredMenu.sections.map((s) => s.dishes).join(""));
+
   return (
     <div className=" mb-28 container mx-auto max-w-4xl ">
       <AppBar page={""}>

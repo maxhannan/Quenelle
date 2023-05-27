@@ -35,7 +35,7 @@ export const action: ActionFunction = async ({ request }) => {
 function AddMenuIndex() {
   const navigate = useNavigate();
   const data = useActionData();
-  console.log(data);
+
   const navigation = useNavigation();
   const { dishes, services } = useDishesForForm();
   console.log({ dishes, services });

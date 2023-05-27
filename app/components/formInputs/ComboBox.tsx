@@ -98,7 +98,7 @@ const ComboBox: FC<Props> = ({
           leaveTo="opacity-0"
           afterLeave={() => setQuery("")}
         >
-          <Combobox.Options className="absolute mt-2 bg-zinc-100 z-50 dark:bg-zinc-800 rounded-bl-2xl  rounded-tl-2xl max-h-96 w-full scrollbar-track-zinc-100 scrollbar-thumb-zinc-400 overflow-auto scrollbar-thin dark:scrollbar-track-zinc-800 dark:scrollbar-thumb-zinc-700 scrollbar-thumb-rounded-2xl  py-1 text-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none  ">
+          <Combobox.Options className="absolute mt-2 bg-zinc-100 z-50 dark:bg-zinc-800 rounded-2xl  overflow-auto max-h-48 w-full  py-1 text-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none  ">
             {allowCustom && query.length > 0 && !checkIfExists(query, options) && (
               <Combobox.Option
                 className={({ active }) =>
