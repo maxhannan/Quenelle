@@ -68,7 +68,7 @@ const ComboBox: FC<Props> = ({
           />
           <Combobox.Input
             name={name}
-            className="rounded-2xl focus:ring-neutral-500 bg-opacity-50 dark:bg-opacity-50 font-light border relative  border-neutral-300 dark:border-neutral-700 h-12 w-full p-2 pl-4 text-xl text-neutral-800    bg-neutral-200    placeholder-neutral-500 dark:bg-neutral-800  dark:placeholder-neutral-400 dark:text-neutral-50   "
+            className="rounded-2xl pr-8 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none bg-zinc-100  focus:ring-2   font-light border relative  border-zinc-300 dark:border-zinc-700 h-12 w-full p-2 pl-4 text-xl text-zinc-800 dark:bg-zinc-900      placeholder-neutral-500   dark:placeholder-neutral-400 dark:text-neutral-50   "
             onChange={(event) => setQuery(event.target.value)}
             placeholder={placeholder}
             displayValue={
@@ -80,7 +80,7 @@ const ComboBox: FC<Props> = ({
               onClick={() => {
                 handleChange(null);
               }}
-              className="w-6 h-6 absolute top-3 right-2 text-violet-500 dark:text-violet-500 hover:text-violet-600 "
+              className="w-6 h-6 absolute top-3 right-2 text-indigo-500 dark:text-indigo-500 hover:text-indigo-600 "
             />
           ) : (
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
@@ -98,7 +98,7 @@ const ComboBox: FC<Props> = ({
           leaveTo="opacity-0"
           afterLeave={() => setQuery("")}
         >
-          <Combobox.Options className="absolute mt-2 bg-neutral-100 z-50   rounded-2xl max-h-96 w-full  overflow-auto   dark:bg-neutral-800 py-1 text-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none  ">
+          <Combobox.Options className="absolute mt-2 bg-zinc-100 z-50 dark:bg-zinc-800 rounded-bl-2xl  rounded-tl-2xl max-h-96 w-full scrollbar-track-zinc-100 scrollbar-thumb-zinc-400 overflow-auto scrollbar-thin dark:scrollbar-track-zinc-800 dark:scrollbar-thumb-zinc-700 scrollbar-thumb-rounded-2xl  py-1 text-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none  ">
             {allowCustom && query.length > 0 && !checkIfExists(query, options) && (
               <Combobox.Option
                 className={({ active }) =>

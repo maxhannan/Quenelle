@@ -53,7 +53,7 @@ const MenuDishSection: FC<Props> = ({ sectionDishes, dishes, section }) => {
       <button
         onClick={addDish}
         type="button"
-        className="col-span-11 col-start-2   h-12 inline-flex border-r-none items-center dark:hover:text-neutral-700 justify-between px-3 dark:bg-neutral-900 bg-neutral-100 hover:bg-neutral-700 border dark:border-neutral-700 border-neutral-300 border-dashed hover:text-neutral-200 hover:dark:bg-neutral-200  transition-all duration-300 rounded-2xl text-lg text-neutral-700 dark:text-neutral-100  "
+        className="col-span-12   h-12 inline-flex border-r-none items-center dark:hover:text-neutral-700 justify-between px-3 dark:bg-neutral-900 bg-neutral-100 hover:bg-neutral-700 border dark:border-neutral-700 border-neutral-300 border-dashed hover:text-neutral-200 hover:dark:bg-neutral-200  transition-all duration-300 rounded-2xl text-lg text-neutral-700 dark:text-neutral-100  "
       >
         <h4 className="text-xl  ">Add Dish</h4>
         <PlusIcon className="h-7 w-7" />

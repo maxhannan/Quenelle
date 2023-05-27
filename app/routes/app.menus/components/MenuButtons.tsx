@@ -15,10 +15,10 @@ const MenuButtons: FC<Props> = ({ activeTab, setActiveTab }) => {
           setActiveTab("Menus");
           navigate("/app/menus");
         }}
-        className={` bg-neutral-200 border grow border-r-0 border-neutral-300 text-lg justify-center rounded-l-xl px-4 p-2 inline-flex  h-12 items-center   sm:hover:bg-neutral-300  transition-all duration-200 dark:bg-neutral-800  dark:border-neutral-700  ${
+        className={` bg-zinc-200 border grow border-r-0 border-zinc-300 text-lg justify-center rounded-l-xl px-4 p-2 inline-flex  h-12 items-center   sm:hover:bg-zinc-300  transition-all duration-200 dark:bg-zinc-800  dark:border-zinc-700  ${
           activeTab === "Menus"
-            ? "text-violet-500 dark:bg-neutral-900 "
-            : "bg-opacity-50 text-neutral-700 dark:text-neutral-200"
+            ? "text-indigo-500 dark:bg-zinc-900 "
+            : "bg-opacity-50 text-zinc-700 dark:text-zinc-200"
         }`}
       >
         Menus
@@ -28,10 +28,10 @@ const MenuButtons: FC<Props> = ({ activeTab, setActiveTab }) => {
           setActiveTab("Dishes");
           navigate("/app/menus/dishes");
         }}
-        className={` bg-neutral-200 border grow  border-neutral-300 text-lg justify-center rounded-r-xl   px-4 p-2 inline-flex  h-12 items-center   sm:hover:bg-neutral-300  transition-all duration-200 dark:bg-neutral-800  dark:border-neutral-700  ${
+        className={` bg-zinc-200 border grow  border-zinc-300 text-lg justify-center rounded-r-xl   px-4 p-2 inline-flex  h-12 items-center   sm:hover:bg-zinc-300  transition-all duration-200 dark:bg-zinc-800  dark:border-zinc-700  ${
           activeTab === "Dishes"
-            ? "text-violet-500 dark:bg-neutral-900 "
-            : "bg-opacity-50 text-neutral-700   dark:text-neutral-200"
+            ? "text-indigo-500 dark:bg-zinc-900 "
+            : "bg-opacity-50 text-zinc-700   dark:text-zinc-200"
         }`}
       >
         Dishes

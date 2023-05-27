@@ -21,7 +21,7 @@ const MenuDish: FC<Props> = ({ dish, section, dishes, handleDelete }) => {
 
   return (
     <>
-      <div className="flex gap-x-2 col-span-11 col-start-2 relative">
+      <div className="flex gap-x-2 col-span-12  relative">
         <div className="grow relative">
           <input type="hidden" name="dishSection" value={section} />
           <ComboBox
@@ -45,7 +45,7 @@ const MenuDish: FC<Props> = ({ dish, section, dishes, handleDelete }) => {
         </div>
       </div>
 
-      <div className="col-span-11 col-start-2 border-b-4 rounded-sm dark:border-neutral-700"></div>
+      <div className="col-span-12 border-b-4 rounded-sm dark:border-neutral-700"></div>
     </>
   );
 };

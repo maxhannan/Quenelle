@@ -48,8 +48,9 @@ function MenuIndex() {
   });
 
   const filteredMenu = { ...menu, sections: filteredSections };
+  console.log(filteredMenu.sections.map((s) => s.dishes).join(""));
   return (
-    <div className=" mb-28 container mx-auto ">
+    <div className=" mb-28 container mx-auto max-w-4xl ">
       <AppBar page={""}>
         <IconButton
           name="Edit"
@@ -62,8 +63,9 @@ function MenuIndex() {
           Icon={ArrowUturnLeftIcon}
         />
       </AppBar>
-      <div className="text-3xl border border-neutral-300 dark:border-neutral-700 gap-3 bg-neutral-200 dark:bg-neutral-800 px-4 w-full items-center flex justify-between dark:text-neutral-200 p-4 mb-2 text-neutral-600 rounded-xl font-light ">
-        <div>{menu!.name}</div>
+
+      <div className="text-3xl md:text-4xl   w-full items-center flex pl-1 justify-between mb-3  dark:text-neutral-200  font-bold text-neutral-600 rounded-xl ">
+        <div>{menu.name}</div>
       </div>
       <div className="mb-2  ">
         <MultiSelect
@@ -72,7 +74,12 @@ function MenuIndex() {
           changeHandler={handleChange}
         />
       </div>
-      <div className="w-full grid lg:grid-cols-2 gap-2 ">
+      <div className="w-full grid  gap-2 ">
+        {filteredMenu.sections.map((s) => s.dishes).join("").length === 0 && (
+          <div className="w-full text-2xl text-zinc-800 dark:text-zinc-200 flex justify-center">
+            No dishes found
+          </div>
+        )}
         <div className="flex flex-col gap-2">
           {filteredMenu.sections
             .slice(0, Math.ceil(filteredMenu.sections.length / 2))
@@ -81,9 +88,9 @@ function MenuIndex() {
               return (
                 <div
                   key={s.id}
-                  className="flex flex-col gap-2 bg-neutral-100 dark:bg-neutral-900 rounded-2xl p-2 border border-neutral-300 dark:border-neutral-700 "
+                  className="flex flex-col gap-2 bg-zinc-100 dark:bg-zinc-900 rounded-2xl p-2 border border-zinc-300 dark:border-zinc-700 "
                 >
-                  <div className="text-2xl border border-neutral-300 dark:border-neutral-700 dark:bg-neutral-800 gap-3 bg-opacity-75 bg-neutral-200  px-4 w-full items-center flex justify-between dark:text-neutral-200 p-4  text-neutral-600 rounded-xl font-light ">
+                  <div className="text-2xl border border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800 gap-3 bg-opacity-75 bg-zinc-200  px-4 w-full items-center flex justify-between dark:text-zinc-200 p-4  text-zinc-600 rounded-xl font-light ">
                     <div>{s.name}</div>
                   </div>
                   {s.dishes.map((d) => (
@@ -109,9 +116,9 @@ function MenuIndex() {
               return (
                 <div
                   key={s.id}
-                  className="flex flex-col gap-2 bg-neutral-100 dark:bg-neutral-900 rounded-2xl p-2 border border-neutral-300 dark:border-neutral-700 "
+                  className="flex flex-col gap-2 bg-zinc-100 dark:bg-zinc-900 rounded-2xl p-2 border border-zinc-300 dark:border-zinc-700 "
                 >
-                  <div className="text-2xl border border-neutral-300 dark:border-neutral-700 dark:bg-neutral-800 gap-3 bg-opacity-75 bg-neutral-200  px-4 w-full items-center flex justify-between dark:text-neutral-200 p-4  text-neutral-600 rounded-xl font-light ">
+                  <div className="text-2xl border border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800 gap-3 bg-opacity-75 bg-zinc-200  px-4 w-full items-center flex justify-between dark:text-zinc-200 p-4  text-zinc-600 rounded-xl font-light ">
                     <div>{s.name}</div>
                   </div>
                   {s.dishes.map((d) => (

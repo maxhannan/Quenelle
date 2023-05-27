@@ -26,8 +26,8 @@ const MenuSection: FC<Props> = ({
     setSectionName(e.target.value);
   };
   return (
-    <>
-      <div className="flex gap-x-2 col-span-5 ">
+    <div className="border border-zinc-300 dark:border-zinc-700 rounded-2xl col-span-5 flex flex-col gap-2 ">
+      <div className="flex gap-x-2 bg-zinc-200 dark:bg-zinc-800 p-2 h-16 rounded-tl-2xl rounded-tr-2xl  ">
         <TextInput
           placeholder="Section Name"
           name="sectionName"
@@ -43,12 +43,14 @@ const MenuSection: FC<Props> = ({
           />
         </div>
       </div>
-      <MenuDishSection
-        section={sectionName}
-        sectionDishes={sectionDishes && sectionDishes}
-        dishes={dishes}
-      />
-    </>
+      <div className="p-2">
+        <MenuDishSection
+          section={sectionName}
+          sectionDishes={sectionDishes && sectionDishes}
+          dishes={dishes}
+        />
+      </div>
+    </div>
   );
 };
 

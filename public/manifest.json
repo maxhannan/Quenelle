@@ -3,6 +3,6 @@
   "name": "Quenelle",
   "scope": "/",
   "display": "standalone",
-  "theme_color": "#fafafa",
-  "background_color": "#fafafa"
+  "theme_color": "#f4f4f5",
+  "background_color": "#f4f4f5"
 }

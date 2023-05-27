@@ -1,5 +1,5 @@
 import { Listbox, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import type { FC } from "react";
 import Chip from "../display/Chip";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
@@ -9,7 +9,6 @@ interface Props {
   changeHandler?: (value: string[]) => void;
   placeholder?: string;
   options: string[];
-  controlledValue?: string[];
 }
 
 const MultiSelect: FC<Props> = ({
@@ -18,7 +17,6 @@ const MultiSelect: FC<Props> = ({
   changeHandler,
   placeholder = "Select Allergens",
   options,
-  controlledValue,
 }) => {
   const [selected, setSelected] = useState(initialValue || []);
 
@@ -29,16 +27,12 @@ const MultiSelect: FC<Props> = ({
     setSelected(value);
   };
 
-  useEffect(() => {
-    setSelected(controlledValue || []);
-  }, [controlledValue]);
-  console.log({ controlledValue });
   return (
     <div className="w-full z-30">
       <input type="hidden" value={selected.join(",")} name={name} />
       <Listbox value={selected} onChange={handleChange} multiple>
         <div className="relative ">
-          <Listbox.Button className=" relative bg-opacity-50 dark:bg-opacity-50 font-light w-full cursor-default border py-2 px-2 border-gray-300 dark:border-neutral-700 rounded-2xl  bg-neutral-200 dark:bg-neutral-800 pl-3 pr-10 text-left  text-lg focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300 ">
+          <Listbox.Button className=" relative  focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none bg-zinc-100  focus:ring-2    border   border-zinc-300 dark:border-zinc-700   p-2  text-xl text-zinc-800 dark:bg-zinc-900      placeholder-neutral-500   dark:placeholder-neutral-400 dark:text-neutral-50    font-light w-full cursor-default  py-2 px-2  rounded-2xl   pr-10 text-left   focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300 ">
             <span className="flex flex-wrap gap-2 items-center ">
               {selected.length > 0 ? (
                 selected.map((s) => <Chip key={s} content={s} />)

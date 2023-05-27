@@ -6,7 +6,7 @@ interface Props extends ComponentPropsWithoutRef<"textarea"> {}
 const TextArea: FC<Props> = ({ ...props }) => {
   return (
     <TextareaAutosize
-      className="col-span-5  text-xl p-4 focus:ring-2 focus:ring-neutral-500 focus:border-none focus:outline-none  dark:placeholder:text-neutral-500 rounded-xl h-16 bg-neutral-200 dark:bg-neutral-800 active:outline-none text-neutral-800 dark:text-neutral-100 text-light border-0 "
+      className="col-span-5 rounded-2xl focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none bg-zinc-100  focus:ring-2   font-light border relative  border-zinc-300 dark:border-zinc-700 h-12 w-full p-2 pl-4 text-xl text-zinc-800 dark:bg-zinc-900      placeholder-neutral-500   dark:placeholder-neutral-400 dark:text-neutral-50    "
       minRows={2}
       {...props}
     />
