@@ -1,6 +1,7 @@
 import { CheckCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import {
   Form,
+  useActionData,
   useLoaderData,
   useNavigate,
   useNavigation,
@@ -11,16 +12,30 @@ import AppBar from "~/components/navigation/AppBar";
 import { useDishesForForm } from "../app.menus_.add/route";
 
 import MenuForm from "~/components/forms/MenuForm";
-import { getMenuById, getMenus } from "~/utils/menus.server";
+import {
+  createMenu,
+  extractMenu,
+  getMenuById,
+  getMenus,
+} from "~/utils/menus.server";
+import { ActionFunction, redirect } from "@remix-run/node";
+import { getUser } from "~/utils/auth.server";
 
-export async function loader() {
-  const menu = getMenuById("clhnq6phs000slc0h88lmakz6");
-  return menu;
-}
+export const action: ActionFunction = async ({ request }) => {
+  const form = await request.formData();
+  const data = await extractMenu(form);
 
+  const user = await getUser(request);
+  const savedMenu = await createMenu(data, user!.id);
+  if (savedMenu) {
+    return redirect(`/app/menus/${savedMenu.id}`);
+  }
+  return null;
+};
 function AddMenuIndex() {
   const navigate = useNavigate();
-  const menu = useLoaderData() as Awaited<ReturnType<typeof loader>>;
+  const data = useActionData();
+  console.log(data);
   const navigation = useNavigation();
   const { dishes, services } = useDishesForForm();
   console.log({ dishes, services });
@@ -42,7 +57,7 @@ function AddMenuIndex() {
           onClick={() => navigate(-1)}
         />
       </AppBar>
-      <MenuForm dishes={dishes} services={services} menu={menu} />
+      <MenuForm dishes={dishes} services={services} />
     </Form>
   );
 }

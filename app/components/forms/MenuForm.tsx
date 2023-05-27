@@ -22,13 +22,13 @@ const MenuForm: FC<Props> = ({ dishes, menu, services }) => {
   return (
     <div className="flex flex-col gap-3 mt-2 relative">
       <TextInput
-        name="recipeName"
-        placeholder="Recipe Name"
+        name="menuName"
+        placeholder="Menu Name"
         initValue={menuValue.name}
       />
       <ComboBox
-        name="category"
-        placeholder="Category"
+        name="service"
+        placeholder="Service"
         allowCustom
         initValue={
           menuValue.service

@@ -1,6 +1,100 @@
 import type { Prisma } from "@prisma/client";
 import { prisma } from "./prisma.server";
 
+export const extractMenu = (form: FormData) => {
+  const name = form.get("menuName") as string;
+  const service = form.get("service") as string;
+  const sections = form.getAll("sectionName") as string[];
+  const dishSections = form.getAll("dishSection") as string[];
+  const linkIds = form.getAll("dishLinkId") as string[];
+
+  const dishes = linkIds.map((l, i) => ({
+    section: dishSections[i],
+    id: l,
+  }));
+
+  return {
+    name,
+    service,
+    sections: sections.map((s) => ({ name: s })),
+    dishes,
+  };
+};
+
+export const deleteMenu = async (id: string) => {
+  await prisma.menu.delete({
+    where: {
+      id: id,
+    },
+  });
+
+  return null;
+};
+
+export const updateMenu = async (
+  id: string,
+  menu: menuForm,
+  authorId: string
+) => {
+  const dishes = menu.dishes;
+  const dishIds = dishes.map((d) => ({ id: d.id }));
+  try {
+    const data = await prisma.$transaction([
+      prisma.menu.delete({
+        where: {
+          id: id,
+        },
+      }),
+      prisma.menu.create({
+        data: {
+          name: menu.name,
+          service: menu.service,
+          author: {
+            connect: {
+              id: authorId,
+            },
+          },
+          sections: {
+            createMany: {
+              data: menu.sections,
+            },
+          },
+          dishes: {
+            connect: dishIds,
+          },
+        },
+        include: {
+          sections: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      }),
+    ]);
+    if (data[1]) {
+      await prisma.$transaction(
+        dishes.map((dish) =>
+          prisma.recipe.update({
+            where: { id: dish.id },
+            data: {
+              section: {
+                connect: {
+                  id: data[1].sections.find((s) => s.name === dish.section)?.id,
+                },
+              },
+            },
+          })
+        )
+      );
+    }
+    return data[1];
+  } catch (error) {
+    return null;
+  }
+};
+
 export const getMenus = async () => {
   try {
     const menus = await prisma.menu.findMany({
@@ -209,3 +303,60 @@ export const getSectionbyId = async (id: string) => {
 };
 
 export type FullSection = Prisma.PromiseReturnType<typeof getSectionbyId>;
+
+type menuForm = ReturnType<typeof extractMenu>;
+export const createMenu = async (menu: menuForm, authorId: string) => {
+  try {
+    console.log("dishes", menu.dishes);
+    const dishes = menu.dishes;
+    const dishIds = dishes.map((d) => ({ id: d.id }));
+    const savedMenu = await prisma.menu.create({
+      data: {
+        name: menu.name,
+        service: menu.service,
+        author: {
+          connect: {
+            id: authorId,
+          },
+        },
+        sections: {
+          createMany: {
+            data: menu.sections,
+          },
+        },
+        dishes: {
+          connect: dishIds,
+        },
+      },
+      include: {
+        sections: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
+    console.log(dishes);
+    console.log("sections", savedMenu.sections, menu.sections);
+    await prisma.$transaction(
+      dishes.map((dish) =>
+        prisma.recipe.update({
+          where: { id: dish.id },
+          data: {
+            section: {
+              connect: {
+                id: savedMenu.sections.find((s) => s.name === dish.section)?.id,
+              },
+            },
+          },
+        })
+      )
+    );
+    console.log(savedMenu);
+    return savedMenu;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};

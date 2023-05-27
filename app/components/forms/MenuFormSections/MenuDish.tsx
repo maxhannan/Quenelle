@@ -25,7 +25,7 @@ const MenuDish: FC<Props> = ({ dish, section, dishes, handleDelete }) => {
         <div className="grow relative">
           <input type="hidden" name="dishSection" value={section} />
           <ComboBox
-            name="recipeLink"
+            name="dishLink"
             placeholder="Link a recipe"
             changeHandler={handleLinkChange}
             initValue={selectedLink ? selectedLink : undefined}
