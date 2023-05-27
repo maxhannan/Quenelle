@@ -31,7 +31,7 @@ const ListCard: FC<Props> = ({ subHeading, user, name, to, active }) => {
         <span className=" text-xl lg:text-2xl ">{user.toLowerCase()}</span>
       </div>
       <div className="  pr-2">
-        <h5 className="text-xl lg:text-2xl  text-neutral-700 dark:text-neutral-100">
+        <h5 className="text-xl lg:text-2xl  text-zinc-700 dark:text-zinc-100">
           {name}
         </h5>
 
@@ -42,7 +42,7 @@ const ListCard: FC<Props> = ({ subHeading, user, name, to, active }) => {
         )}
       </div>
       <div className=" ml-auto ">
-        <ArrowRightIcon className="text-neutral-800 dark:text-neutral-200 w-5 h-5" />
+        <ArrowRightIcon className="text-zinc-800 dark:text-zinc-200 w-5 h-5" />
       </div>
     </div>
   );

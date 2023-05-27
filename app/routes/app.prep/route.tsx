@@ -9,7 +9,7 @@ export async function loader({ request }: LoaderArgs) {
 
 type ContextType = Awaited<ReturnType<typeof loader>>;
 
-function PrepListLayout() {
+function PrepListsLayout() {
   const prepLists = useLoaderData<ContextType>();
   return <Outlet context={prepLists} />;
 }
@@ -18,4 +18,4 @@ export function usePrepLists() {
   return useOutletContext<ContextType>();
 }
 
-export default PrepListLayout;
+export default PrepListsLayout;
