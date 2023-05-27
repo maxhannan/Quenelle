@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Transition, Dialog } from "@headlessui/react";
 import { Link } from "@remix-run/react";
 import { Fragment, useEffect, useState } from "react";
@@ -17,7 +18,6 @@ const Carousel: FC<Props> = ({ isOpen, setIsOpen, imgSrcs }) => {
   const [loadList, setLoadList] = useState<boolean[]>([]);
 
   useEffect(() => {
-    console.log(imgSrcs.length, loadList.length, { loadList }, { loaded });
     if (imgSrcs.length === loadList.length) {
       setLoaded(true);
     }
@@ -58,7 +58,7 @@ const Carousel: FC<Props> = ({ isOpen, setIsOpen, imgSrcs }) => {
                 </div>
               )}
               <div
-                className={`carousel rounded-xl  w-full h-auto max-h-[70vh] ${
+                className={`carousel w-full h-auto max-h-[70vh] ${
                   !loaded && "hidden"
                 }`}
               >
@@ -66,7 +66,7 @@ const Carousel: FC<Props> = ({ isOpen, setIsOpen, imgSrcs }) => {
                   <div
                     key={i}
                     id={`item${i}`}
-                    className="carousel-item w-full h-auto "
+                    className="carousel-item w-full h-auto rounded-xl  overflow-hidden "
                   >
                     <img
                       src={[IMAGE_URL, img, "carousel"].join("/")}

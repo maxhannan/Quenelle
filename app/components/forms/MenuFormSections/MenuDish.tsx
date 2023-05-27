@@ -26,6 +26,7 @@ const MenuDish: FC<Props> = ({ dish, section, dishes, handleDelete }) => {
           <input type="hidden" name="dishSection" value={section} />
           <ComboBox
             name="dishLink"
+            required
             placeholder="Link a recipe"
             changeHandler={handleLinkChange}
             initValue={selectedLink ? selectedLink : undefined}

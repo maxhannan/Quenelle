@@ -15,6 +15,7 @@ interface Props {
   initValue?: ComboBoxOption;
   changeHandler?: (value: ComboBoxOption | null) => void;
   selectedLinkId?: string;
+  required?: boolean;
 }
 
 const ComboBox: FC<Props> = ({
@@ -25,6 +26,7 @@ const ComboBox: FC<Props> = ({
   initValue,
   changeHandler,
   selectedLinkId,
+  required = false,
 }) => {
   const [selected, setSelected] = useState(initValue || null);
   const [query, setQuery] = useState("");
@@ -67,7 +69,7 @@ const ComboBox: FC<Props> = ({
             name={`${name}Id`}
           />
           <Combobox.Input
-            required
+            required={required}
             name={name}
             className="rounded-2xl pr-8 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none bg-zinc-100  focus:ring-2   font-light border relative  border-zinc-300 dark:border-zinc-700 h-12 w-full p-2 pl-4 text-xl text-zinc-800 dark:bg-zinc-900      placeholder-neutral-500   dark:placeholder-neutral-400 dark:text-neutral-50   "
             onChange={(event) => setQuery(event.target.value)}

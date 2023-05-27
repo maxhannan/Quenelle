@@ -92,3 +92,47 @@ export async function getPrepListById(id: string) {
     return null;
   }
 }
+
+export type TaskType = Prisma.PromiseReturnType<typeof getTaskById>;
+
+const getTaskById = async (id: string) => {
+  try {
+    const task = await prisma.tasks.findUnique({
+      where: { id },
+      include: {
+        linkRecipe: {
+          select: {
+            name: true,
+            id: true,
+          },
+        },
+      },
+    });
+    return task;
+  } catch (error) {
+    return null;
+  }
+};
+
+interface updatedTask {
+  onHand: string;
+  prepQty: string;
+  completed: boolean;
+}
+export const updateTask = async (id: string, updatedTask: updatedTask) => {
+  try {
+    const task = await prisma.tasks.update({
+      where: {
+        id,
+      },
+      data: {
+        onHand: updatedTask.onHand,
+        prepQty: updatedTask.prepQty,
+        completed: updatedTask.completed,
+      },
+    });
+    return task;
+  } catch (error) {
+    return null;
+  }
+};
