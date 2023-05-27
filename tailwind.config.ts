@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [require("@headlessui/tailwindcss"), require("daisyui"),require('tailwind-scrollbar')({ nocompatible: true }),],
+  plugins: [require("@headlessui/tailwindcss"), require("daisyui"),require('tailwind-scrollbar')({ nocompatible: true }),require("tailwindcss-animate")],
   daisyui: {
     styled: true,
     themes: false,

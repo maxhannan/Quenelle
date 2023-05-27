@@ -19,7 +19,7 @@ const ListCard: FC<Props> = ({ subHeading, user, name, to, active }) => {
         active
           ? "border-indigo-500 dark:border-indigo-500"
           : "border-zinc-300 dark:border-zinc-700"
-      }  w-full  max-h-full group  border  hover:dark:bg-zinc-900 rounded-2xl p-2 pr-3 flex justify-start items-center  hover:bg-zinc-300   transition-all duration-300`}
+      }  w-full  max-h-full group  border  hover:dark:bg-zinc-800 rounded-2xl p-2 pr-3 flex justify-start items-center  hover:bg-zinc-300   transition-all duration-300`}
     >
       <div
         className={`${
