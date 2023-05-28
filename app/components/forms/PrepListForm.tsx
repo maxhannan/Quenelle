@@ -33,7 +33,7 @@ const PrepListForm: FC<Props> = ({ recipeList }) => {
     <div className="flex flex-col gap-3 mt-2 relative">
       <TextInput name="listName" placeholder="Prep List Name" />
       <div className="flex  gap-2">
-        <input type="hidden" name="date" value={date.toDateString()} />
+        <input type="hidden" name="date" value={date.toString()} />
         <div className=" flex-none">
           <PrepCalendar date={date} handleDateChange={handleDateChange} />
         </div>

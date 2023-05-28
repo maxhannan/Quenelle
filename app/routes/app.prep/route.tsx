@@ -1,17 +1,18 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { Outlet, useLoaderData, useOutletContext } from "@remix-run/react";
-import { getPrepLists } from "~/utils/prepList.server";
+import { getPrepLists, getTemplates } from "~/utils/prepList.server";
 
 export async function loader({ request }: LoaderArgs) {
   const prepLists = await getPrepLists();
-  return prepLists;
+  const templates = await getTemplates();
+  return { prepLists, templates };
 }
 
 type ContextType = Awaited<ReturnType<typeof loader>>;
 
 function PrepListsLayout() {
-  const prepLists = useLoaderData<ContextType>();
-  return <Outlet context={prepLists} />;
+  const { prepLists, templates } = useLoaderData<ContextType>();
+  return <Outlet context={{ prepLists, templates }} />;
 }
 
 export function usePrepLists() {

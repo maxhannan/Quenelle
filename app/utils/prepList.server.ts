@@ -1,5 +1,6 @@
 import type { Prisma } from "@prisma/client";
 import { prisma } from "./prisma.server";
+import { te } from "date-fns/locale";
 
 export type PrepListSummaries = Prisma.PromiseReturnType<typeof getPrepLists>;
 
@@ -33,6 +34,69 @@ export function ExtractListData(data: FormData) {
   return prepListData;
 }
 
+export async function createListFromTemplate(data: FormData, authorId: string) {
+  const templateId = data.get("templateId") as string;
+  const date = new Date(data.get("templateDate") as string);
+  console.log({ templateId }, { date });
+  try {
+    const template = await prisma.prepListTemplate.findUnique({
+      where: {
+        id: templateId,
+      },
+      include: {
+        taskGroups: {
+          include: {
+            tasks: {
+              include: {
+                taskGroup: {
+                  select: {
+                    name: true,
+                  },
+                },
+                linkRecipe: {
+                  select: {
+                    id: true,
+                  },
+                },
+              },
+            },
+            linkRecipe: {
+              select: {
+                id: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    if (!template) return null;
+
+    const tasks = template.taskGroups.map((tg) => tg.tasks).flat();
+    const prepListData = {
+      name: template.name,
+      date,
+      station: "",
+      saveAsTemplate: false,
+      taskGroups: template.taskGroups.map((t, i) => ({
+        name: t.name,
+        linkRecipeId: t.linkRecipe ? t.linkRecipe.id : undefined,
+      })),
+      tasks: tasks.map((tn, i) => ({
+        name: tn.name,
+        unit: tn.prepUnit ? tn.prepUnit : "",
+        linkRecipeId: tn.linkRecipe ? tn.linkRecipe.id : undefined,
+        taskGroup: {
+          name: tn.taskGroup.name,
+        },
+      })),
+    };
+    const prepList = await CreatePrepList(prepListData, authorId);
+    return prepList;
+  } catch (error) {
+    return null;
+  }
+}
+
 export type listData = ReturnType<typeof ExtractListData>;
 
 export async function CreatePrepList(prepListData: listData, authorId: string) {
@@ -55,70 +119,158 @@ export async function CreatePrepList(prepListData: listData, authorId: string) {
       linkRecipeId: task.linkRecipeId,
       taskGroupName: task.taskGroup.name,
     }));
-    const taskGroups = await prisma.$transaction(
-      prepListData.taskGroups.map((tg) =>
+    const formattedTaskGroups = prepListData.taskGroups.map((tg) => {
+      if (tg.linkRecipeId) {
+        return {
+          name: tg.name,
+          prepListId: prepList.id,
+
+          linkRecipeId: tg.linkRecipeId,
+        };
+      } else {
+        return {
+          name: tg.name,
+          prepListId: prepList.id,
+        };
+      }
+    });
+    await prisma.$transaction(
+      formattedTaskGroups.map((tg) =>
         prisma.taskGroup.create({
           data: {
-            name: tg.name,
-            prepList: {
-              connect: {
-                id: prepList.id,
-              },
-            },
-
-            linkRecipe: {
-              connect: {
-                id: tg.linkRecipeId,
-              },
+            ...tg,
+            tasks: {
+              create: [
+                ...formattedTasks
+                  .filter((t) => t.taskGroupName === tg.name)
+                  .map((t) => ({
+                    name: t.name,
+                    prepUnit: t.prepUnit,
+                    linkRecipeId: t.linkRecipeId,
+                  })),
+              ],
             },
           },
         })
       )
     );
-    if (taskGroups) {
-      await prisma.$transaction(
-        formattedTasks.map((task) => {
-          if (task.linkRecipeId) {
-            return prisma.tasks.create({
-              data: {
-                name: task.name,
-                prepUnit: task.prepUnit,
-                taskGroup: {
-                  connect: {
-                    id: taskGroups!.filter(
-                      (tg) => tg.name === task.taskGroupName
-                    )[0].id,
-                  },
-                },
-                linkRecipe: {
-                  connect: {
-                    id: task.linkRecipeId,
-                  },
-                },
-              },
-            });
-          } else {
-            return prisma.tasks.create({
-              data: {
-                name: task.name,
-                prepUnit: task.prepUnit,
-                taskGroup: {
-                  connect: {
-                    id: taskGroups!.filter(
-                      (tg) => tg.name === task.taskGroupName
-                    )[0].id,
-                  },
-                },
-              },
-            });
-          }
-        })
-      );
+    if (prepListData.saveAsTemplate) {
+      await CreateListTemplate(prepListData, authorId);
     }
-
     return prepList;
   } catch (error) {
     console.error(error);
+    return null;
+  }
+}
+
+export async function CreateListTemplate(
+  prepListData: listData,
+  authorId: string
+) {
+  try {
+    const prepListTemplate = await prisma.prepListTemplate.create({
+      data: {
+        name: prepListData.name,
+
+        author: {
+          connect: {
+            id: authorId,
+          },
+        },
+      },
+    });
+
+    const formattedTasks = prepListData.tasks.map((task) => ({
+      name: task.name,
+      prepUnit: task.unit,
+      linkRecipeId: task.linkRecipeId,
+      taskGroupName: task.taskGroup.name,
+    }));
+    const formattedTaskGroups = prepListData.taskGroups.map((tg) => {
+      if (tg.linkRecipeId) {
+        return {
+          name: tg.name,
+          templateId: prepListTemplate.id,
+
+          linkRecipeId: tg.linkRecipeId,
+        };
+      } else {
+        return {
+          name: tg.name,
+          templateId: prepListTemplate.id,
+        };
+      }
+    });
+    await prisma.$transaction(
+      formattedTaskGroups.map((tg) =>
+        prisma.taskGroup.create({
+          data: {
+            ...tg,
+            tasks: {
+              create: [
+                ...formattedTasks
+                  .filter((t) => t.taskGroupName === tg.name)
+                  .map((t) => ({
+                    name: t.name,
+                    prepUnit: t.prepUnit,
+                    linkRecipeId: t.linkRecipeId,
+                  })),
+              ],
+            },
+          },
+        })
+      )
+    );
+
+    return prepListTemplate;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+export async function getTemplates() {
+  try {
+    const templates = await prisma.prepListTemplate.findMany({
+      include: {
+        _count: true,
+        author: {
+          select: {
+            firstName: true,
+            lastName: true,
+            id: true,
+          },
+        },
+        taskGroups: {
+          orderBy: {
+            name: "asc",
+          },
+          include: {
+            linkRecipe: {
+              select: {
+                name: true,
+                id: true,
+              },
+            },
+            _count: true,
+            tasks: {
+              include: {
+                linkRecipe: {
+                  select: {
+                    name: true,
+                    id: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return templates;
+  } catch (error) {
     return null;
   }
 }
@@ -136,6 +288,9 @@ export async function getPrepLists() {
           },
         },
         taskGroups: {
+          orderBy: {
+            name: "asc",
+          },
           include: {
             linkRecipe: {
               select: {

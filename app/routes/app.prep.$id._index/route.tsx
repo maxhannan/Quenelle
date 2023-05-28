@@ -39,6 +39,9 @@ function PrepListRoute() {
 
   const prepList = usePrepList();
 
+  if (!prepList) {
+    return null;
+  }
   if (navigation.state === "loading") {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -48,7 +51,7 @@ function PrepListRoute() {
   }
   return (
     <div className=" container mx-auto mb-28 max-w-4xl ">
-      <AppBar page={"PM Grill"}>
+      <AppBar page={prepList.name}>
         <IconButton
           name="Goback"
           onClick={() => navigate(-1)}
@@ -60,6 +63,7 @@ function PrepListRoute() {
         value={""}
         loading={false}
       />
+
       <Form>
         <div className="w-full grid  gap-2 mt-2">
           <div className="flex flex-col gap-2">
