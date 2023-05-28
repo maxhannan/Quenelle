@@ -1,17 +1,21 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import type { LoaderArgs } from "@remix-run/node";
+import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import {
   Form,
+  useActionData,
   useLoaderData,
   useNavigate,
   useNavigation,
 } from "@remix-run/react";
 import { CheckCircleIcon } from "lucide-react";
+import { useEffect } from "react";
 import Spinner from "~/components/LoadingSpinner";
 import IconButton from "~/components/buttons/IconButton";
 import PrepListForm from "~/components/forms/PrepListForm";
 
 import AppBar from "~/components/navigation/AppBar";
+import { getUser } from "~/utils/auth.server";
+import { CreatePrepList, ExtractListData } from "~/utils/prepList.server";
 
 import { getRecipes } from "~/utils/recipes.server";
 
@@ -20,9 +24,33 @@ export async function loader(args: LoaderArgs) {
   return allRecipes;
 }
 
+export async function action({ request }: ActionArgs) {
+  const form = await request.formData();
+
+  const extractList = ExtractListData(form);
+  const user = await getUser(request);
+
+  if (user) {
+    const savedList = await CreatePrepList(extractList, user.id);
+    console.log({ savedList });
+    if (savedList) {
+      return savedList.id;
+    }
+  }
+  return undefined;
+}
+
 function PrepListAddRoute() {
   const allRecipes = useLoaderData<typeof loader>();
   const navigate = useNavigate();
+  const data = useActionData();
+
+  useEffect(() => {
+    if (data !== undefined) {
+      navigate(`/app/prep/${data}`, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   const navigation = useNavigation();
   if (navigation.state === "loading" || navigation.state === "submitting") {

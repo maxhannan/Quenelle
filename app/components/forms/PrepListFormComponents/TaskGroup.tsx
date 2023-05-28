@@ -30,6 +30,7 @@ export interface TaskType {
 }
 const TaskGroup: FC<Props> = ({ handleDelete, tg, recipeList }) => {
   const [tgName, setTgName] = useState(tg.value ? tg.value : "");
+  const [selectedLink, setSelectedLink] = useState<string | undefined>();
   console.log({ tgName });
   const [tasks, setTasks] = useState<TaskType[]>([]);
   const dishes = recipeList?.filter((recipe) => recipe.dish);
@@ -43,6 +44,7 @@ const TaskGroup: FC<Props> = ({ handleDelete, tg, recipeList }) => {
     console.log({ value });
     const findDish = dishes?.find((d) => d.id === value?.id);
     if (findDish) {
+      setSelectedLink(findDish.id);
       const taskList = findDish.ingredients.map((i) => ({
         id: i.id,
         name: i.ingredient,
@@ -98,6 +100,7 @@ const TaskGroup: FC<Props> = ({ handleDelete, tg, recipeList }) => {
           placeholder="Select or Create a Dish"
           allowCustom
           required
+          selectedLinkId={selectedLink}
           changeHandler={handleDishSelect}
           options={
             dishes

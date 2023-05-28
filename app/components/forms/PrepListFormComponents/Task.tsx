@@ -38,7 +38,7 @@ const Task: FC<Props> = ({
         <div className="grow">
           <TextInput
             placeholder="Name"
-            name="ingredientName"
+            name="taskName"
             initValue={selectedLink?.value || task.name}
             disabled={selectedLink ? true : false}
           />
@@ -65,7 +65,7 @@ const Task: FC<Props> = ({
 
       <div className="col-span-5  relative ">
         <ComboBox
-          name="ingredientUnit"
+          name="unit"
           required
           placeholder="Unit"
           initValue={

@@ -14,7 +14,7 @@ interface Props {
 }
 
 const PrepListForm: FC<Props> = ({ recipeList }) => {
-  const [date, setDate] = useState<Date | undefined>(new Date(Date.now()));
+  const [date, setDate] = useState<Date>(new Date(Date.now()));
   const [taskGroups, setTaskGroups] = useState<{ id: string; value: string }[]>(
     []
   );
@@ -33,6 +33,7 @@ const PrepListForm: FC<Props> = ({ recipeList }) => {
     <div className="flex flex-col gap-3 mt-2 relative">
       <TextInput name="listName" placeholder="Prep List Name" />
       <div className="flex  gap-2">
+        <input type="hidden" name="date" value={date.toDateString()} />
         <div className=" flex-none">
           <PrepCalendar date={date} handleDateChange={handleDateChange} />
         </div>
@@ -49,6 +50,7 @@ const PrepListForm: FC<Props> = ({ recipeList }) => {
       </div>
       <div className="items-center flex space-x-4 bg-zinc-800 rounded-2xl p-3  ">
         <Checkbox
+          name="saveAsTemplate"
           id="terms1"
           className="w-7 h-7 rounded-lg border-indigo-500 data-[state=checked]:bg-indigo-500 data-[state=checked]:text-zinc-200"
         />
