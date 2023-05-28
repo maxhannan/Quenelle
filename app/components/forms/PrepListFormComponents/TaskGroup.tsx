@@ -1,5 +1,5 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
 import IconButton from "~/components/buttons/IconButton";
 import TextInput from "~/components/formInputs/TextInput";
 import MenuDishSection from "../MenuFormSections/MenuDishSection";
@@ -32,6 +32,11 @@ const TaskGroup: FC<Props> = ({ handleDelete, tg, recipeList }) => {
   console.log({ tgName });
   const [tasks, setTasks] = useState<TaskType[]>([]);
   const dishes = recipeList?.filter((recipe) => recipe.dish);
+  const groupRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    groupRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, []);
 
   const handleDishSelect = (value: ComboBoxOption | null) => {
     console.log({ value });
@@ -82,7 +87,10 @@ const TaskGroup: FC<Props> = ({ handleDelete, tg, recipeList }) => {
   };
 
   return (
-    <div className="border border-zinc-300 dark:border-zinc-700 rounded-2xl col-span-5 flex flex-col gap-2 ">
+    <div
+      ref={groupRef}
+      className="border border-zinc-300 dark:border-zinc-700 rounded-2xl col-span-5 flex flex-col gap-2 "
+    >
       <div className="flex gap-x-2 bg-zinc-200 dark:bg-zinc-800 p-2 h-16 rounded-tl-2xl rounded-tr-2xl  ">
         <ComboBox
           name="dish"
