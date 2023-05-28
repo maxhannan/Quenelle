@@ -29,15 +29,12 @@ export interface TaskType {
 }
 const TaskGroup: FC<Props> = ({ handleDelete, tg, recipeList }) => {
   const [tgName, setTgName] = useState(tg.value ? tg.value : "");
-
+  console.log({ tgName });
   const [tasks, setTasks] = useState<TaskType[]>([]);
   const dishes = recipeList?.filter((recipe) => recipe.dish);
 
-  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setTgName(e.target.value);
-  };
-
   const handleDishSelect = (value: ComboBoxOption | null) => {
+    console.log({ value });
     const findDish = dishes?.find((d) => d.id === value?.id);
     if (findDish) {
       const taskList = findDish.ingredients.map((i) => ({
@@ -49,8 +46,11 @@ const TaskGroup: FC<Props> = ({ handleDelete, tg, recipeList }) => {
           : undefined,
       }));
       setTasks(taskList);
+      setTgName(value?.value || "");
     } else {
-      setTasks([]);
+      console.log("else");
+      setTgName(value?.value || "");
+      if (!value?.value || value?.value === "") setTasks([]);
     }
   };
 
@@ -88,6 +88,7 @@ const TaskGroup: FC<Props> = ({ handleDelete, tg, recipeList }) => {
           name="dish"
           placeholder="Select or Create a Dish"
           allowCustom
+          required
           changeHandler={handleDishSelect}
           options={
             dishes
@@ -109,6 +110,7 @@ const TaskGroup: FC<Props> = ({ handleDelete, tg, recipeList }) => {
         {tasks &&
           tasks.map((task, i) => (
             <Task
+              tg={tgName}
               task={task}
               recipes={recipeList ? recipeList.filter((r) => !r.dish) : null}
               key={task.id}
