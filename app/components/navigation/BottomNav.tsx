@@ -47,7 +47,7 @@ const BottomNav = ({ page, setPage }: Props) => {
         <BottomNavButton
           active={page}
           handleNav={handleNav}
-          path="/"
+          path=""
           Icon={HomeIcon}
         />
         <BottomNavButton

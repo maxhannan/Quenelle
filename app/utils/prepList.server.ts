@@ -1,6 +1,5 @@
 import type { Prisma } from "@prisma/client";
 import { prisma } from "./prisma.server";
-import { te } from "date-fns/locale";
 
 export type PrepListSummaries = Prisma.PromiseReturnType<typeof getPrepLists>;
 
