@@ -1,11 +1,12 @@
-import { FC, useState } from "react";
-import { TaskType } from "./TaskGroup";
+import { useState } from "react";
+import type { FC } from "react";
+import type { TaskType } from "./TaskGroup";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import IconButton from "~/components/buttons/IconButton";
 import ComboBox from "~/components/formInputs/ComboBox";
 import TextInput from "~/components/formInputs/TextInput";
 import { unitsList } from "~/utils/staticLists";
-import { FullRecipes } from "~/utils/recipes.server";
+import type { FullRecipes } from "~/utils/recipes.server";
 
 interface Props {
   task: TaskType;

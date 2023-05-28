@@ -1,4 +1,5 @@
-import { FC, useState } from "react";
+import { useState } from "react";
+import type { FC } from "react";
 import TextInput from "../formInputs/TextInput";
 import PrepCalendar from "~/routes/app.prep._index/components/PrepCalendar";
 import ComboBox from "../formInputs/ComboBox";

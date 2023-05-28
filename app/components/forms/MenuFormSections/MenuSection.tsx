@@ -1,8 +1,9 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { ChangeEvent, FC, useState } from "react";
+import { useState } from "react";
+import type { ChangeEvent, FC } from "react";
 import IconButton from "~/components/buttons/IconButton";
 import TextInput from "~/components/formInputs/TextInput";
-import { getDishes } from "~/utils/dishes.server";
+import type { getDishes } from "~/utils/dishes.server";
 import MenuDishSection from "./MenuDishSection";
 
 interface Props {

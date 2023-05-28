@@ -1,13 +1,14 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { FC } from "react";
 import IconButton from "~/components/buttons/IconButton";
-import TextInput from "~/components/formInputs/TextInput";
-import MenuDishSection from "../MenuFormSections/MenuDishSection";
-import ComboBox, { ComboBoxOption } from "~/components/formInputs/ComboBox";
-import { FullRecipes } from "~/utils/recipes.server";
+
+import ComboBox from "~/components/formInputs/ComboBox";
+import type { ComboBoxOption } from "~/components/formInputs/ComboBox";
+import type { FullRecipes } from "~/utils/recipes.server";
 import Task from "./Task";
 import { v4 } from "uuid";
-import { add } from "date-fns";
+
 import { PlusIcon } from "lucide-react";
 
 interface Props {
