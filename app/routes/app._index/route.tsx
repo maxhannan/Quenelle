@@ -1,7 +1,7 @@
-import { CalendarDaysIcon, SunIcon } from "@heroicons/react/24/outline";
+import { SunIcon } from "@heroicons/react/24/outline";
 import type { LoaderArgs } from "@remix-run/node";
 import { useLoaderData, useNavigation } from "@remix-run/react";
-import { Calendar } from "lucide-react";
+
 import Spinner from "~/components/LoadingSpinner";
 import ListCard from "~/components/display/ListCard";
 
