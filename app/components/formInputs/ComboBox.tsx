@@ -1,6 +1,6 @@
 import { Combobox, Transition } from "@headlessui/react";
 import { ChevronDownIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import type { FC } from "react";
 export interface ComboBoxOption {
   id: string;
@@ -30,7 +30,10 @@ const ComboBox: FC<Props> = ({
 }) => {
   const [selected, setSelected] = useState(initValue || null);
   const [query, setQuery] = useState("");
-
+  const optionsRef = useRef<HTMLUListElement>(null);
+  useEffect(() => {
+    optionsRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, []);
   useEffect(() => {
     setSelected(initValue || null);
   }, [initValue]);
@@ -101,7 +104,10 @@ const ComboBox: FC<Props> = ({
           leaveTo="opacity-0"
           afterLeave={() => setQuery("")}
         >
-          <Combobox.Options className="absolute mt-2 bg-zinc-100 z-50 dark:bg-zinc-800 rounded-2xl  overflow-auto max-h-48 w-full  py-1 text-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none  ">
+          <Combobox.Options
+            ref={optionsRef}
+            className="absolute mt-2 bg-zinc-100 z-50 dark:bg-zinc-800 rounded-2xl  overflow-auto max-h-48 w-full  py-1 text-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none  "
+          >
             {allowCustom && query.length > 0 && !checkIfExists(query, options) && (
               <Combobox.Option
                 className={({ active }) =>
