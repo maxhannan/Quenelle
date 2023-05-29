@@ -183,6 +183,34 @@ function PrepListsRoute() {
               <span className="flex-shrink mx-4 text-zinc-400">Or</span>
               <div className="flex-grow border-t border-zinc-700"></div>
             </div>
+            <div className="w-full flex flex-col gap-2  ">
+              <ComboBox
+                name="template"
+                required
+                changeHandler={handleTemplateChange}
+                selectedLinkId={selectedTemplate ?? undefined}
+                options={
+                  templates
+                    ? templates.map((t) => ({ id: t.id, value: t.name }))
+                    : []
+                }
+                placeholder="Template"
+              />
+              <div className="grow">
+                <LoadingButton
+                  disabled={navigation.state === "submitting"}
+                  buttonText="Edit Template"
+                  Icon={ArrowRightIcon}
+                  action={() => navigate("add")}
+                  buttonName="Add list"
+                />
+              </div>
+            </div>
+            <div className="relative flex py-2 items-center">
+              <div className="flex-grow border-t border-zinc-700"></div>
+              <span className="flex-shrink mx-4 text-zinc-400">Or</span>
+              <div className="flex-grow border-t border-zinc-700"></div>
+            </div>
             <div className="w-full flex gap-2  ">
               <div className="grow">
                 <LoadingButton
