@@ -25,7 +25,7 @@ function HomeRoute() {
     );
   if (!user) return null;
   return (
-    <div className=" container mx-auto max-w-3xl flex flex-col  gap-2 mt-12 items-center">
+    <div className=" container mx-auto max-w-3xl flex flex-col  gap-2 mt-12 items-center mb-28">
       <div className="text-4xl md:text-4xl  gap-2 items-start  w-full flex justify-between   py-3  dark:text-neutral-200  font-bold text-neutral-600 rounded-xl ">
         <div>
           <h1>Hi {user.firstName}!</h1>
@@ -40,10 +40,10 @@ function HomeRoute() {
         </div>
       </div>
       <div className="w-full flex flex-col gap-2">
-        <div className="w-full bg-indigo-500 flex flex-col gap-2  text-3xl font-light text-zinc-200 rounded-2xl p-3">
+        <div className="w-full bg-indigo-500 flex flex-col gap-2  text-xl font-light text-zinc-200 rounded-2xl p-3">
           <div className=" p-2 rounded-xl flex items-center justify-between">
             <span className="font-bold">79°F</span> Current Temperature{" "}
-            <SunIcon className="w-9 h-9 inline-block" />
+            <SunIcon className="w-7 h-7 inline-block" />
           </div>
         </div>
         <div className="text-lg text-indigo-500 font-semibold ">
