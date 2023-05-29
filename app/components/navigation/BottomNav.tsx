@@ -25,7 +25,7 @@ const BottomNav = ({ page, setPage }: Props) => {
       return;
     }
     setPage(path);
-    navigate(pathString + location.search);
+    navigate(pathString);
   };
 
   return (

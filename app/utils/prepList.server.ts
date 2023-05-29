@@ -4,32 +4,33 @@ import { prisma } from "./prisma.server";
 export type PrepListSummaries = Prisma.PromiseReturnType<typeof getPrepLists>;
 
 export function ExtractListData(data: FormData) {
-  const saveAsTemplate = data.get("saveAsTemplate") ? true : false;
-  const dishLink = data.getAll("dishId") as string[];
+  const saveAsTemplate = !!data.get("saveAsTemplate");
+  const dishIds = data.getAll("dishId") as string[];
   const tgNames = data.getAll("dish") as string[];
   const tGroupNames = data.getAll("tGroupName") as string[];
   const taskNames = data.getAll("taskName") as string[];
-  const recipeLinkId = data.getAll("recipeLinkId") as string[];
+  const recipeLinkIds = data.getAll("recipeLinkId") as string[];
   const units = data.getAll("unit") as string[];
-  console.log(tGroupNames, taskNames, recipeLinkId, units);
+
   const prepListData = {
     name: data.get("listName") as string,
     date: new Date(data.get("date") as string),
     station: data.get("station") as string,
     saveAsTemplate,
-    taskGroups: tgNames.map((t, i) => ({
-      name: t,
-      linkRecipeId: dishLink[i].length > 0 ? dishLink[i] : undefined,
+    taskGroups: tgNames.map((name, i) => ({
+      name,
+      linkRecipeId: dishIds[i] || undefined,
     })),
-    tasks: taskNames.map((tn, i) => ({
-      name: tn,
-      unit: units[i],
-      linkRecipeId: recipeLinkId[i].length > 0 ? recipeLinkId[i] : undefined,
+    tasks: taskNames.map((name, i) => ({
+      name,
+      unit: units[i] || "",
+      linkRecipeId: recipeLinkIds[i] || undefined,
       taskGroup: {
         name: tGroupNames[i],
       },
     })),
   };
+
   return prepListData;
 }
 
@@ -37,125 +38,51 @@ export async function createListFromTemplate(data: FormData, authorId: string) {
   const templateId = data.get("templateId") as string;
   const date = new Date(data.get("templateDate") as string);
   console.log({ templateId }, { date });
+
   try {
     const template = await prisma.prepListTemplate.findUnique({
-      where: {
-        id: templateId,
-      },
+      where: { id: templateId },
       include: {
         taskGroups: {
           include: {
             tasks: {
               include: {
-                taskGroup: {
-                  select: {
-                    name: true,
-                  },
-                },
-                linkRecipe: {
-                  select: {
-                    id: true,
-                  },
-                },
+                taskGroup: { select: { name: true } },
+                linkRecipe: { select: { id: true } },
               },
             },
-            linkRecipe: {
-              select: {
-                id: true,
-              },
-            },
+            linkRecipe: { select: { id: true } },
           },
         },
       },
     });
+
     if (!template) return null;
 
-    const tasks = template.taskGroups.map((tg) => tg.tasks).flat();
+    const taskGroupsData = template.taskGroups.map((tg) => ({
+      name: tg.name,
+      linkRecipeId: tg.linkRecipe ? tg.linkRecipe.id : undefined,
+    }));
+
+    const tasksData = template.taskGroups
+      .flatMap((tg) => tg.tasks)
+      .map((task) => ({
+        name: task.name,
+        unit: task.prepUnit || "",
+        linkRecipeId: task.linkRecipe ? task.linkRecipe.id : undefined,
+        taskGroup: { name: task.taskGroup.name },
+      }));
+
     const prepListData = {
       name: template.name,
       date,
       station: "",
       saveAsTemplate: false,
-      taskGroups: template.taskGroups.map((t, i) => ({
-        name: t.name,
-        linkRecipeId: t.linkRecipe ? t.linkRecipe.id : undefined,
-      })),
-      tasks: tasks.map((tn, i) => ({
-        name: tn.name,
-        unit: tn.prepUnit ? tn.prepUnit : "",
-        linkRecipeId: tn.linkRecipe ? tn.linkRecipe.id : undefined,
-        taskGroup: {
-          name: tn.taskGroup.name,
-        },
-      })),
+      taskGroups: taskGroupsData,
+      tasks: tasksData,
     };
-    const prepList = await CreatePrepList(prepListData, authorId);
-    return prepList;
-  } catch (error) {
-    return null;
-  }
-}
 
-export type listData = ReturnType<typeof ExtractListData>;
-
-export async function CreatePrepList(prepListData: listData, authorId: string) {
-  try {
-    const prepList = await prisma.prepList.create({
-      data: {
-        name: prepListData.name,
-        date: prepListData.date,
-        author: {
-          connect: {
-            id: authorId,
-          },
-        },
-      },
-    });
-
-    const formattedTasks = prepListData.tasks.map((task) => ({
-      name: task.name,
-      prepUnit: task.unit,
-      linkRecipeId: task.linkRecipeId,
-      taskGroupName: task.taskGroup.name,
-    }));
-    const formattedTaskGroups = prepListData.taskGroups.map((tg) => {
-      if (tg.linkRecipeId) {
-        return {
-          name: tg.name,
-          prepListId: prepList.id,
-
-          linkRecipeId: tg.linkRecipeId,
-        };
-      } else {
-        return {
-          name: tg.name,
-          prepListId: prepList.id,
-        };
-      }
-    });
-    await prisma.$transaction(
-      formattedTaskGroups.map((tg) =>
-        prisma.taskGroup.create({
-          data: {
-            ...tg,
-            tasks: {
-              create: [
-                ...formattedTasks
-                  .filter((t) => t.taskGroupName === tg.name)
-                  .map((t) => ({
-                    name: t.name,
-                    prepUnit: t.prepUnit,
-                    linkRecipeId: t.linkRecipeId,
-                  })),
-              ],
-            },
-          },
-        })
-      )
-    );
-    if (prepListData.saveAsTemplate) {
-      await CreateListTemplate(prepListData, authorId);
-    }
+    const prepList = await createPrepList(prepListData, authorId);
     return prepList;
   } catch (error) {
     console.error(error);
@@ -163,6 +90,108 @@ export async function CreatePrepList(prepListData: listData, authorId: string) {
   }
 }
 
+export type listData = ReturnType<typeof ExtractListData>;
+
+export async function createPrepList(prepListData: listData, authorId: string) {
+  try {
+    const { name, date, tasks, taskGroups, saveAsTemplate } = prepListData;
+
+    const prepList = await prisma.prepList.create({
+      data: {
+        name,
+        date,
+        author: {
+          connect: { id: authorId },
+        },
+        taskGroups: {
+          create: taskGroups.map(({ name, linkRecipeId }) => ({
+            name,
+            linkRecipe: linkRecipeId
+              ? { connect: { id: linkRecipeId } }
+              : undefined,
+            tasks: {
+              create: tasks
+                .filter((task) => task.taskGroup.name === name)
+                .map(({ name, unit, linkRecipeId }) => ({
+                  name,
+                  prepUnit: unit,
+                  linkRecipe: linkRecipeId
+                    ? { connect: { id: linkRecipeId } }
+                    : undefined,
+                })),
+            },
+          })),
+        },
+      },
+      include: {
+        taskGroups: {
+          include: {
+            tasks: true,
+          },
+        },
+      },
+    });
+
+    if (saveAsTemplate) {
+      await createPrepListTemplate(prepListData, authorId);
+    }
+
+    return prepList;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+export async function createPrepListTemplate(
+  prepListData: listData,
+  authorId: string
+) {
+  try {
+    const { name, tasks, taskGroups } = prepListData;
+
+    const template = await prisma.prepListTemplate.create({
+      data: {
+        name,
+
+        author: {
+          connect: { id: authorId },
+        },
+        taskGroups: {
+          create: taskGroups.map(({ name, linkRecipeId }) => ({
+            name,
+            linkRecipe: linkRecipeId
+              ? { connect: { id: linkRecipeId } }
+              : undefined,
+            tasks: {
+              create: tasks
+                .filter((task) => task.taskGroup.name === name)
+                .map(({ name, unit, linkRecipeId }) => ({
+                  name,
+                  prepUnit: unit,
+                  linkRecipe: linkRecipeId
+                    ? { connect: { id: linkRecipeId } }
+                    : undefined,
+                })),
+            },
+          })),
+        },
+      },
+      include: {
+        taskGroups: {
+          include: {
+            tasks: true,
+          },
+        },
+      },
+    });
+
+    return template;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
 export async function CreateListTemplate(
   prepListData: listData,
   authorId: string

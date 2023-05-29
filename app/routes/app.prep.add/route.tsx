@@ -15,7 +15,7 @@ import PrepListForm from "~/components/forms/PrepListForm";
 
 import AppBar from "~/components/navigation/AppBar";
 import { getUser } from "~/utils/auth.server";
-import { CreatePrepList, ExtractListData } from "~/utils/prepList.server";
+import { ExtractListData, createPrepList } from "~/utils/prepList.server";
 
 import { getRecipes } from "~/utils/recipes.server";
 
@@ -31,7 +31,7 @@ export async function action({ request }: ActionArgs) {
   const user = await getUser(request);
 
   if (user) {
-    const savedList = await CreatePrepList(extractList, user.id);
+    const savedList = await createPrepList(extractList, user.id);
     console.log({ savedList });
     if (savedList) {
       return savedList.id;

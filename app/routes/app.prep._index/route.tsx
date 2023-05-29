@@ -106,6 +106,17 @@ function PrepListsRoute() {
     }
   };
 
+  const pageChangeLoading =
+    navigation.state === "loading" &&
+    navigation.location.pathname !== "/app/prep";
+
+  if (navigation.state === "loading" && pageChangeLoading) {
+    return (
+      <div className=" mx-auto h-screen  flex items-center justify-center">
+        <Spinner size={14} />
+      </div>
+    );
+  }
   return (
     <div className=" container mx-auto max-w-4xl">
       <nav className=" flex pt-3 pb-1 mx-auto max-h-full items-center justify-between  duration-300 bg-zinc-100 dark:bg-zinc-900 font-light  w-full top-0 left-0  ">
@@ -158,6 +169,8 @@ function PrepListsRoute() {
                     <IconButton
                       Icon={ArrowRightIcon}
                       type="submit"
+                      disabled={navigation.state === "submitting"}
+                      loading={navigation.state === "submitting"}
                       name="create"
                       onClick={() => console.log("hello")}
                     />
@@ -173,6 +186,7 @@ function PrepListsRoute() {
             <div className="w-full flex gap-2  ">
               <div className="grow">
                 <LoadingButton
+                  disabled={navigation.state === "submitting"}
                   buttonText="Create Custom List"
                   Icon={ArrowRightIcon}
                   action={() => navigate("add")}
@@ -210,7 +224,7 @@ function PrepListsRoute() {
           </button>
         </div>
         <div className="grid z-0 relative grid-flow-row  auto-rows-max gap-y-2  mx-auto mb-28 w-full ">
-          {navigation.state === "loading" ? (
+          {navigation.state === "loading" && !pageChangeLoading ? (
             <div className="flex justify-center mt-4 ">
               <Spinner size={14} />
             </div>
