@@ -1,12 +1,14 @@
 import { Disclosure, Transition } from "@headlessui/react";
-import { ChevronUpIcon } from "@heroicons/react/24/outline";
+import { ArrowLongRightIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
+import { Link } from "@remix-run/react";
 
 interface Props {
   name: string;
   children: React.ReactNode;
+  link?: string;
 }
 
-const Accordion = ({ name, children }: Props) => {
+const Accordion = ({ name, children, link }: Props) => {
   return (
     <div className="rounded-2xl border   border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 p-1.5">
       <Disclosure defaultOpen>
@@ -14,7 +16,16 @@ const Accordion = ({ name, children }: Props) => {
           <>
             <div className="flex items-center gap-4">
               <Disclosure.Button className="dark:bg-opacity-50 transition-all duration-300 flex w-full items-center justify-between  rounded-xl  bg-zinc-200 font-normal dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 px-3 py-3 text-left text-xl lg:text-2xl  text-zinc-700 dark:text-zinc-200  focus:outline-none focus-visible:ring focus-visible:ring-violet-500 focus-visible:ring-opacity-75">
-                <span>{name}</span>
+                {link ? (
+                  <Link
+                    to={link}
+                    className="flex items-center flex-wrap text-indigo-500 underline underline-offset-4 "
+                  >
+                    {name}
+                  </Link>
+                ) : (
+                  <span>{name}</span>
+                )}
                 <ChevronUpIcon
                   className={`${open ? "rotate-180 transform" : ""} h-7 w-7 `}
                 />

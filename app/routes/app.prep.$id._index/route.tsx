@@ -51,24 +51,39 @@ function PrepListRoute() {
   }
   return (
     <div className=" container mx-auto mb-28 max-w-4xl ">
-      <AppBar page={prepList.name}>
+      <AppBar
+        page={prepList.name}
+        textSize="text-3xl md:text-4xl"
+        bottomPadding="0"
+      >
         <IconButton
           name="Goback"
           onClick={() => navigate(-1)}
           Icon={ArrowUturnLeftIcon}
         />
       </AppBar>
+
+      <div className="mb-2 text-lg text-indigo-500 font-mono">
+        {new Date(prepList.date).toDateString()}
+      </div>
       <SearchBar
         handleChange={() => (e: string) => console.log(e)}
         value={""}
         loading={false}
       />
-
       <Form>
         <div className="w-full grid  gap-2 mt-2">
           <div className="flex flex-col gap-2">
             {prepList?.taskGroups.map((tg) => (
-              <Accordion key={tg.id} name={tg.name}>
+              <Accordion
+                key={tg.id}
+                name={tg.name}
+                link={
+                  tg.linkRecipeId
+                    ? `/app/menus/dishes/${tg.linkRecipeId}`
+                    : undefined
+                }
+              >
                 <div className="  max-w-full  bg-zinc-100 border-zinc-300    rounded-xl   px-2 grid grid-cols-10  gap-1   dark:bg-zinc-800 ">
                   <div className=" font-light col-span-5 lg:col-span-7 flex gap-2 items-center mr-1">
                     <div>
