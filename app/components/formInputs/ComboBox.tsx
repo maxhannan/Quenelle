@@ -32,7 +32,11 @@ const ComboBox: FC<Props> = ({
   const [query, setQuery] = useState("");
   const optionsRef = useRef<HTMLUListElement>(null);
   useEffect(() => {
-    optionsRef.current?.scrollIntoView({ behavior: "smooth" });
+    optionsRef.current?.scrollIntoView({
+      block: "end",
+      inline: "nearest",
+      behavior: "smooth",
+    });
   }, []);
   useEffect(() => {
     setSelected(initValue || null);
