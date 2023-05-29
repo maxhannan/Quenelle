@@ -33,7 +33,7 @@ function HomeRoute() {
           <h2 className="text-base text-zinc-600">Welcome to your kitchen.</h2>
         </div>
         <div
-          className={`bg-indigo-500  text-zinc-300 trasition-all duration-300 inline-flex h-14 w-14 group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center  justify-center  overflow-hidden   rounded-2xl   `}
+          className={`bg-indigo-500  text-zinc-200 trasition-all duration-300 inline-flex h-14 w-14 group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center  justify-center  overflow-hidden   rounded-2xl   `}
         >
           <span className=" text-3xl  ">
             {user.firstName[0].toLowerCase() + user.lastName[0].toLowerCase()}

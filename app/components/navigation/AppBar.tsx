@@ -17,8 +17,8 @@ const AppBar: FC<Props> = ({
   return (
     <SlideDownTransition>
       <nav
-        className={`flex pt-3 pb-${
-          bottomPadding || 2
+        className={`flex pt-3 ${
+          bottomPadding ? `pb-${bottomPadding}` : "pb-2"
         } mx-auto  max-h-full items-center justify-between  duration-300    w-full top-0 left-0 `}
       >
         <h1 className={`${textSize} mr-6 text-zinc-800 dark:text-zinc-100`}>
