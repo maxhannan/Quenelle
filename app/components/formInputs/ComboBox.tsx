@@ -33,8 +33,6 @@ const ComboBox: FC<Props> = ({
   const optionsRef = useRef<HTMLUListElement>(null);
   useEffect(() => {
     optionsRef.current?.scrollIntoView({
-      block: "end",
-      inline: "nearest",
       behavior: "smooth",
     });
   }, []);
