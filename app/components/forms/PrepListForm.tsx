@@ -48,7 +48,7 @@ const PrepListForm: FC<Props> = ({ recipeList }) => {
           ]}
         />
       </div>
-      <div className="items-center flex space-x-4 bg-zinc-300 dark:bg-zinc-800 rounded-2xl p-3  ">
+      <div className="items-center flex space-x-4 bg-zinc-200 dark:bg-zinc-800 rounded-2xl p-3  ">
         <Checkbox
           name="saveAsTemplate"
           id="terms1"
