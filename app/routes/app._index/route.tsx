@@ -1,3 +1,4 @@
+import { SunIcon } from "@heroicons/react/24/outline";
 import type { LoaderArgs } from "@remix-run/node";
 import { useLoaderData, useNavigation } from "@remix-run/react";
 import Spinner from "~/components/LoadingSpinner";
@@ -39,9 +40,50 @@ function HomeRoute() {
         </div>
       </div>
       <div className="w-full flex flex-col gap-2">
+        <div className="w-full bg-indigo-500 flex flex-col gap-2  text-3xl font-light text-zinc-200 rounded-2xl p-3">
+          <div className=" p-2 rounded-xl flex items-center justify-between">
+            <span className="font-bold">79°F</span> Current Temperature{" "}
+            <SunIcon className="w-9 h-9 inline-block" />
+          </div>
+        </div>
         <div className="text-lg text-indigo-500 font-semibold ">
           Your prep list for today.
         </div>
+        <ListCard
+          to="/"
+          active
+          subHeading="Created by Erik J."
+          user={"ej"}
+          name="PM Grill"
+        />
+        <div className="w-full bg-indigo-500 flex flex-col gap-2  text-xl font-light text-zinc-200 rounded-2xl p-3">
+          <div className="w-7/12 bg-indigo-600 p-3 rounded-xl">
+            <span className="font-bold">79</span> Breakfast Covers
+          </div>
+          <div className="w-5/12 bg-indigo-600 p-3 rounded-xl">
+            <span className="font-bold">52</span> Lunch Covers
+          </div>
+          <div className="w-12/12 bg-indigo-600 p-3 rounded-xl">
+            <span className="font-bold">157</span> Dinner Covers
+          </div>
+        </div>
+        <div className="text-lg text-indigo-500 font-semibold ">
+          Recipes changes.
+        </div>
+        <ListCard
+          to="/"
+          active
+          subHeading="Created by Erik J."
+          user={"ej"}
+          name="PM Grill"
+        />
+        <ListCard
+          to="/"
+          active
+          subHeading="Created by Erik J."
+          user={"ej"}
+          name="PM Grill"
+        />
         <ListCard
           to="/"
           active
