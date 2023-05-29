@@ -28,9 +28,8 @@ const AppLayout = () => {
       <div className="px-3 lg:px-0 scrollbar-thin scrollbar-track-red-300">
         <Outlet />
       </div>
-      <div className="sticky">
-        <BottomNav page={page} setPage={setPage} />
-      </div>
+
+      <BottomNav page={page} setPage={setPage} />
     </div>
   );
 };
