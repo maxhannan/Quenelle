@@ -48,7 +48,7 @@ const PrepListForm: FC<Props> = ({ recipeList }) => {
           ]}
         />
       </div>
-      <div className="items-center flex space-x-4 bg-zinc-800 rounded-2xl p-3  ">
+      <div className="items-center flex space-x-4 bg-zinc-300 dark:bg-zinc-800 rounded-2xl p-3  ">
         <Checkbox
           name="saveAsTemplate"
           id="terms1"
@@ -57,11 +57,11 @@ const PrepListForm: FC<Props> = ({ recipeList }) => {
         <div className="grid gap-1.5 leading-none">
           <label
             htmlFor="terms1"
-            className="text-md font-medium text-zinc-200 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            className="text-md font-medium text-zinc-800 dark:text-zinc-200 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             Save as template?
           </label>
-          <p className="text-sm text-zinc-300">
+          <p className="text-sm text-zinc-600 dark:text-zinc-300">
             Allows you to reuse this preplist.
           </p>
         </div>

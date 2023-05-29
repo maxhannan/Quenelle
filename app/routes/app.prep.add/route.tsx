@@ -63,7 +63,7 @@ function PrepListAddRoute() {
   return (
     <div className="mb-28 container max-w-4xl mx-auto">
       <Form method="post">
-        <AppBar textSize="text-2xl md:text-4xl" page="Add a Prep List">
+        <AppBar textSize="text-3xl md:text-4xl" page="Add a Prep List">
           <IconButton Icon={CheckCircleIcon} name="Submit" type="submit" />
           <IconButton
             Icon={XMarkIcon}

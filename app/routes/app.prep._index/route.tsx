@@ -236,7 +236,7 @@ function PrepListsRoute() {
             onClick={() => date && handleDateChange(add(date, { days: -1 }))}
             className="h-9 w-9 border flex items-center justify-center dark:border-zinc-700 border-zinc-300 rounded-xl bg-indigo-500"
           >
-            <ArrowLeftIcon className="w-5 h-5 text-zinc-700 dark:text-zinc-100" />
+            <ArrowLeftIcon className="w-5 h-5 text-zinc-100" />
           </button>
           <span
             className={`text-xl  text-zinc-700 dark:text-zinc-100 font-light flex items-center justify-center text-center`}
@@ -248,7 +248,7 @@ function PrepListsRoute() {
             onClick={() => date && handleDateChange(add(date, { days: 1 }))}
             className="h-10 w-10 border flex items-center justify-center dark:border-zinc-700 border-zinc-300 rounded-xl bg-indigo-500"
           >
-            <ArrowRightIcon className="w-5 h-5 text-zinc-700 dark:text-zinc-100" />
+            <ArrowRightIcon className="w-5 h-5 text-zinc-100" />
           </button>
         </div>
         <div className="grid z-0 relative grid-flow-row  auto-rows-max gap-y-2  mx-auto mb-28 w-full ">
