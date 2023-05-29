@@ -1,6 +1,7 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { useLoaderData, useNavigation } from "@remix-run/react";
 import Spinner from "~/components/LoadingSpinner";
+import ListCard from "~/components/display/ListCard";
 
 import { getUser } from "~/utils/auth.server";
 
@@ -23,8 +24,8 @@ function HomeRoute() {
     );
   if (!user) return null;
   return (
-    <div className=" container mx-auto max-w-3xl flex  gap-2 mt-12 items-center">
-      <div className="text-4xl md:text-4xl  gap-2 items-start  w-full flex justify-between mb-3  p-3  dark:text-neutral-200  font-bold text-neutral-600 rounded-xl ">
+    <div className=" container mx-auto max-w-3xl flex flex-col  gap-2 mt-12 items-center">
+      <div className="text-4xl md:text-4xl  gap-2 items-start  w-full flex justify-between   py-3  dark:text-neutral-200  font-bold text-neutral-600 rounded-xl ">
         <div>
           <h1>Hi {user.firstName}!</h1>
           <h2 className="text-base text-zinc-600">Welcome to your kitchen.</h2>
@@ -36,6 +37,18 @@ function HomeRoute() {
             {user.firstName[0].toLowerCase() + user.lastName[0].toLowerCase()}
           </span>
         </div>
+      </div>
+      <div className="w-full flex flex-col gap-2">
+        <div className="text-lg text-indigo-500 font-semibold ">
+          Your prep list for today.
+        </div>
+        <ListCard
+          to="/"
+          active
+          subHeading="Created by Erik J."
+          user={"ej"}
+          name="PM Grill"
+        />
       </div>
     </div>
   );

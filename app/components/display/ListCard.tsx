@@ -28,7 +28,9 @@ const ListCard: FC<Props> = ({ subHeading, user, name, to, active }) => {
             : "dark:bg-zinc-800 bg-zinc-100 text-zinc-800 dark:text-zinc-300 "
         } trasition-all duration-300 inline-flex group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center mr-4 justify-center w-14 h-14 overflow-hidden  border-indigo-400 rounded-2xl  border dark:border-indigo-500`}
       >
-        <span className=" text-xl lg:text-2xl ">{user.toLowerCase()}</span>
+        <span className=" text-2xl font-semibold lg:text-2xl ">
+          {user.toLowerCase()}
+        </span>
       </div>
       <div className="  pr-2">
         <h5 className="text-xl lg:text-2xl  text-zinc-700 dark:text-zinc-100">
