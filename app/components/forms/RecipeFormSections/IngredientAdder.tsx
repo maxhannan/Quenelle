@@ -7,7 +7,6 @@ import IconButton from "~/components/buttons/IconButton";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import ComboBox from "~/components/formInputs/ComboBox";
 import { unitsList } from "~/utils/staticLists";
-import { add } from "date-fns";
 
 interface Props {
   handleDelete: (id: string) => void;
@@ -20,22 +19,13 @@ const IngredientAdder: FC<Props> = ({ handleDelete, ingredient, recipes }) => {
     ingredient.linkId && ingredient.linkRecipe ? ingredient.linkRecipe : null;
 
   const [selectedLink, setSelectedLink] = useState(linkOption);
-  const adderRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    adderRef.current?.scrollIntoView({
-      behavior: "smooth",
-    });
-  }, []);
   const handleLinkChange = (value: { id: string; value: string } | null) => {
     setSelectedLink(value);
   };
 
   return (
-    <div
-      ref={adderRef}
-      className="grid grid-cols-5  gap-y-2 gap-x-2 w-full col-span-5 "
-    >
+    <div className="grid grid-cols-5  gap-y-2 gap-x-2 w-full col-span-5 ">
       <div className="flex gap-x-2 col-span-5">
         <div className="grow">
           <TextInput
