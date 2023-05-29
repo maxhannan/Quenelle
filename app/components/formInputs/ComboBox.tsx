@@ -106,7 +106,7 @@ const ComboBox: FC<Props> = ({
         >
           <Combobox.Options
             ref={optionsRef}
-            className="absolute mt-2 bg-zinc-100 z-50 dark:bg-zinc-800 rounded-2xl  overflow-auto max-h-48 w-full  py-1 text-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none  "
+            className="absolute mt-2 bg-zinc-100 z-50 dark:bg-zinc-800 rounded-2xl  overflow-auto max-h-36 w-full  py-1 text-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none  "
           >
             {allowCustom && query.length > 0 && !checkIfExists(query, options) && (
               <Combobox.Option
