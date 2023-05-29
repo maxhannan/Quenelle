@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import type { FC } from "react";
 import type { FormIngredient } from "./IngredientsSection";
 import type { FullRecipes } from "~/utils/recipes.server";
