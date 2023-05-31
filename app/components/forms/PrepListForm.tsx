@@ -53,7 +53,7 @@ const PrepListForm: FC<Props> = ({ recipeList, template }) => {
           value: tg.name,
           linkDish: tg.linkRecipe
             ? { id: tg.linkRecipe.id, value: tg.linkRecipe.name }
-            : { id: tg.name, value: tg.name },
+            : undefined,
           tasks: tg.tasks.map((t) => ({
             id: t.id,
             name: t.name,
