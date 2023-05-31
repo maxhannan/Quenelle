@@ -68,6 +68,9 @@ const Task: FC<Props> = ({
           name="unit"
           required
           placeholder="Unit"
+          changeHandler={(newValue) =>
+            newValue && handleTaskChange(task.id, newValue.value, "unit")
+          }
           initValue={
             task.unit ? { id: task.unit, value: task.unit } : undefined
           }

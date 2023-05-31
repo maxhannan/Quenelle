@@ -201,7 +201,9 @@ function PrepListsRoute() {
                   disabled={navigation.state === "submitting"}
                   buttonText="Edit Template"
                   Icon={ArrowRightIcon}
-                  action={() => navigate("add")}
+                  action={() =>
+                    selectedTemplate && navigate(`edit/${selectedTemplate}`)
+                  }
                   buttonName="Add list"
                 />
               </div>

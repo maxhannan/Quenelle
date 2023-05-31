@@ -10,17 +10,18 @@ import Task from "./Task";
 import { v4 } from "uuid";
 
 import { PlusIcon } from "lucide-react";
+import { TaskGroupType } from "../PrepListForm";
 
 interface Props {
   handleDelete: (id: string) => void;
-  tg: { id: string; value: string };
+  tg: TaskGroupType;
   recipeList: FullRecipes;
 }
 
 export interface TaskType {
   id: string;
   name: string;
-  unit: string;
+  unit: string | undefined;
   linkRecipe:
     | {
         id: string;
@@ -29,15 +30,19 @@ export interface TaskType {
     | undefined;
 }
 const TaskGroup: FC<Props> = ({ handleDelete, tg, recipeList }) => {
-  const [tgName, setTgName] = useState(tg.value ? tg.value : "");
-  const [selectedLink, setSelectedLink] = useState<string | undefined>();
-  console.log({ tgName });
-  const [tasks, setTasks] = useState<TaskType[]>([]);
+  const [tgName, setTgName] = useState(tg.value);
+  const [selectedLink, setSelectedLink] = useState<string | undefined>(
+    tg.linkDish?.id
+  );
+
+  const [tasks, setTasks] = useState<TaskType[]>(tg.tasks);
   const dishes = recipeList?.filter((recipe) => recipe.dish);
   const groupRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    groupRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (tg.value === "") {
+      groupRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   }, []);
 
   const handleDishSelect = (value: ComboBoxOption | null) => {
@@ -66,7 +71,7 @@ const TaskGroup: FC<Props> = ({ handleDelete, tg, recipeList }) => {
     const newTask = {
         id: v4(),
         name: "",
-        unit: "",
+        unit: undefined,
         linkRecipe: undefined,
       },
       newTasks = [...tasks, newTask];
@@ -102,6 +107,7 @@ const TaskGroup: FC<Props> = ({ handleDelete, tg, recipeList }) => {
           required
           selectedLinkId={selectedLink}
           changeHandler={handleDishSelect}
+          initValue={tg.linkDish}
           options={
             dishes
               ? dishes
