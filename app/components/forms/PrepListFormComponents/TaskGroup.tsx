@@ -10,7 +10,7 @@ import Task from "./Task";
 import { v4 } from "uuid";
 
 import { PlusIcon } from "lucide-react";
-import { TaskGroupType } from "../PrepListForm";
+import type { TaskGroupType } from "../PrepListForm";
 
 interface Props {
   handleDelete: (id: string) => void;
