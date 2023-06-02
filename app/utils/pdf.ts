@@ -21,7 +21,6 @@ export const getPdf = async (prepList: Preplist) => {
       t.completed ? "X" : "",
     ]),
   }));
-  let lasty;
 
   for (let i = 0; i < data.length; i++) {
     autoTable(doc, {
@@ -34,6 +33,7 @@ export const getPdf = async (prepList: Preplist) => {
         3: { cellWidth: 24 },
         4: { cellWidth: 10 },
       },
+      //@ts-ignore: next line is a hack to get around a bug in jspdf-autotable
       startY: i > 0 ? doc.lastAutoTable.finalY : 28,
       showHead: "firstPage",
       styles: { overflow: "hidden" },

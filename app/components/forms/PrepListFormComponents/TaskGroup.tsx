@@ -108,7 +108,11 @@ const TaskGroup: FC<Props> = ({ handleDelete, tg, recipeList }) => {
           required
           selectedLinkId={selectedLink}
           changeHandler={handleDishSelect}
-          initValue={tg.linkDish || { id: tg.value, value: tg.value }}
+          initValue={
+            tg.linkDish || tg.value.length > 0
+              ? { id: tg.value, value: tg.value }
+              : undefined
+          }
           options={
             dishes
               ? dishes
