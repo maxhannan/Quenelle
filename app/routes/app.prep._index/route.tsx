@@ -16,7 +16,12 @@ import { DocumentPlusIcon } from "@heroicons/react/24/outline";
 import IconButton from "~/components/buttons/IconButton";
 import CustomModal from "~/components/display/CustomModal";
 import ComboBox from "~/components/formInputs/ComboBox";
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  Clipboard,
+  ClipboardEdit,
+} from "lucide-react";
 import LoadingButton from "~/components/buttons/LoadingButton";
 import Spinner from "~/components/LoadingSpinner";
 import SearchBar from "~/components/formInputs/SearchBar";
@@ -127,7 +132,7 @@ function PrepListsRoute() {
         </div>
 
         <IconButton
-          Icon={DocumentPlusIcon}
+          Icon={ClipboardEdit}
           name="Add"
           type="button"
           onClick={() => setOpenDialog(true)}

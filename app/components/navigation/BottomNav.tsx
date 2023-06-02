@@ -8,6 +8,7 @@ import {
   HomeIcon,
 } from "@heroicons/react/24/outline";
 import type { Dispatch, SetStateAction } from "react";
+import { ClipboardCheckIcon } from "lucide-react";
 
 interface Props {
   page: string;
@@ -35,7 +36,7 @@ const BottomNav = ({ page, setPage }: Props) => {
           active={page}
           handleNav={handleNav}
           path="prep"
-          Icon={ClipboardDocumentCheckIcon}
+          Icon={ClipboardCheckIcon}
         />
         <BottomNavButton
           active={page}

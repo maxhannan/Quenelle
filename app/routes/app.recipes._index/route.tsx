@@ -14,6 +14,7 @@ import { DocumentPlusIcon, UserIcon } from "@heroicons/react/24/outline";
 import SearchAndFilter from "./components/SearchAndFilter";
 import NewAppBar from "~/components/navigation/NewAppBar";
 import FadeIn from "~/components/animations/FadeIn";
+import { PlusIcon } from "lucide-react";
 
 export default function RecipesIndex() {
   const { recipes, filteredRecipes, categories } = useRecipes();
@@ -40,18 +41,12 @@ export default function RecipesIndex() {
           <div>
             <div className=" ">
               <NewAppBar page={"Recipes"}>
-                <IconButton
-                  onClick={() => navigate("/app/recipes/addrecipe")}
-                  Icon={DocumentPlusIcon}
-                  name="Add Recipe"
-                />
-                <IconButton
-                  onClick={() =>
-                    submit(null, { action: "/logout", method: "post" })
-                  }
-                  Icon={UserIcon}
-                  name="Logout"
-                />
+                <button
+                  onClick={() => navigate("addrecipe")}
+                  className="bg-zinc-300 bg-opacity-40 text-zinc-800 dark:bg-zinc-800 dark:bg-opacity-40 rounded-2xl dark:text-zinc-200 px-3 py-3 font-extralight hover:bg-opacity-90 transition-all duration-300 inline-flex gap-2 items-center "
+                >
+                  <PlusIcon className="h-5 w-5" /> Add A Recipe
+                </button>
               </NewAppBar>
             </div>
 

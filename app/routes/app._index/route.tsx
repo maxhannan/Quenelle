@@ -1,6 +1,7 @@
 import { SunIcon } from "@heroicons/react/24/outline";
 import type { LoaderArgs } from "@remix-run/node";
 import { useLoaderData, useNavigation } from "@remix-run/react";
+import { User2Icon } from "lucide-react";
 
 import Spinner from "~/components/LoadingSpinner";
 import ListCard from "~/components/display/ListCard";
@@ -27,16 +28,16 @@ function HomeRoute() {
   if (!user) return null;
   return (
     <div className=" container mx-auto max-w-3xl flex flex-col  gap-2 mt-3  items-center mb-28">
-      <div className="text-4xl md:text-4xl  gap-2 items-center  w-full flex justify-between    dark:text-neutral-200  font-bold text-neutral-600 rounded-xl ">
+      <div className="text-4xl md:text-4xl  gap-2 items-center  w-full flex justify-between    dark:text-neutral-200  font-bold text-neutral-600 rounded-2xl ">
         <div>
           <h1>Hi {user.firstName}!</h1>
           <h2 className="text-base text-zinc-600">Welcome to your kitchen.</h2>
         </div>
         <div
-          className={`bg-indigo-500  text-zinc-200 trasition-all duration-300 inline-flex h-14 w-14 group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center  justify-center  overflow-hidden   rounded-2xl   `}
+          className={` trasition-all duration-300 inline-flex h-14 w-14 dark:bg-zinc-800 bg-zinc-700 text-zinc-200 dark:text-zinc-300 group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center  justify-center  overflow-hidden   rounded-full   `}
         >
-          <span className=" text-3xl  ">
-            {user.firstName[0].toLowerCase() + user.lastName[0].toLowerCase()}
+          <span className=" text-2xl font-base ">
+            <User2Icon />
           </span>
         </div>
       </div>

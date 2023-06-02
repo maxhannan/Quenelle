@@ -1,6 +1,11 @@
 import React from "react";
 import { usePrepList } from "../app.prep.$id/route";
-import { Form, useNavigate, useNavigation } from "@remix-run/react";
+import {
+  Form,
+  ShouldRevalidateFunction,
+  useNavigate,
+  useNavigation,
+} from "@remix-run/react";
 import Spinner from "~/components/LoadingSpinner";
 import Accordion from "~/components/display/Accordion";
 import SearchBar from "~/components/formInputs/SearchBar";
@@ -18,19 +23,13 @@ export const action: ActionFunction = async ({ request }) => {
   const inv = data.get("inv") as string;
   const prep = data.get("prep") as string;
   const completed = data.get("completed") as string;
-  console.log({
-    id,
-    onHand: inv,
-    prepQty: prep,
-    completed: completed === "yes" ? true : false,
-  });
 
   const updatedTask = await updateTask(id, {
     onHand: inv,
     prepQty: prep,
     completed: completed === "yes" ? true : false,
   });
-
+  if (!updatedTask) return null;
   return updatedTask;
 };
 

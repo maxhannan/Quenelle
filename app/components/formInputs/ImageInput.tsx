@@ -8,7 +8,7 @@ const ImageInput = () => {
         multiple
         accept="image/png, image/jpeg"
         name="uploadedImage"
-        className="file:dark:text-neutral-200 h-12 file:border-none font-light file:font-light file:hover:text-neutral-200 bg-opacity-50 dark:bg-opacity-50 text-neutral-800 file:mr-4 dark:text-neutral-200 dark:bg-neutral-800 file:px-2 p-0 file:text-lg inline-flex file:h-full text-lg dark:border-neutral-700 border-neutral-300 border bg-neutral-200 file:dark:bg-indigo-500 file:bg-indigo-500 file:text-neutral-200 file:transition-all file:duration-200 file:hover:bg-indigo-400 rounded-2xl overflow-hidden file:rounded-r-2xl"
+        className="file:dark:text-neutral-200 h-12 file:border-none font-light file:font-light file:hover:text-neutral-200 bg-opacity-50 dark:bg-opacity-50 text-neutral-800 file:mr-4 dark:text-neutral-200 dark:bg-neutral-800 file:px-2 p-0 file:text-lg inline-flex file:h-full text-lg dark:border-neutral-700 border-neutral-300 border bg-neutral-200 file:dark:bg-indigo-500 file:bg-indigo-500 file:text-neutral-200 file:transition-all file:duration-200 file:hover:bg-indigo-400 rounded-full overflow-hidden file:rounded-r-full"
       />
       <p
         className=" text-sm text-neutral-500 dark:text-neutral-300 my-1 ml-1"
