@@ -27,6 +27,7 @@ import {
   updateRecipe,
 } from "~/utils/recipes.server";
 import Spinner from "~/components/LoadingSpinner";
+import { useToast } from "~/components/ui/use-toast";
 
 export const loader = async () => {
   const recipes = await getRecipes();
@@ -58,6 +59,7 @@ const EditRecipeRoute: FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const [imageLoading, setImageLoading] = useState(false);
   const submit = useSubmit();
+  const { toast } = useToast();
   const [imageList, setImageList] = useState<string[]>(
     recipe && recipe.images ? recipe.images : []
   );
@@ -103,6 +105,9 @@ const EditRecipeRoute: FC = () => {
   useEffect(() => {
     if (data !== undefined) {
       revalidator.revalidate();
+      toast({
+        title: `${recipe!.name} has been updated`,
+      });
       navigate(`/app/recipes/${data}`, { replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

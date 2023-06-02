@@ -37,7 +37,7 @@ const CustomModal = ({ children, isOpen, setIsOpen }: Props) => {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <Dialog.Panel className=" max-w-md w-full rounded-xl  bg-neutral-200 dark:bg-neutral-900">
+            <Dialog.Panel className=" max-w-md w-full rounded-xl  bg-neutral-100 dark:bg-neutral-900">
               {children}
             </Dialog.Panel>
           </Transition.Child>

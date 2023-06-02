@@ -21,6 +21,9 @@ import AppBar from "~/components/navigation/AppBar";
 import { getRecipes } from "~/utils/recipes.server";
 import { getUser } from "~/utils/auth.server";
 import { useEffect, useState } from "react";
+import { useToast } from "~/components/ui/use-toast";
+import SlideDownTransition from "~/components/animations/SlideDown";
+import { Transition } from "@headlessui/react";
 export async function loader({ params }: LoaderArgs) {
   const id = params.id;
 
@@ -56,27 +59,37 @@ function EditTemplateRoute() {
   const navigation = useNavigation();
   const navigate = useNavigate();
   const data = useActionData();
+  const { toast } = useToast();
   useEffect(() => {
     if (data !== undefined) {
-      setSuccess(true);
+      toast({
+        title: "Successfully updated prep list!",
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  if (navigation.state === "loading" || navigation.state === "submitting") {
-    return (
-      <div className="h-screen  flex items-center justify-center">
-        <Spinner size={14} />
-      </div>
-    );
-  }
+  // if (navigation.state === "loading" || navigation.state === "submitting") {
+  //   return (
+  //     <div className="h-screen  flex items-center justify-center">
+  //       <Spinner size={14} />
+  //     </div>
+  //   );
+  // }
+
   return (
     <div className="mb-28 container max-w-4xl mx-auto">
-      {success && (
-        <div className="bg-green-500 p-3 text-zinc-200 rounded-2xl mt-1 text-xl">
-          Successfully updated prep list!
-        </div>
-      )}
+      {navigation.state === "loading" ||
+        (navigation.state === "submitting" && (
+          <div
+            className="fixed inset-0 bg-white/90 dark:bg-black/90 z-50"
+            aria-hidden="true"
+          >
+            <div className="w-screen h-screen  flex justify-center items-center">
+              <Spinner size={14} />
+            </div>
+          </div>
+        ))}
       <Form method="post">
         <AppBar textSize="text-3xl md:text-4xl" page="Add a Prep List">
           <IconButton Icon={CheckCircleIcon} name="Submit" type="submit" />

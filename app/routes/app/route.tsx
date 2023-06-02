@@ -4,6 +4,7 @@ import BottomNav from "~/components/navigation/BottomNav";
 import ErrorBoundaryLayout from "./ErrorBoundary";
 import type { LoaderArgs } from "@remix-run/node";
 import { getUser, requireUserId } from "~/utils/auth.server";
+import { Toaster } from "~/components/ui/toaster";
 
 export function ErrorBoundary() {
   return <ErrorBoundaryLayout />;
@@ -24,13 +25,16 @@ const AppLayout = () => {
     setPage(location.pathname.split("/")[2]);
   }, [location]);
   return (
-    <div className="  ">
-      <div className="px-3 lg:px-0 scrollbar-thin scrollbar-track-red-300">
-        <Outlet />
-      </div>
+    <>
+      <div className="  ">
+        <div className="px-3 lg:px-0 scrollbar-thin scrollbar-track-red-300">
+          <Outlet />
+        </div>
 
-      <BottomNav page={page} setPage={setPage} />
-    </div>
+        <BottomNav page={page} setPage={setPage} />
+      </div>
+      <Toaster />
+    </>
   );
 };
 
