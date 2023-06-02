@@ -96,7 +96,7 @@ const RecipeForm: FC<Props> = ({
             </div>
           )}
           <div className="grid grid-cols-6 gap-x-2  ">
-            <div className="col-span-2">
+            <div className="col-span-3">
               <TextInput
                 placeholder="Yield"
                 type="number"
@@ -104,7 +104,7 @@ const RecipeForm: FC<Props> = ({
                 initValue={recipeValues.yieldAmt}
               />
             </div>
-            <div className="relative col-span-4">
+            <div className="relative col-span-3">
               <ComboBox
                 name="yieldUnit"
                 placeholder="Unit"
