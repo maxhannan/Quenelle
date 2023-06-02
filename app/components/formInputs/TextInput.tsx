@@ -30,7 +30,7 @@ const TextInput: FC<TextInputProps> = ({
       {disabled && <input type="hidden" name={rest.name} value={value} />}
       <input
         {...rest}
-        className={`rounded-2xl font-light  bg-transparent  focus:ring-neutral-500  border relative h-12 w-full p-2 pl-4 text-xl  appearance-none  focus:ring-2 focus:outline-none focus:border-none     placeholder-neutral-500   dark:placeholder-neutral-400   ${
+        className={`rounded-full font-light  bg-zinc-200 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40  focus:ring-neutral-500  border relative h-12 w-full p-2 pl-4 text-xl  appearance-none  focus:ring-2 focus:outline-none focus:border-none     placeholder-neutral-500   dark:placeholder-neutral-400   ${
           error
             ? "border-2 border-red-400 text-zinc-800 dark:text-zinc-50 "
             : disabled

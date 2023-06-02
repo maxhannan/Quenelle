@@ -78,7 +78,7 @@ const ComboBox: FC<Props> = ({
           <Combobox.Input
             required={required}
             name={name}
-            className="rounded-2xl pr-8 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none bg-zinc-100  focus:ring-2   font-light border relative  border-zinc-300 dark:border-zinc-700 h-12 w-full p-2 pl-4 text-xl text-zinc-800 dark:bg-zinc-900      placeholder-neutral-500   dark:placeholder-neutral-400 dark:text-neutral-50   "
+            className="rounded-full pr-8  bg-zinc-200 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none   focus:ring-2   font-light border relative  border-zinc-300 dark:border-zinc-700 h-12 w-full p-2 pl-4 text-xl text-zinc-800      placeholder-zinc-500   dark:placeholder-zinc-400 dark:text-zinc-50   "
             onChange={(event) => setQuery(event.target.value)}
             placeholder={placeholder}
             displayValue={
@@ -95,7 +95,7 @@ const ComboBox: FC<Props> = ({
           ) : (
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
               <ChevronDownIcon
-                className="h-5 w-5 text-neutral-700"
+                className="h-5 w-5 text-zinc-700"
                 aria-hidden="true"
               />
             </Combobox.Button>
@@ -110,15 +110,15 @@ const ComboBox: FC<Props> = ({
         >
           <Combobox.Options
             ref={optionsRef}
-            className="absolute mt-2 bg-zinc-100 z-50 dark:bg-zinc-800 rounded-2xl  overflow-auto max-h-36 w-full  py-1 text-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none  "
+            className="scrollbar-thin scrollbar-track-zinc-100 dark:scrollbar-track-rounded-2xl dark:scrollbar-track-transparent scrollbar-thumb-zinc-600 dark:scrollbar-thumb-zinc-500 scrollbar-thumb-rounded-2xl absolute mt-2 bg-zinc-100 z-50 dark:bg-zinc-800 rounded-2xl  overflow-auto max-h-36 md:max-h-48 w-full  py-1 text-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none  "
           >
             {allowCustom && query.length > 0 && !checkIfExists(query, options) && (
               <Combobox.Option
                 className={({ active }) =>
                   `relative cursor-default select-none py-2 pl-10 pr-4 ${
                     active
-                      ? "bg-neutral-700  text-neutral-100"
-                      : "dark:text-neutral-300 text-neutral-700"
+                      ? "bg-zinc-700  text-zinc-200"
+                      : "dark:text-zinc-300 text-zinc-700"
                   }`
                 }
                 value={{ id: null, value: query }}
@@ -127,7 +127,7 @@ const ComboBox: FC<Props> = ({
               </Combobox.Option>
             )}
             {!allowCustom && filteredList.length === 0 && query !== "" && (
-              <div className="relative cursor-default select-none py-2 px-4 text-neutral-200">
+              <div className="relative cursor-default select-none py-2 px-4 text-zinc-200">
                 Nothing found.
               </div>
             )}
@@ -136,8 +136,8 @@ const ComboBox: FC<Props> = ({
                 className={({ active }) =>
                   `relative cursor-default select-none py-2 pl-10 pr-4 ${
                     active
-                      ? "bg-neutral-700  text-neutral-100"
-                      : "dark:text-neutral-300 text-neutral-700"
+                      ? "bg-zinc-700  text-zinc-100"
+                      : "dark:text-zinc-300 text-zinc-700"
                   }`
                 }
                 key={option.id}
