@@ -3,7 +3,11 @@ import type { Config } from 'tailwindcss'
 export default {
   content: ["./app/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["Geologica", "sans-serif"],
+      }
+    },
   },
   plugins: [require("@headlessui/tailwindcss"), require("daisyui"),require('tailwind-scrollbar')({ nocompatible: true }),require("tailwindcss-animate")],
   daisyui: {

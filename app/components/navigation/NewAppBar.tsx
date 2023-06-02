@@ -37,7 +37,7 @@ const NewAppBar: FC<Props> = ({
         </nav>
       </SlideDownTransition>
       <h1
-        className={` text-[2.5rem] font-bold mb-4 text-zinc-800 dark:text-zinc-100`}
+        className={` text-[2.4rem] font-bold mb-3 text-zinc-800 dark:text-zinc-100`}
       >
         {page.charAt(0).toUpperCase() + page.slice(1)}
       </h1>

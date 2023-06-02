@@ -29,7 +29,7 @@ const BottomNav = ({ page, setPage }: Props) => {
   };
 
   return (
-    <nav className="fixed z-50 w-[95vw] sm:w-96 p-4 transition-all duration-300  bottom-6 sm:bottom-6 inset-x-0 mx-auto  bg-zinc-800 rounded-full pb-4 sm:pb-4 dark:bg-zinc-800 ">
+    <nav className="fixed z-50 w-[80vw] sm:w-96 py-3 transition-all duration-300  bottom-6 sm:bottom-6 inset-x-0 mx-auto  bg-zinc-800 rounded-full  dark:bg-zinc-200 ">
       <div className="grid h-full max-w-lg  mx-auto grid-cols-5 gap-0">
         <BottomNavButton
           active={page}

@@ -25,6 +25,7 @@ import { redirect } from "@remix-run/node";
 import type { ActionArgs } from "@remix-run/node";
 import { getUser } from "~/utils/auth.server";
 import { createListFromTemplate } from "~/utils/prepList.server";
+import NewAppBar from "~/components/navigation/NewAppBar";
 
 const formatRelativeLocale = {
   lastWeek: "'Last' eeee",
@@ -119,23 +120,19 @@ function PrepListsRoute() {
   }
   return (
     <div className=" container mx-auto max-w-4xl">
-      <nav className=" flex pt-3 pb-1 mx-auto max-h-full items-center justify-between  duration-300 bg-zinc-100 dark:bg-zinc-900 font-light  w-full top-0 left-0  ">
-        <h1 className={`text-4xl mr-6 text-zinc-800 dark:text-zinc-100`}>
-          Prep
-        </h1>
-        <div className="grow flex justify-end gap-2">
-          <div>
-            <PrepCalendar date={date} handleDateChange={handleDateChange} />
-          </div>
-
-          <IconButton
-            Icon={DocumentPlusIcon}
-            name="Add"
-            type="button"
-            onClick={() => setOpenDialog(true)}
-          />
+      <NewAppBar page="Prep">
+        <div>
+          <PrepCalendar date={date} handleDateChange={handleDateChange} />
         </div>
-      </nav>
+
+        <IconButton
+          Icon={DocumentPlusIcon}
+          name="Add"
+          type="button"
+          onClick={() => setOpenDialog(true)}
+        />
+      </NewAppBar>
+
       {navigation.state !== "loading" && (
         <CustomModal isOpen={openDialog} setIsOpen={setOpenDialog}>
           <div className=" p-4 flex flex-col  gap-2">
