@@ -2,7 +2,9 @@ import React from "react";
 import { usePrepList } from "../app.prep.$id/route";
 import {
   Form,
+  Link,
   ShouldRevalidateFunction,
+  useFetcher,
   useNavigate,
   useNavigation,
 } from "@remix-run/react";
@@ -36,7 +38,7 @@ export const action: ActionFunction = async ({ request }) => {
 function PrepListRoute() {
   const navigate = useNavigate();
   const navigation = useNavigation();
-
+  const fetcher = useFetcher();
   const prepList = usePrepList();
 
   if (!prepList) {
@@ -66,6 +68,9 @@ function PrepListRoute() {
       <div className="mb-2 text-lg text-indigo-500 font-mono">
         {new Date(prepList.date).toDateString()}
       </div>
+      <Link to="pdf" reloadDocument>
+        View as PDF
+      </Link>
       <SlideUpTransition>
         <SearchBar
           handleChange={() => (e: string) => console.log(e)}
@@ -102,7 +107,7 @@ function PrepListRoute() {
                   </div>
 
                   {tg.tasks.map((item) => (
-                    <PrepListItem key={item.id} task={item} />
+                    <PrepListItem fetcher={fetcher} key={item.id} task={item} />
                   ))}
                 </Accordion>
               ))}

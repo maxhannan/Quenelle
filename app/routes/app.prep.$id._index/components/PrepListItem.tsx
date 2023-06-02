@@ -2,7 +2,7 @@ import {
   ArrowLongRightIcon,
   CheckBadgeIcon,
 } from "@heroicons/react/24/outline";
-import { useFetcher, NavLink } from "@remix-run/react";
+import { useFetcher, NavLink, FetcherWithComponents } from "@remix-run/react";
 import { XCircleIcon } from "lucide-react";
 import { CheckCircle, CheckCircle2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -10,15 +10,16 @@ import type { FC } from "react";
 import type { TaskType } from "~/utils/prepList.server";
 interface Props {
   task: TaskType;
+  fetcher: FetcherWithComponents<any>;
 }
 
-const PrepListItem: FC<Props> = ({ task }) => {
-  const fetcher = useFetcher();
+const PrepListItem: FC<Props> = ({ task, fetcher }) => {
   const [completed, setCompleted] = useState(task?.completed || false);
   const formRef = useRef<HTMLFormElement>(null);
 
   const firstRender = useRef(true);
-  async function handleSubmit() {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement> | undefined) {
+    e && e.preventDefault();
     console.log("submitting");
     fetcher.submit(formRef.current!);
   }
@@ -28,14 +29,20 @@ const PrepListItem: FC<Props> = ({ task }) => {
       firstRender.current = false;
       return;
     }
-    handleSubmit();
+    handleSubmit(undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [completed]);
 
   if (!task) return null;
 
   return (
-    <fetcher.Form method="POST" ref={formRef}>
+    <fetcher.Form
+      method="POST"
+      ref={formRef}
+      onBlur={(e) => {
+        handleSubmit(e);
+      }}
+    >
       <div
         className={`max-w-full border transition-all duration-300  bg-opacity-50 dark:bg-opacity-50 rounded-xl  py-2 px-2 grid grid-cols-10 gap-1     ${
           completed
@@ -77,9 +84,6 @@ const PrepListItem: FC<Props> = ({ task }) => {
             className={`rounded-xl bg-opacity-50 dark:bg-opacity-50  text-zinc-800 dark:text-zinc-50 border-zinc-300 dark:border-zinc-700  dark:bg-zinc-800 bg-zinc-200 rounded-bl-xl focus:ring-zinc-500  border relative    h-10 w-full p-2 pl-2 text-base font-light appearance-none  focus:ring-2 focus:outline-none focus:border-none     placeholder-zinc-500   dark:placeholder-zinc-400 `}
             placeholder={"Inv"}
             defaultValue={task.onHand ? task.onHand : ""}
-            onBlur={(e) => {
-              handleSubmit();
-            }}
           />
         </div>
         <div className="col-span-2 lg:col-span-1 flex items-center justify-center">
@@ -90,9 +94,6 @@ const PrepListItem: FC<Props> = ({ task }) => {
             className={`rounded-xl bg-opacity-50 dark:bg-opacity-50  text-zinc-800 dark:text-zinc-50 border-zinc-300 dark:border-zinc-700  dark:bg-zinc-800 bg-zinc-200 rounded-bl-xl focus:ring-zinc-500  border relative    h-10 w-full p-2 pl-2 text-base font-light appearance-none  focus:ring-2 focus:outline-none focus:border-none     placeholder-zinc-500   dark:placeholder-zinc-400 `}
             placeholder={"Prep"}
             defaultValue={task.prepQty ? task.prepQty : ""}
-            onChange={(e) => {
-              handleSubmit();
-            }}
           />
         </div>
         <div className="col-span-1  flex items-center justify-center ">
