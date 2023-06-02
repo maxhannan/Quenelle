@@ -17,10 +17,10 @@ const BottomNavButton = ({ handleNav, active, Icon, path }: Props) => {
       className="inline-flex flex-col items-center justify-center px-5 rounded-l-lg   group"
     >
       <div
-        className={` transition-all duration-300 w-14 h-14 flex items-center justify-center rounded-2xl ${
+        className={` transition-all duration-300 w-14 h-14 flex items-center justify-center rounded-full ${
           active === path
-            ? "dark:bg-indigo-500 bg-indigo-500 text-zinc-200 dark:text-zinc-900  "
-            : "dark:bg-zinc-800 bg-zinc-200 text-zinc-800 dark:text-zinc-400 "
+            ? "dark:bg-indigo-500 bg-zinc-300 text-zinc-800 dark:text-zinc-900  "
+            : "dark:bg-zinc-800 bg-zinc-800 text-zinc-200 dark:text-zinc-400 "
         } `}
       >
         <Icon className={"  w-8 h-8   "} />

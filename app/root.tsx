@@ -47,7 +47,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="bg-zinc-100 dark:bg-zinc-900 overflow-y-scroll scrollbar-thin scrollbar-track-zinc-100 dark:scrollbar-track-zinc-900 scrollbar-thumb-indigo-500 dark:scrollbar-thumb-indigo-500 scrollbar-thumb-rounded-2xl">
+      <body className="bg-zinc-100 dark:bg-zinc-900 overflow-y-scroll scrollbar-thin scrollbar-track-zinc-100 dark:scrollbar-track-zinc-900 scrollbar-thumb-zinc-600 dark:scrollbar-thumb-zinc-500 scrollbar-thumb-rounded-2xl">
         <Outlet />
         <ScrollRestoration />
         <Scripts />

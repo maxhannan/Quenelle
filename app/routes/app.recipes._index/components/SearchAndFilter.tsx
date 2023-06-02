@@ -108,7 +108,7 @@ const SearchAndFilter: FC<Props> = ({
             type="button"
             onClick={() => setOpenFilter(!openFilter)}
             className={`${
-              openFilter ? "rounded-xl rounded-bl-md " : "rounded-xl"
+              openFilter ? "rounded-full " : "rounded-full"
             } duration-300 text-neutral-700 bg-opacity-50 dark:bg-opacity-50  border dark:border-zinc-700 border-zinc-300 transition-all h-12 w-12  hover:bg-zinc-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-zinc-300 font-medium   text-sm p-2.5 text-center inline-flex items-center dark:text-neutral-500  dark:hover:text-white dark:focus:ring-neutral-800 dark:hover:bg-neutral-500`}
           >
             {openFilter ? (

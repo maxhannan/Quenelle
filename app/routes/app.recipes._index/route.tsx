@@ -12,6 +12,7 @@ import AppBar from "~/components/navigation/AppBar";
 import IconButton from "~/components/buttons/IconButton";
 import { DocumentPlusIcon, UserIcon } from "@heroicons/react/24/outline";
 import SearchAndFilter from "./components/SearchAndFilter";
+import NewAppBar from "~/components/navigation/NewAppBar";
 
 export default function RecipesIndex() {
   const { recipes, filteredRecipes, categories } = useRecipes();
@@ -37,7 +38,7 @@ export default function RecipesIndex() {
         <div className="grid grid-cols-1   ">
           <div>
             <div className=" ">
-              <AppBar page={"Recipes"}>
+              <NewAppBar page={"Recipes"}>
                 <IconButton
                   onClick={() => navigate("/app/recipes/addrecipe")}
                   Icon={DocumentPlusIcon}
@@ -50,7 +51,7 @@ export default function RecipesIndex() {
                   Icon={UserIcon}
                   name="Logout"
                 />
-              </AppBar>
+              </NewAppBar>
             </div>
 
             <div className=" ">

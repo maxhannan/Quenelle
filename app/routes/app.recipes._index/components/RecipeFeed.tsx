@@ -3,6 +3,7 @@ import type { FullRecipes } from "~/utils/recipes.server";
 import ListCard from "~/components/display/ListCard";
 import { useLocation } from "@remix-run/react";
 import { useEffect, useState } from "react";
+import RecipeCard from "~/components/display/RecipesCard";
 
 export default function RecipeFeed({ recipes }: { recipes: FullRecipes }) {
   const location = useLocation();
@@ -14,11 +15,11 @@ export default function RecipeFeed({ recipes }: { recipes: FullRecipes }) {
     setActive(location.pathname.split("/").slice(-1)[0]);
   }, [location]);
   return (
-    <div className="grid z-0 relative grid-flow-row  auto-rows-max gap-y-2  mx-auto  mb-32 ">
+    <div className="grid z-0 relative grid-flow-row  auto-rows-max gap-y-1  mx-auto  mb-32 ">
       {recipes && recipes.length > 0 ? (
         recipes.map((r) => (
           <div key={r.id} onClick={() => setActive(r.id)}>
-            <ListCard
+            <RecipeCard
               to={`/app/recipes/${r.id}`}
               name={r.name}
               active={active === r.id}

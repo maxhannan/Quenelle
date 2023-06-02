@@ -19,14 +19,14 @@ const ListCard: FC<Props> = ({ subHeading, user, name, to, active }) => {
         active
           ? "border-indigo-500 dark:border-indigo-500"
           : "border-zinc-300 dark:border-zinc-700"
-      }  w-full  max-h-full group  border  hover:dark:bg-zinc-800 rounded-2xl p-2 pr-3 flex justify-start items-center  hover:bg-zinc-300   transition-all duration-300`}
+      }  w-full  max-h-full group   bg-zinc-200 bg-opacity-50 border hover:dark:bg-zinc-800 rounded-2xl p-2 pr-3 flex justify-start items-center  hover:bg-zinc-300   transition-all duration-300`}
     >
       <div
         className={`${
           active
             ? "bg-indigo-500 text-zinc-200"
-            : "dark:bg-zinc-800 bg-zinc-100 text-zinc-800 dark:text-zinc-300 "
-        } trasition-all duration-300 inline-flex group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center mr-4 justify-center w-14 h-14 overflow-hidden  border-indigo-400 rounded-2xl  border dark:border-indigo-500`}
+            : "dark:bg-zinc-800 bg-zinc-700 text-zinc-200 dark:text-zinc-300 "
+        } trasition-all duration-300 inline-flex group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center mr-4 justify-center w-14 h-14 overflow-hidden hover:border-indigo-500 border-zinc-500 rounded-full  border dark:border-indigo-500`}
       >
         <span className=" text-2xl font-semibold lg:text-2xl ">
           {user.toLowerCase()}
