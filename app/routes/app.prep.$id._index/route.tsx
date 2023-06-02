@@ -18,7 +18,8 @@ import PrepListItem from "./components/PrepListItem";
 import type { ActionFunction } from "@remix-run/node";
 import { updateTask } from "~/utils/prepList.server";
 import SlideUpTransition from "~/components/animations/SlideUp";
-
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 export const action: ActionFunction = async ({ request }) => {
   const data = await request.formData();
   const id = data.get("id") as string;
@@ -40,6 +41,22 @@ function PrepListRoute() {
   const navigation = useNavigation();
   const fetcher = useFetcher();
   const prepList = usePrepList();
+
+  const getPdf = async () => {
+    const doc = new jsPDF();
+    autoTable(doc, {
+      head: [["Name", "Email", "Country"]],
+      body: [
+        ["David", "david@example.com", "Sweden"],
+        ["Castille", "castille@example.com", "Spain"],
+        // ...
+      ],
+    });
+
+    doc.save("table.pdf");
+
+    return doc;
+  };
 
   if (!prepList) {
     return null;
@@ -68,9 +85,10 @@ function PrepListRoute() {
       <div className="mb-2 text-lg text-indigo-500 font-mono">
         {new Date(prepList.date).toDateString()}
       </div>
-      <Link to="pdf" reloadDocument>
+      {/* <Link to="pdf" reloadDocument>
         View as PDF
-      </Link>
+      </Link> */}
+      <button onClick={getPdf}>Get PDF</button>
       <SlideUpTransition>
         <SearchBar
           handleChange={() => (e: string) => console.log(e)}
