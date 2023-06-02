@@ -16,6 +16,7 @@ import { useNavigation } from "@remix-run/react";
 import IngredientsSection from "./RecipeFormSections/IngredientsSection";
 import RecipeStepSection from "./RecipeFormSections/RecipeStepSection";
 import { v4 } from "uuid";
+import SlideUpTransition from "../animations/SlideUp";
 
 interface Props {
   recipe?: FullRecipe;
@@ -49,113 +50,115 @@ const RecipeForm: FC<Props> = ({
       };
   console.log({ recipeValues });
   return (
-    <div>
-      <div className="flex flex-col gap-y-2 mb-32 ">
-        <div className="flex flex-col gap-y-2 ">
-          <div>
-            <TextInput
-              name="recipeName"
-              placeholder="Recipe Name"
-              initValue={recipeValues.name}
-            />
-          </div>
-          <div>
-            <ComboBox
-              name="category"
-              placeholder="Category"
-              allowCustom
-              initValue={recipeValues.category}
-              options={categories.map((c) => ({
-                id: c,
-                value: c,
-              }))}
-            />
-          </div>
-          <ImageInput />
-          {imageList && imageList.length > 0 && (
-            <div className="w-full flex flex-wrap  items-center justify-start gap-2 py-2 ">
-              {imageList.map((image) => (
-                <div key={image} className="relative ">
-                  <div className="relative  w-[80px] h-[56px] overflow-hidden  rounded-xl ">
-                    <img
-                      className=" object-cover"
-                      src={[IMAGE_URL, image, "icon"].join("/")}
-                      alt="Default avatar"
-                    />
-                  </div>
-                  <span
-                    onClick={() =>
-                      handleDeleteImage && handleDeleteImage(image)
-                    }
-                    className="-top-1 -right-1 absolute  w-5 h-5 bg-red-500 rounded-full flex justify-center items-center hover:bg-red-700 hover:text-neutral-100 transition-all duration-200"
-                  >
-                    <XMarkIcon className="w-3 h-3" />
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-          <div className="grid grid-cols-6 gap-x-2  ">
-            <div className="col-span-3">
+    <SlideUpTransition>
+      <div>
+        <div className="flex flex-col gap-y-2 mb-32 ">
+          <div className="flex flex-col gap-y-2 ">
+            <div>
               <TextInput
-                placeholder="Yield"
-                type="number"
-                name="yieldAmt"
-                initValue={recipeValues.yieldAmt}
+                name="recipeName"
+                placeholder="Recipe Name"
+                initValue={recipeValues.name}
               />
             </div>
-            <div className="relative col-span-3">
+            <div>
               <ComboBox
-                name="yieldUnit"
-                placeholder="Unit"
+                name="category"
+                placeholder="Category"
                 allowCustom
-                initValue={recipeValues.yieldUnit}
-                options={unitsList}
+                initValue={recipeValues.category}
+                options={categories.map((c) => ({
+                  id: c,
+                  value: c,
+                }))}
+              />
+            </div>
+            <ImageInput />
+            {imageList && imageList.length > 0 && (
+              <div className="w-full flex flex-wrap  items-center justify-start gap-2 py-2 ">
+                {imageList.map((image) => (
+                  <div key={image} className="relative ">
+                    <div className="relative  w-[80px] h-[56px] overflow-hidden  rounded-xl ">
+                      <img
+                        className=" object-cover"
+                        src={[IMAGE_URL, image, "icon"].join("/")}
+                        alt="Default avatar"
+                      />
+                    </div>
+                    <span
+                      onClick={() =>
+                        handleDeleteImage && handleDeleteImage(image)
+                      }
+                      className="-top-1 -right-1 absolute  w-5 h-5 bg-red-500 rounded-full flex justify-center items-center hover:bg-red-700 hover:text-neutral-100 transition-all duration-200"
+                    >
+                      <XMarkIcon className="w-3 h-3" />
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+            <div className="grid grid-cols-6 gap-x-2  ">
+              <div className="col-span-3">
+                <TextInput
+                  placeholder="Yield"
+                  type="number"
+                  name="yieldAmt"
+                  initValue={recipeValues.yieldAmt}
+                />
+              </div>
+              <div className="relative col-span-3">
+                <ComboBox
+                  name="yieldUnit"
+                  placeholder="Unit"
+                  allowCustom
+                  initValue={recipeValues.yieldUnit}
+                  options={unitsList}
+                />
+              </div>
+            </div>
+            <div className="relative col-span-6">
+              <MultiSelect
+                name="allergies"
+                initialValue={recipeValues.allergens}
+                options={allergens}
               />
             </div>
           </div>
-          <div className="relative col-span-6">
-            <MultiSelect
-              name="allergies"
-              initialValue={recipeValues.allergens}
-              options={allergens}
+          <IngredientsSection
+            recipes={recipes}
+            ingredients={recipeValues.ingredients}
+          />
+          <RecipeStepSection stepsArr={recipeValues.steps} />
+          {recipe ? (
+            <LoadingButton
+              loading={
+                navigation.state === "submitting" ||
+                navigation.state === "loading" ||
+                formLoading
+              }
+              type="submit"
+              buttonName="updateRecipe"
+              buttonText="Update Recipe"
+              loadingText="Updating..."
+              Icon={ArrowPathIcon}
             />
-          </div>
+          ) : (
+            <LoadingButton
+              loading={
+                navigation.state === "submitting" ||
+                navigation.state === "loading" ||
+                formLoading
+              }
+              type="submit"
+              buttonName="addRecipe"
+              buttonText="Add Recipe"
+              loadingText="Adding..."
+              Icon={PlusCircleIcon}
+            />
+          )}
         </div>
-        <IngredientsSection
-          recipes={recipes}
-          ingredients={recipeValues.ingredients}
-        />
-        <RecipeStepSection stepsArr={recipeValues.steps} />
-        {recipe ? (
-          <LoadingButton
-            loading={
-              navigation.state === "submitting" ||
-              navigation.state === "loading" ||
-              formLoading
-            }
-            type="submit"
-            buttonName="updateRecipe"
-            buttonText="Update Recipe"
-            loadingText="Updating..."
-            Icon={ArrowPathIcon}
-          />
-        ) : (
-          <LoadingButton
-            loading={
-              navigation.state === "submitting" ||
-              navigation.state === "loading" ||
-              formLoading
-            }
-            type="submit"
-            buttonName="addRecipe"
-            buttonText="Add Recipe"
-            loadingText="Adding..."
-            Icon={PlusCircleIcon}
-          />
-        )}
       </div>
-    </div>
+    </SlideUpTransition>
   );
 };
 

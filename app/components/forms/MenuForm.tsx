@@ -4,6 +4,7 @@ import TextInput from "../formInputs/TextInput";
 import type { getMenuById } from "~/utils/menus.server";
 import ComboBox from "../formInputs/ComboBox";
 import MenuSections from "./MenuFormSections/MenuSections";
+import SlideUpTransition from "../animations/SlideUp";
 
 interface Props {
   dishes: Awaited<ReturnType<typeof getDishes>>;
@@ -20,31 +21,33 @@ const MenuForm: FC<Props> = ({ dishes, menu, services }) => {
         service: undefined,
       };
   return (
-    <div className="flex flex-col gap-3 mt-2 relative">
-      <TextInput
-        name="menuName"
-        placeholder="Menu Name"
-        initValue={menuValue.name}
-      />
-      <ComboBox
-        name="service"
-        placeholder="Service"
-        allowCustom
-        initValue={
-          menuValue.service
-            ? { id: menuValue.service, value: menuValue.service }
-            : undefined
-        }
-        options={services.map((c) => ({
-          id: c,
-          value: c,
-        }))}
-      />
-      <MenuSections
-        dishes={dishes}
-        menuSections={menu ? menu.sections : undefined}
-      />
-    </div>
+    <SlideUpTransition>
+      <div className="flex flex-col gap-3 mt-2 relative">
+        <TextInput
+          name="menuName"
+          placeholder="Menu Name"
+          initValue={menuValue.name}
+        />
+        <ComboBox
+          name="service"
+          placeholder="Service"
+          allowCustom
+          initValue={
+            menuValue.service
+              ? { id: menuValue.service, value: menuValue.service }
+              : undefined
+          }
+          options={services.map((c) => ({
+            id: c,
+            value: c,
+          }))}
+        />
+        <MenuSections
+          dishes={dishes}
+          menuSections={menu ? menu.sections : undefined}
+        />
+      </div>
+    </SlideUpTransition>
   );
 };
 

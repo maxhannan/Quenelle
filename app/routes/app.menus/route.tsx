@@ -10,6 +10,7 @@ import MenuButtons from "./components/MenuButtons";
 import IconButton from "~/components/buttons/IconButton";
 import { DocumentPlusIcon } from "@heroicons/react/24/outline";
 import SlideDownTransition from "~/components/animations/SlideDown";
+import FadeIn from "~/components/animations/FadeIn";
 
 export default function MenusLayout() {
   const navigate = useNavigate();

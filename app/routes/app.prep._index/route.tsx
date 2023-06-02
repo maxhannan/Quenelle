@@ -26,6 +26,7 @@ import type { ActionArgs } from "@remix-run/node";
 import { getUser } from "~/utils/auth.server";
 import { createListFromTemplate } from "~/utils/prepList.server";
 import NewAppBar from "~/components/navigation/NewAppBar";
+import FadeIn from "~/components/animations/FadeIn";
 
 const formatRelativeLocale = {
   lastWeek: "'Last' eeee",
@@ -224,63 +225,67 @@ function PrepListsRoute() {
           </div>
         </CustomModal>
       )}
-      <div className="flex flex-col gap-3 mt-2">
-        <SearchBar
-          handleChange={() => (e: string) => console.log(e)}
-          value={""}
-          loading={false}
-        />{" "}
-        <div className="flex w-full items-center justify-between bg-zinc-200 rounded-full border h-12 border-zinc-300  dark:bg-zinc-800 dark:bg-opacity-50 dark:border-zinc-700 overflow-hidden">
-          <button
-            onClick={() => date && handleDateChange(add(date, { days: -1 }))}
-            className="h-12 w-12 hover:text-zinc-600 hover:bg-opacity-70 text-zinc-700 dark:hover:text-zinc-400 dark:text-zinc-200 flex items-center justify-center dark:border-zinc-700 border-zinc-300 rounded-full bg-zinc-300 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40"
-          >
-            <ArrowLeftIcon className="w-6 h-6 " />
-          </button>
-          <span
-            className={`text-xl  text-zinc-700 dark:text-zinc-100 font-normal flex items-center justify-center text-center `}
-          >
-            {date &&
-              formatRelative(date, new Date(), { locale, weekStartsOn: 6 })}
-          </span>
-          <button
-            onClick={() => date && handleDateChange(add(date, { days: 1 }))}
-            className="h-12 w-12 hover:text-zinc-600 hover:bg-opacity-70 text-zinc-700 dark:text-zinc-300 flex items-center justify-center dark:border-zinc-700 border-zinc-300 rounded-full bg-zinc-300 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40"
-          >
-            <ArrowRightIcon className="w-6 h-6" />
-          </button>
-        </div>
-        <div className="grid z-0 relative grid-flow-row  auto-rows-max gap-y-2  mx-auto mb-28 w-full ">
-          {navigation.state === "loading" && !pageChangeLoading ? (
-            <div className="flex justify-center mt-4 ">
-              <Spinner size={14} />
-            </div>
-          ) : (
-            <div className="flex flex-col gap-3  w-full">
-              <div className="grid z-0 relative grid-flow-row  auto-rows-max gap-y-2  mx-auto mb-28 w-full ">
-                {prepListsToday && prepListsToday.length > 0 ? (
-                  prepListsToday.map((pl) => (
-                    <ListCard
-                      key={pl.id}
-                      to={pl.id}
-                      name={pl.name}
-                      subHeading={`Created: ${format(
-                        new Date(pl.createdAt),
-                        "PP"
-                      )}`}
-                      user="MH"
-                    />
-                  ))
-                ) : (
-                  <h2 className="text-2xl text-zinc-700 dark:text-zinc-100 font-light text-center">
-                    Nothing Found
-                  </h2>
-                )}
+      <FadeIn>
+        <div className="flex flex-col gap-3 mt-2">
+          <SearchBar
+            handleChange={() => (e: string) => console.log(e)}
+            value={""}
+            loading={false}
+          />{" "}
+          <div className="flex w-full items-center justify-between bg-zinc-200 rounded-full border h-12 border-zinc-300  dark:bg-zinc-800 dark:bg-opacity-50 dark:border-zinc-700 overflow-hidden">
+            <button
+              onClick={() => date && handleDateChange(add(date, { days: -1 }))}
+              className="h-12 w-12 hover:text-zinc-600 hover:bg-opacity-70 text-zinc-700 dark:hover:text-zinc-400 dark:text-zinc-200 flex items-center justify-center dark:border-zinc-700 border-zinc-300 rounded-full bg-zinc-300 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40"
+            >
+              <ArrowLeftIcon className="w-6 h-6 " />
+            </button>
+            <span
+              className={`text-xl  text-zinc-700 dark:text-zinc-100 font-normal flex items-center justify-center text-center `}
+            >
+              {date &&
+                formatRelative(date, new Date(), { locale, weekStartsOn: 6 })}
+            </span>
+            <button
+              onClick={() => date && handleDateChange(add(date, { days: 1 }))}
+              className="h-12 w-12 hover:text-zinc-600 hover:bg-opacity-70 text-zinc-700 dark:text-zinc-300 flex items-center justify-center dark:border-zinc-700 border-zinc-300 rounded-full bg-zinc-300 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40"
+            >
+              <ArrowRightIcon className="w-6 h-6" />
+            </button>
+          </div>
+          <div className="grid z-0 relative grid-flow-row  auto-rows-max gap-y-2  mx-auto mb-28 w-full ">
+            {navigation.state === "loading" && !pageChangeLoading ? (
+              <div className="flex justify-center mt-4 ">
+                <Spinner size={14} />
               </div>
-            </div>
-          )}
+            ) : (
+              <div className="flex flex-col gap-3  w-full">
+                <FadeIn>
+                  <div className="grid z-0 relative grid-flow-row  auto-rows-max gap-y-2  mx-auto mb-28 w-full ">
+                    {prepListsToday && prepListsToday.length > 0 ? (
+                      prepListsToday.map((pl) => (
+                        <ListCard
+                          key={pl.id}
+                          to={pl.id}
+                          name={pl.name}
+                          subHeading={`Created: ${format(
+                            new Date(pl.createdAt),
+                            "PP"
+                          )}`}
+                          user="MH"
+                        />
+                      ))
+                    ) : (
+                      <h2 className="text-2xl text-zinc-700 dark:text-zinc-100 font-light text-center">
+                        Nothing Found
+                      </h2>
+                    )}
+                  </div>
+                </FadeIn>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </FadeIn>
     </div>
   );
 }

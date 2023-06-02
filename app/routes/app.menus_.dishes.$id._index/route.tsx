@@ -15,6 +15,7 @@ import Carousel from "~/components/display/Carousel";
 import Spinner from "~/components/LoadingSpinner";
 import Chip from "~/components/display/Chip";
 import ListCard from "~/components/display/ListCard";
+import SlideUpTransition from "~/components/animations/SlideUp";
 
 function DishIndex() {
   const dish = useDish();
@@ -62,102 +63,103 @@ function DishIndex() {
       {dish.images.length > 0 && (
         <Carousel isOpen={isOpen} setIsOpen={setIsOpen} imgSrcs={dish.images} />
       )}
-
-      <div className="text-3xl   w-full items-center flex justify-between mb-4  dark:text-zinc-200  font-bold text-zinc-600 rounded-xl ">
-        <div>{dish.name}</div>
-      </div>
-      <div className="grid grid-cols-1 gap-2">
-        <div className="flex flex-col gap-2">
-          <div className="flex  gap-2 flex-wrap rounded-xl bg-zinc-100 border border-zinc-200 dark:bg-zinc-900 dark:border-zinc-700 p-2  ">
-            {dish.allergens &&
-              dish.allergens.length > 0 &&
-              dish.allergens.map((a) => <Chip key={a} content={a} />)}
+      <SlideUpTransition>
+        <div className="text-3xl   w-full items-center flex justify-between mb-4  dark:text-zinc-200  font-bold text-zinc-600 rounded-xl ">
+          <div>{dish.name}</div>
+        </div>
+        <div className="grid grid-cols-1 gap-2">
+          <div className="flex flex-col gap-2">
+            <div className="flex  gap-2 flex-wrap rounded-xl bg-zinc-100 border border-zinc-200 dark:bg-zinc-900 dark:border-zinc-700 p-2  ">
+              {dish.allergens &&
+                dish.allergens.length > 0 &&
+                dish.allergens.map((a) => <Chip key={a} content={a} />)}
+            </div>
+            <div className="text-2xl lg:text-3xl border  border-zinc-300 dark:border-zinc-700 gap-2 bg-zinc-200 dark:bg-zinc-800 px-4 w-full items-center flex justify-between dark:text-zinc-200 p-2  text-zinc-600 rounded-xl font-light ">
+              <div>Components</div>
+            </div>
+            {dish.ingredients.map((i) => {
+              if (i.linkId && i.linkRecipe) {
+                return (
+                  <ListCard
+                    subHeading={i.qty + " " + i.unit}
+                    name={i.linkRecipe.name}
+                    user={
+                      i.linkRecipe.author!.firstName[0].toLowerCase() +
+                      i.linkRecipe.author!.lastName[0].toLowerCase()
+                    }
+                    to={`/app/recipes/${i.linkId}`}
+                    key={i.id}
+                  />
+                );
+              } else
+                return (
+                  <div
+                    key={i.id}
+                    className="  w-full max-h-full border-zinc-300 border bg-opacity-50 dark:bg-opacity-50 bg-zinc-200 dark:bg-zinc-800   rounded-xl  pl-4 pr-2 font-light py-3  flex justify-start items-center  px-2  dark:border-zinc-700"
+                  >
+                    <div className=" ">
+                      <h5 className="text-xl lg:text-2xl text-zinc-700 dark:text-zinc-100">
+                        {i.ingredient}
+                      </h5>
+                      {(i.qty || i.unit) && (
+                        <h6 className="text-md lg:text-lg mt-1  text-indigo-500 dark:text-indigo-300">
+                          {i.qty && i.qty} {i.unit && i.unit}
+                        </h6>
+                      )}
+                    </div>
+                    <div className=" ml-auto ">
+                      <PuzzlePieceIcon className="text-zinc-800 dark:text-zinc-200 w-5 h-5" />
+                    </div>
+                  </div>
+                );
+            })}
           </div>
-          <div className="text-2xl lg:text-3xl border  border-zinc-300 dark:border-zinc-700 gap-2 bg-zinc-200 dark:bg-zinc-800 px-4 w-full items-center flex justify-between dark:text-zinc-200 p-2  text-zinc-600 rounded-xl font-light ">
-            <div>Components</div>
-          </div>
-          {dish.ingredients.map((i) => {
-            if (i.linkId && i.linkRecipe) {
-              return (
-                <ListCard
-                  subHeading={i.qty + " " + i.unit}
-                  name={i.linkRecipe.name}
-                  user={
-                    i.linkRecipe.author!.firstName[0].toLowerCase() +
-                    i.linkRecipe.author!.lastName[0].toLowerCase()
-                  }
-                  to={`/app/recipes/${i.linkId}`}
-                  key={i.id}
-                />
-              );
-            } else
-              return (
+          <div className="flex flex-col gap-2">
+            {dish.steps.length > 0 &&
+              dish.steps.map((s, i) => (
                 <div
-                  key={i.id}
-                  className="  w-full max-h-full border-zinc-300 border bg-opacity-50 dark:bg-opacity-50 bg-zinc-200 dark:bg-zinc-800   rounded-xl  pl-4 pr-2 font-light py-3  flex justify-start items-center  px-2  dark:border-zinc-700"
+                  key={i}
+                  className=" border border-zinc-300 dark:border-zinc-700 bg-zinc-200 dark:bg-zinc-800  bg-opacity-50 dark:bg-opacity-50 transition-all duration-300 rounded-xl p-4 text-lg text-zinc-700 dark:text-zinc-100"
                 >
-                  <div className=" ">
-                    <h5 className="text-xl lg:text-2xl text-zinc-700 dark:text-zinc-100">
-                      {i.ingredient}
-                    </h5>
-                    {(i.qty || i.unit) && (
-                      <h6 className="text-md lg:text-lg mt-1  text-indigo-500 dark:text-indigo-300">
-                        {i.qty && i.qty} {i.unit && i.unit}
-                      </h6>
-                    )}
-                  </div>
-                  <div className=" ml-auto ">
-                    <PuzzlePieceIcon className="text-zinc-800 dark:text-zinc-200 w-5 h-5" />
-                  </div>
+                  <h5 className="text-2xl mb-2">Step {i + 1}</h5>
+                  <p className="text-lg font-light ">{s}</p>
                 </div>
-              );
-          })}
-        </div>
-        <div className="flex flex-col gap-2">
-          {dish.steps.length &&
-            dish.steps.map((s, i) => (
-              <div
-                key={i}
-                className=" border border-zinc-300 dark:border-zinc-700 bg-zinc-200 dark:bg-zinc-800  bg-opacity-50 dark:bg-opacity-50 transition-all duration-300 rounded-xl p-4 text-lg text-zinc-700 dark:text-zinc-100"
-              >
-                <h5 className="text-2xl mb-2">Step {i + 1}</h5>
-                <p className="text-lg font-light ">{s}</p>
+              ))}
+            {dish.menu && dish.menu.length > 0 && (
+              <div className="text-xl bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200  p-4  text-zinc-700 rounded-xl font-light  ">
+                Menus
+                <div className="flex gap-3 flex-wrap r mt-2">
+                  {dish.menu.map((m) => (
+                    <div key={m.id}>
+                      <Link to={`/app/menus/${m.id}`}>
+                        <div className=" flex items-center gap-2  bg-indigo-500 hover:bg-indigo-600 p-2 px-4  font-light rounded-xl text-base text-zinc-100 dark:text-zinc-100 ">
+                          {m.name} <ArrowLongRightIcon className="w-5 h-5" />
+                        </div>
+                      </Link>
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
-          {dish.menu && dish.menu.length > 0 && (
-            <div className="text-xl bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200  p-4  text-zinc-700 rounded-xl font-light  ">
-              Menus
-              <div className="flex gap-3 flex-wrap r mt-2">
-                {dish.menu.map((m) => (
-                  <div key={m.id}>
-                    <Link to={`/app/menus/${m.id}`}>
-                      <div className=" flex items-center gap-2  bg-indigo-500 hover:bg-indigo-600 p-2 px-4  font-light rounded-xl text-base text-zinc-100 dark:text-zinc-100 ">
-                        {m.name} <ArrowLongRightIcon className="w-5 h-5" />
-                      </div>
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-          <div className="text-2xl bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 p-4  text-zinc-700 rounded-xl font-light  ">
-            <div>
-              <b>Author: </b>
-              {dish.author?.firstName + " " + dish.author?.lastName}
-            </div>
-            <div className="flex gap-2 flex-wrap  mt-2 text-lg ">
+            )}
+            <div className="text-2xl bg-zinc-200 dark:bg-zinc-800  dark:text-zinc-200 p-4  text-zinc-700 rounded-xl font-light  ">
               <div>
-                <b>Added: </b>
-                {new Date(dish.createdAt).toLocaleDateString()}
+                <b>Author: </b>
+                {dish.author?.firstName + " " + dish.author?.lastName}
               </div>
-              <div>
-                <b>Updated: </b>
-                {new Date(dish.updatedAt).toLocaleDateString()}
+              <div className="flex gap-2 flex-wrap  mt-2 text-lg ">
+                <div>
+                  <b>Added: </b>
+                  {new Date(dish.createdAt).toLocaleDateString()}
+                </div>
+                <div>
+                  <b>Updated: </b>
+                  {new Date(dish.updatedAt).toLocaleDateString()}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </SlideUpTransition>
     </main>
   );
 }

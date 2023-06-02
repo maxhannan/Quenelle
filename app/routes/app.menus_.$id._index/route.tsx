@@ -12,6 +12,7 @@ import { useMenu } from "../app.menus_.$id/route";
 import ListCard from "~/components/display/ListCard";
 import MultiSelect from "~/components/formInputs/MultiSelect";
 import { allergens } from "~/utils/staticLists";
+import SlideUpTransition from "~/components/animations/SlideUp";
 
 function MenuIndex() {
   const menu = useMenu();
@@ -63,80 +64,81 @@ function MenuIndex() {
           Icon={ArrowUturnLeftIcon}
         />
       </AppBar>
-
-      <div className="text-3xl md:text-4xl   w-full items-center flex pl-1 justify-between mb-3  dark:text-neutral-200  font-bold text-neutral-600 rounded-xl ">
-        <div>{menu.name}</div>
-      </div>
-      <div className="mb-2  ">
-        <MultiSelect
-          name="allergens"
-          options={allergens}
-          changeHandler={handleChange}
-        />
-      </div>
-      <div className="w-full grid  gap-2 ">
-        {filteredMenu.sections.map((s) => s.dishes).join("").length === 0 && (
-          <div className="w-full text-2xl text-zinc-800 dark:text-zinc-200 flex justify-center">
-            No dishes found
+      <SlideUpTransition>
+        <div className="text-3xl md:text-4xl   w-full items-center flex pl-1 justify-between mb-3  dark:text-neutral-200  font-bold text-neutral-600 rounded-xl ">
+          <div>{menu.name}</div>
+        </div>
+        <div className="mb-2  ">
+          <MultiSelect
+            name="allergens"
+            options={allergens}
+            changeHandler={handleChange}
+          />
+        </div>
+        <div className="w-full grid  gap-2 ">
+          {filteredMenu.sections.map((s) => s.dishes).join("").length === 0 && (
+            <div className="w-full text-2xl text-zinc-800 dark:text-zinc-200 flex justify-center">
+              No dishes found
+            </div>
+          )}
+          <div className="flex flex-col gap-2">
+            {filteredMenu.sections
+              .slice(0, Math.ceil(filteredMenu.sections.length / 2))
+              .map((s) => {
+                if (s.dishes.length === 0) return null;
+                return (
+                  <div
+                    key={s.id}
+                    className="flex flex-col gap-2 bg-zinc-100 dark:bg-zinc-900 rounded-2xl p-2 border border-zinc-300 dark:border-zinc-700 "
+                  >
+                    <div className="text-2xl border border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800 gap-3 bg-opacity-75 bg-zinc-200  px-4 w-full items-center flex justify-between dark:text-zinc-200 p-4  text-zinc-600 rounded-xl font-light ">
+                      <div>{s.name}</div>
+                    </div>
+                    {s.dishes.map((d) => (
+                      <ListCard
+                        name={d.name}
+                        key={d.id}
+                        to={`/app/menus/dishes/${d.id}`}
+                        subHeading={`${d._count.ingredients} Component${
+                          d._count.ingredients !== 1 ? "s" : ""
+                        } `}
+                        user={d.author!.firstName[0] + d.author!.lastName[0]}
+                      />
+                    ))}
+                  </div>
+                );
+              })}
           </div>
-        )}
-        <div className="flex flex-col gap-2">
-          {filteredMenu.sections
-            .slice(0, Math.ceil(filteredMenu.sections.length / 2))
-            .map((s) => {
-              if (s.dishes.length === 0) return null;
-              return (
-                <div
-                  key={s.id}
-                  className="flex flex-col gap-2 bg-zinc-100 dark:bg-zinc-900 rounded-2xl p-2 border border-zinc-300 dark:border-zinc-700 "
-                >
-                  <div className="text-2xl border border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800 gap-3 bg-opacity-75 bg-zinc-200  px-4 w-full items-center flex justify-between dark:text-zinc-200 p-4  text-zinc-600 rounded-xl font-light ">
-                    <div>{s.name}</div>
+          <div className="flex flex-col gap-2">
+            {filteredMenu.sections
+              .slice(Math.ceil(filteredMenu.sections.length / 2))
+              .map((s) => {
+                if (s.dishes.length === 0) return null;
+                return (
+                  <div
+                    key={s.id}
+                    className="flex flex-col gap-2 bg-zinc-100 dark:bg-zinc-900 rounded-2xl p-2 border border-zinc-300 dark:border-zinc-700 "
+                  >
+                    <div className="text-2xl border border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800 gap-3 bg-opacity-75 bg-zinc-200  px-4 w-full items-center flex justify-between dark:text-zinc-200 p-4  text-zinc-600 rounded-xl font-light ">
+                      <div>{s.name}</div>
+                    </div>
+                    {s.dishes.map((d) => (
+                      <ListCard
+                        name={d.name}
+                        key={d.id}
+                        to={`/app/menus/dishes/${d.id}`}
+                        subHeading={`${d._count.ingredients} Component${
+                          d._count.ingredients !== 1 ? "s" : ""
+                        } `}
+                        user={d.author!.firstName[0] + d.author!.lastName[0]}
+                      />
+                    ))}
                   </div>
-                  {s.dishes.map((d) => (
-                    <ListCard
-                      name={d.name}
-                      key={d.id}
-                      to={`/app/menus/dishes/${d.id}`}
-                      subHeading={`${d._count.ingredients} Component${
-                        d._count.ingredients !== 1 ? "s" : ""
-                      } `}
-                      user={d.author!.firstName[0] + d.author!.lastName[0]}
-                    />
-                  ))}
-                </div>
-              );
-            })}
+                );
+              })}
+          </div>
         </div>
-        <div className="flex flex-col gap-2">
-          {filteredMenu.sections
-            .slice(Math.ceil(filteredMenu.sections.length / 2))
-            .map((s) => {
-              if (s.dishes.length === 0) return null;
-              return (
-                <div
-                  key={s.id}
-                  className="flex flex-col gap-2 bg-zinc-100 dark:bg-zinc-900 rounded-2xl p-2 border border-zinc-300 dark:border-zinc-700 "
-                >
-                  <div className="text-2xl border border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800 gap-3 bg-opacity-75 bg-zinc-200  px-4 w-full items-center flex justify-between dark:text-zinc-200 p-4  text-zinc-600 rounded-xl font-light ">
-                    <div>{s.name}</div>
-                  </div>
-                  {s.dishes.map((d) => (
-                    <ListCard
-                      name={d.name}
-                      key={d.id}
-                      to={`/app/menus/dishes/${d.id}`}
-                      subHeading={`${d._count.ingredients} Component${
-                        d._count.ingredients !== 1 ? "s" : ""
-                      } `}
-                      user={d.author!.firstName[0] + d.author!.lastName[0]}
-                    />
-                  ))}
-                </div>
-              );
-            })}
-        </div>
-      </div>
+      </SlideUpTransition>
     </div>
   );
 }

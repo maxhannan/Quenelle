@@ -13,6 +13,7 @@ import IconButton from "~/components/buttons/IconButton";
 import { DocumentPlusIcon, UserIcon } from "@heroicons/react/24/outline";
 import SearchAndFilter from "./components/SearchAndFilter";
 import NewAppBar from "~/components/navigation/NewAppBar";
+import FadeIn from "~/components/animations/FadeIn";
 
 export default function RecipesIndex() {
   const { recipes, filteredRecipes, categories } = useRecipes();
@@ -33,7 +34,7 @@ export default function RecipesIndex() {
   }
 
   return (
-    <>
+    <FadeIn>
       <div className=" container mx-auto max-w-3xl ">
         <div className="grid grid-cols-1   ">
           <div>
@@ -73,6 +74,6 @@ export default function RecipesIndex() {
           )}
         </div>
       </div>
-    </>
+    </FadeIn>
   );
 }
