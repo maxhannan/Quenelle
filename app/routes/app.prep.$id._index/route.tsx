@@ -1,13 +1,6 @@
 import React from "react";
 import { usePrepList } from "../app.prep.$id/route";
-import {
-  Form,
-  Link,
-  ShouldRevalidateFunction,
-  useFetcher,
-  useNavigate,
-  useNavigation,
-} from "@remix-run/react";
+import { Form, useFetcher, useNavigate, useNavigation } from "@remix-run/react";
 import Spinner from "~/components/LoadingSpinner";
 import Accordion from "~/components/display/Accordion";
 import SearchBar from "~/components/formInputs/SearchBar";
@@ -16,10 +9,10 @@ import IconButton from "~/components/buttons/IconButton";
 import { ArrowUturnLeftIcon } from "@heroicons/react/24/outline";
 import PrepListItem from "./components/PrepListItem";
 import type { ActionFunction } from "@remix-run/node";
-import { updateTask } from "~/utils/prepList.server";
+import { getPrepListById, updateTask } from "~/utils/prepList.server";
 import SlideUpTransition from "~/components/animations/SlideUp";
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
+import { getPdf } from "~/utils/pdf";
+
 export const action: ActionFunction = async ({ request }) => {
   const data = await request.formData();
   const id = data.get("id") as string;
@@ -35,27 +28,20 @@ export const action: ActionFunction = async ({ request }) => {
   if (!updatedTask) return null;
   return updatedTask;
 };
-
+type List = Awaited<ReturnType<typeof getPrepListById>>;
 function PrepListRoute() {
   const navigate = useNavigate();
   const navigation = useNavigation();
   const fetcher = useFetcher();
   const prepList = usePrepList();
 
-  const getPdf = async () => {
-    const doc = new jsPDF();
-    autoTable(doc, {
-      head: [["Name", "Email", "Country"]],
-      body: [
-        ["David", "david@example.com", "Sweden"],
-        ["Castille", "castille@example.com", "Spain"],
-        // ...
-      ],
-    });
-
-    doc.save("table.pdf");
-
-    return doc;
+  const generatepdf = async () => {
+    console.log(fetcher, fetcher.data);
+    const list = (await fetch(`/app/prep/${prepList?.id}/current`, {
+      method: "GET",
+    }).then((res) => res.json())) as List;
+    const pdf = getPdf(list);
+    return pdf;
   };
 
   if (!prepList) {
@@ -88,7 +74,7 @@ function PrepListRoute() {
       {/* <Link to="pdf" reloadDocument>
         View as PDF
       </Link> */}
-      <button onClick={getPdf}>Get PDF</button>
+      <button onClick={generatepdf}>Get PDF</button>
       <SlideUpTransition>
         <SearchBar
           handleChange={() => (e: string) => console.log(e)}
