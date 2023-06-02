@@ -233,24 +233,24 @@ function PrepListsRoute() {
           value={""}
           loading={false}
         />{" "}
-        <div className="flex w-full items-center justify-between bg-zinc-200 rounded-xl border border-zinc-300 p-1 dark:bg-zinc-800 dark:bg-opacity-50 dark:border-zinc-700">
+        <div className="flex w-full items-center justify-between bg-zinc-200 rounded-full border h-12 border-zinc-300  dark:bg-zinc-800 dark:bg-opacity-50 dark:border-zinc-700 overflow-hidden">
           <button
             onClick={() => date && handleDateChange(add(date, { days: -1 }))}
-            className="h-9 w-9 border flex items-center justify-center dark:border-zinc-700 border-zinc-300 rounded-xl bg-indigo-500"
+            className="h-12 w-12 hover:text-zinc-600 hover:bg-opacity-70 text-zinc-700 dark:hover:text-zinc-400 dark:text-zinc-200 flex items-center justify-center dark:border-zinc-700 border-zinc-300 rounded-full bg-zinc-300 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40"
           >
-            <ArrowLeftIcon className="w-5 h-5 text-zinc-100" />
+            <ArrowLeftIcon className="w-6 h-6 " />
           </button>
           <span
-            className={`text-xl  text-zinc-700 dark:text-zinc-100 font-light flex items-center justify-center text-center`}
+            className={`text-xl  text-zinc-700 dark:text-zinc-100 font-normal flex items-center justify-center text-center `}
           >
             {date &&
               formatRelative(date, new Date(), { locale, weekStartsOn: 6 })}
           </span>
           <button
             onClick={() => date && handleDateChange(add(date, { days: 1 }))}
-            className="h-10 w-10 border flex items-center justify-center dark:border-zinc-700 border-zinc-300 rounded-xl bg-indigo-500"
+            className="h-12 w-12 hover:text-zinc-600 hover:bg-opacity-70 text-zinc-700 dark:text-zinc-300 flex items-center justify-center dark:border-zinc-700 border-zinc-300 rounded-full bg-zinc-300 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40"
           >
-            <ArrowRightIcon className="w-5 h-5 text-zinc-100" />
+            <ArrowRightIcon className="w-6 h-6" />
           </button>
         </div>
         <div className="grid z-0 relative grid-flow-row  auto-rows-max gap-y-2  mx-auto mb-28 w-full ">
