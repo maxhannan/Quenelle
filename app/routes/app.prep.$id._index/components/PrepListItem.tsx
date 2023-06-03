@@ -16,7 +16,7 @@ const PrepListItem: FC<Props> = ({ task, fetcher }) => {
   const formRef = useRef<HTMLFormElement>(null);
 
   const firstRender = useRef(true);
-  const firstRender2 = useRef(true);
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement> | undefined) {
     if (firstRender.current) {
       firstRender.current = false;
@@ -29,8 +29,8 @@ const PrepListItem: FC<Props> = ({ task, fetcher }) => {
   }
 
   useEffect(() => {
-    if (firstRender2.current) {
-      firstRender2.current = false;
+    if (firstRender.current) {
+      firstRender.current = false;
       return;
     }
     handleSubmit(undefined);
