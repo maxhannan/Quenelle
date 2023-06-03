@@ -1,10 +1,8 @@
-import {
-  ArrowLongRightIcon,
-  CheckBadgeIcon,
-} from "@heroicons/react/24/outline";
-import { useFetcher, NavLink, FetcherWithComponents } from "@remix-run/react";
+import { ArrowLongRightIcon } from "@heroicons/react/24/outline";
+import { NavLink } from "@remix-run/react";
+import type { FetcherWithComponents } from "@remix-run/react";
 import { XCircleIcon } from "lucide-react";
-import { CheckCircle, CheckCircle2 } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { FC } from "react";
 import type { TaskType } from "~/utils/prepList.server";
@@ -18,15 +16,21 @@ const PrepListItem: FC<Props> = ({ task, fetcher }) => {
   const formRef = useRef<HTMLFormElement>(null);
 
   const firstRender = useRef(true);
+  const firstRender2 = useRef(true);
   async function handleSubmit(e: React.FormEvent<HTMLFormElement> | undefined) {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
     e && e.preventDefault();
     console.log("submitting");
     fetcher.submit(formRef.current!);
+    console.log(fetcher);
   }
 
   useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
+    if (firstRender2.current) {
+      firstRender2.current = false;
       return;
     }
     handleSubmit(undefined);

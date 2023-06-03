@@ -1,6 +1,5 @@
 import type { Prisma } from "@prisma/client";
 import { prisma } from "./prisma.server";
-import { ca } from "date-fns/locale";
 
 export type PrepListSummaries = Prisma.PromiseReturnType<typeof getPrepLists>;
 
@@ -371,6 +370,9 @@ export async function getPrepListById(id: string) {
           },
         },
         taskGroups: {
+          orderBy: {
+            name: "asc",
+          },
           include: {
             linkRecipe: {
               select: {

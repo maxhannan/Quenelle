@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { usePrepList } from "../app.prep.$id/route";
 import { Form, useFetcher, useNavigate, useNavigation } from "@remix-run/react";
 import Spinner from "~/components/LoadingSpinner";
@@ -12,6 +12,7 @@ import type { ActionFunction } from "@remix-run/node";
 import { getPrepListById, updateTask } from "~/utils/prepList.server";
 import SlideUpTransition from "~/components/animations/SlideUp";
 import { getPdf } from "~/utils/pdf";
+import { ClipboardCheckIcon, FocusIcon, Printer } from "lucide-react";
 
 export const action: ActionFunction = async ({ request }) => {
   const data = await request.formData();
@@ -33,17 +34,26 @@ function PrepListRoute() {
   const navigate = useNavigate();
   const navigation = useNavigation();
   const fetcher = useFetcher();
-  const prepList = usePrepList();
+  let prepList = usePrepList();
 
+  const [pdfLoading, setPdfLoading] = useState(false);
+  const [openTaskFocus, setOpenTaskFocus] = useState<boolean>(false);
   const generatepdf = async () => {
+    setPdfLoading(true);
     console.log(fetcher, fetcher.data);
     const list = (await fetch(`/app/prep/${prepList?.id}/current`, {
       method: "GET",
     }).then((res) => res.json())) as List;
     const pdf = getPdf(list);
+    setPdfLoading(false);
     return pdf;
   };
 
+  const activeTasks = prepList?.taskGroups
+    .map((tg) => tg.tasks)
+    .flat()
+    .filter((t) => t.prepQty && parseInt(t.prepQty) > 0 && !t.completed);
+  console.log({ activeTasks });
   if (!prepList) {
     return null;
   }
@@ -63,6 +73,18 @@ function PrepListRoute() {
       >
         <IconButton
           name="Goback"
+          onClick={() => setOpenTaskFocus(!openTaskFocus)}
+          loading={pdfLoading}
+          Icon={ClipboardCheckIcon}
+        />
+        <IconButton
+          name="Goback"
+          onClick={generatepdf}
+          loading={pdfLoading}
+          Icon={Printer}
+        />
+        <IconButton
+          name="Goback"
           onClick={() => navigate(-1)}
           Icon={ArrowUturnLeftIcon}
         />
@@ -71,53 +93,98 @@ function PrepListRoute() {
       <div className="mb-2 text-lg text-indigo-500 font-mono">
         {new Date(prepList.date).toDateString()}
       </div>
-      {/* <Link to="pdf" reloadDocument>
-        View as PDF
-      </Link> */}
-      <button onClick={generatepdf}>Get PDF</button>
+
       <SlideUpTransition>
         <SearchBar
           handleChange={() => (e: string) => console.log(e)}
           value={""}
           loading={false}
         />
-        <Form>
-          <div className="w-full grid  gap-2 mt-2">
-            <div className="flex flex-col gap-2">
-              {prepList?.taskGroups.map((tg) => (
-                <Accordion
-                  key={tg.id}
-                  name={tg.name}
-                  link={
-                    tg.linkRecipeId
-                      ? `/app/menus/dishes/${tg.linkRecipeId}`
-                      : undefined
-                  }
-                >
-                  <div className="  max-w-full  bg-zinc-100 border-zinc-300    rounded-xl   px-2 grid grid-cols-10  gap-1   dark:bg-zinc-800 ">
-                    <div className=" font-light col-span-5 lg:col-span-7 flex gap-2 items-center mr-1">
-                      <div>
-                        <h5 className="text-lg text-zinc-700 dark:text-zinc-100 ">
-                          Task
-                        </h5>
+
+        <div className="w-full grid  gap-2 mt-2">
+          <div className="flex flex-col gap-2">
+            {openTaskFocus
+              ? activeTasks && activeTasks.length > 0
+                ? activeTasks.map((item) => (
+                    <PrepListItem fetcher={fetcher} key={item.id} task={item} />
+                  ))
+                : "No Active Tasks"
+              : prepList?.taskGroups.map((tg) => (
+                  <Accordion
+                    key={tg.id}
+                    name={tg.name}
+                    link={
+                      tg.linkRecipeId
+                        ? `/app/menus/dishes/${tg.linkRecipeId}`
+                        : undefined
+                    }
+                  >
+                    <div className="  max-w-full  bg-zinc-100 border-zinc-300    rounded-xl   px-2 grid grid-cols-10  gap-1   dark:bg-zinc-800 ">
+                      <div className=" font-light col-span-5 lg:col-span-7 flex gap-2 items-center mr-1">
+                        <div>
+                          <h5 className="text-lg text-zinc-700 dark:text-zinc-100 ">
+                            Task
+                          </h5>
+                        </div>
+                      </div>
+                      <div className="col-span-2 lg:col-span-1 flex items-center justify-start pl-1   text-lg text-zinc-700 dark:text-zinc-100 font-light">
+                        <span>Inv</span>
+                      </div>
+                      <div className="col-span-2 lg:col-span-1 flex items-center justify-start pl-1  text-lg text-zinc-700 dark:text-zinc-100 font-light">
+                        <span>Prep</span>
                       </div>
                     </div>
-                    <div className="col-span-2 lg:col-span-1 flex items-center justify-start pl-1   text-lg text-zinc-700 dark:text-zinc-100 font-light">
-                      <span>Inv</span>
-                    </div>
-                    <div className="col-span-2 lg:col-span-1 flex items-center justify-start pl-1  text-lg text-zinc-700 dark:text-zinc-100 font-light">
-                      <span>Prep</span>
+
+                    {tg.tasks.map((item) =>
+                      fetcher.data && fetcher.data.id === item.id ? (
+                        <PrepListItem
+                          fetcher={fetcher}
+                          key={fetcher.data.id}
+                          task={fetcher.data}
+                        />
+                      ) : (
+                        <PrepListItem
+                          fetcher={fetcher}
+                          key={item.id}
+                          task={item}
+                        />
+                      )
+                    )}
+                  </Accordion>
+                ))}
+            {/* {prepList?.taskGroups.map((tg) => (
+              <Accordion
+                key={tg.id}
+                name={tg.name}
+                link={
+                  tg.linkRecipeId
+                    ? `/app/menus/dishes/${tg.linkRecipeId}`
+                    : undefined
+                }
+              >
+                <div className="  max-w-full  bg-zinc-100 border-zinc-300    rounded-xl   px-2 grid grid-cols-10  gap-1   dark:bg-zinc-800 ">
+                  <div className=" font-light col-span-5 lg:col-span-7 flex gap-2 items-center mr-1">
+                    <div>
+                      <h5 className="text-lg text-zinc-700 dark:text-zinc-100 ">
+                        Task
+                      </h5>
                     </div>
                   </div>
+                  <div className="col-span-2 lg:col-span-1 flex items-center justify-start pl-1   text-lg text-zinc-700 dark:text-zinc-100 font-light">
+                    <span>Inv</span>
+                  </div>
+                  <div className="col-span-2 lg:col-span-1 flex items-center justify-start pl-1  text-lg text-zinc-700 dark:text-zinc-100 font-light">
+                    <span>Prep</span>
+                  </div>
+                </div>
 
-                  {tg.tasks.map((item) => (
-                    <PrepListItem fetcher={fetcher} key={item.id} task={item} />
-                  ))}
-                </Accordion>
-              ))}
-            </div>
+                {tg.tasks.map((item) => (
+                  <PrepListItem fetcher={fetcher} key={item.id} task={item} />
+                ))}
+              </Accordion>
+            ))} */}
           </div>
-        </Form>
+        </div>
       </SlideUpTransition>
     </div>
   );

@@ -25,6 +25,8 @@ model User {
   lastName  String 
   recipes   Recipe[] 
   menus     Menu[]
+  assignedLists PrepList[] @relation("Assigned List")
+  
   prepLists PrepList[]
   prepListsTemplate PrepListTemplate[]
 }
@@ -91,6 +93,8 @@ model PrepList {
   date        DateTime
   author      User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
   authorId    String?  
+  assignedTo User?     @relation(fields: [assignedToId], references: [id], "Assigned List", onDelete: SetNull)
+  assignedToId String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   taskGroups  taskGroup[]

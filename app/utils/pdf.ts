@@ -12,13 +12,13 @@ export const getPdf = async (prepList: Preplist) => {
   doc.setFontSize(12);
   doc.text(new Date(prepList.date).toDateString(), 14, 24);
   const data = prepList.taskGroups.map((tg) => ({
-    head: [[tg.name, "Unit", "On Hand", "Need", ""]],
+    head: [["", tg.name, "Unit", "On Hand", "Need"]],
     body: tg.tasks.map((t) => [
+      t.completed ? "X" : "",
       t.name,
       t.prepUnit,
       t.onHand,
       t.prepQty,
-      t.completed ? "X" : "",
     ]),
   }));
 
@@ -27,11 +27,11 @@ export const getPdf = async (prepList: Preplist) => {
       theme: "grid",
       ...data[i],
       columnStyles: {
-        0: { cellWidth: 100 },
-        1: { cellWidth: 20 },
-        2: { cellWidth: 24 },
-        3: { cellWidth: 24 },
-        4: { cellWidth: 10 },
+        0: { cellWidth: 6 },
+        1: { cellWidth: 100 },
+        2: { cellWidth: 36 },
+        3: { cellWidth: 20 },
+        4: { cellWidth: 20 },
       },
       //@ts-ignore: next line is a hack to get around a bug in jspdf-autotable
       startY: i > 0 ? doc.lastAutoTable.finalY : 28,
