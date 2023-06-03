@@ -29,8 +29,8 @@ const PrepListItem: FC<Props> = ({ task, fetcher }) => {
   }
 
   useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
+    if (firstRender2.current) {
+      firstRender2.current = false;
       return;
     }
     handleSubmit(undefined);
