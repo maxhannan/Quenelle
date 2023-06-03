@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { usePrepList } from "../app.prep.$id/route";
-import { Form, useFetcher, useNavigate, useNavigation } from "@remix-run/react";
+import { useFetcher, useNavigate, useNavigation } from "@remix-run/react";
 import Spinner from "~/components/LoadingSpinner";
 import Accordion from "~/components/display/Accordion";
 import SearchBar from "~/components/formInputs/SearchBar";
@@ -9,10 +9,11 @@ import IconButton from "~/components/buttons/IconButton";
 import { ArrowUturnLeftIcon } from "@heroicons/react/24/outline";
 import PrepListItem from "./components/PrepListItem";
 import type { ActionFunction } from "@remix-run/node";
-import { getPrepListById, updateTask } from "~/utils/prepList.server";
+import { updateTask } from "~/utils/prepList.server";
+import type { getPrepListById } from "~/utils/prepList.server";
 import SlideUpTransition from "~/components/animations/SlideUp";
 import { getPdf } from "~/utils/pdf";
-import { ClipboardCheckIcon, FocusIcon, Printer } from "lucide-react";
+import { ClipboardCheckIcon, Printer } from "lucide-react";
 
 export const action: ActionFunction = async ({ request }) => {
   const data = await request.formData();

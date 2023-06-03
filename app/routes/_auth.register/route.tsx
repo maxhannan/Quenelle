@@ -114,6 +114,13 @@ const RegisterPage: FC = () => {
         <span> Already Have an account? Sign in here. </span>
         <ArrowLongRightIcon className="w-5 h-5 pt-1  " />
       </Link>
+      <Link
+        to={"/setup"}
+        className=" text-violet-500 dark:text-violet-400 px-1  inline-flex gap-2 items-center hover:text-violet-600 dark:hover:text-violet-500 "
+      >
+        <span> Already Have an account? SETUP in here. </span>
+        <ArrowLongRightIcon className="w-5 h-5 pt-1  " />
+      </Link>
     </Form>
   );
 };

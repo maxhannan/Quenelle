@@ -26,11 +26,29 @@ model User {
   recipes   Recipe[] 
   menus     Menu[]
   assignedLists PrepList[] @relation("Assigned List")
-  
   prepLists PrepList[]
   prepListsTemplate PrepListTemplate[]
+  restaurants Restaurant[]
+  orgOwner Boolean @default(false)
 }
 
+
+model Restaurant { 
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String
+  address     String
+  city        String
+  state       String
+  zip         String
+  members     User[]
+  recipes     Recipe[]
+  menus       Menu[]
+  prepLists   PrepList[]
+  prepListsTemplate PrepListTemplate[]
+
+}
 model Recipe {
   id          String   @id @default(cuid())
   images      String[]
@@ -52,6 +70,8 @@ model Recipe {
   linkedIngredients Ingredient[] @relation("Linked Recipes")
   taskGroups  taskGroup[]
   tasks       tasks[]
+  restaurant  Restaurant? @relation(fields: [restaurantId], references: [id], onDelete: SetNull)
+  restaurantId String?
 }
 
 model Ingredient {
@@ -75,6 +95,8 @@ model Menu {
   dishes      Recipe[]
   author      User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
   authorId    String?  
+   restaurant  Restaurant? @relation(fields: [restaurantId], references: [id], onDelete: SetNull)
+  restaurantId String?
 }
  
 model MenuSection {
@@ -98,6 +120,8 @@ model PrepList {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   taskGroups  taskGroup[]
+  restaurant  Restaurant? @relation(fields: [restaurantId], references: [id], onDelete: SetNull)
+  restaurantId String?
   
 }
 
@@ -135,4 +159,6 @@ model PrepListTemplate {
   authorId    String? 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  restaurant  Restaurant? @relation(fields: [restaurantId], references: [id], onDelete: SetNull)
+  restaurantId String?
 }

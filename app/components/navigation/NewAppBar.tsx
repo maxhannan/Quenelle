@@ -1,6 +1,7 @@
 import type { FC, ReactNode } from "react";
 import SlideDownTransition from "../animations/SlideDown";
 import { UserIcon } from "lucide-react";
+import { useSubmit } from "@remix-run/react";
 
 interface Props {
   page: string;
@@ -15,6 +16,7 @@ const NewAppBar: FC<Props> = ({
   bottomPadding,
   children,
 }: Props) => {
+  const submit = useSubmit();
   return (
     <>
       <SlideDownTransition>
@@ -24,7 +26,10 @@ const NewAppBar: FC<Props> = ({
           } mx-auto  max-h-full items-center justify-between  duration-300    w-full top-0 left-0 `}
         >
           {" "}
-          <div className="grow flex justify-start gap-2 items-center relative">
+          <div
+            className="grow flex justify-start gap-2 items-center relative"
+            onClick={() => submit(null, { action: "/logout", method: "POST" })}
+          >
             <div
               className={` dark:bg-zinc-800 bg-zinc-700 text-zinc-200 dark:text-zinc-300 trasition-all duration-300 inline-flex group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center justify-center w-12 h-12 overflow-hidden group-hover:border-indigo-500 border-zinc-500 rounded-full  border dark:border-indigo-500`}
             >
