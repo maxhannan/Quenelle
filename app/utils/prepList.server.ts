@@ -43,8 +43,10 @@ export async function getTemplateById(id: string) {
         name: true,
         author: { select: { id: true, username: true } },
         taskGroups: {
+          orderBy: { name: "asc" },
           include: {
             tasks: {
+              orderBy: { name: "asc" },
               include: {
                 taskGroup: { select: { name: true } },
                 linkRecipe: { select: { id: true, name: true } },

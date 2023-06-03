@@ -77,6 +77,15 @@ const ComboBox: FC<Props> = ({
           />
           <Combobox.Input
             required={required}
+            onBlur={() => {
+              if (
+                allowCustom &&
+                query.length > 0 &&
+                !checkIfExists(query, options)
+              ) {
+                handleChange({ id: query, value: query });
+              }
+            }}
             name={name}
             className="rounded-full pr-8  bg-zinc-200 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none   focus:ring-2   font-light border relative  border-zinc-300 dark:border-zinc-700 h-12 w-full p-2 pl-4 text-xl text-zinc-800      placeholder-zinc-500   dark:placeholder-zinc-400 dark:text-zinc-50   "
             onChange={(event) => setQuery(event.target.value)}

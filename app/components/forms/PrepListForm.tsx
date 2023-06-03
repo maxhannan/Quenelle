@@ -99,22 +99,24 @@ const PrepListForm: FC<Props> = ({ recipeList, template }) => {
           placeholder="Prep List Name"
           initValue={formValues.name}
         />
-        <div className="flex  gap-2">
-          <input type="hidden" name="date" value={date.toString()} />
-          <div className=" flex-none">
-            <PrepCalendar date={date} handleDateChange={handleDateChange} />
+        {!template && (
+          <div className="flex  gap-2">
+            <input type="hidden" name="date" value={date.toString()} />
+            <div className=" flex-none">
+              <PrepCalendar date={date} handleDateChange={handleDateChange} />
+            </div>
+            <ComboBox
+              name="station"
+              placeholder="Station"
+              allowCustom
+              options={[
+                { id: "grill", value: "Grill" },
+                { id: "fry", value: "Fry" },
+                { id: "gm", value: "Garde Manger" },
+              ]}
+            />
           </div>
-          <ComboBox
-            name="station"
-            placeholder="Station"
-            allowCustom
-            options={[
-              { id: "grill", value: "Grill" },
-              { id: "fry", value: "Fry" },
-              { id: "gm", value: "Garde Manger" },
-            ]}
-          />
-        </div>
+        )}
         {!template && (
           <div className="items-center flex space-x-4 bg-zinc-200 dark:bg-zinc-800 rounded-2xl p-3  ">
             <Checkbox

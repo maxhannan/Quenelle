@@ -39,6 +39,8 @@ function PrepListRoute() {
 
   const [pdfLoading, setPdfLoading] = useState(false);
   const [openTaskFocus, setOpenTaskFocus] = useState<boolean>(false);
+
+  if (!prepList) return <h1> No Prep List Found </h1>;
   const generatepdf = async () => {
     setPdfLoading(true);
     console.log(fetcher, fetcher.data);
@@ -49,15 +51,15 @@ function PrepListRoute() {
     setPdfLoading(false);
     return pdf;
   };
+  const activeTaskView = prepList.taskGroups
+    .map((tg) => ({
+      ...tg,
+      tasks: tg.tasks.filter(
+        (t) => t.prepQty && parseInt(t.prepQty) > 0 && !t.completed
+      ),
+    }))
+    .filter((tg) => tg.tasks.length > 0);
 
-  const activeTasks = prepList?.taskGroups
-    .map((tg) => tg.tasks)
-    .flat()
-    .filter((t) => t.prepQty && parseInt(t.prepQty) > 0 && !t.completed);
-  console.log({ activeTasks });
-  if (!prepList) {
-    return null;
-  }
   if (navigation.state === "loading") {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -96,21 +98,11 @@ function PrepListRoute() {
       </div>
 
       <SlideUpTransition>
-        <SearchBar
-          handleChange={() => (e: string) => console.log(e)}
-          value={""}
-          loading={false}
-        />
-
         <div className="w-full grid  gap-2 mt-2">
           <div className="flex flex-col gap-2">
-            {openTaskFocus
-              ? activeTasks && activeTasks.length > 0
-                ? activeTasks.map((item) => (
-                    <PrepListItem fetcher={fetcher} key={item.id} task={item} />
-                  ))
-                : "No Active Tasks"
-              : prepList?.taskGroups.map((tg) => (
+            {openTaskFocus ? (
+              activeTaskView.length > 0 ? (
+                activeTaskView?.map((tg) => (
                   <Accordion
                     key={tg.id}
                     name={tg.name}
@@ -144,7 +136,45 @@ function PrepListRoute() {
                       />
                     ))}
                   </Accordion>
-                ))}
+                ))
+              ) : (
+                <div className="w-full flex  text-xl text-zinc-700 dark:text-zinc-200">
+                  Looks like you're all caught up!
+                </div>
+              )
+            ) : (
+              prepList?.taskGroups.map((tg) => (
+                <Accordion
+                  key={tg.id}
+                  name={tg.name}
+                  link={
+                    tg.linkRecipeId
+                      ? `/app/menus/dishes/${tg.linkRecipeId}`
+                      : undefined
+                  }
+                >
+                  <div className="  max-w-full  bg-zinc-100 border-zinc-300    rounded-xl   px-2 grid grid-cols-10  gap-1   dark:bg-zinc-800 ">
+                    <div className=" font-light col-span-5 lg:col-span-7 flex gap-2 items-center mr-1">
+                      <div>
+                        <h5 className="text-lg text-zinc-700 dark:text-zinc-100 ">
+                          Task
+                        </h5>
+                      </div>
+                    </div>
+                    <div className="col-span-2 lg:col-span-1 flex items-center justify-start pl-1   text-lg text-zinc-700 dark:text-zinc-100 font-light">
+                      <span>Inv</span>
+                    </div>
+                    <div className="col-span-2 lg:col-span-1 flex items-center justify-start pl-1  text-lg text-zinc-700 dark:text-zinc-100 font-light">
+                      <span>Prep</span>
+                    </div>
+                  </div>
+
+                  {tg.tasks.map((item) => (
+                    <PrepListItem fetcher={fetcher} key={item.id} task={item} />
+                  ))}
+                </Accordion>
+              ))
+            )}
             {/* {prepList?.taskGroups.map((tg) => (
               <Accordion
                 key={tg.id}

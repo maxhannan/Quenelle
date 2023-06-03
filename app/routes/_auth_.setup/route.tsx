@@ -3,12 +3,12 @@ import {
   BuildingStorefrontIcon,
 } from "@heroicons/react/24/outline";
 import { Form } from "@remix-run/react";
-import { PlusIcon, XCircleIcon } from "lucide-react";
+import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 import { v4 } from "uuid";
 
 import RestaurantAdder from "./components/RestaurantAdder";
-import { ActionArgs } from "@remix-run/node";
+import type { ActionArgs } from "@remix-run/node";
 import LoadingButton from "~/components/buttons/LoadingButton";
 
 export type Restaurant = {

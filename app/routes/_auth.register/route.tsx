@@ -2,9 +2,10 @@ import {
   ArrowLongRightIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
-import { ActionArgs, LoaderArgs, json, redirect } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
+import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { Form, Link, useActionData, useNavigation } from "@remix-run/react";
-import { FC } from "react";
+import type { FC } from "react";
 import Spinner from "~/components/LoadingSpinner";
 import LoadingButton from "~/components/buttons/LoadingButton";
 import TextInput from "~/components/formInputs/TextInput";

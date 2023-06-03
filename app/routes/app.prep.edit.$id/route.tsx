@@ -55,7 +55,7 @@ export async function action({ request, params }: ActionArgs) {
 
 function EditTemplateRoute() {
   const { allRecipes, prepListTemplate } = useLoaderData<typeof loader>();
-  const [success, setSuccess] = useState(false);
+
   const navigation = useNavigation();
   const navigate = useNavigate();
   const data = useActionData();
@@ -76,7 +76,7 @@ function EditTemplateRoute() {
   //     </div>
   //   );
   // }
-
+  if (!prepListTemplate) return <h1>No Template Found </h1>;
   return (
     <div className="mb-28 container max-w-4xl mx-auto">
       {navigation.state === "loading" ||
@@ -91,7 +91,10 @@ function EditTemplateRoute() {
           </div>
         ))}
       <Form method="post">
-        <AppBar textSize="text-3xl md:text-4xl" page="Add a Prep List">
+        <AppBar
+          textSize="text-3xl md:text-4xl"
+          page={`Edit ${prepListTemplate.name}`}
+        >
           <IconButton Icon={CheckCircleIcon} name="Submit" type="submit" />
           <IconButton
             Icon={XMarkIcon}

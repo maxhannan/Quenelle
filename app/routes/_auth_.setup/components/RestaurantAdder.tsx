@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Restaurant } from "../route";
+import type { Restaurant } from "../route";
 import { XCircleIcon } from "lucide-react";
 import IconButton from "~/components/buttons/IconButton";
 import TextInput from "~/components/formInputs/TextInput";
