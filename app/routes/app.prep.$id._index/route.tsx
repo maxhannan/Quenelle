@@ -135,21 +135,13 @@ function PrepListRoute() {
                       </div>
                     </div>
 
-                    {tg.tasks.map((item) =>
-                      fetcher.data && fetcher.data.id === item.id ? (
-                        <PrepListItem
-                          fetcher={fetcher}
-                          key={fetcher.data.id}
-                          task={fetcher.data}
-                        />
-                      ) : (
-                        <PrepListItem
-                          fetcher={fetcher}
-                          key={item.id}
-                          task={item}
-                        />
-                      )
-                    )}
+                    {tg.tasks.map((item) => (
+                      <PrepListItem
+                        fetcher={fetcher}
+                        key={item.id}
+                        task={item}
+                      />
+                    ))}
                   </Accordion>
                 ))}
             {/* {prepList?.taskGroups.map((tg) => (
