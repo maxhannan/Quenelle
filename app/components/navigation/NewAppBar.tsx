@@ -61,7 +61,7 @@ const NewAppBar: FC<Props> = ({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button
-                className={` dark:bg-zinc-800 bg-zinc-700 text-zinc-200 dark:text-zinc-300 trasition-all duration-300 inline-flex group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center justify-center w-12 h-12 overflow-hidden group-hover:border-indigo-500 border-zinc-500 rounded-full  border dark:border-indigo-500`}
+                className={`data-[state=open]:bg-indigo-500 data-[state=open]:border-indigo-500 dark:bg-zinc-800 bg-zinc-700 text-zinc-200 dark:text-zinc-300 trasition-all duration-300 inline-flex group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center justify-center w-12 h-12 overflow-hidden group-hover:border-indigo-500 border-zinc-500 rounded-full  border dark:border-indigo-500`}
               >
                 <UserIcon className="w-6 h-6" />
               </button>
@@ -84,11 +84,6 @@ const NewAppBar: FC<Props> = ({
                   <Settings className="mr-2 h-4 w-4" />
                   <span>Settings</span>
                   <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Keyboard className="mr-2 h-4 w-4" />
-                  <span>Keyboard shortcuts</span>
-                  <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
@@ -126,21 +121,13 @@ const NewAppBar: FC<Props> = ({
                   <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
+
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Github className="mr-2 h-4 w-4" />
-                <span>GitHub</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <LifeBuoy className="mr-2 h-4 w-4" />
-                <span>Support</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem disabled>
-                <Cloud className="mr-2 h-4 w-4" />
-                <span>API</span>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() =>
+                  submit(null, { action: "/logout", method: "POST" })
+                }
+              >
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Log out</span>
                 <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
