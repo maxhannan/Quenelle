@@ -1,4 +1,5 @@
-import { ActionArgs, redirect } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
+import type { ActionArgs } from "@remix-run/node";
 import {
   ExtractListData,
   getTemplateById,
@@ -20,10 +21,9 @@ import PrepListForm from "~/components/forms/PrepListForm";
 import AppBar from "~/components/navigation/AppBar";
 import { getRecipes } from "~/utils/recipes.server";
 import { getUser } from "~/utils/auth.server";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useToast } from "~/components/ui/use-toast";
-import SlideDownTransition from "~/components/animations/SlideDown";
-import { Transition } from "@headlessui/react";
+
 export async function loader({ params }: LoaderArgs) {
   const id = params.id;
 
@@ -69,13 +69,6 @@ function EditTemplateRoute() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  // if (navigation.state === "loading" || navigation.state === "submitting") {
-  //   return (
-  //     <div className="h-screen  flex items-center justify-center">
-  //       <Spinner size={14} />
-  //     </div>
-  //   );
-  // }
   if (!prepListTemplate) return <h1>No Template Found </h1>;
   return (
     <div className="mb-28 container max-w-4xl mx-auto">

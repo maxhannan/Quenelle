@@ -16,6 +16,7 @@ interface Props {
   changeHandler?: (value: ComboBoxOption | null) => void;
   selectedLinkId?: string;
   required?: boolean;
+  controlledValue?: ComboBoxOption | null;
 }
 
 const ComboBox: FC<Props> = ({
@@ -26,9 +27,11 @@ const ComboBox: FC<Props> = ({
   initValue,
   changeHandler,
   selectedLinkId,
+  controlledValue,
   required = false,
 }) => {
   const [selected, setSelected] = useState(initValue || null);
+  console.log({ selected });
   const [query, setQuery] = useState("");
   const optionsRef = useRef<HTMLUListElement>(null);
   useEffect(() => {
@@ -67,7 +70,7 @@ const ComboBox: FC<Props> = ({
   };
 
   return (
-    <Combobox value={selected} onChange={handleChange}>
+    <Combobox value={controlledValue || selected} onChange={handleChange}>
       <div className="relative w-full ">
         <div className="relative ">
           <input

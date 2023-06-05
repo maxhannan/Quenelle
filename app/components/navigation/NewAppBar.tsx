@@ -1,12 +1,7 @@
-import { FC, Fragment, ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 import SlideDownTransition from "../animations/SlideDown";
 import {
-  Cloud,
   CreditCard,
-  Edit,
-  Github,
-  Keyboard,
-  LifeBuoy,
   LogOut,
   Mail,
   MessageSquare,
@@ -19,7 +14,7 @@ import {
   Users,
 } from "lucide-react";
 import { useSubmit } from "@remix-run/react";
-import { Menu, Transition } from "@headlessui/react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,7 +29,6 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Button } from "react-day-picker";
 
 interface Props {
   page: string;

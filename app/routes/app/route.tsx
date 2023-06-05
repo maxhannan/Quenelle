@@ -26,8 +26,8 @@ const AppLayout = () => {
   }, [location]);
   return (
     <>
-      <div className="  ">
-        <div className="px-3 lg:px-0 scrollbar-thin scrollbar-track-red-300">
+      <div className=" ">
+        <div className="px-3 lg:px-0 scrollbar-thin   w-full lg:h-screen lg:overflow-y-scroll">
           <Outlet />
         </div>
 

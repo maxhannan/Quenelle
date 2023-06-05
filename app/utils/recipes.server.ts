@@ -40,6 +40,7 @@ export const getRecipes = async (all: boolean = false) => {
         },
       },
     });
+    console.log(recipes);
     return recipes;
   } catch (error) {
     console.error(error);

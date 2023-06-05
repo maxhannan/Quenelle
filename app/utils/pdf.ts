@@ -12,7 +12,7 @@ export const getPdf = async (prepList: Preplist) => {
   doc.setFontSize(12);
   doc.text(new Date(prepList.date).toDateString(), 14, 24);
   const data = prepList.taskGroups.map((tg) => ({
-    head: [["", tg.name, "Unit", "On Hand", "Need"]],
+    head: [["", tg.name, "Unit", "Inv", "Need"]],
     body: tg.tasks.map((t) => [
       t.completed ? "X" : "",
       t.name,
@@ -22,22 +22,30 @@ export const getPdf = async (prepList: Preplist) => {
     ]),
   }));
 
+  let lastys = [];
+
   for (let i = 0; i < data.length; i++) {
+    const margin = i % 2 === 0 ? { right: 109 } : { left: 109 };
     autoTable(doc, {
       theme: "grid",
       ...data[i],
+      bodyStyles: { fontSize: 6 },
+      headStyles: { fontSize: 6 },
       columnStyles: {
-        0: { cellWidth: 6 },
-        1: { cellWidth: 100 },
-        2: { cellWidth: 36 },
-        3: { cellWidth: 20 },
-        4: { cellWidth: 20 },
+        0: { cellWidth: 5 },
+        1: { cellWidth: 50 },
+        2: { cellWidth: 18 },
+        3: { cellWidth: 10 },
+        4: { cellWidth: 10 },
       },
+      margin: margin,
       //@ts-ignore: next line is a hack to get around a bug in jspdf-autotable
-      startY: i > 0 ? doc.lastAutoTable.finalY : 28,
+      startY: i > 1 ? lastys[i - 2] + 5 : 28,
+
       showHead: "firstPage",
       styles: { overflow: "hidden" },
     });
+    lastys.push(doc.lastAutoTable.finalY);
   }
 
   doc.save("table.pdf");

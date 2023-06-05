@@ -3,7 +3,7 @@ import { usePrepList } from "../app.prep.$id/route";
 import { useFetcher, useNavigate, useNavigation } from "@remix-run/react";
 import Spinner from "~/components/LoadingSpinner";
 import Accordion from "~/components/display/Accordion";
-import SearchBar from "~/components/formInputs/SearchBar";
+
 import AppBar from "~/components/navigation/AppBar";
 import IconButton from "~/components/buttons/IconButton";
 import { ArrowUturnLeftIcon } from "@heroicons/react/24/outline";

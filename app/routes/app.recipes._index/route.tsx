@@ -8,20 +8,25 @@ import {
 import Spinner from "~/components/LoadingSpinner";
 import RecipeFeed from "./components/RecipeFeed";
 
-import AppBar from "~/components/navigation/AppBar";
-import IconButton from "~/components/buttons/IconButton";
-import { DocumentPlusIcon, UserIcon } from "@heroicons/react/24/outline";
 import SearchAndFilter from "./components/SearchAndFilter";
 import NewAppBar from "~/components/navigation/NewAppBar";
 import FadeIn from "~/components/animations/FadeIn";
 import { PlusIcon } from "lucide-react";
+import { useState } from "react";
 
 export default function RecipesIndex() {
-  const { recipes, filteredRecipes, categories } = useRecipes();
+  const {
+    recipes,
+    filteredRecipes,
+    categories,
+    searchValues,
+    changeSearchValues,
+  } = useRecipes();
   const navigation = useNavigation();
   const navigate = useNavigate();
-  const submit = useSubmit();
+
   const [searchParams, setSearchParams] = useSearchParams();
+
   const pageChangeLoading =
     navigation.state === "loading" &&
     navigation.location.pathname !== "/app/recipes";
@@ -36,7 +41,10 @@ export default function RecipesIndex() {
 
   return (
     <FadeIn>
-      <div className=" container mx-auto max-w-3xl ">
+      <div className=" h-screen w-full  items-center justify-center text-2xl text-zinc-800 dark:text-zinc-200 hidden lg:flex ">
+        <h1>Select A Recipe</h1>
+      </div>
+      <div className=" w-full lg:hidden">
         <div className="grid grid-cols-1   ">
           <div>
             <div className=" ">
@@ -55,6 +63,8 @@ export default function RecipesIndex() {
                 categories={categories}
                 searchParams={searchParams}
                 setSearchParams={setSearchParams}
+                searchValues={searchValues}
+                changeSearchValues={changeSearchValues}
               />
             </div>
           </div>

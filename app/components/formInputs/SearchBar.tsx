@@ -4,7 +4,7 @@ import Spinner from "../LoadingSpinner";
 import { Search } from "lucide-react";
 
 interface Props {
-  handleChange: Dispatch<React.SetStateAction<string>>;
+  handleChange: (val: string) => void;
   value: string;
   loading: boolean;
 }

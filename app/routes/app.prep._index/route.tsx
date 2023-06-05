@@ -12,16 +12,11 @@ import { add, format, formatRelative, isSameDay } from "date-fns";
 
 import PrepCalendar from "./components/PrepCalendar";
 import ListCard from "~/components/display/ListCard";
-import { DocumentPlusIcon } from "@heroicons/react/24/outline";
+
 import IconButton from "~/components/buttons/IconButton";
 import CustomModal from "~/components/display/CustomModal";
 import ComboBox from "~/components/formInputs/ComboBox";
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  Clipboard,
-  ClipboardEdit,
-} from "lucide-react";
+import { ArrowLeftIcon, ArrowRightIcon, ClipboardEdit } from "lucide-react";
 import LoadingButton from "~/components/buttons/LoadingButton";
 import Spinner from "~/components/LoadingSpinner";
 import SearchBar from "~/components/formInputs/SearchBar";

@@ -14,44 +14,61 @@ interface Props {
   categories: string[];
   searchParams: URLSearchParams;
   setSearchParams: (searchParams: URLSearchParams) => void;
+  searchValues: {
+    searchValue: string;
+    category: string;
+    allergies: string[];
+  };
+  changeSearchValues: ({
+    field,
+    value,
+  }: {
+    field: "searchValue" | "category" | "allergies";
+    value: string | string[] | null;
+  }) => void;
 }
 
 const SearchAndFilter: FC<Props> = ({
   categories,
   searchParams,
   setSearchParams,
+  searchValues,
+  changeSearchValues,
 }) => {
-  const category = searchParams.get("category");
-  const allergies = searchParams.get("allergies");
-  console.log({ allergies });
   const navigation = useNavigation();
 
   const [loadingSearch, setLoadingSearch] = useState(false);
 
   const [openFilter, setOpenFilter] = useState(
-    category !== null || allergies !== null ? true : false
-  );
-  const [searchValue, setSearchValue] = useState(
-    searchParams.get("search") || ""
+    searchValues.category !== null || searchValues.allergies !== null
+      ? true
+      : false
   );
 
-  let [debouncedQuery, isDebouncing] = useDebounce(searchValue, 500);
+  let [debouncedQuery, isDebouncing] = useDebounce(
+    searchValues.searchValue,
+    500
+  );
 
   const handleCategorize = (category: ComboBoxOption | null) => {
     if (category) {
       searchParams.set("category", category.value);
+      changeSearchValues({ field: "category", value: category.value });
       setSearchParams(searchParams);
     } else {
       searchParams.delete("category");
+      changeSearchValues({ field: "category", value: null });
       setSearchParams(searchParams);
     }
   };
 
   const handleAllergies = (value: string[]) => {
     if (value.length > 0) {
+      changeSearchValues({ field: "allergies", value: value });
       searchParams.set("allergies", value.join(","));
       setSearchParams(searchParams);
     } else {
+      changeSearchValues({ field: "allergies", value: [] });
       searchParams.delete("allergies");
       setSearchParams(searchParams);
     }
@@ -98,8 +115,12 @@ const SearchAndFilter: FC<Props> = ({
       <div className="container   mx-auto flex  gap-x-2  ">
         <div className=" grow">
           <SearchBar
-            handleChange={setSearchValue}
-            value={searchValue}
+            handleChange={(val) => {
+              console.log({ val });
+
+              changeSearchValues({ field: "searchValue", value: val });
+            }}
+            value={searchValues.searchValue}
             loading={loadingSearch}
           />
         </div>
@@ -134,15 +155,17 @@ const SearchAndFilter: FC<Props> = ({
         <ComboBox
           name="category"
           placeholder="Category"
-          changeHandler={handleCategorize}
           initValue={
-            category!
-              ? {
-                  id: category,
-                  value: category,
-                }
+            searchValues.category
+              ? { id: searchValues.category, value: searchValues.category }
               : undefined
           }
+          controlledValue={
+            searchValues.category
+              ? { id: searchValues.category, value: searchValues.category }
+              : undefined
+          }
+          changeHandler={handleCategorize}
           options={categories.map((c) => ({
             id: c,
             value: c,
@@ -150,8 +173,9 @@ const SearchAndFilter: FC<Props> = ({
         />
         <MultiSelect
           name="allergens"
+          controlledValue={searchValues.allergies}
+          initialValue={searchValues.allergies || undefined}
           changeHandler={handleAllergies}
-          initialValue={allergies ? allergies.split(",") : []}
           options={allergens}
           placeholder="Filter Out Allergens"
         />

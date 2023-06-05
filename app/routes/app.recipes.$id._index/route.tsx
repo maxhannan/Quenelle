@@ -55,7 +55,7 @@ const RecipeIndex: FC = () => {
   }
 
   return (
-    <main className="pb-32 container mx-auto max-w-3xl ">
+    <main className="pb-32 container mx-auto max-w-4xl ">
       <AppBar page="">
         <IconButton
           Icon={PencilIcon}
