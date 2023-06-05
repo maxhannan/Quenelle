@@ -16,7 +16,7 @@ interface Props {
   setSearchParams: (searchParams: URLSearchParams) => void;
   searchValues: {
     searchValue: string;
-    category: string;
+    category: string | null;
     allergies: string[];
   };
   changeSearchValues: ({
@@ -40,7 +40,7 @@ const SearchAndFilter: FC<Props> = ({
   const [loadingSearch, setLoadingSearch] = useState(false);
 
   const [openFilter, setOpenFilter] = useState(
-    searchValues.category !== null || searchValues.allergies !== null
+    searchValues.category !== null || searchValues.allergies.length > 0
       ? true
       : false
   );

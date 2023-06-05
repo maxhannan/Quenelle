@@ -23,7 +23,7 @@ export default function RecipeFeed({ recipes }: { recipes: FullRecipes }) {
           recipes.map((r) => (
             <div key={r.id} onClick={() => setActive(r.id)}>
               <RecipeCard
-                to={`/app/recipes/${r.id}`}
+                to={`/app/recipes/${r.id + location.search} `}
                 name={r.name}
                 active={active === r.id}
                 subHeading={r.category}

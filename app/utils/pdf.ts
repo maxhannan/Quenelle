@@ -39,12 +39,11 @@ export const getPdf = async (prepList: Preplist) => {
         4: { cellWidth: 10 },
       },
       margin: margin,
-      //@ts-ignore: next line is a hack to get around a bug in jspdf-autotable
       startY: i > 1 ? lastys[i - 2] + 5 : 28,
-
       showHead: "firstPage",
       styles: { overflow: "hidden" },
     });
+    // @ts-ignore: next line is a hack to get around a bug in jspdf-autotable
     lastys.push(doc.lastAutoTable.finalY);
   }
 
