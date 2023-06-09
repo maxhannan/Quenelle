@@ -47,7 +47,6 @@ const TaskGroup: FC<Props> = ({ handleDelete, tg, recipeList }) => {
   }, []);
 
   const handleDishSelect = (value: ComboBoxOption | null) => {
-    console.log({ value });
     const findDish = dishes?.find((d) => d.id === value?.id);
     if (findDish) {
       setSelectedLink(findDish.id);
@@ -62,7 +61,6 @@ const TaskGroup: FC<Props> = ({ handleDelete, tg, recipeList }) => {
       setTasks(taskList);
       setTgName(value?.value || "");
     } else {
-      console.log("else");
       setTgName(value?.value || "");
       if (!value?.value || value?.value === "") setTasks([]);
     }

@@ -31,7 +31,7 @@ const ComboBox: FC<Props> = ({
   required = false,
 }) => {
   const [selected, setSelected] = useState(initValue || null);
-  console.log({ selected });
+
   const [query, setQuery] = useState("");
   const optionsRef = useRef<HTMLUListElement>(null);
   useEffect(() => {

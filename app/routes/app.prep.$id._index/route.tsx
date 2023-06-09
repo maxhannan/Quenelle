@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { usePrepList } from "../app.prep.$id/route";
-import { useFetcher, useNavigate, useNavigation } from "@remix-run/react";
+import {
+  useFetcher,
+  useLocation,
+  useNavigate,
+  useNavigation,
+} from "@remix-run/react";
 import Spinner from "~/components/LoadingSpinner";
 import Accordion from "~/components/display/Accordion";
 
@@ -35,6 +40,7 @@ function PrepListRoute() {
   const navigate = useNavigate();
   const navigation = useNavigation();
   const fetcher = useFetcher();
+  const location = useLocation();
   let prepList = usePrepList();
 
   const [pdfLoading, setPdfLoading] = useState(false);
@@ -60,7 +66,11 @@ function PrepListRoute() {
     }))
     .filter((tg) => tg.tasks.length > 0);
 
-  if (navigation.state === "loading") {
+  const pageChangeLoading =
+    navigation.state === "loading" &&
+    location.pathname !== navigation.location.pathname;
+
+  if (navigation.state === "loading" && pageChangeLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Spinner size={14} />

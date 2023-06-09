@@ -41,10 +41,10 @@ export default function RecipesIndex() {
 
   return (
     <FadeIn>
-      <div className=" h-screen w-full  items-center justify-center text-2xl text-zinc-800 dark:text-zinc-200 hidden lg:flex ">
+      <div className=" h-screen w-full  items-center justify-center text-2xl text-zinc-800 dark:text-zinc-200 hidden xl:flex ">
         <h1>Select A Recipe</h1>
       </div>
-      <div className=" w-full lg:hidden">
+      <div className=" w-full xl:hidden max-w-4xl container mx-auto">
         <div className="grid grid-cols-1   ">
           <div>
             <div className=" ">

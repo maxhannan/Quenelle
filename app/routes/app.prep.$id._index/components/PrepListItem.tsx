@@ -23,9 +23,8 @@ const PrepListItem: FC<Props> = ({ task, fetcher }) => {
       return;
     }
     e && e.preventDefault();
-    console.log("submitting");
+
     fetcher.submit(formRef.current!);
-    console.log(fetcher);
   }
 
   useEffect(() => {

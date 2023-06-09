@@ -30,7 +30,7 @@ const Task: FC<Props> = ({
   const handleLinkChange = (value: { id: string; value: string } | null) => {
     setSelectedLink(value);
   };
-  console.log({ tg });
+
   return (
     <div className="grid grid-cols-5  gap-y-2 gap-x-2 w-full col-span-5 ">
       <input type="hidden" name="tGroupName" value={tg} />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { FC } from "react";
 import TextInput from "../formInputs/TextInput";
 import PrepCalendar from "~/routes/app.prep._index/components/PrepCalendar";
@@ -42,8 +42,7 @@ export interface TaskGroupType {
 }
 
 const PrepListForm: FC<Props> = ({ recipeList, template }) => {
-  const [date, setDate] = useState<Date>(new Date(Date.now()));
-
+  console.log({ template }, 22);
   const getFormValues = (template?: Template) => {
     if (template) {
       const { name, taskGroups } = template;
@@ -71,8 +70,16 @@ const PrepListForm: FC<Props> = ({ recipeList, template }) => {
       taskGroups: [],
     };
   };
+  const [date, setDate] = useState<Date>(new Date(Date.now()));
+  const [formValues, setFormValues] = useState(getFormValues(template));
 
-  const formValues = getFormValues(template);
+  useEffect(() => {
+    setFormValues(getFormValues(template));
+  }, [template]);
+
+  useEffect(() => {
+    setTaskGroups(formValues.taskGroups);
+  }, [formValues]);
 
   const [taskGroups, setTaskGroups] = useState<TaskGroupType[]>(
     formValues.taskGroups

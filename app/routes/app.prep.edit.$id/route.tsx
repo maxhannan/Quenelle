@@ -10,8 +10,10 @@ import {
   Form,
   useActionData,
   useLoaderData,
+  useLocation,
   useNavigate,
   useNavigation,
+  useRevalidator,
 } from "@remix-run/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { CheckCircleIcon } from "lucide-react";
@@ -21,7 +23,7 @@ import PrepListForm from "~/components/forms/PrepListForm";
 import AppBar from "~/components/navigation/AppBar";
 import { getRecipes } from "~/utils/recipes.server";
 import { getUser } from "~/utils/auth.server";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useToast } from "~/components/ui/use-toast";
 
 export async function loader({ params }: LoaderArgs) {
@@ -56,10 +58,19 @@ export async function action({ request, params }: ActionArgs) {
 function EditTemplateRoute() {
   const { allRecipes, prepListTemplate } = useLoaderData<typeof loader>();
 
+  const [template, setTemplate] = useState(prepListTemplate);
+
+  useEffect(() => {
+    setTemplate(prepListTemplate);
+  }, [prepListTemplate]);
+
+  console.log({ template });
+
   const navigation = useNavigation();
   const navigate = useNavigate();
   const data = useActionData();
   const { toast } = useToast();
+
   useEffect(() => {
     if (data !== undefined) {
       toast({
@@ -69,7 +80,7 @@ function EditTemplateRoute() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  if (!prepListTemplate) return <h1>No Template Found </h1>;
+  if (!template) return <h1>No Template Found </h1>;
   return (
     <div className="mb-28 container max-w-4xl mx-auto">
       {navigation.state === "loading" ||
@@ -84,10 +95,7 @@ function EditTemplateRoute() {
           </div>
         ))}
       <Form method="post">
-        <AppBar
-          textSize="text-3xl md:text-4xl"
-          page={`Edit ${prepListTemplate.name}`}
-        >
+        <AppBar textSize="text-3xl md:text-4xl" page={`Edit ${template.name}`}>
           <IconButton Icon={CheckCircleIcon} name="Submit" type="submit" />
           <IconButton
             Icon={XMarkIcon}
@@ -96,7 +104,7 @@ function EditTemplateRoute() {
             onClick={() => navigate(-1)}
           />
         </AppBar>
-        <PrepListForm recipeList={allRecipes} template={prepListTemplate} />
+        <PrepListForm recipeList={allRecipes} template={template} />
       </Form>
     </div>
   );
