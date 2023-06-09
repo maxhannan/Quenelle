@@ -81,29 +81,32 @@ const AddRecipeRoute: FC = () => {
   }
 
   return (
-    <div className="container mx-auto max-w-4xl">
-      <Form
-        ref={formRef}
-        method="post"
-        encType="multipart/form-data"
-        onSubmit={handleSubmit}
-      >
-        <AppBar page="Add a Recipe">
-          <IconButton Icon={CheckCircleIcon} name="Submit" type="submit" />
-          <IconButton
-            Icon={XMarkIcon}
-            name="Go Back"
-            type="button"
-            onClick={() => navigate("/app/recipes")}
-          />
-        </AppBar>
-        <RecipeForm
-          categories={categories}
-          recipes={recipes}
-          formLoading={imageLoading}
+    <>
+      <AppBar page="">
+        <IconButton Icon={CheckCircleIcon} name="Submit" type="submit" />
+        <IconButton
+          Icon={XMarkIcon}
+          name="Go Back"
+          type="button"
+          onClick={() => navigate("/app/recipes")}
         />
-      </Form>
-    </div>
+      </AppBar>
+
+      <div className="container mx-auto max-w-4xl xl:mt-1 lg:pl-2">
+        <Form
+          ref={formRef}
+          method="post"
+          encType="multipart/form-data"
+          onSubmit={handleSubmit}
+        >
+          <RecipeForm
+            categories={categories}
+            recipes={recipes}
+            formLoading={imageLoading}
+          />
+        </Form>
+      </div>
+    </>
   );
 };
 

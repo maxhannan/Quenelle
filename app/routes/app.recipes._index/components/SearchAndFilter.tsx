@@ -45,6 +45,11 @@ const SearchAndFilter: FC<Props> = ({
       : false
   );
 
+  useEffect(() => {
+    if (searchValues.category !== null || searchValues.allergies.length > 0) {
+      setOpenFilter(true);
+    }
+  }, [searchValues.category, searchValues.allergies]);
   let [debouncedQuery, isDebouncing] = useDebounce(
     searchValues.searchValue,
     500

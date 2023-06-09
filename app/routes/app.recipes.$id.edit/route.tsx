@@ -126,9 +126,9 @@ const EditRecipeRoute: FC = () => {
   }
 
   return (
-    <div className="container mx-auto max-w-2xl">
-      <Form method="post" ref={formRef} onSubmit={handleSubmit}>
-        <AppBar page={`Edit Recipe`} textSize="text-3xl">
+    <div>
+      <div className="">
+        <AppBar page={``} textSize="text-3xl lg:text-4xl ">
           <IconButton
             Icon={TrashIcon}
             name="delete"
@@ -145,15 +145,19 @@ const EditRecipeRoute: FC = () => {
             }
           />
         </AppBar>
-        <RecipeForm
-          recipe={recipe}
-          imageList={imageList}
-          handleDeleteImage={handleDeleteImage}
-          recipes={recipes}
-          categories={categories}
-          formLoading={imageLoading}
-        />
-      </Form>
+      </div>
+      <div className="container mx-auto max-w-4xl lg:pl-2">
+        <Form method="post" ref={formRef} onSubmit={handleSubmit}>
+          <RecipeForm
+            recipe={recipe}
+            imageList={imageList}
+            handleDeleteImage={handleDeleteImage}
+            recipes={recipes}
+            categories={categories}
+            formLoading={imageLoading}
+          />
+        </Form>
+      </div>
     </div>
   );
 };

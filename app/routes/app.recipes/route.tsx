@@ -74,7 +74,8 @@ const RecipesLayout = () => {
       category: categoryParam || null,
       allergies: allergyParam?.split(",") || [],
     });
-  }, [location.search]);
+  }, [location]);
+
   const [searchValues, setSearchValues] = useState({
     searchValue: searchquery || "",
     category: categoryParam || null,
@@ -102,7 +103,7 @@ const RecipesLayout = () => {
 
   return (
     <div className="flex">
-      <div className="relative w-1/4 h-screen bg-zinc-50 dark:bg-zinc-950 overflow-y-scroll flex-none hidden lg:flex scrollbar-thin scrollbar-track-zinc-100 dark:scrollbar-track-zinc-900 scrollbar-thumb-zinc-600 dark:scrollbar-thumb-zinc-500 scrollbar-thumb-rounded-2xl">
+      <div className="relative w-1/3  h-screen bg-zinc-50 dark:bg-zinc-950 overflow-y-scroll flex-none hidden xl:flex scrollbar-thin scrollbar-track-zinc-100 dark:scrollbar-track-zinc-900 scrollbar-thumb-zinc-600 dark:scrollbar-thumb-zinc-500 scrollbar-thumb-rounded-2xl">
         <div className=" w-full px-3">
           <div className="grid grid-cols-1   ">
             <div>
@@ -139,7 +140,7 @@ const RecipesLayout = () => {
           </div>
         </div>
       </div>
-      <div className="w-full lg:h-screen lg:overflow-y-scroll scrollbar-none">
+      <div className="w-full xl:h-screen xl:overflow-y-scroll scrollbar-none">
         <Outlet
           context={{
             recipes,
