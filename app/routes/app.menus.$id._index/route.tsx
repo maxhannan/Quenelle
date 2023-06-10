@@ -3,12 +3,12 @@ import {
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
 
-import { useNavigate, useNavigation } from "@remix-run/react";
+import { useLocation, useNavigate, useNavigation } from "@remix-run/react";
 import React from "react";
 import Spinner from "~/components/LoadingSpinner";
 import IconButton from "~/components/buttons/IconButton";
 import AppBar from "~/components/navigation/AppBar";
-import { useMenu } from "../app.menus_.$id/route";
+import { useMenu } from "../app.menus.$id/route";
 import ListCard from "~/components/display/ListCard";
 import MultiSelect from "~/components/formInputs/MultiSelect";
 import { allergens } from "~/utils/staticLists";
@@ -21,8 +21,12 @@ function MenuIndex() {
   const navigation = useNavigation();
 
   const [allergies, setAllergies] = React.useState<string[]>([]);
+  const location = useLocation();
 
-  if (navigation.state === "loading")
+  if (
+    navigation.state === "loading" &&
+    navigation.location.pathname !== location.pathname
+  )
     return (
       <div className=" mx-auto h-screen  flex items-center justify-center">
         <Spinner size={14} />
@@ -51,7 +55,7 @@ function MenuIndex() {
   const filteredMenu = { ...menu, sections: filteredSections };
 
   return (
-    <div className=" mb-28 container mx-auto max-w-4xl ">
+    <div className=" mb-28 container mx-auto xl:pl-2 ">
       <AppBar page={""}>
         <IconButton
           name="Edit"

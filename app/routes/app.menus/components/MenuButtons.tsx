@@ -1,4 +1,3 @@
-import { useNavigate } from "@remix-run/react";
 import type { FC } from "react";
 
 interface Props {
@@ -7,13 +6,11 @@ interface Props {
 }
 
 const MenuButtons: FC<Props> = ({ activeTab, setActiveTab }) => {
-  const navigate = useNavigate();
   return (
     <div className="flex flex-2 max-w-md ">
       <button
         onClick={() => {
           setActiveTab("Menus");
-          navigate("/app/menus");
         }}
         className={` bg-zinc-200 border grow border-r-0 border-zinc-300 text-lg font-normal justify-center rounded-l-2xl px-3 p-2 inline-flex  h-12 items-center   sm:hover:bg-zinc-300  transition-all duration-200 dark:bg-zinc-800  dark:border-zinc-700  ${
           activeTab === "Menus"
@@ -26,7 +23,6 @@ const MenuButtons: FC<Props> = ({ activeTab, setActiveTab }) => {
       <button
         onClick={() => {
           setActiveTab("Dishes");
-          navigate("/app/menus/dishes");
         }}
         className={` bg-zinc-200 border grow  border-zinc-300 text-lg justify-center rounded-r-2xl font-normal  px-3 p-2 inline-flex  h-12 items-center   sm:hover:bg-zinc-300  transition-all duration-200 dark:bg-zinc-800  dark:border-zinc-700  ${
           activeTab === "Dishes"

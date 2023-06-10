@@ -1,21 +1,25 @@
 import { useNavigation } from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
-import type { FC } from "react";
+import type { Dispatch, FC } from "react";
 import SearchBar from "~/components/formInputs/SearchBar";
 import { useDebounce } from "~/hooks/useDebounce";
 
 interface Props {
   searchParams: URLSearchParams;
   setSearchParams: (searchParams: URLSearchParams) => void;
+  searchValue: string;
+  setSearchValue: Dispatch<React.SetStateAction<string>>;
 }
 
-const MenuSearch: FC<Props> = ({ searchParams, setSearchParams }) => {
+const MenuSearch: FC<Props> = ({
+  searchParams,
+  setSearchParams,
+  searchValue,
+  setSearchValue,
+}) => {
   const navigation = useNavigation();
   const [loadingSearch, setLoadingSearch] = useState(false);
 
-  const [searchValue, setSearchValue] = useState(
-    searchParams.get("search") || ""
-  );
   let [debouncedQuery, isDebouncing] = useDebounce(searchValue, 500);
 
   let initialRender = useRef(true);

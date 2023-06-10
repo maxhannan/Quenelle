@@ -1,6 +1,11 @@
 import { useState } from "react";
-import { useDish } from "../app.menus_.dishes.$id/route";
-import { Link, useNavigate, useNavigation } from "@remix-run/react";
+import { useDish } from "../app.menus.dishes.$id/route";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useNavigation,
+} from "@remix-run/react";
 import AppBar from "~/components/navigation/AppBar";
 import IconButton from "~/components/buttons/IconButton";
 import {
@@ -22,7 +27,11 @@ function DishIndex() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const navigation = useNavigation();
-  if (navigation.state === "loading") {
+  const location = useLocation();
+  if (
+    navigation.state === "loading" &&
+    navigation.location.pathname !== location.pathname
+  ) {
     return (
       <div className="h-screen  flex items-center justify-center">
         <Spinner size={14} />
@@ -34,7 +43,7 @@ function DishIndex() {
     return navigate("/app/menus/dishes");
   }
   return (
-    <main className="mb-28 container mx-auto max-w-3xl">
+    <main className="mb-28 container mx-auto xl:pl-2">
       <AppBar page="">
         <IconButton
           Icon={PencilIcon}

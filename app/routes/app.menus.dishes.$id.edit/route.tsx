@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import type { FormEventHandler } from "react";
-import { useDish } from "../app.menus_.dishes.$id/route";
+import { useDish } from "../app.menus.dishes.$id/route";
 import { getRecipes } from "~/utils/recipes.server";
 import {
   Form,
   useActionData,
   useFetcher,
   useLoaderData,
+  useLocation,
   useNavigate,
   useNavigation,
   useRevalidator,
@@ -52,6 +53,7 @@ function EditDishRoute() {
   const { recipes, categories } = useLoaderData<typeof loader>();
   const revalidator = useRevalidator();
   const navigate = useNavigate();
+  const location = useLocation();
   const navigation = useNavigation();
   const fetcher = useFetcher();
   const data = useActionData();
@@ -109,7 +111,8 @@ function EditDishRoute() {
   }, [data]);
 
   if (
-    navigation.state === "loading" ||
+    (navigation.state === "loading" &&
+      navigation?.location?.pathname !== location.pathname) ||
     navigation.state === "submitting" ||
     imageLoading
   ) {
@@ -121,7 +124,7 @@ function EditDishRoute() {
   }
 
   return (
-    <div className="container mx-auto max-w-2xl">
+    <div className="container mx-auto xl:pl-2">
       <Form method="post" ref={formRef} onSubmit={handleSubmit}>
         <AppBar page={`Edit Recipe`} textSize="text-3xl">
           <IconButton

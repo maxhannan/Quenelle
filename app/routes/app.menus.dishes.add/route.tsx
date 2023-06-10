@@ -91,7 +91,7 @@ function AddDishRoute() {
     );
   }
   return (
-    <div className="container mx-auto max-w-4xl">
+    <div className="container mx-auto xl:pl-2">
       <Form
         ref={formRef}
         method="post"

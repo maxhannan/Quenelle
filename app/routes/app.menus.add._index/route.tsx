@@ -3,7 +3,7 @@ import { Form, useNavigate, useNavigation } from "@remix-run/react";
 import Spinner from "~/components/LoadingSpinner";
 import IconButton from "~/components/buttons/IconButton";
 import AppBar from "~/components/navigation/AppBar";
-import { useDishesForForm } from "../app.menus_.add/route";
+import { useDishesForForm } from "../app.menus.add/route";
 
 import MenuForm from "~/components/forms/MenuForm";
 import { createMenu, extractMenu } from "~/utils/menus.server";
@@ -28,7 +28,10 @@ function AddMenuIndex() {
   const navigation = useNavigation();
   const { dishes, services } = useDishesForForm();
 
-  if (navigation.state === "loading" || navigation.state === "submitting") {
+  if (
+    (navigation.state === "loading" || navigation.state === "submitting") &&
+    navigation.location.pathname !== "/app/menus/add"
+  ) {
     return (
       <div className="h-screen  flex items-center justify-center">
         <Spinner size={14} />

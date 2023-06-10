@@ -19,7 +19,7 @@ function AddMenuLayout() {
   const { services, dishes } = useLoaderData<ContextType>();
   console.log({ services, dishes });
   return (
-    <div className="mb-28 container max-w-4xl mx-auto">
+    <div className="mb-28 container xl:pl-2 mx-auto">
       <Outlet context={{ services, dishes }} />
     </div>
   );

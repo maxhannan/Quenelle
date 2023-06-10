@@ -5,7 +5,7 @@ import {
   Form,
   useLoaderData,
 } from "@remix-run/react";
-import { useMenu } from "../app.menus_.$id/route";
+import { useMenu } from "../app.menus.$id/route";
 import { getDishes } from "~/utils/dishes.server";
 import { extractMenu, getMenus, updateMenu } from "~/utils/menus.server";
 import { serviceList } from "~/utils/staticLists";
@@ -65,7 +65,7 @@ function EditMenuRoute() {
   }
 
   return (
-    <div className="mb-28 container max-w-4xl mx-auto">
+    <div className="mb-28 container xl:pl-2 mx-auto">
       <Form method="post">
         <AppBar page="Add a Menu">
           <IconButton Icon={CheckCircleIcon} name="Submit" type="submit" />

@@ -48,7 +48,7 @@ const AppLayout = () => {
           <Outlet />
         </div>
 
-        <div className="w-1/3   justify-center bottom-6 fixed pr-3 xl:flex hidden">
+        <div className="w-1/3   justify-center bottom-6 fixed pr-6 xl:flex hidden">
           <div className="py-3 px-2 w-96  bg-zinc-800 dark:bg-zinc-200 rounded-full">
             <div className="grid h-full max-w-lg  mx-auto grid-cols-5 gap-0">
               <BottomNavButton

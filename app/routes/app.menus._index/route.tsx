@@ -1,83 +1,81 @@
-import type { LoaderArgs } from "@remix-run/node";
-import {
-  useLoaderData,
-  useNavigation,
-  useSearchParams,
-} from "@remix-run/react";
+import { useLocation, useNavigate, useNavigation } from "@remix-run/react";
 import Spinner from "~/components/LoadingSpinner";
 
-import { getMenus } from "~/utils/menus.server";
 import MenuSearch from "./Components/MenuSearch";
 
-import ListCard from "~/components/display/ListCard";
-import FadeIn from "~/components/animations/FadeIn";
-
-export async function loader({ request }: LoaderArgs) {
-  const url = new URL(request.url);
-  const params = new URLSearchParams(url.search);
-
-  const search = params.get("search");
-  const menus = await getMenus();
-
-  if (search && search.length > 0 && menus) {
-    return menus.filter((m) =>
-      m.name.toLowerCase().includes(search.toLowerCase())
-    );
-  }
-  return menus;
-}
+import { DocumentPlusIcon } from "@heroicons/react/24/outline";
+import SlideDownTransition from "~/components/animations/SlideDown";
+import IconButton from "~/components/buttons/IconButton";
+import DishesPages from "../app.menus/components/DishesPages";
+import MenuButtons from "../app.menus/components/MenuButtons";
+import { useMenuContext } from "../app.menus/route";
+import MenuPages from "../app.menus/components/MenuPages";
 
 function MenuIndex() {
-  const menus = useLoaderData<typeof loader>();
   const navigation = useNavigation();
-  const [searchParams, setSearchParams] = useSearchParams();
+
+  const {
+    activeTab,
+    setActiveTab,
+    menus,
+    dishes,
+    searchParams,
+    setSearchParams,
+    searchValue,
+    setSearchValue,
+  } = useMenuContext();
+  const navigate = useNavigate();
+  const location = useLocation();
   const pageChangeLoading =
     navigation.state === "loading" &&
-    navigation.location.pathname !== "/app/menus";
-
+    navigation.location.pathname !== location.pathname;
   if (pageChangeLoading) {
     return (
-      <div className="flex items-center justify-center h-48">
+      <div className="flex items-center justify-center h-screen">
         <Spinner size={14} />
       </div>
     );
   }
   return (
-    <FadeIn>
-      <div className="flex flex-col gap-2 mb-24 mt-1">
-        <MenuSearch
-          searchParams={searchParams}
-          setSearchParams={setSearchParams}
-        />
-        <div className="flex flex-col gap-2">
-          {navigation.state === "loading" && !pageChangeLoading ? (
-            <div className="flex items-center justify-center">
-              <Spinner size={14} />
+    <>
+      <div className=" h-screen w-full  items-center justify-center text-2xl text-zinc-800 dark:text-zinc-200 hidden xl:flex ">
+        <h1>Select A {activeTab === "Dishes" ? "Dish" : "Menu"}</h1>
+      </div>
+      <div className=" container mx-auto max-w-4xl xl:hidden ">
+        <SlideDownTransition>
+          <nav className=" flex pt-3 pb-1 mx-auto max-h-full items-center justify-between  duration-300 bg-zinc-100 dark:bg-zinc-900 font-light  w-full top-0 left-0  ">
+            <MenuButtons activeTab={activeTab} setActiveTab={setActiveTab} />
+            <div className="grow flex justify-end gap-2">
+              <IconButton
+                Icon={DocumentPlusIcon}
+                name="Add"
+                type="button"
+                onClick={() =>
+                  navigate(`${activeTab === "Dishes" ? "dishes/" : ""}add`)
+                }
+              />
             </div>
+          </nav>
+        </SlideDownTransition>
+
+        <div className=" mb-28 flex flex-col gap-2 mt-2">
+          <MenuSearch
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+            searchParams={searchParams}
+            setSearchParams={setSearchParams}
+          />
+          {activeTab === "Dishes" ? (
+            <DishesPages
+              dishes={dishes}
+              pageChangeLoading={!pageChangeLoading}
+            />
           ) : (
-            <div className="flex flex-col gap-2 items-center">
-              {menus && menus.length ? (
-                menus.map((m) => (
-                  <ListCard
-                    subHeading={`${m._count.dishes} Dish${
-                      m._count.dishes !== 1 ? "es" : ""
-                    } `}
-                    to={`/app/menus/${m.id}`}
-                    key={m.id}
-                    name={m.name}
-                    user={m.author!.firstName[0] + m.author!.lastName[0]}
-                  />
-                ))
-              ) : (
-                <div className="text-xl text-neutral-700 dark:text-neutral-200 mt-2">
-                  No Menus Found
-                </div>
-              )}
-            </div>
+            <MenuPages menus={menus} pageChangeLoading={!pageChangeLoading} />
           )}
         </div>
       </div>
-    </FadeIn>
+    </>
   );
 }
 
