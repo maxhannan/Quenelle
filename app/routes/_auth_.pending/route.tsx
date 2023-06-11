@@ -1,7 +1,5 @@
-import React from "react";
-
 import { getUser } from "~/utils/auth.server";
-import { LoaderArgs, redirect } from "@remix-run/node";
+import { type LoaderArgs, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import Spinner from "~/components/LoadingSpinner";
 type User = Awaited<ReturnType<typeof getUser>>;

@@ -1,6 +1,6 @@
-import { LoaderArgs, redirect } from "@remix-run/node";
+import { type LoaderArgs, redirect } from "@remix-run/node";
 import { Outlet, useLoaderData, useOutletContext } from "@remix-run/react";
-import { Dispatch, useState } from "react";
+import { type Dispatch, useState } from "react";
 import { Progress } from "~/components/ui/progress";
 import { getUser } from "~/utils/auth.server";
 export async function loader({ params, request }: LoaderArgs) {

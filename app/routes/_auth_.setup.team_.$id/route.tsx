@@ -9,7 +9,7 @@ import {
   useNavigate,
   useNavigation,
 } from "@remix-run/react";
-import { ActionArgs, LoaderArgs, redirect } from "@remix-run/node";
+import { type ActionArgs, type LoaderArgs, redirect } from "@remix-run/node";
 import { prisma } from "~/utils/prisma.server";
 import { approveTeamMember, getUser } from "~/utils/auth.server";
 

@@ -1,21 +1,16 @@
-import {
-  ArrowLongRightIcon,
-  BuildingStorefrontIcon,
-} from "@heroicons/react/24/outline";
+import { BuildingStorefrontIcon } from "@heroicons/react/24/outline";
 import {
   Form,
   useActionData,
-  useLoaderData,
   useNavigate,
   useNavigation,
 } from "@remix-run/react";
-import { ArrowRightIcon, PlusIcon } from "lucide-react";
+import { ArrowRightIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { v4 } from "uuid";
 
 import { redirect, type ActionArgs, type LoaderArgs } from "@remix-run/node";
 import LoadingButton from "~/components/buttons/LoadingButton";
-import { Progress } from "~/components/ui/progress";
+
 import { createTeam, getUser } from "~/utils/auth.server";
 import TextInput from "~/components/formInputs/TextInput";
 import IconButton from "~/components/buttons/IconButton";
@@ -67,6 +62,7 @@ function SetupRoute() {
     if (data && data.error) {
       setError(data.error);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   return (
