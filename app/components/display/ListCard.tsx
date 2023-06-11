@@ -21,7 +21,7 @@ const RecipeCard: FC<Props> = ({ subHeading, user, name, to, active }) => {
         active
           ? "border-indigo-500 dark:border-indigo-500"
           : "border-zinc-200 dark:border-zinc-800"
-      }  w-full  max-h-full group   bg-zinc-200 bg-opacity-30 border dark:bg-zinc-800 hover:dark:bg-zinc-800 dark:bg-opacity-30 rounded-2xl p-2 pr-3 flex justify-start items-center  hover:bg-zinc-300   transition-all duration-300`}
+      }  w-full  max-h-full group cursor-pointer   bg-zinc-200 bg-opacity-30 border dark:bg-zinc-800 hover:dark:bg-zinc-800 dark:bg-opacity-30 rounded-2xl p-2 pr-3 flex justify-start items-center  hover:bg-zinc-300   transition-all duration-300`}
     >
       <div
         className={`${

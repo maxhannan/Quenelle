@@ -1,4 +1,9 @@
-import { Outlet, useLocation, useNavigate } from "@remix-run/react";
+import {
+  Outlet,
+  useLocation,
+  useNavigate,
+  useNavigation,
+} from "@remix-run/react";
 import { useState, useEffect } from "react";
 import BottomNav from "~/components/navigation/BottomNav";
 import ErrorBoundaryLayout from "./ErrorBoundary";
@@ -11,6 +16,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { ClipboardCheckIcon, FolderIcon, HomeIcon } from "lucide-react";
 import BottomNavButton from "~/components/navigation/BottomNavButton";
+import Spinner from "~/components/LoadingSpinner";
 
 export function ErrorBoundary() {
   return <ErrorBoundaryLayout />;
@@ -27,6 +33,7 @@ const AppLayout = () => {
   const location = useLocation();
   const [page, setPage] = useState(location.pathname.split("/")[2]);
   const navigate = useNavigate();
+  const navigation = useNavigation();
 
   const handleNav = (path: string) => {
     const pathString = `/app/${path}`;
@@ -41,11 +48,20 @@ const AppLayout = () => {
   useEffect(() => {
     setPage(location.pathname.split("/")[2]);
   }, [location]);
+
   return (
     <>
       <div className=" ">
-        <div className="px-3 lg:px-0 scrollbar-thin   w-full lg:h-screen lg:overflow-y-scroll">
-          <Outlet />
+        <div className="px-3 xl:px-0 scrollbar-thin   w-full lg:h-screen lg:overflow-y-scroll">
+          {navigation.state === "loading" &&
+          navigation.location.pathname.split("/")[2] !==
+            location.pathname.split("/")[2] ? (
+            <div className="flex justify-center items-center h-screen">
+              <Spinner size={14} />
+            </div>
+          ) : (
+            <Outlet />
+          )}
         </div>
 
         <div className="w-1/3   justify-center bottom-6 fixed pr-6 xl:flex hidden">

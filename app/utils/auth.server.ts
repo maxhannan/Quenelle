@@ -58,7 +58,7 @@ export const Register = async (user: UserObj) => {
       { status: 400 }
     );
   }
-  return createUserSession(newUser.id, "/app/recipes");
+  return createUserSession(newUser.id, `/setup/${newUser.id}`);
 };
 
 export async function login({
@@ -132,4 +132,26 @@ export async function logout(request: Request) {
       "Set-Cookie": await storage.destroySession(session),
     },
   });
+}
+
+export async function createTeam(
+  userId: string,
+  teamData: { name: string; city: string; state: string }
+) {
+  const team = await prisma.team.create({
+    data: {
+      ...teamData,
+    },
+  });
+  await prisma.user.update({
+    where: { id: userId },
+    data: {
+      teams: {
+        connect: {
+          id: team.id,
+        },
+      },
+    },
+  });
+  return team;
 }

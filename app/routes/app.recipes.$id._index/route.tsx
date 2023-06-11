@@ -81,7 +81,7 @@ const RecipeIndex: FC = () => {
           onClick={() => navigate(-1)}
         />
       </AppBar>
-      <main className="pb-32 container mx-auto max-w-4xl lg:pl-2">
+      <main className="pb-32 container mx-auto xl:pl-2">
         {recipe.images.length > 0 && (
           <Carousel
             isOpen={isOpen}

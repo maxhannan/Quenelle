@@ -13,7 +13,7 @@ import {
   UserPlus,
   Users,
 } from "lucide-react";
-import { useSubmit } from "@remix-run/react";
+import { useNavigate, useSubmit } from "@remix-run/react";
 
 import {
   DropdownMenu,
@@ -44,6 +44,7 @@ const NewAppBar: FC<Props> = ({
   children,
 }: Props) => {
   const submit = useSubmit();
+  const navigate = useNavigate();
   return (
     <>
       <SlideDownTransition>
@@ -64,7 +65,7 @@ const NewAppBar: FC<Props> = ({
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate("/setup/fadjkSl")}>
                   <User className="mr-2 h-4 w-4" />
                   <span>Profile</span>
                   <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>

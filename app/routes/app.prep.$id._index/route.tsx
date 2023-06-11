@@ -19,6 +19,7 @@ import type { getPrepListById } from "~/utils/prepList.server";
 import SlideUpTransition from "~/components/animations/SlideUp";
 import { getPdf } from "~/utils/pdf";
 import { ClipboardCheckIcon, Printer } from "lucide-react";
+import { useToast } from "~/components/ui/use-toast";
 
 export const action: ActionFunction = async ({ request }) => {
   const data = await request.formData();
@@ -37,6 +38,7 @@ export const action: ActionFunction = async ({ request }) => {
 };
 type List = Awaited<ReturnType<typeof getPrepListById>>;
 function PrepListRoute() {
+  const { toast } = useToast();
   const navigate = useNavigate();
   const navigation = useNavigation();
   const fetcher = useFetcher();
@@ -55,6 +57,9 @@ function PrepListRoute() {
     }).then((res) => res.json())) as List;
     const pdf = getPdf(list);
     setPdfLoading(false);
+    toast({
+      title: "PDF Generated",
+    });
     return pdf;
   };
   const activeTaskView = prepList.taskGroups
@@ -78,7 +83,7 @@ function PrepListRoute() {
     );
   }
   return (
-    <div className=" container mx-auto mb-28 max-w-4xl ">
+    <div className=" container mx-auto mb-28 xl:pl-2">
       <AppBar
         page={prepList.name}
         textSize="text-3xl md:text-4xl"
@@ -86,8 +91,8 @@ function PrepListRoute() {
       >
         <IconButton
           name="Goback"
+          active={openTaskFocus}
           onClick={() => setOpenTaskFocus(!openTaskFocus)}
-          loading={pdfLoading}
           Icon={ClipboardCheckIcon}
         />
         <IconButton
@@ -185,37 +190,6 @@ function PrepListRoute() {
                 </Accordion>
               ))
             )}
-            {/* {prepList?.taskGroups.map((tg) => (
-              <Accordion
-                key={tg.id}
-                name={tg.name}
-                link={
-                  tg.linkRecipeId
-                    ? `/app/menus/dishes/${tg.linkRecipeId}`
-                    : undefined
-                }
-              >
-                <div className="  max-w-full  bg-zinc-100 border-zinc-300    rounded-xl   px-2 grid grid-cols-10  gap-1   dark:bg-zinc-800 ">
-                  <div className=" font-light col-span-5 lg:col-span-7 flex gap-2 items-center mr-1">
-                    <div>
-                      <h5 className="text-lg text-zinc-700 dark:text-zinc-100 ">
-                        Task
-                      </h5>
-                    </div>
-                  </div>
-                  <div className="col-span-2 lg:col-span-1 flex items-center justify-start pl-1   text-lg text-zinc-700 dark:text-zinc-100 font-light">
-                    <span>Inv</span>
-                  </div>
-                  <div className="col-span-2 lg:col-span-1 flex items-center justify-start pl-1  text-lg text-zinc-700 dark:text-zinc-100 font-light">
-                    <span>Prep</span>
-                  </div>
-                </div>
-
-                {tg.tasks.map((item) => (
-                  <PrepListItem fetcher={fetcher} key={item.id} task={item} />
-                ))}
-              </Accordion>
-            ))} */}
           </div>
         </div>
       </SlideUpTransition>

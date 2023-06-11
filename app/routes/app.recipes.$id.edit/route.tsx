@@ -127,27 +127,27 @@ const EditRecipeRoute: FC = () => {
 
   return (
     <div>
-      <div className="">
-        <AppBar page={``} textSize="text-3xl lg:text-4xl ">
-          <IconButton
-            Icon={TrashIcon}
-            name="delete"
-            type="button"
-            onClick={handleDeleteRecipe}
-          />
-          <IconButton Icon={CheckCircleIcon} name="Submit" type="submit" />
-          <IconButton
-            Icon={XMarkIcon}
-            name="Go Back"
-            type="button"
-            onClick={() =>
-              navigate(`/app/recipes/${recipe!.id}`, { replace: true })
-            }
-          />
-        </AppBar>
-      </div>
-      <div className="container mx-auto max-w-4xl lg:pl-2">
-        <Form method="post" ref={formRef} onSubmit={handleSubmit}>
+      <Form method="post" ref={formRef} onSubmit={handleSubmit}>
+        <div className="">
+          <AppBar page={``} textSize="text-3xl lg:text-4xl ">
+            <IconButton
+              Icon={TrashIcon}
+              name="delete"
+              type="button"
+              onClick={handleDeleteRecipe}
+            />
+            <IconButton Icon={CheckCircleIcon} name="Submit" type="submit" />
+            <IconButton
+              Icon={XMarkIcon}
+              name="Go Back"
+              type="button"
+              onClick={() =>
+                navigate(`/app/recipes/${recipe!.id}`, { replace: true })
+              }
+            />
+          </AppBar>
+        </div>
+        <div className="container mx-auto max-w-4xl lg:pl-2">
           <RecipeForm
             recipe={recipe}
             imageList={imageList}
@@ -156,8 +156,8 @@ const EditRecipeRoute: FC = () => {
             categories={categories}
             formLoading={imageLoading}
           />
-        </Form>
-      </div>
+        </div>
+      </Form>
     </div>
   );
 };

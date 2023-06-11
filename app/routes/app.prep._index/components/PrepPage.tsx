@@ -1,11 +1,12 @@
-import { FC, useEffect, useState } from "react";
+import { useState } from "react";
+import type { FC } from "react";
 import NewAppBar from "~/components/navigation/NewAppBar";
 import FadeIn from "~/components/animations/FadeIn";
-import SearchBar from "~/components/formInputs/SearchBar";
+
 import { ArrowLeftIcon, ArrowRightIcon, ClipboardEdit } from "lucide-react";
 import formatRelative from "date-fns/formatRelative";
 import { enUS } from "date-fns/locale";
-import { add, format, isSameDay, set } from "date-fns";
+import { add, format, isSameDay } from "date-fns";
 import { useLocation, useNavigation } from "@remix-run/react";
 import Spinner from "~/components/LoadingSpinner";
 import ListCard from "~/components/display/ListCard";
@@ -68,11 +69,6 @@ const PrepPage: FC<Props> = ({
       </NewAppBar>
       <FadeIn>
         <div className="flex flex-col gap-3 mt-2">
-          <SearchBar
-            handleChange={() => (e: string) => console.log(e)}
-            value={""}
-            loading={false}
-          />{" "}
           <div className="flex w-full items-center justify-between bg-zinc-200 rounded-full border h-12 border-zinc-300  dark:bg-zinc-800 dark:bg-opacity-50 dark:border-zinc-700 overflow-hidden">
             <button
               onClick={() => date && handleDateChange(add(date, { days: -1 }))}

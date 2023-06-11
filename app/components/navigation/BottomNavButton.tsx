@@ -1,3 +1,4 @@
+import { useNavigation } from "@remix-run/react";
 import type { ElementType } from "react";
 
 interface Props {
@@ -8,10 +9,14 @@ interface Props {
 }
 
 const BottomNavButton = ({ handleNav, active, Icon, path }: Props) => {
+  const navigation = useNavigation();
   return (
     <button
       data-tooltip-target="tooltip-home"
       type="button"
+      disabled={
+        navigation.state === "loading" || navigation.state === "submitting"
+      }
       name={path}
       onClick={() => handleNav(path)}
       className="inline-flex flex-col items-center justify-center px-4 rounded-l-lg   group"

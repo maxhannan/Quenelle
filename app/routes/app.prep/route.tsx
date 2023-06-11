@@ -111,10 +111,6 @@ function PrepListsLayout() {
     }
   };
 
-  const pageChangeLoading =
-    navigation.state === "loading" &&
-    navigation.location.pathname !== "/app/prep";
-
   return (
     <>
       {navigation.state !== "loading" && (
@@ -225,6 +221,7 @@ function PrepListsLayout() {
               date={date}
               handleDateChange={handleDateChange}
               pageChangeLoading={true}
+              //@ts-expect-error
               prepLists={prepLists}
               setOpenDialog={setOpenDialog}
             />

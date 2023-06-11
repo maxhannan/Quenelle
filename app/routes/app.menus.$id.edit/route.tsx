@@ -18,6 +18,7 @@ import AppBar from "~/components/navigation/AppBar";
 import type { ActionFunction } from "@remix-run/node";
 import { getUser } from "~/utils/auth.server";
 import { useEffect } from "react";
+import { useToast } from "~/components/ui/use-toast";
 
 export async function loader() {
   const dishes = await getDishes();
@@ -48,9 +49,12 @@ function EditMenuRoute() {
   const data = useActionData();
   const navigation = useNavigation();
   const { dishes, services } = useLoaderData<typeof loader>();
-
+  const { toast } = useToast();
   useEffect(() => {
     if (data !== undefined) {
+      toast({
+        title: `Successfully updated ${menu?.name}`,
+      });
       navigate(`/app/menus/${data}`, { replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,7 +71,7 @@ function EditMenuRoute() {
   return (
     <div className="mb-28 container xl:pl-2 mx-auto">
       <Form method="post">
-        <AppBar page="Add a Menu">
+        <AppBar page="">
           <IconButton Icon={CheckCircleIcon} name="Submit" type="submit" />
           <IconButton
             Icon={XMarkIcon}

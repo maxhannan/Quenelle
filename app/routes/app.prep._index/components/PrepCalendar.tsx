@@ -19,6 +19,7 @@ const PrepCalendar: FC<Props> = ({ date, handleDateChange }) => {
   const changeHandler = (date: Date | undefined) => {
     if (date) {
       handleDateChange(date);
+      setIsOpen(false);
     }
   };
   return (

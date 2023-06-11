@@ -25,6 +25,7 @@ import AppBar from "~/components/navigation/AppBar";
 import DishForm from "~/components/forms/DishForm";
 import type { ActionFunction } from "@remix-run/node";
 import { extractDish, updateDish } from "~/utils/dishes.server";
+import { useToast } from "~/components/ui/use-toast";
 
 export async function loader() {
   const recipes = await getRecipes();
@@ -51,7 +52,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 function EditDishRoute() {
   const dish = useDish();
   const { recipes, categories } = useLoaderData<typeof loader>();
-  const revalidator = useRevalidator();
+  const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
   const navigation = useNavigation();
@@ -104,7 +105,9 @@ function EditDishRoute() {
 
   useEffect(() => {
     if (data !== undefined) {
-      revalidator.revalidate();
+      toast({
+        title: `${dish!.name} has been updated`,
+      });
       navigate(`/app/menus/dishes/${data}`, { replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

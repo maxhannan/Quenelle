@@ -104,7 +104,7 @@ function DishIndex() {
                 return (
                   <div
                     key={i.id}
-                    className="  w-full max-h-full border-zinc-300 border bg-opacity-50 dark:bg-opacity-50 bg-zinc-200 dark:bg-zinc-800   rounded-xl  pl-4 pr-2 font-light py-3  flex justify-start items-center  px-2  dark:border-zinc-700"
+                    className="  w-full max-h-full border-zinc-200 border bg-opacity-30 dark:bg-opacity-30 bg-zinc-200 dark:bg-zinc-800   rounded-xl  pl-4 pr-2 font-light py-3  flex justify-start items-center  px-2  dark:border-zinc-800"
                   >
                     <div className=" ">
                       <h5 className="text-xl lg:text-2xl text-zinc-700 dark:text-zinc-100">
