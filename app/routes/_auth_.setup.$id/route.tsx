@@ -67,25 +67,7 @@ function SetupRoute() {
 
   return (
     <>
-      <div className="flex flex-col gap-2">
-        <h3 className="text-lg text-zinc-800 dark:text-zinc-200 pl-2 ">
-          Have a code to join a team?
-        </h3>
-        <div className="flex gap-2">
-          <TextInput name="teamCode" placeholder="Enter it here..." />
-          <div className="flex-none">
-            <IconButton Icon={ArrowRightIcon} />
-          </div>
-        </div>
-      </div>
-      <div className="relative flex py-2 items-center">
-        <div className="flex-grow border-t border-zinc-700"></div>
-        <span className="flex-shrink mx-4 text-zinc-600  dark:text-zinc-400">
-          Or
-        </span>
-        <div className="flex-grow border-t border-zinc-700"></div>
-      </div>
-      <div className="w-full   text-zinc-800 dark:text-zinc-200 flex flex-col gap-3 ">
+      <div className="w-full   text-zinc-800 dark:text-zinc-200 flex flex-col gap-3 pt-1">
         <div className="flex gap-4 items-center pl-2">
           <h4 className="text-3xl  ">Set Up Your Team</h4>
           <BuildingStorefrontIcon className="w-7 h-7" />
@@ -123,6 +105,24 @@ function SetupRoute() {
             </div>
           </div>
         </Form>
+      </div>
+      <div className="relative flex py-2 items-center">
+        <div className="flex-grow border-t border-zinc-700"></div>
+        <span className="flex-shrink mx-4 text-zinc-600  dark:text-zinc-400">
+          Or
+        </span>
+        <div className="flex-grow border-t border-zinc-700"></div>
+      </div>
+      <div className="flex flex-col gap-2">
+        <h3 className="text-lg text-zinc-800 dark:text-zinc-200 pl-2 ">
+          Have a code to join a team?
+        </h3>
+        <div className="flex gap-2">
+          <TextInput name="teamCode" placeholder="Enter it here..." />
+          <div className="flex-none">
+            <IconButton Icon={ArrowRightIcon} />
+          </div>
+        </div>
       </div>
     </>
   );
