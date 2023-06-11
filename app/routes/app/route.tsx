@@ -7,7 +7,7 @@ import {
 import { useState, useEffect } from "react";
 import BottomNav from "~/components/navigation/BottomNav";
 import ErrorBoundaryLayout from "./ErrorBoundary";
-import type { LoaderArgs } from "@remix-run/node";
+import { redirect, type LoaderArgs } from "@remix-run/node";
 import { getUser, requireUserId } from "~/utils/auth.server";
 import { Toaster } from "~/components/ui/toaster";
 import {
@@ -25,6 +25,12 @@ export function ErrorBoundary() {
 export async function loader({ request }: LoaderArgs) {
   await requireUserId(request);
   const user = await getUser(request);
+  if (!user) return redirect("/login");
+  if (!user.approved) {
+    if (user.teams.length === 0) return redirect(`/setup/${user.id}`);
+    return redirect("/app/pending");
+  }
+  console.log(user);
 
   return user;
 }

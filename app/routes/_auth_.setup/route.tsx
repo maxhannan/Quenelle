@@ -6,6 +6,7 @@ import { getUser } from "~/utils/auth.server";
 export async function loader({ params, request }: LoaderArgs) {
   if (!params.id) return redirect("/login");
   const user = await getUser(request);
+
   return user;
 }
 type ContextType = {

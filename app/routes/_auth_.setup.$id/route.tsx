@@ -2,16 +2,21 @@ import {
   ArrowLongRightIcon,
   BuildingStorefrontIcon,
 } from "@heroicons/react/24/outline";
-import { Form, useLoaderData, useNavigate } from "@remix-run/react";
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useNavigate,
+  useNavigation,
+} from "@remix-run/react";
 import { ArrowRightIcon, PlusIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 } from "uuid";
 
-import RestaurantAdder from "./components/RestaurantAdder";
 import { redirect, type ActionArgs, type LoaderArgs } from "@remix-run/node";
 import LoadingButton from "~/components/buttons/LoadingButton";
 import { Progress } from "~/components/ui/progress";
-import { getUser } from "~/utils/auth.server";
+import { createTeam, getUser } from "~/utils/auth.server";
 import TextInput from "~/components/formInputs/TextInput";
 import IconButton from "~/components/buttons/IconButton";
 
@@ -24,15 +29,46 @@ export type Restaurant = {
   zip: string;
 };
 
-export async function action({ request }: ActionArgs) {
-  const data = await request.formData();
-  const restaurants = data.getAll("restaurants");
-
-  return restaurants;
+export async function loader({ request }: LoaderArgs) {
+  const user = await getUser(request);
+  if (!user) return redirect("/login");
+  if (user.approved) return redirect("/app/recipes");
+  return user;
 }
-type User = Awaited<ReturnType<typeof getUser>>;
+
+export async function action({ request }: ActionArgs) {
+  const user = await getUser(request);
+  const data = await request.formData();
+  const name = data.get("teamName") as string;
+  const city = data.get("city") as string;
+  const state = data.get("state") as string;
+
+  let error = null;
+  if (!user || !name || !city || !state) {
+    error = "Team Creation Failed, Please Try Again";
+  }
+  let team;
+  if (user && name && city && state) {
+    team = await createTeam(user.id, { name, city, state });
+  }
+
+  return { team, error };
+}
+
 function SetupRoute() {
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const navigation = useNavigation();
+  const data = useActionData<typeof action>();
+  useEffect(() => {
+    if (data && data.team) {
+      navigate(`/setup/team/${data.team.id}`);
+    }
+    if (data && data.error) {
+      setError(data.error);
+    }
+  }, [data]);
+
   return (
     <>
       <div className="flex flex-col gap-2">
@@ -58,30 +94,39 @@ function SetupRoute() {
           <h4 className="text-3xl  ">Set Up Your Team</h4>
           <BuildingStorefrontIcon className="w-7 h-7" />
         </div>
-        <div className="grid grid-cols-12 gap-2">
-          <div className="col-span-12">
-            <TextInput name="teamName" placeholder="Team Name" />
-          </div>
-          <div className="col-span-6">
-            <TextInput name="city" placeholder="City" />
-          </div>
-          <div className="col-span-6 ">
-            <TextInput name="State" placeholder="State" />
-          </div>
+        <Form method="post">
+          {error && <h1 className="text-red-500">Form Error</h1>}
+          <div className="grid grid-cols-12 gap-2">
+            <div className="col-span-12">
+              <TextInput name="teamName" placeholder="Team Name" />
+            </div>
+            <div className="col-span-6">
+              <TextInput name="city" placeholder="City" />
+            </div>
+            <div className="col-span-6 ">
+              <TextInput name="state" placeholder="State" />
+            </div>
 
-          <div className="col-span-12">
-            <LoadingButton
-              Icon={ArrowRightIcon}
-              action={() => {
-                console.log("hello");
-                navigate("/setup/team/fdshaJLkh");
-              }}
-              buttonName="SignUp"
-              buttonText="Let's get started!"
-              placeholder="Team Name"
-            />
+            <div className="col-span-12">
+              <LoadingButton
+                Icon={ArrowRightIcon}
+                loading={
+                  navigation.state === "loading" ||
+                  navigation.state === "submitting"
+                }
+                loadingText="Creating Team..."
+                action={() => {
+                  console.log("hello");
+                  navigate("/setup/team/fdshaJLkh");
+                }}
+                type="submit"
+                buttonName="SignUp"
+                buttonText="Let's get started!"
+                placeholder="Team Name"
+              />
+            </div>
           </div>
-        </div>
+        </Form>
       </div>
     </>
   );

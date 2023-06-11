@@ -30,6 +30,7 @@ model User {
   prepListsTemplate PrepListTemplate[]
   teams Team[]
   orgOwner Boolean @default(false)
+  approved  Boolean  @default(false)
 }
 
 
@@ -45,7 +46,6 @@ model Team {
   menus       Menu[]
   prepLists   PrepList[]
   prepListsTemplate PrepListTemplate[]
-
 }
 model Recipe {
   id          String   @id @default(cuid())

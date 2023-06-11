@@ -117,6 +117,10 @@ export async function getUser(request: Request) {
         username: true,
         firstName: true,
         lastName: true,
+        teams: true,
+        approved: true,
+        chef: true,
+        orgOwner: true,
       },
     });
     return user;
@@ -154,4 +158,27 @@ export async function createTeam(
     },
   });
   return team;
+}
+export async function joinTeam(userId: string, teamId: string) {
+  const user = await prisma.user.update({
+    where: { id: userId },
+    data: {
+      teams: {
+        connect: {
+          id: teamId,
+        },
+      },
+    },
+  });
+  return user;
+}
+
+export async function approveTeamMember(userId: string) {
+  const user = await prisma.user.update({
+    where: { id: userId },
+    data: {
+      approved: true,
+    },
+  });
+  return user;
 }
