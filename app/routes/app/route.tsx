@@ -26,9 +26,15 @@ export async function loader({ request }: LoaderArgs) {
   await requireUserId(request);
   const user = await getUser(request);
   if (!user) return redirect("/login");
+  console.log(user);
   if (!user.approved) {
-    if (user.teams.length === 0) return redirect(`/setup/${user.id}`);
-    return redirect("/app/pending");
+    if (user.teams.length && user.orgOwner) {
+      console.log("redirecting to team setup");
+      return redirect(`/setup/team/${user.teams[0].id}`);
+    } else {
+      if (user.teams.length === 0) return redirect(`/setup/${user.id}`);
+      return redirect("/pending");
+    }
   }
   console.log(user);
 

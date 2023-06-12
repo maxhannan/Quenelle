@@ -19,6 +19,7 @@ import SearchAndFilter from "../app.recipes._index/components/SearchAndFilter";
 import Spinner from "~/components/LoadingSpinner";
 import RecipeFeed from "../app.recipes._index/components/RecipeFeed";
 import BottomNav from "~/components/navigation/BottomNav";
+import { getUser } from "~/utils/auth.server";
 
 export async function loader({ request }: LoaderArgs) {
   const url = new URL(request.url);
@@ -28,8 +29,11 @@ export async function loader({ request }: LoaderArgs) {
   const category = params.get("category");
   const allergies = params.get("allergies");
   const allergyArr = allergies && allergies.length ? allergies.split(",") : [];
-
-  const recipes = await getRecipes();
+  const user = await getUser(request);
+  const recipes = await getRecipes(
+    false,
+    user!.teams.map((t) => t.id)
+  );
   return {
     recipes,
     filteredRecipes: getFilteredRecipes(recipes, search, category, allergyArr),

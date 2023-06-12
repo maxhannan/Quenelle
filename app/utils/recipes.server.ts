@@ -2,11 +2,18 @@ import type { Prisma } from "@prisma/client";
 import { prisma } from "./prisma.server";
 
 export type FullRecipes = Prisma.PromiseReturnType<typeof getRecipes>;
-export const getRecipes = async (all: boolean = false) => {
+export const getRecipes = async (all: boolean = false, teamid: string[]) => {
   try {
     const recipes = await prisma.recipe.findMany({
       where: {
         dish: all === true ? undefined : all,
+        teams: {
+          some: {
+            id: {
+              in: teamid,
+            },
+          },
+        },
       },
       orderBy: {
         name: "asc",
@@ -130,7 +137,11 @@ export const extractRecipe = (form: FormData) => {
   };
 };
 
-export const createRecipe = async (recipe: ExtractedRecipe, userId: string) => {
+export const createRecipe = async (
+  recipe: ExtractedRecipe,
+  userId: string,
+  teamId: string | undefined
+) => {
   const {
     name,
     category,
@@ -142,6 +153,18 @@ export const createRecipe = async (recipe: ExtractedRecipe, userId: string) => {
     savedImages,
   } = recipe;
 
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      teams: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  });
   const newRecipe = await prisma.recipe.create({
     data: {
       name,
@@ -150,6 +173,7 @@ export const createRecipe = async (recipe: ExtractedRecipe, userId: string) => {
       allergens,
       yieldUnit,
       yieldAmt,
+
       steps,
       ingredients: {
         create: [...ingredients],
@@ -158,6 +182,37 @@ export const createRecipe = async (recipe: ExtractedRecipe, userId: string) => {
       author: { connect: { id: userId } },
     },
   });
+  if (!teamId && user) {
+    await prisma.$transaction(
+      user.teams.map((t) =>
+        prisma.recipe.update({
+          where: {
+            id: newRecipe.id,
+          },
+          data: {
+            teams: {
+              connect: {
+                id: t.id,
+              },
+            },
+          },
+        })
+      )
+    );
+  } else {
+    await prisma.recipe.update({
+      where: {
+        id: newRecipe.id,
+      },
+      data: {
+        teams: {
+          connect: {
+            id: teamId,
+          },
+        },
+      },
+    });
+  }
   return newRecipe;
 };
 

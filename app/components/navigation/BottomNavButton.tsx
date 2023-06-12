@@ -14,9 +14,7 @@ const BottomNavButton = ({ handleNav, active, Icon, path }: Props) => {
     <button
       data-tooltip-target="tooltip-home"
       type="button"
-      disabled={
-        navigation.state === "loading" || navigation.state === "submitting"
-      }
+      disabled={navigation.state === "submitting"}
       name={path}
       onClick={() => handleNav(path)}
       className="inline-flex flex-col items-center justify-center px-4 rounded-l-lg   group"

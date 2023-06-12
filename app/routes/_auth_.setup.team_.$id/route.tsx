@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SlideUpTransition from "~/components/animations/SlideUp";
 import { useSetProgress } from "../_auth_.setup/route";
 import LoadingButton from "~/components/buttons/LoadingButton";
@@ -12,6 +12,7 @@ import {
 import { type ActionArgs, type LoaderArgs, redirect } from "@remix-run/node";
 import { prisma } from "~/utils/prisma.server";
 import { approveTeamMember, getUser } from "~/utils/auth.server";
+import { set } from "date-fns";
 
 export async function loader({ params }: LoaderArgs) {
   const team = await prisma.team.findUnique({
@@ -32,9 +33,13 @@ function TeamSetupRoute() {
   const navigation = useNavigation();
   const { setProgress } = useSetProgress();
   const team = useLoaderData<typeof loader>();
+  useEffect(() => {
+    setProgress(66);
+  }, []);
+
   if (!team) navigate("/login");
   if (!team) return null;
-  setProgress(66);
+
   return (
     <SlideUpTransition>
       <div className="flex flex-col gap-2">

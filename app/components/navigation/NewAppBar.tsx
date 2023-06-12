@@ -65,7 +65,7 @@ const NewAppBar: FC<Props> = ({
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
-                <DropdownMenuItem onClick={() => navigate("/setup/fadjkSl")}>
+                <DropdownMenuItem onClick={() => navigate("/app/dashboard")}>
                   <User className="mr-2 h-4 w-4" />
                   <span>Profile</span>
                   <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>

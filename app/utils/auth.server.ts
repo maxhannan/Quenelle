@@ -150,6 +150,8 @@ export async function createTeam(
   await prisma.user.update({
     where: { id: userId },
     data: {
+      approved: false,
+      orgOwner: true,
       teams: {
         connect: {
           id: team.id,
@@ -181,4 +183,25 @@ export async function approveTeamMember(userId: string) {
     },
   });
   return user;
+}
+
+export async function updateAllInfo(id: string) {
+  const team = await prisma.team.findUnique({
+    where: {
+      id: id,
+    },
+  });
+  const ids = await prisma.menu.findMany({
+    select: {
+      id: true,
+    },
+  });
+  await prisma.team.update({
+    where: { id: id },
+    data: {
+      menus: {
+        connect: ids,
+      },
+    },
+  });
 }

@@ -117,12 +117,18 @@ function SetupRoute() {
         <h3 className="text-lg text-zinc-800 dark:text-zinc-200 pl-2 ">
           Have a code to join a team?
         </h3>
-        <div className="flex gap-2">
-          <TextInput name="teamCode" placeholder="Enter it here..." />
-          <div className="flex-none">
-            <IconButton Icon={ArrowRightIcon} />
+        <Form method="post" action="/app/addToTeam">
+          <div className="flex gap-2">
+            <TextInput name="teamId" placeholder="Enter it here..." />
+            <div className="flex-none">
+              <IconButton
+                Icon={ArrowRightIcon}
+                type="submit"
+                loading={navigation.state === "submitting"}
+              />
+            </div>
           </div>
-        </div>
+        </Form>
       </div>
     </>
   );

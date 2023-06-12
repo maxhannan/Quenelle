@@ -6,6 +6,7 @@ type User = Awaited<ReturnType<typeof getUser>>;
 export async function loader({ params, request }: LoaderArgs) {
   const user = await getUser(request);
   if (!user) return redirect("/login");
+  if (user.approved) return redirect("/app");
   return user;
 }
 
@@ -23,7 +24,8 @@ function PendingRoute() {
         </div>
 
         <h4 className="text-md  text-zinc-600 dark:text-zinc-400">
-          A request has been sent to your team admin to approve your account.
+          A request has been sent to the {user.teams[0].name} team admin to
+          approve your account.
         </h4>
         <h4 className="text-md text-zinc-600 dark:text-zinc-400">
           You will be notified when your account has been approved.

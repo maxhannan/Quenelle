@@ -1,12 +1,12 @@
 import { SunIcon } from "@heroicons/react/24/outline";
-import type { LoaderArgs } from "@remix-run/node";
-import { useLoaderData, useNavigation } from "@remix-run/react";
+import type { ActionArgs, LoaderArgs } from "@remix-run/node";
+import { Form, useLoaderData, useNavigation } from "@remix-run/react";
 import { User2Icon } from "lucide-react";
 
 import Spinner from "~/components/LoadingSpinner";
 import RecipeCard from "~/components/display/RecipesCard";
 
-import { getUser } from "~/utils/auth.server";
+import { getUser, updateAllInfo } from "~/utils/auth.server";
 
 export const loader = async ({ request }: LoaderArgs) => {
   console.log("hello");
@@ -29,7 +29,6 @@ function HomeRoute() {
   return (
     <div className=" container mx-auto max-w-3xl flex flex-col  mt-3  items-center mb-28">
       <div className="text-4xl md:text-4xl  gap-2 items-center  w-full flex justify-between    dark:text-neutral-200  font-bold text-neutral-600 rounded-2xl ">
-        <div></div>
         <div className="flex gap-2 ">
           <div className="w-full  flex  gap-2  text-xl font-light  text-zinc-200 ">
             <div className=" p-3 bg-zinc-700  rounded-full flex gap-2 items-center justify-between">
