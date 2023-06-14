@@ -50,13 +50,13 @@ const NewAppBar: FC<Props> = ({
       <SlideDownTransition>
         <nav
           className={`flex pt-3 ${
-            bottomPadding ? `pb-${bottomPadding}` : "pb-2"
-          } mx-auto  max-h-full items-center justify-between  duration-300    w-full top-0 left-0 `}
+            bottomPadding ? `pb-${bottomPadding}` : "pb-3"
+          } mx-auto  max-h-full items-center justify-between   duration-300 gap-3   w-full top-0 left-0 `}
         >
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button
-                className={`data-[state=open]:bg-indigo-500 data-[state=open]:border-indigo-500 dark:bg-zinc-800 bg-zinc-700 text-zinc-200 dark:text-zinc-300 trasition-all duration-300 inline-flex group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center justify-center w-12 h-12 overflow-hidden group-hover:border-indigo-500 border-zinc-500 rounded-full  border dark:border-indigo-500`}
+                className={`data-[state=open]:bg-indigo-500 data-[state=open]:border-indigo-500 dark:bg-zinc-800 bg-zinc-700 text-zinc-200 dark:text-zinc-300 trasition-all duration-300 inline-flex group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center justify-center w-10 h-10 overflow-hidden group-hover:border-indigo-500 border-zinc-500 rounded-full  border dark:border-indigo-500`}
               >
                 <UserIcon className="w-6 h-6" />
               </button>
@@ -129,17 +129,14 @@ const NewAppBar: FC<Props> = ({
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-
+          <h1 className={` text-3xl  text-zinc-800 dark:text-zinc-100`}>
+            {page.charAt(0).toUpperCase() + page.slice(1)}
+          </h1>
           <div className="grow flex justify-end gap-2 items-center relative">
             {children && children}
           </div>
         </nav>
       </SlideDownTransition>
-      <h1
-        className={` text-[2.4rem] font-bold mb-3 text-zinc-800 dark:text-zinc-100`}
-      >
-        {page.charAt(0).toUpperCase() + page.slice(1)}
-      </h1>
     </>
   );
 };

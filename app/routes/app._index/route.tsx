@@ -1,12 +1,12 @@
 import { SunIcon } from "@heroicons/react/24/outline";
-import type { ActionArgs, LoaderArgs } from "@remix-run/node";
-import { Form, useLoaderData, useNavigation } from "@remix-run/react";
+import type { LoaderArgs } from "@remix-run/node";
+import { useLoaderData, useNavigation } from "@remix-run/react";
 import { User2Icon } from "lucide-react";
 
 import Spinner from "~/components/LoadingSpinner";
 import RecipeCard from "~/components/display/RecipesCard";
 
-import { getUser, updateAllInfo } from "~/utils/auth.server";
+import { getUser } from "~/utils/auth.server";
 
 export const loader = async ({ request }: LoaderArgs) => {
   console.log("hello");

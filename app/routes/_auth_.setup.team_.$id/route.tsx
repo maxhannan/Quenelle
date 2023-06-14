@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import SlideUpTransition from "~/components/animations/SlideUp";
 import { useSetProgress } from "../_auth_.setup/route";
 import LoadingButton from "~/components/buttons/LoadingButton";
@@ -12,7 +12,6 @@ import {
 import { type ActionArgs, type LoaderArgs, redirect } from "@remix-run/node";
 import { prisma } from "~/utils/prisma.server";
 import { approveTeamMember, getUser } from "~/utils/auth.server";
-import { set } from "date-fns";
 
 export async function loader({ params }: LoaderArgs) {
   const team = await prisma.team.findUnique({
@@ -35,6 +34,7 @@ function TeamSetupRoute() {
   const team = useLoaderData<typeof loader>();
   useEffect(() => {
     setProgress(66);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!team) navigate("/login");

@@ -18,7 +18,7 @@ import { getRecipes } from "~/utils/recipes.server";
 import SearchAndFilter from "../app.recipes._index/components/SearchAndFilter";
 import Spinner from "~/components/LoadingSpinner";
 import RecipeFeed from "../app.recipes._index/components/RecipeFeed";
-import BottomNav from "~/components/navigation/BottomNav";
+
 import { getUser } from "~/utils/auth.server";
 
 export async function loader({ request }: LoaderArgs) {
@@ -78,6 +78,7 @@ const RecipesLayout = () => {
       category: categoryParam || null,
       allergies: allergyParam?.split(",") || [],
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
   const [searchValues, setSearchValues] = useState({
@@ -107,17 +108,17 @@ const RecipesLayout = () => {
 
   return (
     <div className="flex">
-      <div className="relative w-1/3  h-screen bg-zinc-50 dark:bg-zinc-950 overflow-y-scroll flex-none hidden xl:flex scrollbar-thin scrollbar-track-zinc-100 dark:scrollbar-track-zinc-900 scrollbar-thumb-zinc-600 dark:scrollbar-thumb-zinc-500 scrollbar-thumb-rounded-2xl">
-        <div className=" w-full px-3">
+      <div className="relative xl:w-1/3 2xl:w-1/4 border-r dark:border-zinc-800 h-screen bg-zinc-100  dark:bg-zinc-900 overflow-y-scroll flex-none hidden xl:flex scrollbar-none scrollbar-track-zinc-100 dark:scrollbar-track-zinc-900 scrollbar-thumb-zinc-600 dark:scrollbar-thumb-zinc-500 scrollbar-thumb-rounded-2xl">
+        <div className=" w-full px-3 ">
           <div className="grid grid-cols-1   ">
             <div>
               <div className=" ">
                 <NewAppBar page={"Recipes"}>
                   <button
                     onClick={() => navigate("addrecipe")}
-                    className="bg-zinc-300 bg-opacity-40 text-zinc-800 dark:bg-zinc-800 dark:bg-opacity-40 rounded-2xl dark:text-zinc-200 px-3 py-3 font-extralight hover:bg-opacity-90 transition-all duration-300 inline-flex gap-2 items-center "
+                    className=" font-light  bg-indigo-500 rounded-xl text-zinc-100 px-2 py-2 hover:bg-opacity-90 transition-all duration-300 inline-flex gap-1 items-center "
                   >
-                    <PlusIcon className="h-5 w-5" /> Add A Recipe
+                    <PlusIcon className="h-5 w-5" /> Add Recipe
                   </button>
                 </NewAppBar>
               </div>

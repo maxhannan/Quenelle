@@ -1,4 +1,4 @@
-import { ActionArgs, redirect } from "@remix-run/node";
+import { type ActionArgs, redirect } from "@remix-run/node";
 import { getUser, joinTeam } from "~/utils/auth.server";
 import { prisma } from "~/utils/prisma.server";
 

@@ -6,7 +6,7 @@ interface Props {
 
 const Chip: FC<Props> = ({ content }) => {
   return (
-    <div className="border border-red-400  p-1 px-3 rounded-full flex-grow-0  lg:text-lg text-base text-red-500 dark:text-red-400 ">
+    <div className=" bg-red-400  p-1 px-3 rounded-full flex-grow-0  lg:text-lg text-base text-zinc-100 dark:text-zinc-100 ">
       {content}
     </div>
   );

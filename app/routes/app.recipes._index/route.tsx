@@ -1,10 +1,5 @@
 import { useRecipes } from "../app.recipes/route";
-import {
-  useNavigate,
-  useNavigation,
-  useSearchParams,
-  useSubmit,
-} from "@remix-run/react";
+import { useNavigate, useNavigation, useSearchParams } from "@remix-run/react";
 import Spinner from "~/components/LoadingSpinner";
 import RecipeFeed from "./components/RecipeFeed";
 
@@ -12,7 +7,6 @@ import SearchAndFilter from "./components/SearchAndFilter";
 import NewAppBar from "~/components/navigation/NewAppBar";
 import FadeIn from "~/components/animations/FadeIn";
 import { PlusIcon } from "lucide-react";
-import { useState } from "react";
 
 export default function RecipesIndex() {
   const {
@@ -51,9 +45,9 @@ export default function RecipesIndex() {
               <NewAppBar page={"Recipes"}>
                 <button
                   onClick={() => navigate("addrecipe")}
-                  className="bg-zinc-300 bg-opacity-40 text-zinc-800 dark:bg-zinc-800 dark:bg-opacity-40 rounded-2xl dark:text-zinc-200 px-3 py-3 font-extralight hover:bg-opacity-90 transition-all duration-300 inline-flex gap-2 items-center "
+                  className=" font-light  bg-indigo-500 rounded-xl text-zinc-100 px-2 py-2 hover:bg-opacity-90 transition-all duration-300 inline-flex gap-1 items-center "
                 >
-                  <PlusIcon className="h-5 w-5" /> Add A Recipe
+                  <PlusIcon className="h-5 w-5" /> Add Recipe
                 </button>
               </NewAppBar>
             </div>
