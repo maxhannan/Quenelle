@@ -1,5 +1,6 @@
 import { Transition, Dialog } from "@headlessui/react";
-import { format } from "date-fns";
+import { format, formatRelative } from "date-fns";
+import enUS from "date-fns/locale/en-US";
 import { CalendarCheck2 } from "lucide-react";
 import React from "react";
 import { useState } from "react";
@@ -13,7 +14,20 @@ interface Props {
   handleDateChange: (date: Date) => void;
   size?: number;
 }
+const formatRelativeLocale = {
+  lastWeek: "'Last' eeee",
+  yesterday: "'Yesterday'",
+  today: "'Today'",
+  tomorrow: "'Tomorrow'",
+  nextWeek: "'This' eeee",
+  other: "MM/dd/yyyy",
+};
 
+const locale = {
+  ...enUS,
+  // @ts-ignore
+  formatRelative: (token) => formatRelativeLocale[token],
+};
 const PrepCalendar: FC<Props> = ({ date, handleDateChange, size }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -30,14 +44,18 @@ const PrepCalendar: FC<Props> = ({ date, handleDateChange, size }) => {
         type="button"
         onClick={() => setIsOpen(true)}
         className={cn(
-          ` justify-start text-left text-lg w-full  font-light pl-3 pr-4 border-zinc-300 dark:border-zinc-700 h-${
+          ` justify-start text-left text-lg w-full  font-light pl-3 pr-4 border-zinc-800   h-${
             size ?? 12
-          } rounded-full  text-zinc-700 hover:bg-zinc-200 hover:dark:bg-zinc-700 dark:text-zinc-200 bg-opacity-50 dark:bg-opacity-50 hover:dark:text-zinc-200 max-w-sm bg-zinc-200 dark:bg-zinc-900`,
+          } rounded-full  text-zinc-700 hover:bg-zinc-200 hover:dark:bg-zinc-700 dark:text-zinc-200 bg-opacity-50 dark:bg-opacity-50 hover:dark:text-zinc-200 max-w-sm bg-zinc-200 dark:bg-zinc-800`,
           !date && "text-muted-foreground"
         )}
       >
         <CalendarCheck2 className="w-5 h-5 text-zinc-500 dark:text-zinc-400 mr-2" />
-        {date ? format(date, "PP") : <span>Pick a date</span>}
+        {date ? (
+          formatRelative(date, new Date(), { locale, weekStartsOn: 6 })
+        ) : (
+          <span>Pick a date</span>
+        )}
       </Button>
       <Transition appear show={isOpen} as={React.Fragment}>
         <Dialog

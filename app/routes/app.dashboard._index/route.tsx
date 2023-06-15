@@ -14,12 +14,7 @@ function DashBoardIndex() {
   const teams = useLoaderData<typeof loader>();
   console.log({ teams });
   const { user } = useUserContext();
-  return (
-    <div className="lg:px-2">
-      <NewAppBar page="Dashboard"></NewAppBar>
-      {user?.firstName}
-    </div>
-  );
+  return <div className="lg:px-2">{user?.firstName}</div>;
 }
 
 export default DashBoardIndex;

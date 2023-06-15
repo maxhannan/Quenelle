@@ -14,7 +14,16 @@ import {
   QueueListIcon,
   ChatBubbleBottomCenterIcon,
 } from "@heroicons/react/24/outline";
-import { ClipboardCheckIcon, FolderIcon, HomeIcon } from "lucide-react";
+import {
+  ClipboardCheckIcon,
+  CreditCard,
+  FolderIcon,
+  HelpCircle,
+  HomeIcon,
+  LogOut,
+  Settings,
+  Users,
+} from "lucide-react";
 import BottomNavButton from "~/components/navigation/BottomNavButton";
 import Spinner from "~/components/LoadingSpinner";
 
@@ -24,6 +33,7 @@ export function ErrorBoundary() {
 
 export async function loader({ request }: LoaderArgs) {
   await requireUserId(request);
+
   const user = await getUser(request);
   if (!user) return redirect("/login");
   console.log(user);
@@ -46,7 +56,7 @@ const AppLayout = () => {
   const [page, setPage] = useState(location.pathname.split("/")[2]);
   const navigate = useNavigate();
   const navigation = useNavigation();
-
+  let active = true;
   const handleNav = (path: string) => {
     const pathString = `/app/${path}`;
     if (location.pathname === pathString) {
@@ -64,7 +74,7 @@ const AppLayout = () => {
   return (
     <>
       <div className=" ">
-        <div className="px-3 xl:px-0 scrollbar-thin   w-full lg:h-screen lg:overflow-y-scroll">
+        <div className="px-3 xl:px-0  xl:pl-[5.5rem] scrollbar-thin   w-full lg:h-screen lg:overflow-y-scroll">
           {navigation.state === "loading" &&
           navigation.location.pathname.split("/")[2] !==
             location.pathname.split("/")[2] ? (
@@ -76,41 +86,82 @@ const AppLayout = () => {
           )}
         </div>
 
-        <div className="xl:w-1/3 2xl:w-1/4   justify-center bottom-6 fixed pr-6 xl:flex hidden">
-          <div className="py-3 px-2 w-96  bg-zinc-800 dark:bg-zinc-200 rounded-full">
-            <div className="grid h-full max-w-lg  mx-auto grid-cols-5 gap-0">
-              <BottomNavButton
-                active={page}
-                handleNav={handleNav}
-                path="prep"
-                Icon={ClipboardCheckIcon}
-              />
-              <BottomNavButton
-                active={page}
-                handleNav={handleNav}
-                path="recipes"
-                Icon={FolderIcon}
-              />
+        <div className="  justify-end bottom-0 top-0 left-1     fixed my-1 xl:flex hidden bg-zinc-100 dark:bg-zinc-900">
+          <div className="  dark:bg-zinc-800 bg-zinc-200 rounded-2xl w-full ">
+            <div className="flex flex-col  justify-between  items-center h-full my-1 ">
+              <div className="flex flex-col gap-4 items-center pt-2 ">
+                <div
+                  className={`${
+                    active
+                      ? "bg-indigo-500 text-zinc-200 dark:border-indigo-500 border-indigo-500"
+                      : "dark:bg-zinc-800 bg-zinc-700 text-zinc-200 dark:text-zinc-300 dark:border-zinc-700 border-zinc-500"
+                  } trasition-all duration-300 inline-flex group-hover:bg-indigo-500  group-hover:text-zinc-200 items-center  child flex-shrink-0 justify-center w-14 h-14 overflow-hidden group-hover:border-indigo-500  rounded-2xl  border `}
+                >
+                  <span className=" text-lg lg:text-2xl ">mh</span>
+                </div>
+                <BottomNavButton
+                  active={page}
+                  handleNav={handleNav}
+                  path="prep"
+                  Icon={ClipboardCheckIcon}
+                />
+                <BottomNavButton
+                  active={page}
+                  handleNav={handleNav}
+                  path="recipes"
+                  Icon={FolderIcon}
+                />
 
-              <BottomNavButton
-                active={page}
-                handleNav={handleNav}
-                path=""
-                Icon={HomeIcon}
-              />
-              <BottomNavButton
-                active={page}
-                handleNav={handleNav}
-                path="menus"
-                Icon={QueueListIcon}
-              />
-
-              <BottomNavButton
-                active={page}
-                handleNav={handleNav}
-                path="chat"
-                Icon={ChatBubbleBottomCenterIcon}
-              />
+                <BottomNavButton
+                  active={page}
+                  handleNav={handleNav}
+                  path=""
+                  Icon={HomeIcon}
+                />
+                <BottomNavButton
+                  active={page}
+                  handleNav={handleNav}
+                  path="menus"
+                  Icon={QueueListIcon}
+                />
+              </div>
+              <div className="flex-col justify-between flex pb-4">
+                <div className="flex flex-col gap-2">
+                  <BottomNavButton
+                    active={page}
+                    handleNav={handleNav}
+                    path="chat"
+                    Icon={Settings}
+                  />
+                  <BottomNavButton
+                    active={page}
+                    handleNav={handleNav}
+                    path="chat"
+                    Icon={Users}
+                  />
+                  <BottomNavButton
+                    active={page}
+                    handleNav={handleNav}
+                    path="chat"
+                    Icon={CreditCard}
+                  />
+                  <div className="w-full border border-zinc-700 mb-2 "></div>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <BottomNavButton
+                    active={page}
+                    handleNav={handleNav}
+                    path="chat"
+                    Icon={HelpCircle}
+                  />
+                  <BottomNavButton
+                    active={page}
+                    handleNav={handleNav}
+                    path="chat"
+                    Icon={LogOut}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>

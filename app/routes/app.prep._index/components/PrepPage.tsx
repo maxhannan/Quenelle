@@ -57,36 +57,31 @@ const PrepPage: FC<Props> = ({
     <>
       <NewAppBar page="Prep" bottomPadding="1">
         <div>
-          <PrepCalendar
-            date={date}
-            handleDateChange={handleDateChange}
-            size={10}
+          <IconButton
+            Icon={ClipboardEdit}
+            name="Add"
+            size={12}
+            type="button"
+            onClick={() => setOpenDialog(true)}
           />
         </div>
-
-        <IconButton
-          Icon={ClipboardEdit}
-          name="Add"
-          size={10}
-          type="button"
-          onClick={() => setOpenDialog(true)}
-        />
       </NewAppBar>
       <FadeIn>
         <div className="flex flex-col gap-2 mt-2">
-          <div className="flex w-full items-center justify-between bg-zinc-200 rounded-full border h-10 border-zinc-300  dark:bg-zinc-800 dark:bg-opacity-50 dark:border-zinc-700 overflow-hidden">
+          <div className="flex w-full items-center justify-between bg-zinc-200 rounded-full border h-14 border-zinc-300  dark:bg-zinc-800 dark:bg-opacity-50 dark:border-zinc-700 overflow-hidden px-1">
             <button
               onClick={() => date && handleDateChange(add(date, { days: -1 }))}
               className="h-10 w-10 hover:text-zinc-600 hover:bg-opacity-70 text-zinc-700 dark:hover:text-zinc-400 dark:text-zinc-200 flex items-center justify-center dark:border-zinc-700 border-zinc-300 rounded-full bg-zinc-300 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40"
             >
               <ArrowLeftIcon className="w-6 h-6 " />
             </button>
-            <span
-              className={`text-xl  text-zinc-700 dark:text-zinc-100 font-normal flex items-center justify-center text-center `}
-            >
-              {date &&
-                formatRelative(date, new Date(), { locale, weekStartsOn: 6 })}
-            </span>
+            <div>
+              <PrepCalendar
+                date={date}
+                handleDateChange={handleDateChange}
+                size={10}
+              />
+            </div>
             <button
               onClick={() => date && handleDateChange(add(date, { days: 1 }))}
               className="h-10 w-10 hover:text-zinc-600 hover:bg-opacity-70 text-zinc-700 dark:text-zinc-300 flex items-center justify-center dark:border-zinc-700 border-zinc-300 rounded-full bg-zinc-300 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40"
