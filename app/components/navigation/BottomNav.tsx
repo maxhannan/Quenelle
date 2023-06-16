@@ -6,6 +6,7 @@ import {
   QueueListIcon,
   ChatBubbleBottomCenterIcon,
   HomeIcon,
+  ChatBubbleBottomCenterTextIcon,
 } from "@heroicons/react/24/outline";
 import type { Dispatch, SetStateAction } from "react";
 import { ClipboardCheckIcon } from "lucide-react";
@@ -62,7 +63,7 @@ const BottomNav = ({ page, setPage }: Props) => {
           active={page}
           handleNav={handleNav}
           path="chat"
-          Icon={ChatBubbleBottomCenterIcon}
+          Icon={ChatBubbleBottomCenterTextIcon}
         />
       </div>
     </nav>

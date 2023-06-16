@@ -12,8 +12,6 @@ import TextInput from "~/components/formInputs/TextInput";
 import NewAppBar from "~/components/navigation/NewAppBar";
 
 function ChatIndex() {
-  let active = false;
-  let loading = false;
   return (
     <div className="container  mx-auto max-w-4xl xl:max-w-full xl:px-2 flex flex-col justify-between gap-2 h-screen  ">
       <NewAppBar page="chat" bottomPadding="1"></NewAppBar>
