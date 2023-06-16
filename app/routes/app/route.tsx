@@ -13,6 +13,7 @@ import { Toaster } from "~/components/ui/toaster";
 import {
   QueueListIcon,
   ChatBubbleBottomCenterIcon,
+  ChatBubbleBottomCenterTextIcon,
 } from "@heroicons/react/24/outline";
 import {
   ClipboardCheckIcon,
@@ -102,6 +103,12 @@ const AppLayout = () => {
                 <BottomNavButton
                   active={page}
                   handleNav={handleNav}
+                  path=""
+                  Icon={HomeIcon}
+                />
+                <BottomNavButton
+                  active={page}
+                  handleNav={handleNav}
                   path="prep"
                   Icon={ClipboardCheckIcon}
                 />
@@ -115,14 +122,14 @@ const AppLayout = () => {
                 <BottomNavButton
                   active={page}
                   handleNav={handleNav}
-                  path=""
-                  Icon={HomeIcon}
+                  path="menus"
+                  Icon={QueueListIcon}
                 />
                 <BottomNavButton
                   active={page}
                   handleNav={handleNav}
-                  path="menus"
-                  Icon={QueueListIcon}
+                  path="chat"
+                  Icon={ChatBubbleBottomCenterTextIcon}
                 />
               </div>
               <div className="flex-col justify-between flex pb-4">
@@ -130,19 +137,19 @@ const AppLayout = () => {
                   <BottomNavButton
                     active={page}
                     handleNav={handleNav}
-                    path="chat"
+                    path="dashboard"
                     Icon={Settings}
                   />
                   <BottomNavButton
                     active={page}
                     handleNav={handleNav}
-                    path="chat"
+                    path="dashboard"
                     Icon={Users}
                   />
                   <BottomNavButton
                     active={page}
                     handleNav={handleNav}
-                    path="chat"
+                    path="dashboard"
                     Icon={CreditCard}
                   />
                   <div className="w-full border border-zinc-700 mb-2 "></div>
@@ -151,13 +158,13 @@ const AppLayout = () => {
                   <BottomNavButton
                     active={page}
                     handleNav={handleNav}
-                    path="chat"
+                    path="dashboard"
                     Icon={HelpCircle}
                   />
                   <BottomNavButton
                     active={page}
                     handleNav={handleNav}
-                    path="chat"
+                    path="dashboard"
                     Icon={LogOut}
                   />
                 </div>

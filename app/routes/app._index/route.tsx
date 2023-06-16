@@ -5,6 +5,7 @@ import { User2Icon } from "lucide-react";
 
 import Spinner from "~/components/LoadingSpinner";
 import RecipeCard from "~/components/display/RecipesCard";
+import NewAppBar from "~/components/navigation/NewAppBar";
 
 import { getUser } from "~/utils/auth.server";
 
@@ -27,24 +28,13 @@ function HomeRoute() {
     );
   if (!user) return null;
   return (
-    <div className=" container mx-auto max-w-3xl flex flex-col  mt-3  items-center mb-28">
-      <div className="text-4xl md:text-4xl  gap-2 items-center  w-full flex justify-between    dark:text-neutral-200  font-bold text-neutral-600 rounded-2xl ">
-        <div className="flex gap-2 ">
-          <div className="w-full  flex  gap-2  text-xl font-light  text-zinc-200 ">
-            <div className=" p-3 bg-zinc-700  rounded-full flex gap-2 items-center justify-between">
-              <span className="font-bold">79°F</span>
-              <SunIcon className="w-7 h-7 inline-block" />
-            </div>
-          </div>
-          <div
-            className={` trasition-all duration-300 inline-flex h-14 w-14 dark:bg-zinc-800 bg-zinc-700 text-zinc-200 dark:text-zinc-300 group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center  justify-center  overflow-hidden   rounded-full   `}
-          >
-            <span className=" text-2xl font-base ">
-              <User2Icon />
-            </span>
-          </div>
+    <div className=" container mx-auto  flex flex-col  mt-3  mb-28">
+      <NewAppBar page="">
+        <div className=" px-3 py-2 bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 rounded-full flex gap-2 items-center justify-between">
+          <span className="font-bold">79°F</span>
+          <SunIcon className="w-7 h-7 inline-block" />
         </div>
-      </div>
+      </NewAppBar>
       <div className="text-[3rem] md:text-4xl   items-center  w-full    dark:text-neutral-200  font-bold text-neutral-600 rounded-2xl  ">
         <h1>Hi {user.firstName}!</h1>
       </div>
