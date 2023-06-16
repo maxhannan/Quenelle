@@ -44,7 +44,7 @@ const PrepCalendar: FC<Props> = ({ date, handleDateChange, size }) => {
         type="button"
         onClick={() => setIsOpen(true)}
         className={cn(
-          ` justify-start text-left text-lg w-full  font-light pl-3 pr-4 border-zinc-800   h-${
+          ` justify-start text-left text-lg w-full  font-light pl-3 pr-4 dark:border-zinc-800  border-zinc-300  h-${
             size ?? 12
           } rounded-full  text-zinc-700 hover:bg-zinc-200 hover:dark:bg-zinc-700 dark:text-zinc-200 bg-opacity-50 dark:bg-opacity-50 hover:dark:text-zinc-200 max-w-sm bg-zinc-200 dark:bg-zinc-800`,
           !date && "text-muted-foreground"

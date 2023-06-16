@@ -152,7 +152,7 @@ const AppLayout = () => {
                     path="dashboard"
                     Icon={CreditCard}
                   />
-                  <div className="w-full border border-zinc-700 mb-2 "></div>
+                  <div className="w-full border border-zinc-400 dark:border-zinc-700 mb-2 "></div>
                 </div>
                 <div className="flex flex-col gap-2">
                   <BottomNavButton

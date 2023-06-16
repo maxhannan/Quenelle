@@ -69,6 +69,10 @@ const RecipesLayout = () => {
   const pageChangeLoading =
     navigation.state === "loading" &&
     navigation.location.pathname !== "/app/recipes";
+
+  const searchLoading =
+    navigation.state === "loading" &&
+    navigation.location.search !== location.search;
   useEffect(() => {
     const categoryParam = searchParams.get("category");
     const allergyParam = searchParams.get("allergies");
@@ -133,7 +137,7 @@ const RecipesLayout = () => {
                 />
               </div>
             </div>
-            {navigation.state === "loading" && !pageChangeLoading ? (
+            {navigation.state === "loading" && searchLoading ? (
               <div className="flex h-screen justify-center mt-12">
                 <Spinner size={12} />
               </div>

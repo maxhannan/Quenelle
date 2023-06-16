@@ -71,7 +71,7 @@ const PrepPage: FC<Props> = ({
           <div className="flex w-full items-center justify-between bg-zinc-200 rounded-full border h-14 border-zinc-300  dark:bg-zinc-800 dark:bg-opacity-50 dark:border-zinc-700 overflow-hidden px-1">
             <button
               onClick={() => date && handleDateChange(add(date, { days: -1 }))}
-              className="h-10 w-10 hover:text-zinc-600 hover:bg-opacity-70 text-zinc-700 dark:hover:text-zinc-400 dark:text-zinc-200 flex items-center justify-center dark:border-zinc-700 border-zinc-300 rounded-full bg-zinc-300 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40"
+              className="h-10 w-10 hover:text-zinc-600 hover:bg-opacity-70 text-zinc-700 dark:hover:text-zinc-400 dark:text-zinc-200 flex items-center justify-center border dark:border-zinc-700 border-zinc-300 rounded-full bg-zinc-300 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40"
             >
               <ArrowLeftIcon className="w-6 h-6 " />
             </button>
@@ -84,7 +84,7 @@ const PrepPage: FC<Props> = ({
             </div>
             <button
               onClick={() => date && handleDateChange(add(date, { days: 1 }))}
-              className="h-10 w-10 hover:text-zinc-600 hover:bg-opacity-70 text-zinc-700 dark:text-zinc-300 flex items-center justify-center dark:border-zinc-700 border-zinc-300 rounded-full bg-zinc-300 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40"
+              className="h-10 w-10 hover:text-zinc-600 hover:bg-opacity-70 text-zinc-700 dark:text-zinc-300 flex items-center justify-center border dark:border-zinc-700 border-zinc-300 rounded-full bg-zinc-300 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40"
             >
               <ArrowRightIcon className="w-6 h-6" />
             </button>

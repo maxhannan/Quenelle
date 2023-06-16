@@ -90,13 +90,13 @@ const RecipeIndex: FC = () => {
           />
         )}
         <SlideUpTransition>
-          <div className="text-3xl md:text-4xl   w-full items-center flex pl-1 justify-between mb-3  dark:text-neutral-200  font-bold text-neutral-600 rounded-xl ">
+          <div className="text-3xl md:text-4xl   w-full items-center flex pl-1 justify-between mb-2  dark:text-neutral-200  font-bold text-neutral-600 rounded-xl ">
             <div>{recipe.name}</div>
           </div>
-          <div className="grid grid-cols-1 gap-x-2">
-            <div className="flex flex-col gap-2">
+          <div className="grid grid-cols-1 gap-x-2 ">
+            <div className="flex flex-col gap-2 mb-1">
               {recipe.allergens.length > 0 && (
-                <div className="inline-flex  gap-2 flex-wrap rounded-xl  border border-zinc-300  dark:border-neutral-700 p-2 ">
+                <div className="inline-flex  gap-2 flex-wrap ">
                   {recipe.allergens.map((a, i) => (
                     <Chip content={a} key={i} />
                   ))}

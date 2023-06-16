@@ -28,7 +28,7 @@ function HomeRoute() {
     );
   if (!user) return null;
   return (
-    <div className=" container mx-auto  flex flex-col  mt-3  mb-28">
+    <div className=" container mx-auto  flex flex-col  xl:px-2  mb-28">
       <NewAppBar page="">
         <div className=" px-3 py-2 bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 rounded-full flex gap-2 items-center justify-between">
           <span className="font-bold">79°F</span>
