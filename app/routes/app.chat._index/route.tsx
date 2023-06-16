@@ -13,7 +13,7 @@ import NewAppBar from "~/components/navigation/NewAppBar";
 
 function ChatIndex() {
   return (
-    <div className="container  mx-auto max-w-4xl xl:max-w-full xl:px-2 flex flex-col justify-between gap-2 h-screen  ">
+    <div className="container  mx-auto max-w-4xl xl:max-w-full xl:px-2 flex flex-col justify-between gap-2 h-screen xs:h-[calc(100dvh)]  ">
       <NewAppBar page="chat" bottomPadding="1"></NewAppBar>
       <div className=" h-full max-h-full overflow-y-scroll  bg-zinc-200 dark:bg-zinc-800 rounded-2xl p-4 scrollbar-none scrollbar-track-rounded-2xl scrollbar-track-zinc-100 dark:scrollbar-track-zinc-900 scrollbar-thumb-zinc-600 dark:scrollbar-thumb-zinc-500 scrollbar-thumb-rounded-2xl">
         <div className="w-full h-16 mb-2 dark:bg-zinc-700 bg-zinc-300  rounded-2xl "></div>
@@ -115,7 +115,7 @@ function ChatIndex() {
         </div>
       </div>
 
-      <div className="h-32 sm:h-28 xl:h-2  "></div>
+      <div className="h-[8.2rem] sm:h-28 xl:h-2  "></div>
     </div>
   );
 }
