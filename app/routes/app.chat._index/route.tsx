@@ -100,7 +100,7 @@ function ChatIndex() {
               <Checkbox className="w-5 h-5 border-zinc-500 rounded-lg text-xl" />
               <input
                 placeholder="Type Something..."
-                className="w-full bg-transparent  focus:ring-0 focus:outline-none focus:border-b focus:border-indigo-500 text-base placeholder:text-zinc-600"
+                className="w-full bg-transparent  focus:ring-0 focus:outline-none focus:border-b focus:border-indigo-500 text-base placeholder:text-zinc-600 rounded-none"
               />
               <button className="">
                 <XCircleIcon className="h-5 w-5" />
