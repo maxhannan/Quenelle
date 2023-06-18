@@ -52,7 +52,24 @@ export async function loader({ request }: LoaderArgs) {
 
   return user;
 }
-
+const colorVariants = [
+  "bg-yellow-300 ",
+  "bg-orange-300 ",
+  "bg-pink-300 ",
+  "bg-indigo-300 ",
+  "bg-green-300 ",
+  "bg-amber-300 ",
+  "bg-lime-300 ",
+  "bg-teal-300 ",
+  "bg-cyan-300 ",
+  "bg-sky-300",
+  "bg-emerald-300 ",
+  "bg-blue-300 ",
+  "bg-purple-300 ",
+  "bg-violet-300 ",
+  "bg-rose-300 ",
+  "bg-red-300 ",
+];
 const AppLayout = () => {
   const location = useLocation();
   const [page, setPage] = useState(location.pathname.split("/")[2]);
@@ -95,7 +112,13 @@ const AppLayout = () => {
                 <div
                   className={`${
                     active
-                      ? "bg-indigo-500 text-zinc-200 dark:border-indigo-500 border-indigo-500"
+                      ? `${
+                          colorVariants[
+                            Math.floor(
+                              Math.random() * (colorVariants.length - 1)
+                            )
+                          ]
+                        } text-zinc-800 `
                       : "dark:bg-zinc-800 bg-zinc-700 text-zinc-200 dark:text-zinc-300 dark:border-zinc-700 border-zinc-500"
                   } trasition-all duration-300 inline-flex group-hover:bg-indigo-500  group-hover:text-zinc-200 items-center  child flex-shrink-0 justify-center w-14 h-14 overflow-hidden group-hover:border-indigo-500  rounded-2xl  border `}
                 >

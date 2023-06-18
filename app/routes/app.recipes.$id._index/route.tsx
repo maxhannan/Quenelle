@@ -156,7 +156,7 @@ const RecipeIndex: FC = () => {
                   </div>
                 </div>
               )}
-              <div className="text-2xl bg-indigo-500 dark:bg-indigo-500 dark:text-zinc-200 p-4  text-zinc-200 rounded-xl font-light  ">
+              <div className="text-2xl bg-indigo-300 dark:bg-indigo-300 dark:text-zinc-700 p-4  text-zinc-700 rounded-xl font-light  ">
                 <div>
                   <b>Author: </b>
                   {recipe.author?.firstName + " " + recipe.author?.lastName}

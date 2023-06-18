@@ -135,12 +135,12 @@ const SearchAndFilter: FC<Props> = ({
             onClick={() => setOpenFilter(!openFilter)}
             className={`${
               openFilter ? "rounded-full " : "rounded-full"
-            } duration-300 text-neutral-700 bg-opacity-50 dark:bg-opacity-50  border dark:border-zinc-700 border-zinc-300 transition-all h-12 w-12  hover:bg-zinc-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-zinc-300 font-medium   text-sm p-2.5 text-center inline-flex items-center dark:text-neutral-500  dark:hover:text-white dark:focus:ring-neutral-800 dark:hover:bg-neutral-500`}
+            } duration-300 text-neutral-700 bg-opacity-50 dark:bg-opacity-50 justify-center  border dark:border-zinc-700 border-zinc-300 transition-all h-10 w-10  hover:bg-zinc-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-zinc-300 font-medium   text-sm p-1.5 text-center inline-flex items-center dark:text-neutral-500  dark:hover:text-white dark:focus:ring-neutral-800 dark:hover:bg-neutral-500`}
           >
             {openFilter ? (
-              <XMarkIcon className="w-7 h-7" />
+              <XMarkIcon className="w-5 h-5" />
             ) : (
-              <FunnelIcon className="w-7 h-7" />
+              <FunnelIcon className="w-5 h-5" />
             )}
             <span className="sr-only">Icon description</span>
           </button>

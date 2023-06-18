@@ -20,7 +20,7 @@ const SearchBar: FC<Props> = ({ handleChange, value, loading = false }) => {
         <input
           id={"search"}
           name={"search"}
-          className={`rounded-full transition-all bg-zinc-200 bg-opacity-40  dark:bg-zinc-800 dark:bg-opacity-40 duration-300  block h-12 w-full p-2 pl-10      dark:focus:ring-indigo-500 dark:focus:border-indigo-500  focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none   focus:ring-2  font-light border relative  border-zinc-300 dark:border-zinc-700  text-xl text-zinc-800       placeholder-neutral-500   dark:placeholder-neutral-400 dark:text-neutral-50 `}
+          className={`rounded-2xl transition-all bg-zinc-200 bg-opacity-40  dark:bg-zinc-800 dark:bg-opacity-40 duration-300  block h-10 w-full p-2 pl-10      dark:focus:ring-indigo-500 dark:focus:border-indigo-500  focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none   focus:ring-2  font-light border relative  border-zinc-300 dark:border-zinc-700  text-lg text-zinc-800       placeholder-neutral-500   dark:placeholder-neutral-400 dark:text-neutral-50 `}
           placeholder={"Search..."}
           value={value}
           onChange={(e) => {
