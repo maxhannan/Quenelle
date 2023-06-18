@@ -22,6 +22,7 @@ export async function getMembers(request: Request) {
           firstName: true,
           lastName: true,
           username: true,
+          email: true,
           id: true,
           approved: true,
           chef: true,

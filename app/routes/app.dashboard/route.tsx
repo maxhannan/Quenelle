@@ -16,7 +16,7 @@ type ContextType = {
 function DashboardLayout() {
   const user = useLoaderData<typeof loader>();
   return (
-    <div className="flex-1 lg:max-w-4xl mx-auto">
+    <div className="flex-1 lg:max-w-full lg:mx-12">
       <Outlet context={{ user }} />
     </div>
   );

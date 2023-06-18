@@ -9,7 +9,13 @@ interface Props {
   active?: boolean;
   to: string;
 }
-
+const colorVariants = [
+  "bg-yellow-300 ",
+  "bg-orange-300 ",
+  "bg-pink-300 ",
+  "bg-indigo-300 ",
+  "bg-green-300 ",
+];
 const RecipeCard: FC<Props> = ({ subHeading, user, name, to, active }) => {
   const navigate = useNavigate();
   return (
@@ -25,7 +31,11 @@ const RecipeCard: FC<Props> = ({ subHeading, user, name, to, active }) => {
         className={`${
           active
             ? "bg-indigo-500 text-zinc-200"
-            : "dark:bg-zinc-800 bg-zinc-700 text-zinc-200 dark:text-zinc-300 "
+            : `${
+                colorVariants[
+                  Math.floor(Math.random() * (colorVariants.length - 1))
+                ]
+              }  text-zinc-700 dark:text-zinc-700 `
         } trasition-all duration-300 inline-flex group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center mr-4 justify-center w-14 h-14 overflow-hidden group-hover:border-indigo-500 border-zinc-500 rounded-2xl  border dark:border-zinc-700`}
       >
         <span className=" text-2xl lg:text-2xl ">{user.toLowerCase()}</span>

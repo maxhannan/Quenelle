@@ -26,7 +26,7 @@ export default {
         sans: ["Geologica", "sans-serif"],
       },
       gridTemplateColumns: {
-        sticky: "repeat(auto-fill, minmax(250px, 1fr))",
+        sticky: "repeat(auto-fill, minmax(350px, 1fr))",
       }
     },
   },
