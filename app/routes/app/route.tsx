@@ -21,7 +21,9 @@ import {
   FolderIcon,
   HelpCircle,
   HomeIcon,
+  List,
   LogOut,
+  MessageCircle,
   Settings,
   Users,
 } from "lucide-react";
@@ -123,13 +125,13 @@ const AppLayout = () => {
                   active={page}
                   handleNav={handleNav}
                   path="menus"
-                  Icon={QueueListIcon}
+                  Icon={List}
                 />
                 <BottomNavButton
                   active={page}
                   handleNav={handleNav}
                   path="chat"
-                  Icon={ChatBubbleBottomCenterTextIcon}
+                  Icon={MessageCircle}
                 />
               </div>
               <div className="flex-col justify-between flex pb-4">
