@@ -20,7 +20,7 @@ import RecipeForm from "~/components/forms/RecipeForm";
 import AppBar from "~/components/navigation/AppBar";
 import { uploadImage } from "~/utils/images";
 import IconButton from "~/components/buttons/IconButton";
-import type { ActionFunction } from "@remix-run/node";
+import type { ActionFunction, LoaderArgs } from "@remix-run/node";
 import {
   extractRecipe,
   getRecipes,
@@ -28,9 +28,15 @@ import {
 } from "~/utils/recipes.server";
 import Spinner from "~/components/LoadingSpinner";
 import { useToast } from "~/components/ui/use-toast";
+import { getUser } from "~/utils/auth.server";
 
-export const loader = async () => {
-  const recipes = await getRecipes();
+export const loader = async ({ request }: LoaderArgs) => {
+  const user = await getUser(request);
+
+  const recipes = await getRecipes(
+    false,
+    user!.teams.map((t) => t.id)
+  );
   return {
     recipes,
     categories: recipes ? [...new Set(recipes.map((r) => r.category))] : [],

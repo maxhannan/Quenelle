@@ -39,7 +39,7 @@ export async function loader({ request }: LoaderArgs) {
 
   const user = await getUser(request);
   if (!user) return redirect("/login");
-  console.log(user);
+
   if (!user.approved) {
     if (user.teams.length && user.orgOwner) {
       console.log("redirecting to team setup");
@@ -49,7 +49,6 @@ export async function loader({ request }: LoaderArgs) {
       return redirect("/pending");
     }
   }
-  console.log(user);
 
   return user;
 }

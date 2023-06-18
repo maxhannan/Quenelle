@@ -31,6 +31,7 @@ model User {
   teams Team[]
   orgOwner Boolean @default(false)
   approved  Boolean  @default(false)
+  stickyNotes StickyNote[]
 }
 
 
@@ -46,6 +47,7 @@ model Team {
   menus       Menu[]
   prepLists   PrepList[]
   prepListsTemplate PrepListTemplate[]
+  stickyNotes StickyNote[]
 }
 model Recipe {
   id          String   @id @default(cuid())
@@ -72,6 +74,30 @@ model Recipe {
 
 }
 
+model StickyNote {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  content        String
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    String
+  tasks       StickyNoteTask[]
+  color      String
+  team  Team? @relation(fields: [teamId], references: [id], onDelete: SetNull)
+  teamId String?
+
+
+}
+
+model StickyNoteTask {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  content     String
+  completed   Boolean @default(false)
+  stickyNote  StickyNote @relation(fields: [stickyNoteId], references: [id], onDelete: Cascade)
+  stickyNoteId String
+}
 model Ingredient {
   id          String   @id @default(cuid())
   recipe      Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)

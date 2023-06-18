@@ -24,6 +24,9 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Geologica", "sans-serif"],
+      },
+      gridTemplateColumns: {
+        sticky: "repeat(auto-fill, minmax(250px, 1fr))",
       }
     },
   },
