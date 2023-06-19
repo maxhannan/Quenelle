@@ -4,9 +4,24 @@ import { type LoaderArgs } from "@remix-run/node";
 import { getMembers } from "~/utils/teams.server";
 import { useLoaderData } from "@remix-run/react";
 import NewAppBar from "~/components/navigation/NewAppBar";
-import { Users, Users2Icon } from "lucide-react";
+import { ChevronDown, Trash2Icon, Users, Users2Icon } from "lucide-react";
 import RecipeCard from "~/components/display/ListCard";
 import ComboBox from "~/components/formInputs/ComboBox";
+import { CheckIcon } from "@heroicons/react/24/outline";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "~/components/ui/popover";
+import { Button } from "~/components/ui/button";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "~/components/ui/command";
 
 export async function loader({ request }: LoaderArgs) {
   const teams = await getMembers(request);
@@ -36,49 +51,49 @@ function DashBoardIndex() {
   console.log({ teams });
   const { user } = useUserContext();
   return (
-    <div className="">
+    <div className="container max-w-4xl mx-auto">
       <NewAppBar page="Teams" />
-      <div className="lg:p-2  rounded-2xl">
+      <div className="  rounded-2xl">
         {teams.map((team) => (
-          <div
-            key={team.id}
-            className="grid grid-cols-1 gap-4 w-full lg:grid-cols-5"
-          >
-            <div className="flex  space-x-4 col-span-2">
-              <div className="flex flex-col justify-center">
-                <div className="text-2xl font-semibold dark:text-zinc-100">
+          <div key={team.id} className="flex flex-col gap-2 ">
+            <div className="flex  justify-between w-full items-center">
+              <div>
+                <div className="text-xl font-semibold dark:text-zinc-100">
                   {team.name}
                 </div>
-                <div className="text-lg text-zinc-500">
+                <div className="text-base text-zinc-500">
                   {team.city}, {team.state}
                 </div>
-                <div className="mt-2">
-                  <button className="bg-indigo-500 rounded-lg text-lg px-3 py-1 text-zinc-100 hover:bg-indigo-400">
-                    {" "}
-                    Invite Members{" "}
-                  </button>
-                </div>
+              </div>
+              <div className="">
+                <button className="bg-indigo-500 rounded-lg text-sm px-2 py-2 text-zinc-100 hover:bg-indigo-400">
+                  {" "}
+                  Invite Members{" "}
+                </button>
               </div>
             </div>
-            <div className="col-span-3  flex flex-col border-zinc-700 border rounded-2xl [&>*:not(:last-child)]:border-b [&>*:not(:last-child)]:border-zinc-700 bg-zinc-800 bg-opacity-60">
+            <div className="  flex flex-col border-zinc-300 dark:border-zinc-700 border rounded-2xl [&>*:not(:last-child)]:border-b [&>*:not(:last-child)]:border-zinc-300 [&>*:not(:last-child)]:dark:border-zinc-700 bg-zinc-200 dark:bg-zinc-800 bg-opacity-60">
               {team.members.map((member) => (
-                <div key={member.id} className="flex ">
-                  <div className="w-full p-2 flex gap-2 items-center border-zinc-700 ">
+                <div
+                  key={member.id}
+                  className="flex justify-between flex-col md:flex-row items-start w-full"
+                >
+                  <div className="p-2 flex gap-2 items-center border-zinc-700 ">
                     <div
                       className={` trasition-all duration-300 inline-flex group-hover:bg-indigo-500  ${
                         colorVariants[
                           Math.floor(Math.random() * (colorVariants.length - 1))
                         ]
-                      } group-hover:text-zinc-200  child flex-shrink-0 items-center  justify-center w-10 h-10 md:h-14 md:w-14 overflow-hidden group-hover:border-indigo-500 border-zinc-500 rounded-xl lg:rounded-2xl  border dark:border-zinc-700`}
+                      } group-hover:text-zinc-200  child flex-shrink-0 items-center  justify-center h-12 w-12 overflow-hidden group-hover:border-indigo-500 border-zinc-500 rounded-xl lg:rounded-2xl  border dark:border-zinc-700`}
                     >
-                      <span className=" text-base lg:text-2xl ">mh</span>
+                      <span className=" text-xl ">mh</span>
                     </div>
-                    <div className="   space-x-4 col-span-2">
+                    <div className="   space-x-4 flex w-full  ">
                       <div className="flex flex-col justify-center">
-                        <div className="text-base lg:text-lg font-semibold dark:text-zinc-100 flex items-center">
+                        <div className="text-lg font-semibold dark:text-zinc-100 items-center w-full justify-between inline-flex">
                           {member.firstName} {member.lastName}
                           {member.approved ? (
-                            <span className="bg-green-500 text-zinc-100 text-xs  p-[2px] px-2  rounded-full ml-2 ">
+                            <span className="bg-green-500 text-zinc-100 text-xs  p-[2px] px-2  rounded-full ml-auto ">
                               Approved
                             </span>
                           ) : (
@@ -87,20 +102,73 @@ function DashBoardIndex() {
                             </span>
                           )}
                         </div>
-                        <div className="text-sm lg:text-base text-zinc-500">
+                        <div className="text-md lg:text-base text-zinc-500">
                           {member.email}
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="flex justify-end items-center p-2">
-                    <div className="flex-col flex md:flex-row gap-2">
-                      {!member.approved && (
+                  <div className="flex  items-center p-2 justify-between w-full">
+                    <div className=" flex justify-between w-full  gap-2">
+                      {!member.approved ? (
                         <>
-                          <button className="border border-green-500 rounded-lg text-sm md:text-base px-2 py-1 text-zinc-100 hover:bg-green-400">
-                            {" "}
-                            Approve{" "}
+                          <button className=" border border-red-500 rounded-2xl text-sm md:text-base px-2 py-2 text-zinc-700 dark:text-zinc-100 hover:bg-red-300">
+                            Deny
                           </button>
+                          <button className="border border-green-500 rounded-2xl text-sm md:text-base px-2 py-2 text-zinc-700 dark:text-zinc-100 hover:bg-green-300">
+                            Approve
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button className=" border border-red-500 rounded-2xl text-sm md:text-sm h-10 px-2 py-2 text-zinc-700 dark:text-zinc-100 hover:bg-red-300">
+                            Remove User
+                          </button>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <Button
+                                variant="outline"
+                                className="ml-auto bg-zinc-100 dark:bg-zinc-900 rounded-2xl text-zinc-800 dark:text-zinc-200 border  border-zinc-300 dark:border-zinc-700 h-10"
+                              >
+                                Developer{" "}
+                                <ChevronDown className="ml-2 h-4 w-4 text-muted-foreground" />
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="p-0" align="end">
+                              <Command className="bg-zinc-100 dark:bg-zinc-800">
+                                <CommandInput placeholder="Select new role..." />
+                                <CommandList>
+                                  <CommandEmpty>No roles found.</CommandEmpty>
+                                  <CommandGroup>
+                                    <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
+                                      <p>Viewer</p>
+                                      <p className="text-sm text-muted-foreground">
+                                        Can view and comment.
+                                      </p>
+                                    </CommandItem>
+                                    <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
+                                      <p>Developer</p>
+                                      <p className="text-sm text-muted-foreground">
+                                        Can view, comment and edit.
+                                      </p>
+                                    </CommandItem>
+                                    <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
+                                      <p>Billing</p>
+                                      <p className="text-sm text-muted-foreground">
+                                        Can view, comment and manage billing.
+                                      </p>
+                                    </CommandItem>
+                                    <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
+                                      <p>Owner</p>
+                                      <p className="text-sm text-muted-foreground">
+                                        Admin-level access to all resources.
+                                      </p>
+                                    </CommandItem>
+                                  </CommandGroup>
+                                </CommandList>
+                              </Command>
+                            </PopoverContent>
+                          </Popover>
                         </>
                       )}
                     </div>
