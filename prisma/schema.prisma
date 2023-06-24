@@ -30,6 +30,7 @@ model User {
   prepLists PrepList[]
   prepListsTemplate PrepListTemplate[]
   teams Team[]
+  feedMessages FeedMessage[]
   orgOwner Boolean @default(false)
   approved  Boolean  @default(false)
   stickyNotes StickyNote[]
@@ -51,6 +52,7 @@ model Team {
   recipes     Recipe[]
   menus       Menu[]
   prepLists   PrepList[]
+  feedMessages FeedMessage[]
   prepListsTemplate PrepListTemplate[]
   stickyNotes StickyNote[]
 }
@@ -68,10 +70,11 @@ model Recipe {
   yieldAmt    String 
   yieldUnit   String   
   ingredients Ingredient[]
+  feedMessages FeedMessage[]
   steps       String[]
   Notes       String[]
-  author      User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
-  authorId    String?  
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    String 
   linkedIngredients Ingredient[] @relation("Linked Recipes")
   taskGroups  taskGroup[]
   tasks       tasks[]
@@ -120,6 +123,7 @@ model Menu {
   updatedAt   DateTime @updatedAt
   name        String
   service     String
+  feedMessages FeedMessage[]
   sections    MenuSection[]
   dishes      Recipe[]
   author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
@@ -186,4 +190,18 @@ model PrepListTemplate {
   updatedAt   DateTime @updatedAt
   team  Team? @relation(fields: [teamId], references: [id], onDelete: SetNull)
   teamId String?
+}
+
+model FeedMessage { 
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  content     String
+  linkRecipe Recipe?  @relation(fields: [linkRecipeId], references: [id],  onDelete: SetNull)
+  linkRecipeId String?
+  linkMenu Menu?  @relation(fields: [linkMenuId], references: [id],  onDelete: SetNull)
+  linkMenuId String?
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    String
+  teams  Team[] 
 }

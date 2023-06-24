@@ -103,3 +103,17 @@
 //       </div>
 //     </div>
 //   ))}
+
+{
+  /* <div className="w-full  flex flex-col gap-2  text-xl font-light text-zinc-200 rounded-2xl">
+<div className="w-7/12 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-600  p-3 rounded-xl">
+  <span className="font-bold">79</span> Breakfast
+</div>
+<div className="w-5/12 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-600 p-3 rounded-xl">
+  <span className="font-bold">52</span> Lunch
+</div>
+<div className="w-12/12 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-600 p-3 rounded-xl">
+  <span className="font-bold">157</span> Dinner
+</div>
+</div> */
+}

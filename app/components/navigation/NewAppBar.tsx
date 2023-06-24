@@ -29,6 +29,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { colorVariants } from "~/utils/staticLists";
 
 interface Props {
   page: string;
@@ -56,9 +57,9 @@ const NewAppBar: FC<Props> = ({
           <DropdownMenu>
             <DropdownMenuTrigger asChild className="lg:hidden">
               <button
-                className={`data-[state=open]:bg-indigo-500 data-[state=open]:border-indigo-500 dark:bg-zinc-800 bg-zinc-700 text-zinc-200 dark:text-zinc-300 trasition-all duration-300 inline-flex group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center justify-center w-10 h-10 overflow-hidden group-hover:border-indigo-500 border-zinc-500 rounded-full  border dark:border-indigo-500`}
+                className={`data-[state=open]:bg-indigo-500 data-[state=open]:border-indigo-500 trasition-all duration-300 inline-flex group-hover:bg-indigo-500  ${colorVariants[1]} group-hover:text-zinc-200  child flex-shrink-0 items-center  justify-center h-10 w-10 overflow-hidden group-hover:border-indigo-500 border-zinc-400 rounded-xl  border dark:border-zinc-700`}
               >
-                <UserIcon className="w-6 h-6" />
+                mh
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56 ml-2">

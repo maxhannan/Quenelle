@@ -22,13 +22,16 @@ import {
   HelpCircle,
   HomeIcon,
   List,
+  ListOrderedIcon,
   LogOut,
   MessageCircle,
+  Newspaper,
   Settings,
   Users,
 } from "lucide-react";
 import BottomNavButton from "~/components/navigation/BottomNavButton";
 import Spinner from "~/components/LoadingSpinner";
+import { colorVariants } from "~/utils/staticLists";
 
 export function ErrorBoundary() {
   return <ErrorBoundaryLayout />;
@@ -52,24 +55,7 @@ export async function loader({ request }: LoaderArgs) {
 
   return user;
 }
-const colorVariants = [
-  "bg-yellow-300 ",
-  "bg-orange-300 ",
-  "bg-pink-300 ",
-  "bg-indigo-300 ",
-  "bg-green-300 ",
-  "bg-amber-300 ",
-  "bg-lime-300 ",
-  "bg-teal-300 ",
-  "bg-cyan-300 ",
-  "bg-sky-300",
-  "bg-emerald-300 ",
-  "bg-blue-300 ",
-  "bg-purple-300 ",
-  "bg-violet-300 ",
-  "bg-rose-300 ",
-  "bg-red-300 ",
-];
+
 const AppLayout = () => {
   const location = useLocation();
   const [page, setPage] = useState(location.pathname.split("/")[2]);
@@ -128,7 +114,7 @@ const AppLayout = () => {
                   active={page}
                   handleNav={handleNav}
                   path=""
-                  Icon={HomeIcon}
+                  Icon={Newspaper}
                 />
                 <BottomNavButton
                   active={page}
