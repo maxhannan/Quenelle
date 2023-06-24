@@ -114,17 +114,7 @@ export const extractRecipe = (form: FormData) => {
       linkId: linkIds[i].length > 0 ? linkIds[i] : undefined,
     };
   });
-  console.log({ iNames, ingredientAmts, ingredientUnits, linkIds });
-  console.log({
-    name,
-    category,
-    savedImages,
-    yieldAmt,
-    yieldUnit,
-    allergens: allergies.length > 0 ? allergies?.split(",") : [],
-    ingredients,
-    steps,
-  });
+
   return {
     name,
     category,

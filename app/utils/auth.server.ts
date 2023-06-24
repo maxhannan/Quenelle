@@ -113,6 +113,7 @@ export async function getUser(request: Request) {
       where: { id: userId },
       select: {
         id: true,
+        role: true,
         email: true,
         username: true,
         firstName: true,

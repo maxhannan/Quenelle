@@ -18,10 +18,29 @@ export async function getMembers(request: Request) {
       state: true,
 
       members: {
+        orderBy: [
+          {
+            approved: "asc",
+          },
+          {
+            role: "desc",
+          },
+          {
+            firstName: "asc",
+          },
+        ],
+
         select: {
           firstName: true,
           lastName: true,
           username: true,
+          role: true,
+          teams: {
+            select: {
+              name: true,
+              id: true,
+            },
+          },
           email: true,
           id: true,
           approved: true,
@@ -32,4 +51,30 @@ export async function getMembers(request: Request) {
     },
   });
   return teams;
+}
+
+export async function getMember(id: string) {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: id,
+    },
+    select: {
+      firstName: true,
+      lastName: true,
+      username: true,
+      role: true,
+      teams: {
+        select: {
+          name: true,
+          id: true,
+        },
+      },
+      email: true,
+      id: true,
+      approved: true,
+      chef: true,
+      orgOwner: true,
+    },
+  });
+  return user;
 }

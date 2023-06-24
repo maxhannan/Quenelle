@@ -21,6 +21,7 @@ model User {
   email     String   @unique
   password  String
   chef      Boolean  @default(false)
+  role      Role     @default(cook)
   firstName String
   lastName  String 
   recipes   Recipe[] 
@@ -34,7 +35,11 @@ model User {
   stickyNotes StickyNote[]
 }
 
-
+enum Role {
+cook
+sousChef
+headChef
+}
 model Team { 
   id          String   @id @default(cuid())
   createdAt   DateTime @default(now())
@@ -83,8 +88,8 @@ model StickyNote {
   authorId    String
   tasks       StickyNoteTask[]
   color      String
-  team  Team? @relation(fields: [teamId], references: [id], onDelete: SetNull)
-  teamId String?
+  team  Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId String
 
 
 }
@@ -117,8 +122,8 @@ model Menu {
   service     String
   sections    MenuSection[]
   dishes      Recipe[]
-  author      User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
-  authorId    String?  
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    String  
   team  Team[]
 }
  
@@ -136,8 +141,8 @@ model PrepList {
   id          String   @id @default(cuid())
   name        String
   date        DateTime
-  author      User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
-  authorId    String?  
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    String 
   assignedTo User?     @relation(fields: [assignedToId], references: [id], "Assigned List", onDelete: SetNull)
   assignedToId String?
   createdAt   DateTime @default(now())
@@ -175,8 +180,8 @@ model PrepListTemplate {
   id    String  @id @default(cuid())
   name  String
   taskGroups  taskGroup[]
-  author      User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
-  authorId    String? 
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   team  Team? @relation(fields: [teamId], references: [id], onDelete: SetNull)
