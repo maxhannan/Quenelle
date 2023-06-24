@@ -248,7 +248,7 @@ export async function updateRecipe(
     steps,
     savedImages,
   } = recipe;
-
+  console.log({ userId });
   try {
     const data = await prisma.$transaction([
       prisma.ingredient.deleteMany({ where: { recipeId: id } }),
@@ -279,7 +279,7 @@ export async function updateRecipe(
         content: `${author.firstName} ${author.lastName} updated the recipe ${data[1].name}`,
         author: {
           connect: {
-            id: userId,
+            id: author.id,
           },
         },
         teams: {
