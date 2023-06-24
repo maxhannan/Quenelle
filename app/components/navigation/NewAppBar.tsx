@@ -52,7 +52,7 @@ const NewAppBar: FC<Props> = ({
         <nav
           className={`flex pt-3 ${
             bottomPadding ? `pb-${bottomPadding}` : "pb-3"
-          } mx-auto  max-h-full items-center justify-between   duration-300 gap-4   w-full top-0 left-0 `}
+          } mx-auto  max-h-full items-center justify-between   duration-300 gap-2   w-full top-0 left-0 `}
         >
           <DropdownMenu>
             <DropdownMenuTrigger asChild className="lg:hidden">

@@ -71,7 +71,7 @@ function HomeRoute() {
   if (!user) return null;
   return (
     <div className=" container mx-auto  max-w-4xl flex flex-col  mb-28">
-      <NewAppBar page="" bottomPadding="0">
+      <NewAppBar page="Feed" bottomPadding="0">
         <div className=" px-3 py-2 bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 rounded-full flex gap-2 items-center justify-between">
           <span className="font-bold">79°F</span>
           <SunIcon className="w-7 h-7 inline-block" />
