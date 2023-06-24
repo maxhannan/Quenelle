@@ -3,13 +3,12 @@ import Spinner from "~/components/LoadingSpinner";
 
 import MenuSearch from "./Components/MenuSearch";
 
-import { DocumentPlusIcon } from "@heroicons/react/24/outline";
 import SlideDownTransition from "~/components/animations/SlideDown";
-import IconButton from "~/components/buttons/IconButton";
 import DishesPages from "../app.menus/components/DishesPages";
 import MenuButtons from "../app.menus/components/MenuButtons";
 import { useMenuContext } from "../app.menus/route";
 import MenuPages from "../app.menus/components/MenuPages";
+import { PlusIcon } from "lucide-react";
 
 function MenuIndex() {
   const navigation = useNavigation();
@@ -46,14 +45,15 @@ function MenuIndex() {
           <nav className=" flex pt-3 pb-1 mx-auto max-h-full items-center justify-between  duration-300 bg-zinc-100 dark:bg-zinc-900 font-light  w-full top-0 left-0  ">
             <MenuButtons activeTab={activeTab} setActiveTab={setActiveTab} />
             <div className="grow flex justify-end gap-2">
-              <IconButton
-                Icon={DocumentPlusIcon}
-                name="Add"
-                type="button"
+              <button
                 onClick={() =>
                   navigate(`${activeTab === "Dishes" ? "dishes/" : ""}add`)
                 }
-              />
+                className=" font-light  bg-indigo-500 rounded-xl text-zinc-100 px-3 py-2 text-sm hover:bg-opacity-90 transition-all duration-300 inline-flex gap-1 items-center "
+              >
+                <PlusIcon className="h-5 w-5" /> Add{" "}
+                {activeTab === "Dishes" ? "Dish" : "Menu"}
+              </button>
             </div>
           </nav>
         </SlideDownTransition>

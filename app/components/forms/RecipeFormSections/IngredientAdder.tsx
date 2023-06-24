@@ -38,7 +38,7 @@ const IngredientAdder: FC<Props> = ({ handleDelete, ingredient, recipes }) => {
         <div className="flex justify-center items-center ml-auto">
           <IconButton
             Icon={XMarkIcon}
-            size={12}
+            size={10}
             name="deleteRecipe"
             onClick={() => handleDelete(ingredient.id)}
           />

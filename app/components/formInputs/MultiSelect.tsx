@@ -46,18 +46,18 @@ const MultiSelect: FC<Props> = ({
         multiple
       >
         <div className="relative ">
-          <Listbox.Button className=" relative  focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none bg-zinc-200 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40 focus:ring-2    border   border-zinc-300 dark:border-zinc-700  pl-4  p-4  text-xl text-zinc-800      placeholder-zinc-500   dark:placeholder-zinc-400 dark:text-zinc-50    font-light w-full cursor-default  py-2 px-2  rounded-3xl   pr-10 text-left   focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300 ">
+          <Listbox.Button className=" relative  focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none bg-zinc-200 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40 focus:ring-2    border   border-zinc-300 dark:border-zinc-700     text-xl text-zinc-800      placeholder-zinc-500   dark:placeholder-zinc-400 dark:text-zinc-50    font-light w-full cursor-default  py-2 px-2  rounded-2xl   pr-10 text-left   focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300 ">
             <span className="flex flex-wrap gap-2 items-center ">
               {controlledValue ? (
                 controlledValue.length > 0 ? (
                   controlledValue.map((s) => <Chip key={s} content={s} />)
                 ) : (
-                  <p className=" m-0.5 text-zinc-400  text-md">{placeholder}</p>
+                  <p className="  text-zinc-400  text-base">{placeholder}</p>
                 )
               ) : selected.length > 0 ? (
                 selected.map((s) => <Chip key={s} content={s} />)
               ) : (
-                <p className=" m-0.5 text-zinc-400  text-md">{placeholder}</p>
+                <p className="  text-zinc-400  text-base">{placeholder}</p>
               )}
             </span>
 

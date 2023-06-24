@@ -233,7 +233,11 @@ export const createRecipe = async (
   return newRecipe;
 };
 
-export async function updateRecipe(id: string, recipe: ExtractedRecipe) {
+export async function updateRecipe(
+  id: string,
+  recipe: ExtractedRecipe,
+  userId: string
+) {
   const {
     name,
     category,
@@ -275,7 +279,7 @@ export async function updateRecipe(id: string, recipe: ExtractedRecipe) {
         content: `${author.firstName} ${author.lastName} updated the recipe ${data[1].name}`,
         author: {
           connect: {
-            id: author.id,
+            id: userId,
           },
         },
         teams: {

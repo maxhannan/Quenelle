@@ -25,7 +25,7 @@ export const action: ActionFunction = async ({ request }) => {
   const newRecipe = await extractRecipe(form);
 
   if (user) {
-    const savedRecipe = await createRecipe(newRecipe, user.id);
+    const savedRecipe = await createRecipe(newRecipe, user.id, undefined);
     console.log({ savedRecipe });
 
     return savedRecipe.id;
@@ -92,7 +92,7 @@ const AddRecipeRoute: FC = () => {
         />
       </AppBar>
 
-      <div className="container mx-auto max-w-4xl xl:mt-1 lg:pl-2">
+      <div className="container mx-auto max-w-3xl xl:mt-1 lg:pl-2">
         <Form
           ref={formRef}
           method="post"

@@ -5,13 +5,12 @@ import { useEffect, useState } from "react";
 import NewAppBar from "~/components/navigation/NewAppBar";
 
 import StickyNote from "./components/StickyNote";
-import { LoaderArgs, type ActionArgs } from "@remix-run/node";
-import { useActionData, useFetcher, useLoaderData } from "@remix-run/react";
+import { type LoaderArgs, type ActionArgs } from "@remix-run/node";
+import { useFetcher, useLoaderData } from "@remix-run/react";
 import { prisma } from "~/utils/prisma.server";
 import { getUser } from "~/utils/auth.server";
 import { Checkbox } from "~/components/ui/checkbox";
-import SlideDownTransition from "~/components/animations/SlideDown";
-import SlideUpTransition from "~/components/animations/SlideUp";
+
 import { Transition } from "@headlessui/react";
 
 export async function action({ request }: ActionArgs) {
@@ -124,7 +123,7 @@ function ChatIndex() {
           <ResponsiveMasonry
             columnsCountBreakPoints={{ 350: 1, 500: 2, 1200: 3, 1800: 4 }}
           >
-            <Masonry gutter="1rem">
+            <Masonry gutter=".5rem">
               {notes &&
                 notes.map((note) => (
                   <div key={note.id}>

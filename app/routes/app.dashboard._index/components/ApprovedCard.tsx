@@ -16,10 +16,9 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { type DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
-import { getMember, getMembers } from "~/utils/teams.server";
-import { type getUser } from "~/utils/auth.server";
-import { FetcherWithComponents, useFetcher } from "@remix-run/react";
-import { da } from "date-fns/locale";
+import { type getMember } from "~/utils/teams.server";
+
+import { useFetcher } from "@remix-run/react";
 
 interface Props {
   m: Member;

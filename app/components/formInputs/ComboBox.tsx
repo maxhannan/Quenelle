@@ -90,7 +90,7 @@ const ComboBox: FC<Props> = ({
               }
             }}
             name={name}
-            className="rounded-full pr-8  bg-zinc-200 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none   focus:ring-2   font-light border relative  border-zinc-300 dark:border-zinc-700 h-12 w-full p-2 pl-4 text-xl text-zinc-800      placeholder-zinc-500   dark:placeholder-zinc-400 dark:text-zinc-50   "
+            className="rounded-2xl pr-8  bg-zinc-200 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none   focus:ring-2   font-light border relative  border-zinc-300 dark:border-zinc-700 h-10 w-full p-2 pl-4 text-xl text-zinc-800      placeholder-zinc-500   dark:placeholder-zinc-400 dark:text-zinc-50   "
             onChange={(event) => setQuery(event.target.value)}
             placeholder={placeholder}
             displayValue={
@@ -102,7 +102,7 @@ const ComboBox: FC<Props> = ({
               onClick={() => {
                 handleChange(null);
               }}
-              className="w-6 h-6 absolute top-3 right-2 text-indigo-500 dark:text-indigo-500 hover:text-indigo-600 "
+              className="w-6 h-6 absolute top-2 right-2 text-indigo-500 dark:text-indigo-500 hover:text-indigo-600 "
             />
           ) : (
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">

@@ -60,7 +60,7 @@ const PrepPage: FC<Props> = ({
           <IconButton
             Icon={ClipboardEdit}
             name="Add"
-            size={12}
+            size={10}
             type="button"
             onClick={() => setOpenDialog(true)}
           />

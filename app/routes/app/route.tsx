@@ -10,19 +10,13 @@ import ErrorBoundaryLayout from "./ErrorBoundary";
 import { redirect, type LoaderArgs } from "@remix-run/node";
 import { getUser, requireUserId } from "~/utils/auth.server";
 import { Toaster } from "~/components/ui/toaster";
-import {
-  QueueListIcon,
-  ChatBubbleBottomCenterIcon,
-  ChatBubbleBottomCenterTextIcon,
-} from "@heroicons/react/24/outline";
+
 import {
   ClipboardCheckIcon,
   CreditCard,
   FolderIcon,
   HelpCircle,
-  HomeIcon,
   List,
-  ListOrderedIcon,
   LogOut,
   MessageCircle,
   Newspaper,

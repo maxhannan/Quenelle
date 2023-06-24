@@ -9,7 +9,6 @@ import {
   PlusCircle,
   Settings,
   User,
-  UserIcon,
   UserPlus,
   Users,
 } from "lucide-react";

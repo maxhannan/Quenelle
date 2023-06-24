@@ -15,13 +15,13 @@ const RecipeStepAdder: FC<Props> = ({ step, handleDelete }) => {
   return (
     <>
       <div className="flex gap-x-2 col-span-5 ">
-        <div className="grow h-12 inline-flex  items-center  dark:bg-zinc-800 bg-zinc-200 transition-all duration-300 rounded-xl   pl-3 font-light text-lg text-zinc-700 dark:text-zinc-100  ">
-          <h4 className="text-xl dark:text-zinc-100 "> Step {step.orderNum}</h4>
+        <div className="grow h-10 inline-flex  items-center  dark:bg-zinc-800 bg-zinc-200 transition-all duration-300 rounded-xl   pl-3 font-light text-lg text-zinc-700 dark:text-zinc-100  ">
+          <h4 className="text-lg dark:text-zinc-100 "> Step {step.orderNum}</h4>
         </div>
         <div className="flex justify-center items-center ml-auto">
           <IconButton
             Icon={XMarkIcon}
-            size={12}
+            size={10}
             name="deleteRecipe"
             onClick={() => handleDelete(step.id)}
           />

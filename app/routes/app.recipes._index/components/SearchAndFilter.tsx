@@ -149,7 +149,7 @@ const SearchAndFilter: FC<Props> = ({
 
       <Transition
         show={openFilter}
-        className="z-30 relative flex-col flex gap-3 mt-3 mb-1"
+        className="z-30 relative flex-col flex gap-2 mt-2 mb-1"
         enter="transition-all ease-linear duration-500  overflow-hidden"
         enterFrom="transform opacity-0 max-h-0"
         enterTo="transform opacity-100 max-h-96"

@@ -45,7 +45,7 @@ export default function RecipesIndex() {
               <NewAppBar page={"Recipes"}>
                 <button
                   onClick={() => navigate("addrecipe")}
-                  className=" font-light  bg-indigo-500 rounded-xl text-zinc-100 px-2 py-2 hover:bg-opacity-90 transition-all duration-300 inline-flex gap-1 items-center "
+                  className=" font-light  bg-indigo-500 rounded-xl text-zinc-100 px-2 py-2 text-sm hover:bg-opacity-90 transition-all duration-300 inline-flex gap-1 items-center "
                 >
                   <PlusIcon className="h-5 w-5" /> Add Recipe
                 </button>

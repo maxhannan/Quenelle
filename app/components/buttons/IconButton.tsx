@@ -11,7 +11,7 @@ interface Props extends ComponentPropsWithoutRef<"button"> {
 const IconButton: FC<Props> = ({
   active = false,
   loading,
-  size = 12,
+  size = 10,
   Icon,
   ...rest
 }) => {
