@@ -19,7 +19,6 @@ import {
   HelpCircle,
   List,
   LogOut,
-  MessageCircle,
   Newspaper,
   Settings,
   StickyNote,

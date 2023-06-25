@@ -3,7 +3,13 @@ import type { Ingredient } from "@prisma/client";
 import { ArrowLongRightIcon } from "@heroicons/react/24/outline";
 import { useLocation, useNavigate } from "@remix-run/react";
 
-const IngredientTable = ({ ingredients }: { ingredients: Ingredient[] }) => {
+const IngredientTable = ({
+  ingredients,
+  scaleFactor,
+}: {
+  ingredients: Ingredient[];
+  scaleFactor: number;
+}) => {
   const navigate = useNavigate();
   const location = useLocation();
   return (
@@ -44,7 +50,7 @@ const IngredientTable = ({ ingredients }: { ingredients: Ingredient[] }) => {
                 <td className="px-3 py-2">
                   <div className="flex  ">
                     <p>
-                      {i.qty && Number(i.qty) + "  "}
+                      {i.qty && parseInt(i.qty) * scaleFactor + "  "}
                       <b>{i.unit}</b>
                     </p>
                   </div>

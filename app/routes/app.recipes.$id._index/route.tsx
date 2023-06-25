@@ -24,10 +24,18 @@ import Spinner from "~/components/LoadingSpinner";
 import Carousel from "~/components/display/Carousel";
 import { useRecipe } from "../app.recipes.$id/route";
 import SlideUpTransition from "~/components/animations/SlideUp";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "~/components/ui/popover";
+import TextInput from "~/components/formInputs/TextInput";
 
 const RecipeIndex: FC = () => {
   const { recipe } = useRecipe();
   const navigate = useNavigate();
+  const [scaleFactor, setScaleFactor] = useState(1);
+  console.log({ scaleFactor });
   const [isOpen, setIsOpen] = useState(false);
   const navigation = useNavigation();
   const location = useLocation();
@@ -70,11 +78,32 @@ const RecipeIndex: FC = () => {
           />
         )}
 
-        <IconButton
-          Icon={ScaleIcon}
-          name="Scale Recipe"
-          onClick={() => console.log("edit")}
-        />
+        <Popover>
+          <PopoverTrigger>
+            {" "}
+            <IconButton
+              Icon={ScaleIcon}
+              name="Scale Recipe"
+              onClick={() => console.log("edit")}
+            />
+          </PopoverTrigger>
+          <PopoverContent className="mt-1 mr-2 bg-zinc-100 w-56 ">
+            <TextInput
+              type="number"
+              min="0"
+              max={"100"}
+              value={scaleFactor.toString()}
+              initValue={scaleFactor.toString()}
+              changeHandler={(e) =>
+                setScaleFactor(
+                  parseFloat(e.target.value) > 0
+                    ? parseFloat(e.target.value)
+                    : 1
+                )
+              }
+            />
+          </PopoverContent>
+        </Popover>
         <IconButton
           Icon={ArrowUturnLeftIcon}
           name="Go Back"
@@ -102,7 +131,10 @@ const RecipeIndex: FC = () => {
                   ))}
                 </div>
               )}
-              <IngredientTable ingredients={recipe.ingredients} />
+              <IngredientTable
+                ingredients={recipe.ingredients}
+                scaleFactor={scaleFactor}
+              />
               <div className="text-lg bg-zinc-200 dark:bg-zinc-950   px-3  items-center flex gap-4 justify-between dark:text-neutral-200 p-4 mb-2 text-neutral-700 rounded-xl font-light ">
                 <div>
                   {" "}

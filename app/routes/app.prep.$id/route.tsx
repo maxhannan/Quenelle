@@ -1,4 +1,4 @@
-import { LoaderArgs, redirect } from "@remix-run/node";
+import { type LoaderArgs } from "@remix-run/node";
 import { Outlet, useLoaderData, useOutletContext } from "@remix-run/react";
 import { getPrepListById } from "~/utils/prepList.server";
 

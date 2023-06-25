@@ -1,25 +1,9 @@
 import BottomNavButton from "./BottomNavButton";
 import { useNavigate, useLocation } from "@remix-run/react";
-import {
-  ClipboardDocumentCheckIcon,
-  QueueListIcon,
-  ChatBubbleBottomCenterIcon,
-  HomeIcon,
-  ChatBubbleBottomCenterTextIcon,
-} from "@heroicons/react/24/outline";
+import { QueueListIcon } from "@heroicons/react/24/outline";
 import type { Dispatch, SetStateAction } from "react";
 import { ClipboardCheckIcon, NewspaperIcon, StickyNote } from "lucide-react";
-import {
-  CreditCard,
-  FolderIcon,
-  HelpCircle,
-  List,
-  LogOut,
-  MessageCircle,
-  Newspaper,
-  Settings,
-  Users,
-} from "lucide-react";
+import { FolderIcon } from "lucide-react";
 interface Props {
   page: string;
   setPage: Dispatch<SetStateAction<string>>;

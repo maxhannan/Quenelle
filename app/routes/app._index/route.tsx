@@ -1,4 +1,3 @@
-import { SunIcon } from "@heroicons/react/24/outline";
 import type { LoaderArgs } from "@remix-run/node";
 import { useLoaderData, useNavigation } from "@remix-run/react";
 import { formatDistance, isToday } from "date-fns";
