@@ -50,7 +50,10 @@ const IngredientTable = ({
                 <td className="px-3 py-2">
                   <div className="flex  ">
                     <p>
-                      {i.qty && parseInt(i.qty) * scaleFactor + "  "}
+                      {i.qty &&
+                        (parseInt(i.qty) * scaleFactor).toFixed(
+                          scaleFactor === 1 ? 0 : 1
+                        ) + "  "}
                       <b>{i.unit}</b>
                     </p>
                   </div>
