@@ -94,7 +94,7 @@ const RecipeIndex: FC = () => {
             <TextInput
               type="number"
               min="0"
-              inputMode="numeric"
+              inputMode="decimal"
               pattern="[0-9]*"
               max={"100"}
               value={scaleFactor.toString()}
