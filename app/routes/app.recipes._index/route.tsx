@@ -40,7 +40,7 @@ export default function RecipesIndex() {
       </div>
       <div className=" w-full xl:hidden  container mx-auto">
         <div className="grid grid-cols-1   ">
-          <div>
+          <div className="fixed left-0 top-0 z-50 bg-zinc-100 shadow-sm w-full pb-2 px-2">
             <div className=" ">
               <NewAppBar page={"Recipes"}>
                 <button
@@ -67,7 +67,7 @@ export default function RecipesIndex() {
               <Spinner size={12} />
             </div>
           ) : (
-            <div className="pb-1 py-2  scrollbar-none ">
+            <div className="pb-1 py-2  scrollbar-none mt-28">
               {recipes && <RecipeFeed recipes={filteredRecipes} />}
             </div>
           )}

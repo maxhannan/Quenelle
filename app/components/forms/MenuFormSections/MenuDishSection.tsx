@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
 import { v4 } from "uuid";
 import type { getDishes } from "~/utils/dishes.server";
 import MenuDish from "./MenuDish";

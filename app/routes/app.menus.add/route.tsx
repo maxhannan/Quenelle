@@ -3,7 +3,7 @@ import { getDishes } from "~/utils/dishes.server";
 import { Outlet, useLoaderData, useOutletContext } from "@remix-run/react";
 import { getMenus } from "~/utils/menus.server";
 import { serviceList } from "~/utils/staticLists";
-import { LoaderArgs } from "@remix-run/node";
+import { type LoaderArgs } from "@remix-run/node";
 import { getUser } from "~/utils/auth.server";
 
 export async function loader({ request }: LoaderArgs) {

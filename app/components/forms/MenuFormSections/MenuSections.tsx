@@ -1,8 +1,8 @@
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
 import { v4 } from "uuid";
 import type { FullSection } from "~/utils/menus.server";
 import MenuSection from "./MenuSection";
-import { getDishes } from "~/utils/dishes.server";
+import { type getDishes } from "~/utils/dishes.server";
 import { PlusIcon } from "@heroicons/react/24/outline";
 
 interface Props {

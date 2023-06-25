@@ -120,6 +120,20 @@ export async function getUser(request: Request) {
         lastName: true,
         teams: true,
         approved: true,
+        assignedLists: {
+          select: {
+            id: true,
+            name: true,
+            author: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+              },
+            },
+            date: true,
+          },
+        },
         chef: true,
         orgOwner: true,
       },
