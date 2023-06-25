@@ -87,7 +87,7 @@ const RecipeIndex: FC = () => {
               onClick={() => console.log("edit")}
             />
           </PopoverTrigger>
-          <PopoverContent className="mt-1 mr-2 bg-zinc-100 dark:bg-zinc-800 w-56 dark:border-zinc-700">
+          <PopoverContent className="mt-1 mr-2 bg-zinc-100 dark:bg-zinc-800 w-32 dark:border-zinc-700">
             <span className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2 ">
               Scale Recipe
             </span>
