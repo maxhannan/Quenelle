@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { usePrepList } from "../app.prep.$id/route";
 import {
+  Form,
   useFetcher,
+  useLoaderData,
   useLocation,
   useNavigate,
   useNavigation,
@@ -13,13 +15,24 @@ import AppBar from "~/components/navigation/AppBar";
 import IconButton from "~/components/buttons/IconButton";
 import { ArrowUturnLeftIcon } from "@heroicons/react/24/outline";
 import PrepListItem from "./components/PrepListItem";
-import type { ActionFunction } from "@remix-run/node";
+import type { ActionFunction, LoaderArgs } from "@remix-run/node";
 import { updateTask } from "~/utils/prepList.server";
 import type { getPrepListById } from "~/utils/prepList.server";
 import SlideUpTransition from "~/components/animations/SlideUp";
 import { getPdf } from "~/utils/pdf";
 import { ClipboardCheckIcon, Printer } from "lucide-react";
 import { useToast } from "~/components/ui/use-toast";
+import ComboBox from "~/components/formInputs/ComboBox";
+import { getMembers } from "~/utils/teams.server";
+
+export async function loader({ request }: LoaderArgs) {
+  const members = await getMembers(request);
+  return members
+    .map((m) => m.members.flat())
+    .flat()
+    .filter((m) => m.approved)
+    .map((m) => ({ id: m.id, value: m.firstName + " " + m.lastName }));
+}
 
 export const action: ActionFunction = async ({ request }) => {
   const data = await request.formData();
@@ -39,6 +52,7 @@ export const action: ActionFunction = async ({ request }) => {
 type List = Awaited<ReturnType<typeof getPrepListById>>;
 function PrepListRoute() {
   const { toast } = useToast();
+  const members = useLoaderData<typeof loader>();
   const navigate = useNavigate();
   const navigation = useNavigation();
   const fetcher = useFetcher();
@@ -47,7 +61,6 @@ function PrepListRoute() {
 
   const [pdfLoading, setPdfLoading] = useState(false);
   const [openTaskFocus, setOpenTaskFocus] = useState<boolean>(false);
-
   if (!prepList) return <h1> No Prep List Found </h1>;
   const generatepdf = async () => {
     setPdfLoading(true);
@@ -82,6 +95,21 @@ function PrepListRoute() {
       </div>
     );
   }
+
+  const handleAssignList = async (id: string | null) => {
+    const data = new FormData();
+    if (!id) {
+      data.set("assignedToId", "");
+      console.log("no id");
+    } else {
+      data.set("assignedToId", id);
+      console.log(id);
+    }
+    fetcher.submit(data, {
+      action: `/app/prep/${prepList!.id}/assign`,
+      method: "POST",
+    });
+  };
   return (
     <div className=" container mx-auto mb-28 xl:pl-2">
       <AppBar
@@ -108,12 +136,26 @@ function PrepListRoute() {
         />
       </AppBar>
 
-      <div className="mb-2 text-lg text-indigo-500 font-mono">
+      <div className="mb-2 text-lg text-indigo-500 ">
         {new Date(prepList.date).toDateString()}
       </div>
 
       <SlideUpTransition>
         <div className="w-full grid  gap-2 mt-2">
+          <div className="w-full flex flex-col gap-2">
+            <ComboBox
+              name="users"
+              displayText={"Assigned to : "}
+              changeHandler={(v) => handleAssignList(v?.id ?? null)}
+              initValue={
+                prepList.assignedToId
+                  ? members.find((m) => m.id === prepList!.assignedToId)
+                  : undefined
+              }
+              options={members}
+              placeholder="Assign to user"
+            />
+          </div>
           <div className="flex flex-col gap-2">
             {openTaskFocus ? (
               activeTaskView.length > 0 ? (

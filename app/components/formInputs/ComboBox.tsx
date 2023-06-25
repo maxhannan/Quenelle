@@ -16,6 +16,7 @@ interface Props {
   changeHandler?: (value: ComboBoxOption | null) => void;
   selectedLinkId?: string;
   required?: boolean;
+  displayText?: string;
   controlledValue?: ComboBoxOption | null;
 }
 
@@ -28,6 +29,7 @@ const ComboBox: FC<Props> = ({
   changeHandler,
   selectedLinkId,
   controlledValue,
+  displayText,
   required = false,
 }) => {
   const [selected, setSelected] = useState(initValue || null);
@@ -94,7 +96,10 @@ const ComboBox: FC<Props> = ({
             onChange={(event) => setQuery(event.target.value)}
             placeholder={placeholder}
             displayValue={
-              selected ? (option: ComboBoxOption) => option.value : undefined
+              selected
+                ? (option: ComboBoxOption) =>
+                    displayText ? displayText + option.value : option.value
+                : undefined
             }
           />
           {selected !== null ? (

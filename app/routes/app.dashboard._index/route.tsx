@@ -71,7 +71,7 @@ function DashBoardIndex() {
   if (!user) return null;
   console.log({ user });
   return (
-    <div className="container max-w-4xl mx-auto">
+    <div className="container max-w-4xl mx-auto mb-28">
       <NewAppBar page="Teams" />
       <div className="  rounded-2xl">
         {teams.map((team) => (

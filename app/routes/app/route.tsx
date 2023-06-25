@@ -22,6 +22,7 @@ import {
   MessageCircle,
   Newspaper,
   Settings,
+  StickyNote,
   Users,
 } from "lucide-react";
 import BottomNavButton from "~/components/navigation/BottomNavButton";
@@ -109,33 +110,44 @@ const AppLayout = () => {
                 <BottomNavButton
                   active={page}
                   handleNav={handleNav}
-                  path=""
-                  Icon={Newspaper}
-                />
-                <BottomNavButton
-                  active={page}
-                  handleNav={handleNav}
                   path="prep"
+                  tooltip
+                  tooltipText="Prep"
                   Icon={ClipboardCheckIcon}
                 />
                 <BottomNavButton
                   active={page}
                   handleNav={handleNav}
                   path="recipes"
+                  tooltip
+                  tooltipText="Recipes"
                   Icon={FolderIcon}
                 />
 
                 <BottomNavButton
                   active={page}
                   handleNav={handleNav}
-                  path="menus"
-                  Icon={List}
+                  path=""
+                  tooltip
+                  tooltipText="Feed"
+                  Icon={Newspaper}
                 />
                 <BottomNavButton
                   active={page}
                   handleNav={handleNav}
+                  path="menus"
+                  tooltip
+                  tooltipText="Menus & Dishes"
+                  Icon={List}
+                />
+
+                <BottomNavButton
+                  active={page}
+                  handleNav={handleNav}
                   path="chat"
-                  Icon={MessageCircle}
+                  tooltip
+                  tooltipText="Team Messages"
+                  Icon={StickyNote}
                 />
               </div>
               <div className="flex-col justify-between flex pb-4">
@@ -143,18 +155,24 @@ const AppLayout = () => {
                   <BottomNavButton
                     active={page}
                     handleNav={handleNav}
+                    tooltip
+                    tooltipText="Settings"
                     path="dashboard"
                     Icon={Settings}
                   />
                   <BottomNavButton
                     active={page}
                     handleNav={handleNav}
+                    tooltip
+                    tooltipText="Team Members"
                     path="dashboard"
                     Icon={Users}
                   />
                   <BottomNavButton
                     active={page}
                     handleNav={handleNav}
+                    tooltip
+                    tooltipText="Billing"
                     path="dashboard"
                     Icon={CreditCard}
                   />
@@ -163,6 +181,8 @@ const AppLayout = () => {
                 <div className="flex flex-col gap-2">
                   <BottomNavButton
                     active={page}
+                    tooltip
+                    tooltipText="Help"
                     handleNav={handleNav}
                     path="dashboard"
                     Icon={HelpCircle}

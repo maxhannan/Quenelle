@@ -363,6 +363,13 @@ export async function getPrepListById(id: string) {
         id,
       },
       include: {
+        assignedTo: {
+          select: {
+            firstName: true,
+            lastName: true,
+            id: true,
+          },
+        },
         _count: true,
         author: {
           select: {

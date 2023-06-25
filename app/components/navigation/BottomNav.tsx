@@ -1,7 +1,6 @@
 import BottomNavButton from "./BottomNavButton";
 import { useNavigate, useLocation } from "@remix-run/react";
 import {
-  FolderIcon,
   ClipboardDocumentCheckIcon,
   QueueListIcon,
   ChatBubbleBottomCenterIcon,
@@ -9,8 +8,18 @@ import {
   ChatBubbleBottomCenterTextIcon,
 } from "@heroicons/react/24/outline";
 import type { Dispatch, SetStateAction } from "react";
-import { ClipboardCheckIcon } from "lucide-react";
-
+import { ClipboardCheckIcon, NewspaperIcon, StickyNote } from "lucide-react";
+import {
+  CreditCard,
+  FolderIcon,
+  HelpCircle,
+  List,
+  LogOut,
+  MessageCircle,
+  Newspaper,
+  Settings,
+  Users,
+} from "lucide-react";
 interface Props {
   page: string;
   setPage: Dispatch<SetStateAction<string>>;
@@ -37,12 +46,14 @@ const BottomNav = ({ page, setPage }: Props) => {
           active={page}
           handleNav={handleNav}
           path="prep"
+          tooltipPosition="top"
           Icon={ClipboardCheckIcon}
         />
         <BottomNavButton
           active={page}
           handleNav={handleNav}
           path="recipes"
+          tooltipPosition="top"
           Icon={FolderIcon}
         />
 
@@ -50,12 +61,14 @@ const BottomNav = ({ page, setPage }: Props) => {
           active={page}
           handleNav={handleNav}
           path=""
-          Icon={HomeIcon}
+          tooltipPosition="top"
+          Icon={NewspaperIcon}
         />
         <BottomNavButton
           active={page}
           handleNav={handleNav}
           path="menus"
+          tooltipPosition="top"
           Icon={QueueListIcon}
         />
 
@@ -63,7 +76,7 @@ const BottomNav = ({ page, setPage }: Props) => {
           active={page}
           handleNav={handleNav}
           path="chat"
-          Icon={ChatBubbleBottomCenterTextIcon}
+          Icon={StickyNote}
         />
       </div>
     </nav>

@@ -1,7 +1,7 @@
 import { SunIcon } from "@heroicons/react/24/outline";
 import type { LoaderArgs } from "@remix-run/node";
 import { useLoaderData, useNavigation } from "@remix-run/react";
-import { formatDistance } from "date-fns";
+import { formatDistance, isToday } from "date-fns";
 import { BadgePlusIcon, DeleteIcon, FileEdit } from "lucide-react";
 
 import Spinner from "~/components/LoadingSpinner";
@@ -76,11 +76,16 @@ export const loader = async ({ request }: LoaderArgs) => {
       },
     },
   });
-  return { user, feedMessages };
+  const assignedListsToday = user!.assignedLists.filter((l) =>
+    isToday(new Date(l.date))
+  );
+
+  return { user, feedMessages, assignedListsToday };
 };
 
 function HomeRoute() {
-  const { user, feedMessages } = useLoaderData<typeof loader>();
+  const { user, feedMessages, assignedListsToday } =
+    useLoaderData<typeof loader>();
   console.log({ user, feedMessages });
 
   const navigation = useNavigation();
@@ -93,26 +98,31 @@ function HomeRoute() {
     );
   if (!user) return null;
   return (
-    <div className=" container mx-auto  max-w-4xl flex flex-col  mb-28">
-      <NewAppBar page="" bottomPadding="0">
-        <div className=" px-3 py-2 bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 rounded-full flex gap-2 items-center justify-between">
-          <span className="font-bold">79°F</span>
-          <SunIcon className="w-7 h-7 inline-block" />
+    <div className=" container mx-auto max-w-4xl   flex flex-col  mb-28">
+      <NewAppBar page="" bottomPadding="0"></NewAppBar>
+      <div className="mb-4">
+        <div className="text-[3rem] md:text-4xl   items-center  w-full    dark:text-neutral-200  font-bold text-neutral-600 rounded-2xl  ">
+          <h1>Hi {user.firstName}!</h1>
         </div>
-      </NewAppBar>
-      <div className="text-[3rem] md:text-4xl   items-center  w-full    dark:text-neutral-200  font-bold text-neutral-600 rounded-2xl  ">
-        <h1>Hi {user.firstName}!</h1>
-      </div>
-      <div className="w-full flex flex-col gap-2 mb-2">
-        <div className="text-lg text-indigo-500 font-semibold ">
-          Your prep list for today.
-        </div>
-        <RecipeCard
-          to="/"
-          subHeading="Created by Erik J."
-          user={"ej"}
-          name="PM Grill"
-        />
+        {assignedListsToday.length > 0 && (
+          <div className="w-full flex flex-col gap-2 ">
+            <div className="text-lg text-indigo-500 font-semibold ">
+              Your prep list{assignedListsToday.length > 1 && "s"} for today.
+            </div>
+
+            {assignedListsToday.map((l) => (
+              <RecipeCard
+                key={l.id}
+                to={`/app/prep/${l.id}`}
+                subHeading={`Assigned By ${l.author.firstName} ${l.author.lastName}`}
+                user={(
+                  l.author.firstName[0] + l.author.lastName[0]
+                ).toLowerCase()}
+                name={l.name}
+              />
+            ))}
+          </div>
+        )}
       </div>
       <div className="flex flex-col gap-2 rounded-xl bg-zinc-200 dark:bg-zinc-800 p-2">
         {feedMessages.map((m) => (
