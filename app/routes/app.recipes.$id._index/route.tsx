@@ -101,9 +101,9 @@ const RecipeIndex: FC = () => {
               initValue={scaleFactor.toString()}
               changeHandler={(e) =>
                 setScaleFactor(
-                  e.target.value !== "" && e.target.value !== "0"
-                    ? parseFloat(e.target.value)
-                    : 1
+                  e.target.value === "" || e.target.value === "0"
+                    ? 1
+                    : parseFloat(e.target.value)
                 )
               }
             />

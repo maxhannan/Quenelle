@@ -1,14 +1,8 @@
 import { redirect } from "@remix-run/node";
 import type { LoaderArgs } from "@remix-run/node";
-import {
-  Outlet,
-  useLoaderData,
-  useMatches,
-  useOutletContext,
-} from "@remix-run/react";
+import { Outlet, useLoaderData, useOutletContext } from "@remix-run/react";
 import type { FC } from "react";
-import { getRecipeById, getRecipes } from "~/utils/recipes.server";
-import { useRecipes } from "../app.recipes/route";
+import { getRecipeById } from "~/utils/recipes.server";
 
 export async function loader({ params }: LoaderArgs) {
   const { id } = params;
