@@ -99,13 +99,11 @@ const RecipeIndex: FC = () => {
               max={"100"}
               value={scaleFactor.toString()}
               initValue={scaleFactor.toString()}
-              changeHandler={(e) =>
-                setScaleFactor(
-                  e.target.value === "" || e.target.value === "0"
-                    ? 1
-                    : parseFloat(e.target.value)
-                )
-              }
+              changeHandler={(e) => {
+                e.target.value !== "" &&
+                  e.target.value !== "0" &&
+                  setScaleFactor(parseFloat(e.target.value));
+              }}
             />
           </PopoverContent>
         </Popover>
