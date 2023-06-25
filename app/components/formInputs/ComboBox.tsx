@@ -138,8 +138,9 @@ const ComboBox: FC<Props> = ({
                 Create "{query}"
               </Combobox.Option>
             )}
-            {!allowCustom && filteredList.length === 0 && query !== "" && (
-              <div className="relative cursor-default select-none py-2 px-4 text-zinc-200">
+            {((!allowCustom && filteredList.length === 0 && query !== "") ||
+              (options.length === 0 && query === "")) && (
+              <div className="relative cursor-default select-none py-2 px-4 text-zinc-700 dark:text-zinc-200">
                 Nothing found.
               </div>
             )}

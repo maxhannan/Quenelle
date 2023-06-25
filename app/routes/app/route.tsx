@@ -3,6 +3,7 @@ import {
   useLocation,
   useNavigate,
   useNavigation,
+  useSubmit,
 } from "@remix-run/react";
 import { useState, useEffect } from "react";
 import BottomNav from "~/components/navigation/BottomNav";
@@ -55,6 +56,7 @@ const AppLayout = () => {
   const [page, setPage] = useState(location.pathname.split("/")[2]);
   const navigate = useNavigate();
   const navigation = useNavigation();
+  const submit = useSubmit();
   let active = true;
   const handleNav = (path: string) => {
     const pathString = `/app/${path}`;
@@ -165,12 +167,23 @@ const AppLayout = () => {
                     path="dashboard"
                     Icon={HelpCircle}
                   />
-                  <BottomNavButton
-                    active={page}
-                    handleNav={handleNav}
-                    path="dashboard"
-                    Icon={LogOut}
-                  />
+                  <button
+                    data-tooltip-target="tooltip-home"
+                    type="button"
+                    disabled={navigation.state === "submitting"}
+                    name={"logout"}
+                    onClick={() =>
+                      submit(null, { action: "/logout", method: "POST" })
+                    }
+                    className="inline-flex flex-col items-center justify-center px-4 rounded-l-lg   group"
+                  >
+                    <div
+                      className={` transition-all duration-300 w-12 h-12 sm:w-12 sm:h-12 flex items-center justify-center rounded-full dark:bg-zinc-200 bg-zinc-800 text-zinc-200 dark:text-zinc-800 xl:dark:bg-zinc-800 xl:bg-zinc-200 xl:text-zinc-800 xl:dark:text-zinc-200 `}
+                    >
+                      <LogOut className={"  w-7 h-7  "} />
+                      <span className="sr-only">logout</span>
+                    </div>
+                  </button>
                 </div>
               </div>
             </div>

@@ -16,7 +16,11 @@ export const action: ActionFunction = async ({ request }) => {
   const data = await extractMenu(form);
 
   const user = await getUser(request);
-  const savedMenu = await createMenu(data, user!.id);
+  const savedMenu = await createMenu({
+    menu: data,
+    authorId: user!.id,
+    teamId: undefined,
+  });
   if (savedMenu) {
     return redirect(`/app/menus/${savedMenu.id}`);
   }

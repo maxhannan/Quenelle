@@ -128,7 +128,7 @@ model Menu {
   dishes      Recipe[]
   author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId    String  
-  team  Team[]
+  teams  Team[]
 }
  
 model MenuSection {

@@ -38,6 +38,7 @@ export const loader = async ({ request }: LoaderArgs) => {
     user!.teams.map((t) => t.id)
   );
   return {
+    user,
     recipes,
     categories: recipes ? [...new Set(recipes.map((r) => r.category))] : [],
   };
@@ -46,16 +47,16 @@ export const loader = async ({ request }: LoaderArgs) => {
 export const action: ActionFunction = async ({ request, params }) => {
   const recipeId = params.id;
   const form = await request.formData();
-
+  const userId = (await form.get("userId")) as string;
   const newRecipe = extractRecipe(form);
-  const savedRecipe = await updateRecipe(recipeId!, newRecipe);
-  console.log({ savedRecipe });
+  console.log({ userId });
+  const savedRecipe = await updateRecipe(recipeId!, newRecipe, userId);
   return recipeId;
 };
 
 const EditRecipeRoute: FC = () => {
   const { recipe } = useRecipe();
-  const { recipes, categories } = useLoaderData<typeof loader>();
+  const { user, recipes, categories } = useLoaderData<typeof loader>();
 
   const navigate = useNavigate();
   const revalidator = useRevalidator();
@@ -92,6 +93,7 @@ const EditRecipeRoute: FC = () => {
     }
     if (formRef.current) {
       const formData = new FormData(formRef.current);
+
       const Images = formData.getAll("uploadedImage") as File[];
       console.log({ Images });
       if (Images.length > 0 && Images[0].size > 0) {
@@ -103,6 +105,7 @@ const EditRecipeRoute: FC = () => {
       } else {
         formData.set("imageLinks", JSON.stringify(imageList));
       }
+      formData.set("userId", user!.id);
       setImageLoading(false);
       submit(formData, { method: "post" });
     }

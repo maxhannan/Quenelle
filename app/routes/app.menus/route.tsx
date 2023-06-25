@@ -20,6 +20,7 @@ import { getDishes } from "~/utils/dishes.server";
 
 import DishesPages from "./components/DishesPages";
 import MenuSearch from "../app.menus._index/Components/MenuSearch";
+import { getUser } from "~/utils/auth.server";
 
 function filterDishes(
   dishes: Awaited<ReturnType<typeof getDishes>>,
@@ -44,10 +45,10 @@ function filterDishes(
 export async function loader({ request }: LoaderArgs) {
   const url = new URL(request.url);
   const params = new URLSearchParams(url.search);
-
+  const user = await getUser(request);
   const search = params.get("search");
-  let menus = await getMenus();
-  const dishList = await getDishes();
+  let menus = await getMenus(user!.teams.map((t) => t.id));
+  const dishList = await getDishes(user!.teams.map((t) => t.id));
 
   const allergies = params.get("allergies")?.split(",");
   let dishes = filterDishes(dishList, search, allergies);

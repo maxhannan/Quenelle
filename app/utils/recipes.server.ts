@@ -155,6 +155,7 @@ export const createRecipe = async (
       },
     },
   });
+  if (!user) return null;
   const newRecipe = await prisma.recipe.create({
     data: {
       name,
@@ -163,12 +164,13 @@ export const createRecipe = async (
       allergens,
       yieldUnit,
       yieldAmt,
-
       steps,
       ingredients: {
         create: [...ingredients],
       },
-
+      teams: {
+        connect: teamId ? [{ id: teamId }] : user.teams,
+      },
       author: { connect: { id: userId } },
     },
     include: {
@@ -183,31 +185,7 @@ export const createRecipe = async (
       teams: true,
     },
   });
-  if (!teamId && user) {
-    await prisma.recipe.update({
-      where: {
-        id: newRecipe.id,
-      },
-      data: {
-        teams: {
-          connect: user.teams.map((t) => ({ id: t.id })),
-        },
-      },
-    });
-  } else {
-    await prisma.recipe.update({
-      where: {
-        id: newRecipe.id,
-      },
-      data: {
-        teams: {
-          connect: {
-            id: teamId,
-          },
-        },
-      },
-    });
-  }
+
   const author = newRecipe.author;
   console.log({ teams: newRecipe.teams });
   await prisma.feedMessage.create({
@@ -219,9 +197,7 @@ export const createRecipe = async (
         },
       },
       teams: {
-        connect: teamId
-          ? [{ id: teamId }]
-          : user?.teams.map((t) => ({ id: t.id })),
+        connect: teamId ? [{ id: teamId }] : user.teams,
       },
       linkRecipe: {
         connect: {
@@ -250,6 +226,17 @@ export async function updateRecipe(
   } = recipe;
   console.log({ userId });
   try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+      },
+    });
+    if (!user) return null;
     const data = await prisma.$transaction([
       prisma.ingredient.deleteMany({ where: { recipeId: id } }),
       prisma.recipe.update({
@@ -273,13 +260,13 @@ export async function updateRecipe(
         },
       }),
     ]);
-    const { author } = data[1];
+
     await prisma.feedMessage.create({
       data: {
-        content: `${author.firstName} ${author.lastName} updated the recipe ${data[1].name}`,
+        content: `${user.firstName} ${user.lastName} updated the recipe ${data[1].name}`,
         author: {
           connect: {
-            id: author.id,
+            id: userId,
           },
         },
         teams: {
@@ -316,7 +303,9 @@ export const deleteRecipe = async (id: string) => {
     });
     await prisma.feedMessage.create({
       data: {
-        content: `${data.author.firstName} ${data.author.lastName} deleted the recipe ${data.name}`,
+        content: `${data.author.firstName} ${
+          data.author.lastName
+        } deleted the ${data.dish ? "dish" : "recipe"} ${data.name}`,
         author: {
           connect: {
             id: data.author.id,

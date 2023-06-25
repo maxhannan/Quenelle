@@ -10,7 +10,6 @@ import {
   useLocation,
   useNavigate,
   useNavigation,
-  useRevalidator,
   useSubmit,
 } from "@remix-run/react";
 import { uploadImage } from "~/utils/images";
@@ -23,16 +22,22 @@ import {
 import IconButton from "~/components/buttons/IconButton";
 import AppBar from "~/components/navigation/AppBar";
 import DishForm from "~/components/forms/DishForm";
-import type { ActionFunction } from "@remix-run/node";
+import type { ActionFunction, LoaderArgs } from "@remix-run/node";
 import { extractDish, updateDish } from "~/utils/dishes.server";
 import { useToast } from "~/components/ui/use-toast";
+import { getUser } from "~/utils/auth.server";
 
-export async function loader() {
-  const recipes = await getRecipes();
+export async function loader({ request }: LoaderArgs) {
+  const user = await getUser(request);
+  const recipes = await getRecipes(
+    false,
+    user!.teams.map((t) => t.id)
+  );
 
   return {
     recipes,
     categories: recipes ? [...new Set(recipes.map((r) => r.category))] : [],
+    user,
   };
 }
 
@@ -40,9 +45,9 @@ export const action: ActionFunction = async ({ request, params }) => {
   const dishId = params.id;
   if (!dishId) return undefined;
   const form = await request.formData();
-
+  const userId = form.get("userId") as string;
   const newRecipe = extractDish(form);
-  const savedDish = await updateDish(dishId, newRecipe);
+  const savedDish = await updateDish(dishId, newRecipe, userId);
   console.log({ savedDish });
   if (savedDish) {
     return savedDish.id;
@@ -51,7 +56,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 function EditDishRoute() {
   const dish = useDish();
-  const { recipes, categories } = useLoaderData<typeof loader>();
+  const { recipes, categories, user } = useLoaderData<typeof loader>();
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
@@ -74,6 +79,7 @@ function EditDishRoute() {
   const handleDeleteDish = async () => {
     const data = new FormData();
     data.set("id", dish!.id);
+    data.set("dish", "true");
     submit(data, { method: "delete", action: "/app/recipes/deleterecipe" });
   };
 
@@ -99,6 +105,7 @@ function EditDishRoute() {
         formData.set("imageLinks", JSON.stringify(imageList));
       }
       setImageLoading(false);
+      formData.set("userId", user!.id);
       submit(formData, { method: "post" });
     }
   };

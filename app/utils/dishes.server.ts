@@ -1,10 +1,20 @@
 import { prisma } from "./prisma.server";
 
-export const getDishes = async () => {
+export const getDishes = async (teamid: string[]) => {
   try {
     const dishes = await prisma.recipe.findMany({
+      orderBy: {
+        name: "asc",
+      },
       where: {
         dish: true,
+        teams: {
+          some: {
+            id: {
+              in: teamid,
+            },
+          },
+        },
       },
       select: {
         section: {
@@ -120,9 +130,26 @@ export const extractDish = (form: FormData) => {
   };
 };
 
-export const createDish = async (dish: ExtractedDish, userid: string) => {
+export const createDish = async (
+  dish: ExtractedDish,
+  userid: string,
+  teamId: string | undefined
+) => {
   const { name, allergens, ingredients, steps, savedImages } = dish;
   try {
+    const user = await prisma.user.findUnique({
+      where: { id: userid },
+      select: {
+        firstName: true,
+        lastName: true,
+        teams: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (!user) return null;
     const savedDish = await prisma.recipe.create({
       data: {
         name,
@@ -136,8 +163,31 @@ export const createDish = async (dish: ExtractedDish, userid: string) => {
         ingredients: {
           create: [...ingredients],
         },
-
+        teams: {
+          connect: teamId ? [{ id: teamId }] : user.teams,
+        },
         author: { connect: { id: userid } },
+      },
+      include: {
+        teams: {
+          select: {
+            id: true,
+          },
+        },
+        author: {
+          select: {
+            firstName: true,
+            lastName: true,
+          },
+        },
+      },
+    });
+    await prisma.feedMessage.create({
+      data: {
+        content: `${savedDish.author.firstName} ${savedDish.author.lastName} created the dish ${savedDish.name}`,
+        author: { connect: { id: userid } },
+        teams: { connect: savedDish.teams.map((t: any) => ({ id: t.id })) },
+        linkRecipe: { connect: { id: savedDish.id } },
       },
     });
     return savedDish;
@@ -146,9 +196,18 @@ export const createDish = async (dish: ExtractedDish, userid: string) => {
   }
 };
 
-export const updateDish = async (id: string, dish: ExtractedDish) => {
+export const updateDish = async (
+  id: string,
+  dish: ExtractedDish,
+  userId: string
+) => {
   const { name, allergens, ingredients, steps, savedImages } = dish;
   try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { firstName: true, lastName: true },
+    });
+    if (!user) return null;
     const data = await prisma.$transaction([
       prisma.ingredient.deleteMany({ where: { recipeId: id } }),
       prisma.recipe.update({
@@ -166,10 +225,23 @@ export const updateDish = async (id: string, dish: ExtractedDish) => {
         include: {
           ingredients: true,
           author: true,
+          teams: {
+            select: {
+              id: true,
+            },
+          },
         },
       }),
     ]);
 
+    await prisma.feedMessage.create({
+      data: {
+        content: `${user.firstName} ${user.lastName} updated the dish ${data[1].name}`,
+        author: { connect: { id: userId } },
+        teams: { connect: data[1].teams.map((t: any) => ({ id: t.id })) },
+        linkRecipe: { connect: { id: id } },
+      },
+    });
     return data[1];
   } catch (error) {
     return null;

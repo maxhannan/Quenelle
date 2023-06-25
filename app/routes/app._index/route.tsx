@@ -1,6 +1,7 @@
 import { SunIcon } from "@heroicons/react/24/outline";
 import type { LoaderArgs } from "@remix-run/node";
 import { useLoaderData, useNavigation } from "@remix-run/react";
+import { formatDistance } from "date-fns";
 import { BadgePlusIcon, DeleteIcon, FileEdit } from "lucide-react";
 
 import Spinner from "~/components/LoadingSpinner";
@@ -13,7 +14,6 @@ import { prisma } from "~/utils/prisma.server";
 import { colorVariants } from "~/utils/staticLists";
 
 export const loader = async ({ request }: LoaderArgs) => {
-  console.log("hello");
   const user = await getUser(request);
   const feedMessages = await prisma.feedMessage.findMany({
     where: {
@@ -34,6 +34,14 @@ export const loader = async ({ request }: LoaderArgs) => {
     include: {
       linkRecipe: {
         include: {
+          _count: {
+            select: {
+              ingredients: true,
+              linkedIngredients: true,
+              menu: true,
+              section: true,
+            },
+          },
           author: {
             select: {
               id: true,
@@ -43,7 +51,22 @@ export const loader = async ({ request }: LoaderArgs) => {
           },
         },
       },
-      linkMenu: true,
+      linkMenu: {
+        include: {
+          author: {
+            select: {
+              firstName: true,
+              lastName: true,
+            },
+          },
+          _count: {
+            select: {
+              sections: true,
+              dishes: true,
+            },
+          },
+        },
+      },
       author: {
         select: {
           id: true,
@@ -124,8 +147,16 @@ function HomeRoute() {
             </div>
             {m.linkRecipe && (
               <RecipeCard
-                to={`/app/recipes/${m.linkRecipe.id}`}
-                subHeading={m.linkRecipe.category}
+                to={`/app/${m.linkRecipe.dish ? "menus/dishes/" : "recipes/"}${
+                  m.linkRecipe.id
+                }`}
+                subHeading={
+                  m.linkRecipe.dish
+                    ? `${m.linkRecipe._count.ingredients} Component${
+                        m.linkRecipe._count.ingredients !== 1 ? "s" : ""
+                      } `
+                    : m.linkRecipe.category
+                }
                 user={(
                   m.linkRecipe.author.firstName[0] +
                   m.linkRecipe.author.lastName[0]
@@ -133,6 +164,23 @@ function HomeRoute() {
                 name={m.linkRecipe.name}
               />
             )}
+            {m.linkMenu && (
+              <RecipeCard
+                to={`/app/menus/${m.linkMenu.id}`}
+                subHeading={`${m.linkMenu._count.dishes} Dish${
+                  m.linkMenu._count.dishes !== 1 ? "es" : ""
+                }`}
+                user={(
+                  m.linkMenu.author.firstName[0] + m.linkMenu.author.lastName[0]
+                ).toLowerCase()}
+                name={m.linkMenu.name}
+              />
+            )}
+            <div className="w-full flex justify-end">
+              <span className="text-xs text-gray-500 dark:text-gray-400">
+                {formatDistance(new Date(m.createdAt), new Date()) + " ago"}
+              </span>
+            </div>
           </div>
         ))}
       </div>

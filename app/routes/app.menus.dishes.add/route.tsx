@@ -1,5 +1,5 @@
 import { CheckCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import type { ActionFunction } from "@remix-run/node";
+import type { ActionFunction, LoaderArgs } from "@remix-run/node";
 import {
   Form,
   useActionData,
@@ -20,8 +20,12 @@ import { createDish, extractDish } from "~/utils/dishes.server";
 import { uploadImage } from "~/utils/images";
 import { getRecipes } from "~/utils/recipes.server";
 
-export async function loader() {
-  const recipes = await getRecipes();
+export async function loader({ request }: LoaderArgs) {
+  const user = await getUser(request);
+  const recipes = await getRecipes(
+    false,
+    user!.teams.map((t) => t.id)
+  );
 
   return {
     recipes,
@@ -36,7 +40,7 @@ export const action: ActionFunction = async ({ request }) => {
   const extractedDish = await extractDish(form);
 
   if (user) {
-    const savedDish = await createDish(extractedDish, user.id);
+    const savedDish = await createDish(extractedDish, user.id, undefined);
     if (savedDish) {
       return savedDish.id;
     } else return undefined;

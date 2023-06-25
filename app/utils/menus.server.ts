@@ -34,19 +34,44 @@ export const deleteMenu = async (id: string) => {
 export const updateMenu = async (
   id: string,
   menu: menuForm,
-  authorId: string
+  authorId: string,
+  teamId: string | undefined
 ) => {
   const dishes = menu.dishes;
   const dishIds = dishes.map((d) => ({ id: d.id }));
   try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: authorId,
+      },
+      select: {
+        firstName: true,
+        lastName: true,
+
+        teams: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (!user) return null;
     const data = await prisma.$transaction([
       prisma.menu.delete({
         where: {
           id: id,
         },
+        include: {
+          feedMessages: {
+            select: {
+              id: true,
+            },
+          },
+        },
       }),
       prisma.menu.create({
         data: {
+          id: id,
           name: menu.name,
           service: menu.service,
           author: {
@@ -59,11 +84,19 @@ export const updateMenu = async (
               data: menu.sections,
             },
           },
+          teams: {
+            connect: teamId ? [{ id: teamId }] : user.teams,
+          },
           dishes: {
             connect: dishIds,
           },
         },
         include: {
+          teams: {
+            select: {
+              id: true,
+            },
+          },
           sections: {
             select: {
               id: true,
@@ -73,6 +106,22 @@ export const updateMenu = async (
         },
       }),
     ]);
+    await prisma.$transaction(
+      data[0].feedMessages.map((m) =>
+        prisma.feedMessage.update({
+          where: {
+            id: m.id,
+          },
+          data: {
+            linkMenu: {
+              connect: {
+                id: data[1].id,
+              },
+            },
+          },
+        })
+      )
+    );
     if (data[1]) {
       await prisma.$transaction(
         dishes.map((dish) =>
@@ -89,17 +138,44 @@ export const updateMenu = async (
         )
       );
     }
+    await prisma.feedMessage.create({
+      data: {
+        content: `${user.firstName} ${user.lastName} updated the menu ${data[1].name}`,
+        author: {
+          connect: {
+            id: authorId,
+          },
+        },
+        teams: {
+          connect: data[1].teams,
+        },
+        linkMenu: {
+          connect: {
+            id: data[1].id,
+          },
+        },
+      },
+    });
     return data[1];
   } catch (error) {
     return null;
   }
 };
 
-export const getMenus = async () => {
+export const getMenus = async (teamid: string[]) => {
   try {
     const menus = await prisma.menu.findMany({
       orderBy: {
         name: "asc",
+      },
+      where: {
+        teams: {
+          some: {
+            id: {
+              in: teamid,
+            },
+          },
+        },
       },
       select: {
         _count: {
@@ -304,12 +380,36 @@ export const getSectionbyId = async (id: string) => {
 
 export type FullSection = Prisma.PromiseReturnType<typeof getSectionbyId>;
 
+type CreateMenuArgs = {
+  menu: menuForm;
+  authorId: string;
+  teamId: string | undefined;
+};
 type menuForm = ReturnType<typeof extractMenu>;
-export const createMenu = async (menu: menuForm, authorId: string) => {
+export const createMenu = async ({
+  menu,
+  authorId,
+  teamId,
+}: CreateMenuArgs) => {
   try {
     console.log("dishes", menu.dishes);
     const dishes = menu.dishes;
     const dishIds = dishes.map((d) => ({ id: d.id }));
+    const user = await prisma.user.findUnique({
+      where: {
+        id: authorId,
+      },
+      select: {
+        firstName: true,
+        lastName: true,
+        teams: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (!user) return null;
     const savedMenu = await prisma.menu.create({
       data: {
         name: menu.name,
@@ -318,6 +418,9 @@ export const createMenu = async (menu: menuForm, authorId: string) => {
           connect: {
             id: authorId,
           },
+        },
+        teams: {
+          connect: teamId ? [{ id: teamId }] : user.teams,
         },
         sections: {
           createMany: {
@@ -329,6 +432,11 @@ export const createMenu = async (menu: menuForm, authorId: string) => {
         },
       },
       include: {
+        teams: {
+          select: {
+            id: true,
+          },
+        },
         sections: {
           select: {
             id: true,
@@ -337,8 +445,7 @@ export const createMenu = async (menu: menuForm, authorId: string) => {
         },
       },
     });
-    console.log(dishes);
-    console.log("sections", savedMenu.sections, menu.sections);
+
     await prisma.$transaction(
       dishes.map((dish) =>
         prisma.recipe.update({
@@ -353,6 +460,24 @@ export const createMenu = async (menu: menuForm, authorId: string) => {
         })
       )
     );
+    await prisma.feedMessage.create({
+      data: {
+        content: `${user.firstName} ${user.lastName} created a new menu: ${savedMenu.name}`,
+        teams: {
+          connect: savedMenu.teams,
+        },
+        author: {
+          connect: {
+            id: authorId,
+          },
+        },
+        linkMenu: {
+          connect: {
+            id: savedMenu.id,
+          },
+        },
+      },
+    });
     console.log(savedMenu);
     return savedMenu;
   } catch (error) {

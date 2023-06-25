@@ -3,10 +3,13 @@ import { getDishes } from "~/utils/dishes.server";
 import { Outlet, useLoaderData, useOutletContext } from "@remix-run/react";
 import { getMenus } from "~/utils/menus.server";
 import { serviceList } from "~/utils/staticLists";
+import { LoaderArgs } from "@remix-run/node";
+import { getUser } from "~/utils/auth.server";
 
-export async function loader() {
-  const dishes = await getDishes();
-  const menus = await getMenus();
+export async function loader({ request }: LoaderArgs) {
+  const user = await getUser(request);
+  const dishes = await getDishes(user!.teams.map((t) => t.id));
+  const menus = await getMenus(user!.teams.map((t) => t.id));
   const services = menus
     ? [...new Set([...menus.map((m) => m.service), ...serviceList])]
     : [];
