@@ -59,6 +59,8 @@ const IngredientAdder: FC<Props> = ({ handleDelete, ingredient, recipes }) => {
           placeholder="Amt"
           name="ingredientAmt"
           type="number"
+          inputMode="numeric"
+          pattern="[0-9]*"
           required={false}
           initValue={ingredient.qty}
         />
