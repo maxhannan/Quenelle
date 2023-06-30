@@ -202,6 +202,7 @@ export const getMenus = async (teamid: string[]) => {
           select: {
             firstName: true,
             lastName: true,
+            colorVariant: true,
           },
         },
         createdAt: true,
@@ -273,6 +274,7 @@ export const getMenuById = async (id: string) => {
                   select: {
                     firstName: true,
                     lastName: true,
+                    colorVariant: true,
                   },
                 },
               },
@@ -283,6 +285,7 @@ export const getMenuById = async (id: string) => {
           select: {
             firstName: true,
             lastName: true,
+            colorVariant: true,
           },
         },
 
@@ -310,6 +313,7 @@ export const getMenuById = async (id: string) => {
               select: {
                 firstName: true,
                 lastName: true,
+                colorVariant: true,
               },
             },
           },
@@ -350,6 +354,7 @@ export const getSectionbyId = async (id: string) => {
                   select: {
                     firstName: true,
                     lastName: true,
+                    colorVariant: true,
                   },
                 },
               },
@@ -366,6 +371,7 @@ export const getSectionbyId = async (id: string) => {
               select: {
                 firstName: true,
                 lastName: true,
+                colorVariant: true,
               },
             },
           },

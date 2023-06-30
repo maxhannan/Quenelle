@@ -4,6 +4,7 @@ import Spinner from "~/components/LoadingSpinner";
 
 import type { getDishes } from "~/utils/dishes.server";
 import ListCard from "~/components/display/ListCard";
+import RecipeCard from "~/components/display/RecipesCard";
 interface Props {
   dishes: Awaited<ReturnType<typeof getDishes>>;
   pageChangeLoading: boolean;
@@ -32,12 +33,13 @@ const DishesPages: FC<Props> = ({ dishes, pageChangeLoading }) => {
                   onClick={() => setActiveId(d.id)}
                   className="flex w-full"
                 >
-                  <ListCard
+                  <RecipeCard
                     subHeading={`${d._count.ingredients} Component${
                       d._count.ingredients !== 1 ? "s" : ""
                     } `}
                     to={`/app/menus/dishes/${d.id + location.search} `}
                     key={d.id}
+                    colorVariant={d.author.colorVariant}
                     active={d.id === activeId}
                     name={d.name}
                     user={d.author!.firstName[0] + d.author!.lastName[0]}

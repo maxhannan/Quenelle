@@ -13,6 +13,7 @@ import ListCard from "~/components/display/ListCard";
 import type { getPrepLists } from "~/utils/prepList.server";
 import PrepCalendar from "./PrepCalendar";
 import IconButton from "~/components/buttons/IconButton";
+import RecipeCard from "~/components/display/RecipesCard";
 interface Props {
   date: Date | undefined;
   handleDateChange: (date: Date) => void;
@@ -101,11 +102,12 @@ const PrepPage: FC<Props> = ({
                     {prepListsToday && prepListsToday.length > 0 ? (
                       prepListsToday.map((pl) => (
                         <div key={pl.id} onClick={() => setActiveId(pl.id)}>
-                          <ListCard
+                          <RecipeCard
                             key={pl.id}
                             to={pl.id}
                             active={activeId === pl.id}
                             name={pl.name}
+                            colorVariant={pl.author.colorVariant}
                             subHeading={`Created: ${format(
                               new Date(pl.createdAt),
                               "PP"

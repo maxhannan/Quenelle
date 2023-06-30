@@ -12,7 +12,7 @@ import {
   UserPlus,
   Users,
 } from "lucide-react";
-import { useNavigate, useSubmit } from "@remix-run/react";
+import { useMatches, useNavigate, useSubmit } from "@remix-run/react";
 
 import {
   DropdownMenu,
@@ -29,6 +29,8 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { colorVariants } from "~/utils/staticLists";
+import { useRouteData } from "~/hooks/useRouteData";
+import { getUser } from "~/utils/auth.server";
 
 interface Props {
   page: string;
@@ -44,6 +46,8 @@ const NewAppBar: FC<Props> = ({
   children,
 }: Props) => {
   const submit = useSubmit();
+  const user = useRouteData<Awaited<ReturnType<typeof getUser>>>("routes/app");
+  console.log({ user });
   const navigate = useNavigate();
   return (
     <>
@@ -54,9 +58,11 @@ const NewAppBar: FC<Props> = ({
           } mx-auto  max-h-full items-center justify-between   duration-300 gap-2   w-full top-0 left-0 `}
         >
           <DropdownMenu>
-            <DropdownMenuTrigger asChild className="lg:hidden">
+            <DropdownMenuTrigger asChild className="xl:hidden">
               <button
-                className={`data-[state=open]:bg-indigo-500 data-[state=open]:border-indigo-500 trasition-all duration-300 inline-flex group-hover:bg-indigo-500  ${colorVariants[1]} group-hover:text-zinc-200  child flex-shrink-0 items-center  justify-center h-10 w-10 overflow-hidden group-hover:border-indigo-500 border-zinc-400 rounded-xl  border dark:border-zinc-700`}
+                className={`data-[state=open]:bg-indigo-500 data-[state=open]:text-zinc-200 data-[state=open]:border-indigo-500 transition-all duration-300 inline-flex group-hover:bg-indigo-500  ${
+                  colorVariants[user!.colorVariant]
+                } group-hover:text-zinc-200  child flex-shrink-0 items-center  justify-center h-10 w-10 overflow-hidden group-hover:border-indigo-500 border-zinc-400 rounded-full    `}
               >
                 mh
               </button>

@@ -3,6 +3,7 @@ import { useEffect, useState, type FC } from "react";
 import Spinner from "~/components/LoadingSpinner";
 
 import FadeIn from "~/components/animations/FadeIn";
+import RecipeCard from "~/components/display/RecipesCard";
 import ListCard from "~/components/display/ListCard";
 import type { getMenus } from "~/utils/menus.server";
 
@@ -39,13 +40,14 @@ const MenuPages: FC<Props> = ({ menus, pageChangeLoading }) => {
                     onClick={() => setActiveId(m.id)}
                     className="flex w-full"
                   >
-                    <ListCard
+                    <RecipeCard
                       subHeading={`${m._count.dishes} Dish${
                         m._count.dishes !== 1 ? "es" : ""
                       } `}
                       to={`/app/menus/${m.id}`}
                       active={m.id === activeId}
                       key={m.id}
+                      colorVariant={m.author.colorVariant}
                       name={m.name}
                       user={m.author!.firstName[0] + m.author!.lastName[0]}
                     />

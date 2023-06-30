@@ -395,6 +395,7 @@ export async function getPrepLists(teamid: string[]) {
             firstName: true,
             lastName: true,
             id: true,
+            colorVariant: true,
           },
         },
         taskGroups: {

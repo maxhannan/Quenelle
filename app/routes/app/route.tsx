@@ -111,6 +111,7 @@ const AppLayout = () => {
                   handleNav={handleNav}
                   path="prep"
                   tooltip
+                  colorVariant={1}
                   tooltipText="Prep"
                   Icon={ClipboardCheckIcon}
                 />
@@ -119,6 +120,7 @@ const AppLayout = () => {
                   handleNav={handleNav}
                   path="recipes"
                   tooltip
+                  colorVariant={3}
                   tooltipText="Recipes"
                   Icon={FolderIcon}
                 />
@@ -127,6 +129,7 @@ const AppLayout = () => {
                   active={page}
                   handleNav={handleNav}
                   path=""
+                  colorVariant={5}
                   tooltip
                   tooltipText="Feed"
                   Icon={Newspaper}
@@ -135,6 +138,7 @@ const AppLayout = () => {
                   active={page}
                   handleNav={handleNav}
                   path="menus"
+                  colorVariant={2}
                   tooltip
                   tooltipText="Menus & Dishes"
                   Icon={List}
@@ -143,6 +147,7 @@ const AppLayout = () => {
                 <BottomNavButton
                   active={page}
                   handleNav={handleNav}
+                  colorVariant={11}
                   path="chat"
                   tooltip
                   tooltipText="Team Messages"
@@ -155,12 +160,14 @@ const AppLayout = () => {
                     active={page}
                     handleNav={handleNav}
                     tooltip
+                    colorVariant={12}
                     tooltipText="Settings"
                     path="dashboard"
                     Icon={Settings}
                   />
                   <BottomNavButton
                     active={page}
+                    colorVariant={13}
                     handleNav={handleNav}
                     tooltip
                     tooltipText="Team Members"
@@ -169,6 +176,7 @@ const AppLayout = () => {
                   />
                   <BottomNavButton
                     active={page}
+                    colorVariant={14}
                     handleNav={handleNav}
                     tooltip
                     tooltipText="Billing"
@@ -183,6 +191,7 @@ const AppLayout = () => {
                     tooltip
                     tooltipText="Help"
                     handleNav={handleNav}
+                    colorVariant={9}
                     path="dashboard"
                     Icon={HelpCircle}
                   />

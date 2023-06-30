@@ -31,6 +31,7 @@ const BottomNav = ({ page, setPage }: Props) => {
           handleNav={handleNav}
           path="prep"
           tooltipPosition="top"
+          colorVariant={1}
           Icon={ClipboardCheckIcon}
         />
         <BottomNavButton
@@ -38,6 +39,7 @@ const BottomNav = ({ page, setPage }: Props) => {
           handleNav={handleNav}
           path="recipes"
           tooltipPosition="top"
+          colorVariant={3}
           Icon={FolderIcon}
         />
 
@@ -46,6 +48,7 @@ const BottomNav = ({ page, setPage }: Props) => {
           handleNav={handleNav}
           path=""
           tooltipPosition="top"
+          colorVariant={5}
           Icon={NewspaperIcon}
         />
         <BottomNavButton
@@ -53,6 +56,7 @@ const BottomNav = ({ page, setPage }: Props) => {
           handleNav={handleNav}
           path="menus"
           tooltipPosition="top"
+          colorVariant={2}
           Icon={QueueListIcon}
         />
 
@@ -60,6 +64,7 @@ const BottomNav = ({ page, setPage }: Props) => {
           active={page}
           handleNav={handleNav}
           path="chat"
+          colorVariant={11}
           Icon={StickyNote}
         />
       </div>

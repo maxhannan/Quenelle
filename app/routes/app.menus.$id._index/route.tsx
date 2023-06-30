@@ -13,6 +13,7 @@ import ListCard from "~/components/display/ListCard";
 import MultiSelect from "~/components/formInputs/MultiSelect";
 import { allergens } from "~/utils/staticLists";
 import SlideUpTransition from "~/components/animations/SlideUp";
+import RecipeCard from "~/components/display/RecipesCard";
 
 function MenuIndex() {
   const menu = useMenu();
@@ -99,8 +100,9 @@ function MenuIndex() {
                       <div>{s.name}</div>
                     </div>
                     {s.dishes.map((d) => (
-                      <ListCard
+                      <RecipeCard
                         name={d.name}
+                        colorVariant={d.author.colorVariant}
                         key={d.id}
                         to={`/app/menus/dishes/${d.id}`}
                         subHeading={`${d._count.ingredients} Component${
@@ -127,10 +129,11 @@ function MenuIndex() {
                       <div>{s.name}</div>
                     </div>
                     {s.dishes.map((d) => (
-                      <ListCard
+                      <RecipeCard
                         name={d.name}
                         key={d.id}
                         to={`/app/menus/dishes/${d.id}`}
+                        colorVariant={d.author.colorVariant}
                         subHeading={`${d._count.ingredients} Component${
                           d._count.ingredients !== 1 ? "s" : ""
                         } `}

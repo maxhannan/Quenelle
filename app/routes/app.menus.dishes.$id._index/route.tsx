@@ -21,6 +21,8 @@ import Spinner from "~/components/LoadingSpinner";
 import Chip from "~/components/display/Chip";
 import ListCard from "~/components/display/ListCard";
 import SlideUpTransition from "~/components/animations/SlideUp";
+import RecipeCard from "~/components/display/RecipesCard";
+import { colorVariants } from "~/utils/staticLists";
 
 function DishIndex() {
   const dish = useDish();
@@ -89,9 +91,10 @@ function DishIndex() {
             {dish.ingredients.map((i) => {
               if (i.linkId && i.linkRecipe) {
                 return (
-                  <ListCard
+                  <RecipeCard
                     subHeading={i.qty + " " + i.unit}
                     name={i.linkRecipe.name}
+                    colorVariant={i.linkRecipe.author.colorVariant}
                     user={
                       i.linkRecipe.author!.firstName[0].toLowerCase() +
                       i.linkRecipe.author!.lastName[0].toLowerCase()
@@ -104,8 +107,16 @@ function DishIndex() {
                 return (
                   <div
                     key={i.id}
-                    className="  w-full max-h-full border-zinc-200 border bg-opacity-30 dark:bg-opacity-30 bg-zinc-200 dark:bg-zinc-800   rounded-xl  pl-4 pr-2 font-light py-3  flex justify-start items-center  px-2  dark:border-zinc-800"
+                    className="  w-full max-h-full border-zinc-200 border bg-opacity-30 dark:bg-opacity-30 bg-zinc-200 dark:bg-zinc-800   rounded-xl  pl-2 pr-2 font-light py-3  flex justify-start items-center  px-2  dark:border-zinc-800"
                   >
+                    <div
+                      className={`${colorVariants[6]}  text-zinc-700 dark:text-zinc-700 
+         trasition-all duration-300 inline-flex group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center mr-4 justify-center w-14 h-14 overflow-hidden group-hover:border-indigo-500 border-zinc-500 rounded-full   dark:border-zinc-700`}
+                    >
+                      <span className=" text-2xl lg:text-2xl ">
+                        <PuzzlePieceIcon className="w-6 h-6 text-zinc-800" />
+                      </span>
+                    </div>
                     <div className=" ">
                       <h5 className="text-xl lg:text-2xl text-zinc-700 dark:text-zinc-100">
                         {i.ingredient}
@@ -115,9 +126,6 @@ function DishIndex() {
                           {i.qty && i.qty} {i.unit && i.unit}
                         </h6>
                       )}
-                    </div>
-                    <div className=" ml-auto ">
-                      <PuzzlePieceIcon className="text-zinc-800 dark:text-zinc-200 w-5 h-5" />
                     </div>
                   </div>
                 );

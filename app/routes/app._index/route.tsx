@@ -114,11 +114,8 @@ function HomeRoute() {
   if (!user) return null;
   return (
     <div className=" container mx-auto max-w-4xl   flex flex-col  mb-28">
-      <NewAppBar page="" bottomPadding="0"></NewAppBar>
+      <NewAppBar page={`Hi ${user.firstName}!`} bottomPadding="2"></NewAppBar>
       <div className="mb-4">
-        <div className="text-[3rem] md:text-4xl   items-center  w-full    dark:text-neutral-200  font-bold text-neutral-600 rounded-2xl  ">
-          <h1>Hi {user.firstName}!</h1>
-        </div>
         {assignedListsToday.length > 0 && (
           <div className="w-full flex flex-col gap-2 ">
             <div className="text-lg text-indigo-500 font-semibold ">

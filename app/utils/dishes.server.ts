@@ -34,6 +34,7 @@ export const getDishes = async (teamid: string[]) => {
           select: {
             firstName: true,
             lastName: true,
+            colorVariant: true,
           },
         },
         id: true,
@@ -87,6 +88,7 @@ export const getDishById = async (id: string) => {
                   select: {
                     firstName: true,
                     lastName: true,
+                    colorVariant: true,
                   },
                 },
               },

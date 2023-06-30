@@ -6,6 +6,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/Tooltip";
+import { colorVariants } from "~/utils/staticLists";
 
 interface Props {
   handleNav: (path: string) => void;
@@ -15,6 +16,7 @@ interface Props {
   tooltip?: boolean;
   tooltipText?: string;
   tooltipPosition?: "top" | "right";
+  colorVariant?: number;
 }
 
 const BottomNavButton = ({
@@ -25,6 +27,7 @@ const BottomNavButton = ({
   tooltip = false,
   tooltipText,
   tooltipPosition = "right",
+  colorVariant = 0,
 }: Props) => {
   const navigation = useNavigation();
   if (!tooltip) {
@@ -40,7 +43,7 @@ const BottomNavButton = ({
         <div
           className={` transition-all duration-300 w-12 h-12 sm:w-12 sm:h-12 flex items-center justify-center rounded-full ${
             active === path
-              ? "dark:bg-zinc-800 bg-zinc-300 text-zinc-800 dark:text-zinc-200   xl:bg-zinc-800 xl:dark:bg-zinc-300 xl:dark:text-zinc-800 xl:text-zinc-200  "
+              ? `${colorVariants[colorVariant]} text-zinc-800 xl:text-zinc-800    xl:bg-zinc-800    `
               : "dark:bg-zinc-200 bg-zinc-800 text-zinc-200 dark:text-zinc-800 xl:dark:bg-zinc-800 xl:bg-zinc-200 xl:text-zinc-800 xl:dark:text-zinc-200 "
           } `}
         >
@@ -71,7 +74,7 @@ const BottomNavButton = ({
             <div
               className={` transition-all duration-300 w-12 h-12 sm:w-12 sm:h-12 flex items-center justify-center rounded-full ${
                 active === path
-                  ? "dark:bg-zinc-800 bg-zinc-300 text-zinc-800 dark:text-zinc-200   xl:bg-zinc-800 xl:dark:bg-zinc-300 xl:dark:text-zinc-800 xl:text-zinc-200  "
+                  ? `${colorVariants[colorVariant]} text-zinc-800   `
                   : "dark:bg-zinc-200 bg-zinc-800 text-zinc-200 dark:text-zinc-800 xl:dark:bg-zinc-800 xl:bg-zinc-200 xl:text-zinc-800 xl:dark:text-zinc-200 "
               } `}
             >
