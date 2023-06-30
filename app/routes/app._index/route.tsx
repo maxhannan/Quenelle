@@ -83,7 +83,15 @@ export const loader = async ({ request }: LoaderArgs) => {
       },
     },
   });
-  const assignedListsToday = user!.assignedLists.filter((l) => {
+  const assignedLists = user!.assignedLists;
+
+  return { user, feedMessages, assignedLists };
+};
+
+function HomeRoute() {
+  const { user, feedMessages, assignedLists } = useLoaderData<typeof loader>();
+  console.log({ user, feedMessages });
+  const assignedListsToday = assignedLists.filter((l) => {
     console.log({
       listDate: new Date(l.date),
       today: new Date(Date.now()),
@@ -92,15 +100,6 @@ export const loader = async ({ request }: LoaderArgs) => {
     });
     return isToday(new Date(l.date));
   });
-
-  return { user, feedMessages, assignedListsToday };
-};
-
-function HomeRoute() {
-  const { user, feedMessages, assignedListsToday } =
-    useLoaderData<typeof loader>();
-  console.log({ user, feedMessages });
-
   const navigation = useNavigation();
 
   if (navigation.state === "loading")
