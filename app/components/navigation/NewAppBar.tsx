@@ -64,7 +64,7 @@ const NewAppBar: FC<Props> = ({
                   colorVariants[user!.colorVariant]
                 } group-hover:text-zinc-200  child flex-shrink-0 items-center  justify-center h-10 w-10 overflow-hidden group-hover:border-indigo-500 border-zinc-400 rounded-full    `}
               >
-                mh
+                {(user!.firstName[0] + user!.lastName[0]).toLowerCase()}
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56 ml-2">

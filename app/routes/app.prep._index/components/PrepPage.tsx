@@ -112,7 +112,9 @@ const PrepPage: FC<Props> = ({
                               new Date(pl.createdAt),
                               "PP"
                             )}`}
-                            user="MH"
+                            user={
+                              pl.author.firstName[0] + pl.author.lastName[0]
+                            }
                           />
                         </div>
                       ))

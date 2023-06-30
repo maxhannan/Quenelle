@@ -34,6 +34,7 @@ export async function getMembers(request: Request) {
           firstName: true,
           lastName: true,
           username: true,
+          colorVariant: true,
           role: true,
           teams: {
             select: {
@@ -62,6 +63,7 @@ export async function getMember(id: string) {
       firstName: true,
       lastName: true,
       username: true,
+      colorVariant: true,
       role: true,
       teams: {
         select: {

@@ -19,6 +19,7 @@ import { type DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-men
 import { type getMember } from "~/utils/teams.server";
 
 import { useFetcher } from "@remix-run/react";
+import { colorVariants } from "~/utils/staticLists";
 
 interface Props {
   m: Member;
@@ -67,7 +68,7 @@ const ApprovedCard: FC<Props> = ({ m, teamId }) => {
       <div className="flex justify-between  ">
         <div className="flex gap-2 items-center">
           <Avatar
-            color={"bg-blue-400"}
+            color={colorVariants[m!.colorVariant]}
             content={(firstName[0] + lastName[0]).toLowerCase()}
           />
           <div>

@@ -17,7 +17,7 @@ const LoadingButton = (props: Props) => {
       type={props.type}
       name={props.buttonName}
       onClick={props.action ? props.action : undefined}
-      className="text-zinc-800 hover:text-neutral-200 inline-flex items-center justify-between px-4 w-full dark:text-zinc-50 bg-zinc-200 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40  h-12 text-xl rounded-full  border dark:border-zinc-700 border-zinc-300 transition-all duration-300 hover:bg-indigo-500 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-100"
+      className="text-zinc-800 hover:text-neutral-200 inline-flex items-center justify-between px-3 w-full dark:text-zinc-50 bg-zinc-200 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40  h-10 text-lg rounded-full  border dark:border-zinc-700 border-zinc-300 transition-all duration-300 hover:bg-indigo-500 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-100"
     >
       {props.loading ? (
         <>

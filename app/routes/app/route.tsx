@@ -54,7 +54,7 @@ export async function loader({ request }: LoaderArgs) {
 
 const AppLayout = () => {
   const location = useLocation();
-  const user = useLoaderData();
+  const user = useLoaderData<Awaited<ReturnType<typeof getUser>>>();
   const [page, setPage] = useState(location.pathname.split("/")[2]);
   const navigate = useNavigate();
   const navigation = useNavigation();
@@ -98,13 +98,15 @@ const AppLayout = () => {
                     active
                       ? `${
                           colorVariants[
-                            user.colorVariant ? user.colorVariant : 0
+                            user!.colorVariant ? user!.colorVariant : 0
                           ]
                         } text-zinc-800 `
                       : "dark:bg-zinc-800 bg-zinc-700 text-zinc-200 dark:text-zinc-300 dark:border-zinc-700 border-zinc-500"
                   } trasition-all duration-300 inline-flex group-hover:bg-indigo-500  group-hover:text-zinc-200 items-center  child flex-shrink-0 justify-center w-14 h-14 overflow-hidden group-hover:border-indigo-500  rounded-full   `}
                 >
-                  <span className=" text-lg lg:text-2xl ">mh</span>
+                  <span className=" text-lg lg:text-2xl ">
+                    {(user!.firstName[0] + user!.lastName[0]).toLowerCase()}
+                  </span>
                 </div>
                 <BottomNavButton
                   active={page}
