@@ -188,8 +188,7 @@ model PrepListTemplate {
   authorId    String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  team  Team? @relation(fields: [teamId], references: [id], onDelete: SetNull)
-  teamId String?
+teams  Team[] 
 }
 
 model FeedMessage { 

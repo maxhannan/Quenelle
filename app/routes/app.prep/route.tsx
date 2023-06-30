@@ -30,8 +30,9 @@ import { getUser } from "~/utils/auth.server";
 import PrepPage from "../app.prep._index/components/PrepPage";
 
 export async function loader({ request }: LoaderArgs) {
-  const prepLists = await getPrepLists();
-  const templates = await getTemplates();
+  const user = await getUser(request);
+  const prepLists = await getPrepLists(user!.teams.map((t) => t.id));
+  const templates = await getTemplates(user!.teams.map((t) => t.id));
   return { prepLists, templates };
 }
 export async function action({ request }: ActionArgs) {
@@ -40,7 +41,11 @@ export async function action({ request }: ActionArgs) {
   const user = await getUser(request);
 
   if (user) {
-    const savedList = await createListFromTemplate(form, user.id);
+    const savedList = await createListFromTemplate(
+      form,
+      user.id,
+      user.teams[0].id
+    );
 
     if (savedList) {
       return redirect(savedList.id);
@@ -227,7 +232,7 @@ function PrepListsLayout() {
             />
           </div>
         </div>
-        <div className="w-full xl:h-screen xl:overflow-y-scroll scrollbar-none">
+        <div className="container  mx-auto xl:h-screen xl:overflow-y-scroll scrollbar-none">
           <Outlet
             context={{
               prepLists,

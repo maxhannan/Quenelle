@@ -33,10 +33,10 @@ import { getUser } from "~/utils/auth.server";
 export const loader = async ({ request }: LoaderArgs) => {
   const user = await getUser(request);
 
-  const recipes = await getRecipes(
-    false,
-    user!.teams.map((t) => t.id)
-  );
+  const recipes = await getRecipes({
+    all: true,
+    teamid: user!.teams.map((t) => t.id),
+  });
   return {
     user,
     recipes,
@@ -49,8 +49,8 @@ export const action: ActionFunction = async ({ request, params }) => {
   const form = await request.formData();
   const userId = (await form.get("userId")) as string;
   const newRecipe = extractRecipe(form);
-  console.log({ userId });
-  const savedRecipe = await updateRecipe(recipeId!, newRecipe, userId);
+
+  await updateRecipe(recipeId!, newRecipe, userId);
   return recipeId;
 };
 

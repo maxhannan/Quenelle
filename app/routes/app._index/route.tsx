@@ -1,6 +1,6 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { useLoaderData, useNavigation } from "@remix-run/react";
-import { formatDistance, isToday } from "date-fns";
+import { formatDistance, isSameDay } from "date-fns";
 import { BadgePlusIcon, DeleteIcon, FileEdit } from "lucide-react";
 
 import Spinner from "~/components/LoadingSpinner";
@@ -76,7 +76,7 @@ export const loader = async ({ request }: LoaderArgs) => {
     },
   });
   const assignedListsToday = user!.assignedLists.filter((l) =>
-    isToday(new Date(l.date))
+    isSameDay(new Date(l.date), new Date(Date.now()))
   );
 
   return { user, feedMessages, assignedListsToday };

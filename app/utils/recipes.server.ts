@@ -2,7 +2,11 @@ import type { Prisma } from "@prisma/client";
 import { prisma } from "./prisma.server";
 
 export type FullRecipes = Prisma.PromiseReturnType<typeof getRecipes>;
-export const getRecipes = async (all: boolean = false, teamid: string[]) => {
+type getRecipesArgs = {
+  all: boolean;
+  teamid: string[];
+};
+export const getRecipes = async ({ all, teamid }: getRecipesArgs) => {
   try {
     const recipes = await prisma.recipe.findMany({
       where: {

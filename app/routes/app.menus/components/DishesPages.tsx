@@ -1,5 +1,5 @@
 import { useLocation, useNavigation } from "@remix-run/react";
-import { useState, type FC } from "react";
+import { useState, type FC, useEffect } from "react";
 import Spinner from "~/components/LoadingSpinner";
 
 import type { getDishes } from "~/utils/dishes.server";
@@ -13,6 +13,9 @@ const DishesPages: FC<Props> = ({ dishes, pageChangeLoading }) => {
   const navigation = useNavigation();
   const [activeId, setActiveId] = useState<string | null>(null);
   const location = useLocation();
+  useEffect(() => {
+    setActiveId(location.pathname.split("/").slice(-1)[0]);
+  }, [location]);
   return (
     <div className="flex flex-col gap-2 mb-24 mt-1">
       <div className="flex flex-col gap-2">

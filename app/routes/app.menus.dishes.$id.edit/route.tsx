@@ -29,10 +29,10 @@ import { getUser } from "~/utils/auth.server";
 
 export async function loader({ request }: LoaderArgs) {
   const user = await getUser(request);
-  const recipes = await getRecipes(
-    false,
-    user!.teams.map((t) => t.id)
-  );
+  const recipes = await getRecipes({
+    all: true,
+    teamid: user!.teams.map((t) => t.id),
+  });
 
   return {
     recipes,

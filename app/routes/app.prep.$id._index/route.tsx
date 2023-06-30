@@ -23,14 +23,23 @@ import { ClipboardCheckIcon, Printer } from "lucide-react";
 import { useToast } from "~/components/ui/use-toast";
 import ComboBox from "~/components/formInputs/ComboBox";
 import { getMembers } from "~/utils/teams.server";
+import { getUser } from "~/utils/auth.server";
 
 export async function loader({ request }: LoaderArgs) {
+  const user = await getUser(request);
   const members = await getMembers(request);
   return members
     .map((m) => m.members.flat())
     .flat()
     .filter((m) => m.approved)
-    .map((m) => ({ id: m.id, value: m.firstName + " " + m.lastName }));
+    .map((m) => ({
+      id: m.id,
+      value:
+        m.firstName +
+        " " +
+        m.lastName +
+        `${m.id === user!.id ? " (You) " : ""}`,
+    }));
 }
 
 export const action: ActionFunction = async ({ request }) => {

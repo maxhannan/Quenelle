@@ -10,10 +10,8 @@ import {
   Form,
   useActionData,
   useLoaderData,
-  useLocation,
   useNavigate,
   useNavigation,
-  useRevalidator,
 } from "@remix-run/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { CheckCircleIcon } from "lucide-react";
@@ -26,16 +24,19 @@ import { getUser } from "~/utils/auth.server";
 import { useEffect, useState } from "react";
 import { useToast } from "~/components/ui/use-toast";
 
-export async function loader({ params }: LoaderArgs) {
+export async function loader({ params, request }: LoaderArgs) {
   const id = params.id;
 
   if (!id) redirect("/app/prep");
-
+  const user = await getUser(request);
   const prepListTemplate = await getTemplateById(id!);
 
   if (!prepListTemplate) redirect("/app/prep");
 
-  const allRecipes = await getRecipes(true);
+  const allRecipes = await getRecipes({
+    all: true,
+    teamid: user!.teams.map((t) => t.id),
+  });
   return { allRecipes, prepListTemplate };
 }
 
@@ -46,7 +47,7 @@ export async function action({ request, params }: ActionArgs) {
   const user = await getUser(request);
   const id = params.id;
   if (user && id) {
-    const savedList = await updateTemplate(id, extractList, user.id);
+    const savedList = await updateTemplate(id, extractList, user.id, undefined);
     console.log({ savedList });
     if (savedList) {
       return savedList.id;

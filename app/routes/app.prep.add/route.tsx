@@ -20,7 +20,11 @@ import { ExtractListData, createPrepList } from "~/utils/prepList.server";
 import { getRecipes } from "~/utils/recipes.server";
 
 export async function loader(args: LoaderArgs) {
-  const allRecipes = await getRecipes(true);
+  const user = await getUser(args.request);
+  const allRecipes = await getRecipes({
+    all: true,
+    teamid: user!.teams.map((t) => t.id),
+  });
   return allRecipes;
 }
 
@@ -31,7 +35,11 @@ export async function action({ request }: ActionArgs) {
   const user = await getUser(request);
 
   if (user) {
-    const savedList = await createPrepList(extractList, user.id);
+    const savedList = await createPrepList(
+      extractList,
+      user.id,
+      user.teams[0].id
+    );
     console.log({ savedList });
     if (savedList) {
       return savedList.id;

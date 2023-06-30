@@ -30,10 +30,10 @@ export async function loader({ request }: LoaderArgs) {
   const allergies = params.get("allergies");
   const allergyArr = allergies && allergies.length ? allergies.split(",") : [];
   const user = await getUser(request);
-  const recipes = await getRecipes(
-    false,
-    user!.teams.map((t) => t.id)
-  );
+  const recipes = await getRecipes({
+    all: true,
+    teamid: user!.teams.map((t) => t.id),
+  });
   return {
     recipes,
     filteredRecipes: getFilteredRecipes(recipes, search, category, allergyArr),
@@ -66,9 +66,6 @@ const RecipesLayout = () => {
   const searchquery = searchParams.get("search");
   const location = useLocation();
   const navigation = useNavigation();
-  const pageChangeLoading =
-    navigation.state === "loading" &&
-    navigation.location.pathname !== "/app/recipes";
 
   const searchLoading =
     navigation.state === "loading" &&

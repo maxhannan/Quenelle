@@ -65,10 +65,13 @@ export async function getTemplateById(id: string) {
   }
 }
 
-export async function createListFromTemplate(data: FormData, authorId: string) {
+export async function createListFromTemplate(
+  data: FormData,
+  authorId: string,
+  teamId: string
+) {
   const templateId = data.get("templateId") as string;
   const date = new Date(data.get("templateDate") as string);
-  console.log({ templateId }, { date });
 
   try {
     const template = await getTemplateById(templateId);
@@ -98,7 +101,7 @@ export async function createListFromTemplate(data: FormData, authorId: string) {
       tasks: tasksData,
     };
 
-    const prepList = await createPrepList(prepListData, authorId);
+    const prepList = await createPrepList(prepListData, authorId, teamId);
     return prepList;
   } catch (error) {
     console.error(error);
@@ -108,16 +111,35 @@ export async function createListFromTemplate(data: FormData, authorId: string) {
 
 export type listData = ReturnType<typeof ExtractListData>;
 
-export async function createPrepList(prepListData: listData, authorId: string) {
+export async function createPrepList(
+  prepListData: listData,
+  authorId: string,
+  teamId: string
+) {
   try {
     const { name, date, tasks, taskGroups, saveAsTemplate } = prepListData;
-
+    // const user = await prisma.user.findUnique({
+    //   where: { id: authorId },
+    //   select: {
+    //     id: true,
+    //     username: true,
+    //     teams: {
+    //       select: {
+    //         id: true,
+    //       },
+    //     },
+    //   },
+    // });
+    // if (!user) return null;
     const prepList = await prisma.prepList.create({
       data: {
         name,
         date,
         author: {
           connect: { id: authorId },
+        },
+        team: {
+          connect: { id: teamId },
         },
         taskGroups: {
           create: taskGroups.map(({ name, linkRecipeId }) => ({
@@ -149,7 +171,7 @@ export async function createPrepList(prepListData: listData, authorId: string) {
     });
 
     if (saveAsTemplate) {
-      await createPrepListTemplate(prepListData, authorId);
+      await createPrepListTemplate(prepListData, authorId, undefined);
     }
 
     return prepList;
@@ -161,11 +183,24 @@ export async function createPrepList(prepListData: listData, authorId: string) {
 
 export async function createPrepListTemplate(
   prepListData: listData,
-  authorId: string
+  authorId: string,
+  teamId: string | undefined
 ) {
   try {
     const { name, tasks, taskGroups } = prepListData;
-
+    const user = await prisma.user.findUnique({
+      where: { id: authorId },
+      select: {
+        id: true,
+        username: true,
+        teams: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (!user) return null;
     const template = await prisma.prepListTemplate.create({
       data: {
         name,
@@ -173,6 +208,10 @@ export async function createPrepListTemplate(
         author: {
           connect: { id: authorId },
         },
+        teams: {
+          connect: teamId ? [{ id: teamId }] : user.teams,
+        },
+
         taskGroups: {
           create: taskGroups.map(({ name, linkRecipeId }) => ({
             name,
@@ -212,10 +251,24 @@ export async function createPrepListTemplate(
 export async function updateTemplate(
   id: string,
   prepListData: listData,
-  authorId: string
+  authorId: string,
+  teamId: string | undefined
 ) {
   try {
     const { name, tasks, taskGroups } = prepListData;
+    const user = await prisma.user.findUnique({
+      where: { id: authorId },
+      select: {
+        id: true,
+        username: true,
+        teams: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (!user) return null;
     const data = await prisma.$transaction([
       prisma.prepListTemplate.delete({
         where: {
@@ -229,6 +282,10 @@ export async function updateTemplate(
           author: {
             connect: { id: authorId },
           },
+          teams: {
+            connect: teamId ? [{ id: teamId }] : user.teams,
+          },
+
           taskGroups: {
             create: taskGroups.map(({ name, linkRecipeId }) => ({
               name,
@@ -265,9 +322,18 @@ export async function updateTemplate(
   }
 }
 
-export async function getTemplates() {
+export async function getTemplates(teamid: string[]) {
   try {
     const templates = await prisma.prepListTemplate.findMany({
+      where: {
+        teams: {
+          some: {
+            id: {
+              in: teamid,
+            },
+          },
+        },
+      },
       include: {
         _count: true,
         author: {
@@ -310,9 +376,18 @@ export async function getTemplates() {
   }
 }
 
-export async function getPrepLists() {
+export async function getPrepLists(teamid: string[]) {
   try {
     const prepLists = await prisma.prepList.findMany({
+      where: {
+        team: {
+          is: {
+            id: {
+              in: teamid,
+            },
+          },
+        },
+      },
       include: {
         _count: true,
         author: {
