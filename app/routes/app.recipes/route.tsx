@@ -31,7 +31,7 @@ export async function loader({ request }: LoaderArgs) {
   const allergyArr = allergies && allergies.length ? allergies.split(",") : [];
   const user = await getUser(request);
   const recipes = await getRecipes({
-    all: true,
+    all: false,
     teamid: user!.teams.map((t) => t.id),
   });
   return {

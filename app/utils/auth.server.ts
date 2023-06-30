@@ -119,6 +119,7 @@ export async function getUser(request: Request) {
         firstName: true,
         lastName: true,
         teams: true,
+        colorVariant: true,
         approved: true,
         assignedLists: {
           select: {
@@ -167,6 +168,7 @@ export async function createTeam(
     data: {
       approved: false,
       orgOwner: true,
+      role: "headChef",
       teams: {
         connect: {
           id: team.id,

@@ -47,6 +47,7 @@ export const getRecipes = async ({ all, teamid }: getRecipesArgs) => {
             firstName: true,
             lastName: true,
             username: true,
+            colorVariant: true,
           },
         },
       },

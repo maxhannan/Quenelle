@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import { prisma } from "./prisma.server";
+import { colorVariants } from "./staticLists";
 
 export interface UserObj {
   email: string;
@@ -19,6 +20,7 @@ export const createUser = async (user: UserObj) => {
       firstName: user.firstName,
       lastName: user.lastName,
       chef: false,
+      colorVariant: Math.floor(Math.random() * (colorVariants.length - 1)),
     },
   });
   return { id: newUser.id, username: user.username };

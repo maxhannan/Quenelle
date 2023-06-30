@@ -1,6 +1,7 @@
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "@remix-run/react";
 import type { FC } from "react";
+import { colorVariants } from "~/utils/staticLists";
 
 interface Props {
   subHeading: string;
@@ -8,15 +9,17 @@ interface Props {
   name: string;
   active?: boolean;
   to: string;
+  colorVariant?: number;
 }
-const colorVariants = [
-  "bg-yellow-300 ",
-  "bg-orange-300 ",
-  "bg-pink-300 ",
-  "bg-indigo-300 ",
-  "bg-green-300 ",
-];
-const RecipeCard: FC<Props> = ({ subHeading, user, name, to, active }) => {
+
+const RecipeCard: FC<Props> = ({
+  subHeading,
+  user,
+  name,
+  to,
+  active,
+  colorVariant = 0,
+}) => {
   const navigate = useNavigate();
   return (
     <div
@@ -31,12 +34,8 @@ const RecipeCard: FC<Props> = ({ subHeading, user, name, to, active }) => {
         className={`${
           active
             ? "bg-indigo-500 text-zinc-200"
-            : `${
-                colorVariants[
-                  Math.floor(Math.random() * (colorVariants.length - 1))
-                ]
-              }  text-zinc-700 dark:text-zinc-700 `
-        } trasition-all duration-300 inline-flex group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center mr-4 justify-center w-14 h-14 overflow-hidden group-hover:border-indigo-500 border-zinc-500 rounded-2xl  border dark:border-zinc-700`}
+            : `${colorVariants[colorVariant]}  text-zinc-700 dark:text-zinc-700 `
+        } trasition-all duration-300 inline-flex group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center mr-4 justify-center w-14 h-14 overflow-hidden group-hover:border-indigo-500 border-zinc-500 rounded-full   dark:border-zinc-700`}
       >
         <span className=" text-2xl lg:text-2xl ">{user.toLowerCase()}</span>
       </div>

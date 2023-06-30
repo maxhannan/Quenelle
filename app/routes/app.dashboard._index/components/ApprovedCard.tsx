@@ -153,7 +153,7 @@ const ApprovedCard: FC<Props> = ({ m, teamId }) => {
                     Head Chef
                   </div>
                   <div className="text-xs text-zinc-500">
-                    view, edit, delete
+                    create, edit, delete
                   </div>
                 </div>
               </DropdownMenuRadioItem>
@@ -162,7 +162,7 @@ const ApprovedCard: FC<Props> = ({ m, teamId }) => {
                   <div className="text-sm font-semibold dark:text-zinc-100">
                     Sous Chef
                   </div>
-                  <div className="text-xs text-zinc-500">view, delete</div>
+                  <div className="text-xs text-zinc-500">create, edit</div>
                 </div>
               </DropdownMenuRadioItem>
               <DropdownMenuRadioItem value="cook">
@@ -170,7 +170,7 @@ const ApprovedCard: FC<Props> = ({ m, teamId }) => {
                   <div className="text-sm font-semibold dark:text-zinc-100">
                     Cook
                   </div>
-                  <div className="text-xs text-zinc-500">view.</div>
+                  <div className="text-xs text-zinc-500">view only</div>
                 </div>
               </DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>

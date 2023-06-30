@@ -54,6 +54,7 @@ export const loader = async ({ request }: LoaderArgs) => {
               id: true,
               firstName: true,
               lastName: true,
+              colorVariant: true,
             },
           },
         },
@@ -64,6 +65,7 @@ export const loader = async ({ request }: LoaderArgs) => {
             select: {
               firstName: true,
               lastName: true,
+              colorVariant: true,
             },
           },
           _count: {
@@ -79,6 +81,7 @@ export const loader = async ({ request }: LoaderArgs) => {
           id: true,
           firstName: true,
           lastName: true,
+          colorVariant: true,
         },
       },
     },
@@ -147,11 +150,7 @@ function HomeRoute() {
                 content={(
                   m.author.firstName[0] + m.author.lastName[0]
                 ).toLowerCase()}
-                color={
-                  colorVariants[
-                    Math.floor(Math.random() * (colorVariants.length - 1))
-                  ]
-                }
+                color={colorVariants[m.author.colorVariant]}
               />
 
               <h3 className=" dark:text-zinc-200 text-zinc-700 text-sm md:text-base">
@@ -179,6 +178,7 @@ function HomeRoute() {
                       } `
                     : m.linkRecipe.category
                 }
+                colorVariant={m.linkRecipe.author.colorVariant}
                 user={(
                   m.linkRecipe.author.firstName[0] +
                   m.linkRecipe.author.lastName[0]
@@ -192,6 +192,7 @@ function HomeRoute() {
                 subHeading={`${m.linkMenu._count.dishes} Dish${
                   m.linkMenu._count.dishes !== 1 ? "es" : ""
                 }`}
+                colorVariant={m.linkMenu.author.colorVariant}
                 user={(
                   m.linkMenu.author.firstName[0] + m.linkMenu.author.lastName[0]
                 ).toLowerCase()}

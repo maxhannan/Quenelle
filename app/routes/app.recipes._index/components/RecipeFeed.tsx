@@ -25,6 +25,7 @@ export default function RecipeFeed({ recipes }: { recipes: FullRecipes }) {
               <RecipeCard
                 to={`/app/recipes/${r.id + location.search} `}
                 name={r.name}
+                colorVariant={r.author.colorVariant}
                 active={active === r.id}
                 subHeading={r.category}
                 user={r.author!.firstName[0] + r.author!.lastName[0]}
