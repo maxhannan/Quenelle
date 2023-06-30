@@ -12,6 +12,14 @@ import { getUser } from "~/utils/auth.server";
 import { prisma } from "~/utils/prisma.server";
 import { colorVariants } from "~/utils/staticLists";
 
+const isToday = (someDate: Date) => {
+  const today = new Date();
+  return (
+    someDate.getDate() == today.getDate() &&
+    someDate.getMonth() == today.getMonth() &&
+    someDate.getFullYear() == today.getFullYear()
+  );
+};
 export const loader = async ({ request }: LoaderArgs) => {
   const user = await getUser(request);
   const feedMessages = await prisma.feedMessage.findMany({
@@ -75,9 +83,15 @@ export const loader = async ({ request }: LoaderArgs) => {
       },
     },
   });
-  const assignedListsToday = user!.assignedLists.filter((l) =>
-    isSameDay(new Date(l.date), new Date(Date.now()))
-  );
+  const assignedListsToday = user!.assignedLists.filter((l) => {
+    console.log({
+      listDate: new Date(l.date),
+      today: new Date(Date.now()),
+      isSame: isSameDay(new Date(l.date), new Date(Date.now())),
+      isToday: isToday(new Date(l.date)),
+    });
+    return isToday(new Date(l.date));
+  });
 
   return { user, feedMessages, assignedListsToday };
 };
