@@ -116,7 +116,7 @@ const SideNav: FC<Props> = ({ page, handleNav, user }) => {
                 path="dashboard"
                 Icon={CreditCard}
               />
-              <div className="w-full border border-zinc-400 dark:border-zinc-700 mb-2 "></div>
+              <div className="w-full border-t border-zinc-300 dark:border-zinc-700 mb-2 "></div>
             </div>
             <div className="flex flex-col gap-2">
               <BottomNavButton
