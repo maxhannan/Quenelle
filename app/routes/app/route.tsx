@@ -78,7 +78,7 @@ const AppLayout = () => {
   return (
     <>
       <div className=" ">
-        <div className="px-3 md:px-0 md:pr-1 md:pl-[5.5rem] scrollbar-thin   w-full lg:h-screen lg:overflow-y-scroll">
+        <div className="px-3 md:px-3  md:pl-[6rem] scrollbar-thin   w-full lg:h-screen lg:overflow-y-scroll">
           {navigation.state === "loading" &&
           navigation.location.pathname.split("/")[2] !==
             location.pathname.split("/")[2] ? (
