@@ -26,7 +26,7 @@ const SideNav: FC<Props> = ({ page, handleNav, user }) => {
   const submit = useSubmit();
   const navigation = useNavigation();
   return (
-    <div className="  justify-end bottom-0 top-0 left-1     fixed my-1 md:flex hidden bg-zinc-100 dark:bg-zinc-900">
+    <div className="  justify-end bottom-0 top-0 left-2    fixed my-1 md:flex hidden bg-zinc-100 dark:bg-zinc-900">
       <div className="  dark:bg-zinc-800 bg-zinc-200 rounded-2xl w-full ">
         <div className="flex flex-col  justify-between  items-center h-full my-1 ">
           <div className="flex flex-col gap-4 items-center pt-2 ">
@@ -139,7 +139,7 @@ const SideNav: FC<Props> = ({ page, handleNav, user }) => {
                 className="inline-flex flex-col items-center justify-center px-4 rounded-l-lg   group"
               >
                 <div
-                  className={` transition-all duration-300 w-12 h-12 sm:w-12 sm:h-12 flex items-center justify-center rounded-full dark:bg-zinc-200 bg-zinc-800 text-zinc-200 dark:text-zinc-800 xl:dark:bg-zinc-800 xl:bg-zinc-200 xl:text-zinc-800 xl:dark:text-zinc-200 `}
+                  className={` transition-all duration-300 w-12 h-12 sm:w-12 sm:h-12 flex items-center justify-center rounded-full dark:bg-zinc-200 bg-zinc-800 text-zinc-200 dark:text-zinc-800 md:dark:bg-zinc-800 md:bg-zinc-200 md:text-zinc-800 md:dark:text-zinc-200 `}
                 >
                   <LogOut className={"  w-7 h-7  "} />
                   <span className="sr-only">logout</span>

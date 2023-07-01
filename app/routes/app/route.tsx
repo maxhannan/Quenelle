@@ -4,7 +4,6 @@ import {
   useLocation,
   useNavigate,
   useNavigation,
-  useSubmit,
 } from "@remix-run/react";
 import { useState, useEffect } from "react";
 import BottomNav from "~/components/navigation/BottomNav";
@@ -13,21 +12,8 @@ import { redirect, type LoaderArgs } from "@remix-run/node";
 import { getUser, requireUserId } from "~/utils/auth.server";
 import { Toaster } from "~/components/ui/toaster";
 
-import {
-  ClipboardCheckIcon,
-  CreditCard,
-  FolderIcon,
-  HelpCircle,
-  List,
-  LogOut,
-  Newspaper,
-  Settings,
-  StickyNote,
-  Users,
-} from "lucide-react";
-import BottomNavButton from "~/components/navigation/BottomNavButton";
 import Spinner from "~/components/LoadingSpinner";
-import { colorVariants } from "~/utils/staticLists";
+
 import SideNav from "~/components/navigation/SideNav";
 
 export function ErrorBoundary() {
@@ -59,8 +45,7 @@ const AppLayout = () => {
   const [page, setPage] = useState(location.pathname.split("/")[2]);
   const navigate = useNavigate();
   const navigation = useNavigation();
-  const submit = useSubmit();
-  let active = true;
+
   const handleNav = (path: string) => {
     const pathString = `/app/${path}`;
     if (location.pathname === pathString) {
