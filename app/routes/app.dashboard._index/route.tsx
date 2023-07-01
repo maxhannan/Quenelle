@@ -1,4 +1,4 @@
-import React, { FormEvent, useRef, useState } from "react";
+import { type FormEvent, useRef, useState } from "react";
 import { useUserContext } from "../app.dashboard/route";
 import { type ActionArgs, type LoaderArgs } from "@remix-run/node";
 import { getMembers } from "~/utils/teams.server";
@@ -14,6 +14,7 @@ import LoadingButton from "~/components/buttons/LoadingButton";
 import { UserPlus2Icon } from "lucide-react";
 import TextInput from "~/components/formInputs/TextInput";
 import { InviteUser } from "~/utils/email.server";
+import { useToast } from "~/components/ui/use-toast";
 
 export async function loader({ request }: LoaderArgs) {
   const teams = await getMembers(request);
@@ -73,27 +74,37 @@ export async function action({ request }: ActionArgs) {
 function DashBoardIndex() {
   const formRef = useRef<HTMLFormElement>(null);
   const teams = useLoaderData<typeof loader>();
+  const [inviting, setInviting] = useState(false);
   const [teamId, setTeamId] = useState<string | undefined>();
   const fetcher = useFetcher();
   const [openModal, setOpenModal] = useState(false);
-  const navigation = useNavigation();
+
   console.log({ teams });
   const { user } = useUserContext();
+  const { toast } = useToast();
   if (!user) return null;
   console.log({ user });
+
   const handleModal = (id: string) => {
     setTeamId(id);
     setOpenModal(true);
   };
 
   const handleInvite = async (e: FormEvent) => {
+    setInviting(true);
+    setTimeout(() => {
+      setInviting(false);
+      setOpenModal(false);
+      toast({
+        title: "Invitation Sent",
+      });
+    }, 1000);
     e.preventDefault();
     const data = new FormData(e.target as HTMLFormElement);
     data.set("teamId", teamId as string);
     data.set("action", "invite");
     console.log({ data });
     await fetcher.submit(data, { method: "POST" });
-    setOpenModal(false);
   };
 
   return (
@@ -134,9 +145,7 @@ function DashBoardIndex() {
                 buttonText="Invite User"
                 onClick={() => fetcher.submit(formRef.current)}
                 loadingText="Inviting"
-                loading={
-                  fetcher.state === "loading" || fetcher.state === "submitting"
-                }
+                loading={inviting}
               />
             </div>
           </fetcher.Form>

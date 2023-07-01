@@ -15,14 +15,15 @@ import { CheckCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import IconButton from "~/components/buttons/IconButton";
 import MenuForm from "~/components/forms/MenuForm";
 import AppBar from "~/components/navigation/AppBar";
-import type { ActionFunction } from "@remix-run/node";
+import type { ActionFunction, LoaderArgs } from "@remix-run/node";
 import { getUser } from "~/utils/auth.server";
 import { useEffect } from "react";
 import { useToast } from "~/components/ui/use-toast";
 
-export async function loader() {
-  const dishes = await getDishes();
-  const menus = await getMenus();
+export async function loader({ request }: LoaderArgs) {
+  const user = await getUser(request);
+  const dishes = await getDishes(user!.teams.map((t) => t.id));
+  const menus = await getMenus(user!.teams.map((t) => t.id));
   const services = menus
     ? [...new Set([...menus.map((m) => m.service), ...serviceList])]
     : [];
@@ -34,7 +35,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   const user = await getUser(request);
   if (params.id && newMenu && user) {
-    const savedMenu = await updateMenu(params.id, newMenu, user.id);
+    const savedMenu = await updateMenu(params.id, newMenu, user.id, undefined);
     if (savedMenu) {
       return savedMenu.id;
     }

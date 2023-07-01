@@ -58,7 +58,7 @@ const NewAppBar: FC<Props> = ({
           } mx-auto  max-h-full items-center justify-between   duration-300 gap-2   w-full top-0 left-0 `}
         >
           <DropdownMenu>
-            <DropdownMenuTrigger asChild className="xl:hidden">
+            <DropdownMenuTrigger asChild className="md:hidden">
               <button
                 className={`data-[state=open]:bg-indigo-500 data-[state=open]:text-zinc-200 data-[state=open]:border-indigo-500 transition-all duration-300 inline-flex group-hover:bg-indigo-500  ${
                   colorVariants[user!.colorVariant]

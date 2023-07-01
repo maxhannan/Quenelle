@@ -19,7 +19,7 @@ import {
 import Carousel from "~/components/display/Carousel";
 import Spinner from "~/components/LoadingSpinner";
 import Chip from "~/components/display/Chip";
-import ListCard from "~/components/display/ListCard";
+
 import SlideUpTransition from "~/components/animations/SlideUp";
 import RecipeCard from "~/components/display/RecipesCard";
 import { colorVariants } from "~/utils/staticLists";
