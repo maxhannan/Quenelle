@@ -1,10 +1,9 @@
 import type { FullRecipes } from "~/utils/recipes.server";
 
-import ListCard from "~/components/display/ListCard";
 import { useLocation } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import RecipeCard from "~/components/display/RecipesCard";
-import SlideUpTransition from "~/components/animations/SlideUp";
+
 import FadeIn from "~/components/animations/FadeIn";
 
 export default function RecipeFeed({ recipes }: { recipes: FullRecipes }) {

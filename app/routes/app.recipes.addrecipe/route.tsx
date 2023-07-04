@@ -27,8 +27,9 @@ export const action: ActionFunction = async ({ request }) => {
   if (user) {
     const savedRecipe = await createRecipe(newRecipe, user.id, undefined);
     console.log({ savedRecipe });
-
-    return savedRecipe.id;
+    if (savedRecipe) {
+      return savedRecipe.id;
+    }
   }
 
   return undefined;

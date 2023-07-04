@@ -3,7 +3,7 @@ import { useState, type FC, useEffect } from "react";
 import Spinner from "~/components/LoadingSpinner";
 
 import type { getDishes } from "~/utils/dishes.server";
-import ListCard from "~/components/display/ListCard";
+
 import RecipeCard from "~/components/display/RecipesCard";
 interface Props {
   dishes: Awaited<ReturnType<typeof getDishes>>;

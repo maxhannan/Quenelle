@@ -19,7 +19,7 @@ import { updateTask } from "~/utils/prepList.server";
 import type { getPrepListById } from "~/utils/prepList.server";
 import SlideUpTransition from "~/components/animations/SlideUp";
 import { getPdf } from "~/utils/pdf";
-import { ClipboardCheckIcon, Printer } from "lucide-react";
+import { ClipboardCheckIcon, Printer, Trash2Icon } from "lucide-react";
 import { useToast } from "~/components/ui/use-toast";
 import ComboBox from "~/components/formInputs/ComboBox";
 import { getMembers } from "~/utils/teams.server";
@@ -66,7 +66,7 @@ function PrepListRoute() {
   const fetcher = useFetcher();
   const location = useLocation();
   let prepList = usePrepList();
-
+  const [deleting, setDeleting] = useState(false);
   const [pdfLoading, setPdfLoading] = useState(false);
   const [openTaskFocus, setOpenTaskFocus] = useState<boolean>(false);
   if (!prepList) return <h1> No Prep List Found </h1>;
@@ -103,7 +103,24 @@ function PrepListRoute() {
       </div>
     );
   }
-
+  const handleDeleteList = async () => {
+    setDeleting(true);
+    await fetcher.submit(null, {
+      action: `/app/prep/${prepList!.id}/delete`,
+      method: "POST",
+    });
+    if (fetcher.data) {
+      toast({
+        title: "Prep List Deleted",
+      });
+      navigate("/app/prep");
+    } else {
+      toast({
+        title: "Prep List Not Deleted",
+      });
+    }
+    setDeleting(false);
+  };
   const handleAssignList = async (id: string | null) => {
     const data = new FormData();
     if (!id) {
@@ -120,11 +137,27 @@ function PrepListRoute() {
   };
   return (
     <div className=" container mx-auto mb-28 xl:pl-2">
+      {deleting && (
+        <div
+          className="fixed inset-0 bg-white/90 dark:bg-black/90 z-50"
+          aria-hidden="true"
+        >
+          <div className="w-screen h-screen  flex justify-center items-center">
+            <Spinner size={14} />
+          </div>
+        </div>
+      )}
       <AppBar
         page={prepList.name}
         textSize="text-3xl md:text-4xl"
         bottomPadding="0"
       >
+        <IconButton
+          name="Goback"
+          onClick={() => handleDeleteList()}
+          Icon={Trash2Icon}
+          loading={deleting}
+        />
         <IconButton
           name="Goback"
           active={openTaskFocus}

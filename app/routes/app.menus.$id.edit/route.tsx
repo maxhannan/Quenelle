@@ -15,13 +15,18 @@ import { CheckCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import IconButton from "~/components/buttons/IconButton";
 import MenuForm from "~/components/forms/MenuForm";
 import AppBar from "~/components/navigation/AppBar";
-import type { ActionFunction, LoaderArgs } from "@remix-run/node";
+import {
+  redirect,
+  type ActionFunction,
+  type LoaderArgs,
+} from "@remix-run/node";
 import { getUser } from "~/utils/auth.server";
 import { useEffect } from "react";
 import { useToast } from "~/components/ui/use-toast";
 
 export async function loader({ request }: LoaderArgs) {
   const user = await getUser(request);
+  if (user!.role === "cook") return redirect("/app/menus");
   const dishes = await getDishes(user!.teams.map((t) => t.id));
   const menus = await getMenus(user!.teams.map((t) => t.id));
   const services = menus
@@ -44,12 +49,16 @@ export const action: ActionFunction = async ({ request, params }) => {
   return null;
 };
 
+interface LoaderData {
+  dishes: Awaited<ReturnType<typeof getDishes>>;
+  services: string[];
+}
 function EditMenuRoute() {
   const menu = useMenu();
   const navigate = useNavigate();
   const data = useActionData();
   const navigation = useNavigation();
-  const { dishes, services } = useLoaderData<typeof loader>();
+  const { dishes, services } = useLoaderData<LoaderData>();
   const { toast } = useToast();
   useEffect(() => {
     if (data !== undefined) {

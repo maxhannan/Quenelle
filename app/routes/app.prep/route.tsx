@@ -220,7 +220,7 @@ function PrepListsLayout() {
       )}
 
       <div className="flex">
-        <div className="relative w-1/3  h-screen bg-zinc-50 dark:bg-zinc-950 overflow-y-scroll flex-none hidden xl:flex scrollbar-thin scrollbar-track-zinc-100 dark:scrollbar-track-zinc-900 scrollbar-thumb-zinc-600 dark:scrollbar-thumb-zinc-500 scrollbar-thumb-rounded-2xl">
+        <div className="relative xl:w-1/3 2xl:w-1/4 border-r dark:border-zinc-800 h-screen bg-zinc-100  dark:bg-zinc-900 overflow-y-scroll flex-none hidden xl:flex scrollbar-none scrollbar-track-zinc-100 dark:scrollbar-track-zinc-900 scrollbar-thumb-zinc-600 dark:scrollbar-thumb-zinc-500 scrollbar-thumb-rounded-2xl">
           <div className=" container mx-auto max-w-4xl px-3">
             <PrepPage
               date={date}

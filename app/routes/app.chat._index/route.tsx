@@ -98,7 +98,7 @@ function ChatIndex() {
   }, [notes]);
   return (
     <div className="container  mx-auto  max-w-full xl:px-2  ">
-      <NewAppBar page="chat" bottomPadding="1">
+      <NewAppBar page="Notes" bottomPadding="1">
         <button
           onClick={() => setShowModal(true)}
           className=" font-light  bg-indigo-500 rounded-xl text-zinc-100 px-2 py-2 hover:bg-opacity-90 transition-all duration-300 inline-flex gap-1 items-center  "
@@ -121,7 +121,12 @@ function ChatIndex() {
           enterTo="opacity-100 "
         >
           <ResponsiveMasonry
-            columnsCountBreakPoints={{ 350: 1, 500: 2, 1200: 3, 1800: 4 }}
+            columnsCountBreakPoints={{
+              350: 1,
+              500: 2,
+              1200: 3,
+              1500: 4,
+            }}
           >
             <Masonry gutter=".5rem">
               {notes &&

@@ -1,6 +1,6 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { useLoaderData, useNavigation } from "@remix-run/react";
-import { formatDistance, isSameDay } from "date-fns";
+import { formatDistance } from "date-fns";
 import { BadgePlusIcon, DeleteIcon, FileEdit } from "lucide-react";
 
 import Spinner from "~/components/LoadingSpinner";
@@ -95,12 +95,6 @@ function HomeRoute() {
   const { user, feedMessages, assignedLists } = useLoaderData<typeof loader>();
   console.log({ user, feedMessages });
   const assignedListsToday = assignedLists.filter((l) => {
-    console.log({
-      listDate: new Date(l.date),
-      today: new Date(Date.now()),
-      isSame: isSameDay(new Date(l.date), new Date(Date.now())),
-      isToday: isToday(new Date(l.date)),
-    });
     return isToday(new Date(l.date));
   });
   const navigation = useNavigation();
@@ -115,10 +109,10 @@ function HomeRoute() {
   return (
     <div className=" container mx-auto max-w-4xl   flex flex-col  mb-28">
       <NewAppBar page={`Hi ${user.firstName}!`} bottomPadding="2"></NewAppBar>
-      <div className="mb-4">
+      <div className="mb-2">
         {assignedListsToday.length > 0 && (
-          <div className="w-full flex flex-col gap-2 ">
-            <div className="text-lg text-indigo-500 font-semibold ">
+          <div className="w-full flex flex-col gap-2 p-2 px-3 bg-zinc-200 bg-opacity-40 dark:bg-opacity-40 dark:bg-zinc-800 rounded-2xl">
+            <div className="text-lg text-indigo-500  ">
               Your prep list{assignedListsToday.length > 1 && "s"} for today.
             </div>
 
@@ -136,11 +130,11 @@ function HomeRoute() {
           </div>
         )}
       </div>
-      <div className="flex flex-col gap-2 rounded-xl bg-zinc-200 dark:bg-zinc-800 p-2">
+      <div className="flex flex-col gap-2 rounded-2xl bg-zinc-200 bg-opacity-40 dark:bg-opacity-40 dark:bg-zinc-800 p-2">
         {feedMessages.map((m) => (
           <div
             key={m.id}
-            className="flex flex-col gap-2 rounded-xl bg-zinc-100 dark:bg-zinc-900 p-2 text-zinc-700"
+            className="flex flex-col gap-2 rounded-2xl bg-zinc-100 dark:bg-zinc-900 p-2 text-zinc-700"
           >
             <div className="flex gap-2 items-center">
               <Avatar

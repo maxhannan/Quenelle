@@ -1,15 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { FC } from "react";
 import NewAppBar from "~/components/navigation/NewAppBar";
 import FadeIn from "~/components/animations/FadeIn";
 
 import { ArrowLeftIcon, ArrowRightIcon, ClipboardEdit } from "lucide-react";
-import formatRelative from "date-fns/formatRelative";
-import { enUS } from "date-fns/locale";
+
 import { add, format, isSameDay } from "date-fns";
 import { useLocation, useNavigation } from "@remix-run/react";
 import Spinner from "~/components/LoadingSpinner";
-import ListCard from "~/components/display/ListCard";
 import type { getPrepLists } from "~/utils/prepList.server";
 import PrepCalendar from "./PrepCalendar";
 import IconButton from "~/components/buttons/IconButton";
@@ -22,21 +20,6 @@ interface Props {
   setOpenDialog: (open: boolean) => void;
 }
 
-const formatRelativeLocale = {
-  lastWeek: "'Last' eeee",
-  yesterday: "'Yesterday'",
-  today: "'Today'",
-  tomorrow: "'Tomorrow'",
-  nextWeek: "'This' eeee",
-  other: "MM/dd/yyyy",
-};
-
-const locale = {
-  ...enUS,
-  // @ts-ignore
-  formatRelative: (token) => formatRelativeLocale[token],
-};
-
 const PrepPage: FC<Props> = ({
   date,
   handleDateChange,
@@ -48,6 +31,9 @@ const PrepPage: FC<Props> = ({
   const navigation = useNavigation();
   const [activeId, setActiveId] = useState(location.pathname.split("/")[3]);
 
+  useEffect(() => {
+    setActiveId(location.pathname.split("/")[3]);
+  }, [location.pathname]);
   const prepListsToday =
     prepLists && prepLists.length > 0
       ? prepLists.filter((prepList) =>

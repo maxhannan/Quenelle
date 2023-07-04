@@ -14,7 +14,6 @@ import {
   PencilIcon,
   PhotoIcon,
   PuzzlePieceIcon,
-  ScaleIcon,
 } from "@heroicons/react/24/outline";
 import Carousel from "~/components/display/Carousel";
 import Spinner from "~/components/LoadingSpinner";
@@ -61,11 +60,6 @@ function DishIndex() {
         )}
 
         <IconButton
-          Icon={ScaleIcon}
-          name="Scale dish"
-          onClick={() => console.log("edit")}
-        />
-        <IconButton
           Icon={ArrowUturnLeftIcon}
           name="Go Back"
           onClick={() => navigate(-1)}
@@ -75,16 +69,18 @@ function DishIndex() {
         <Carousel isOpen={isOpen} setIsOpen={setIsOpen} imgSrcs={dish.images} />
       )}
       <SlideUpTransition>
-        <div className="text-3xl   w-full items-center flex justify-between mb-4  dark:text-zinc-200  font-bold text-zinc-600 rounded-xl ">
+        <div className="text-3xl   w-full items-center flex justify-between mb-2  dark:text-zinc-200  font-bold text-zinc-600 rounded-xl ">
           <div>{dish.name}</div>
         </div>
         <div className="grid grid-cols-1 gap-2">
           <div className="flex flex-col gap-2">
-            <div className="flex  gap-2 flex-wrap rounded-xl bg-zinc-100 border border-zinc-200 dark:bg-zinc-900 dark:border-zinc-700 p-2  ">
-              {dish.allergens &&
-                dish.allergens.length > 0 &&
-                dish.allergens.map((a) => <Chip key={a} content={a} />)}
-            </div>
+            {dish.allergens && dish.allergens.length > 0 && (
+              <div className="inline-flex  gap-2 flex-wrap ">
+                {dish.allergens.map((a) => (
+                  <Chip key={a} content={a} />
+                ))}
+              </div>
+            )}
             <div className="text-2xl lg:text-3xl border  border-zinc-300 dark:border-zinc-700 gap-2 bg-zinc-200 dark:bg-zinc-800 px-4 w-full items-center flex justify-between dark:text-zinc-200 p-2  text-zinc-600 rounded-xl font-light ">
               <div>Components</div>
             </div>
