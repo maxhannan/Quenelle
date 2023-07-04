@@ -2,7 +2,7 @@ import { type FormEvent, useRef, useState } from "react";
 import { useUserContext } from "../app.dashboard/route";
 import { type ActionArgs, type LoaderArgs } from "@remix-run/node";
 import { getMembers } from "~/utils/teams.server";
-import { useFetcher, useLoaderData, useNavigation } from "@remix-run/react";
+import { useFetcher, useLoaderData } from "@remix-run/react";
 import NewAppBar from "~/components/navigation/NewAppBar";
 
 import ApprovedCard from "./components/ApprovedCard";

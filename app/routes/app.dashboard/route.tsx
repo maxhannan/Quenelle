@@ -1,17 +1,16 @@
-import { type LoaderArgs } from "@remix-run/node";
+import { redirect, type LoaderArgs } from "@remix-run/node";
 import { Outlet, useLoaderData, useOutletContext } from "@remix-run/react";
-import { Users } from "lucide-react";
-import NewAppBar from "~/components/navigation/NewAppBar";
+
 import { getUser } from "~/utils/auth.server";
 
 export async function loader({ request }: LoaderArgs) {
   const user = await getUser(request);
-
+  if (!user?.orgOwner) return redirect("/app");
   return user;
 }
 
 type ContextType = {
-  user: Awaited<ReturnType<typeof loader>>;
+  user: Awaited<ReturnType<typeof getUser>>;
 };
 function DashboardLayout() {
   const user = useLoaderData<typeof loader>();

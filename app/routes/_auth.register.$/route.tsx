@@ -4,7 +4,13 @@ import {
 } from "@heroicons/react/24/outline";
 import { json, redirect } from "@remix-run/node";
 import type { ActionArgs, LoaderArgs } from "@remix-run/node";
-import { Form, Link, useActionData, useNavigation } from "@remix-run/react";
+import {
+  Form,
+  Link,
+  useActionData,
+  useNavigation,
+  useParams,
+} from "@remix-run/react";
 import type { FC } from "react";
 import Spinner from "~/components/LoadingSpinner";
 import LoadingButton from "~/components/buttons/LoadingButton";
@@ -20,7 +26,7 @@ export async function loader({ request }: LoaderArgs) {
   return (await getUser(request)) ? redirect("/app/recipes") : null;
 }
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request, params }: ActionArgs) {
   const form = await request.formData();
   const email = form.get("email") as string;
   const password = form.get("password") as string;
@@ -28,6 +34,7 @@ export async function action({ request }: ActionArgs) {
   const username = form.get("username") as string;
   const firstName = form.get("firstName") as string;
   const lastName = form.get("lastName") as string;
+  const teamId = form.get("teamId") as string;
 
   const errors = {
     email: validateEmail(email),
@@ -46,13 +53,22 @@ export async function action({ request }: ActionArgs) {
       { status: 400 }
     );
   }
-  return await Register({ email, password, username, firstName, lastName });
+  return await Register({
+    user: { email, password, username, firstName, lastName },
+    teamId: teamId && teamId.length > 0 ? teamId : undefined,
+  });
 }
 
 const RegisterPage: FC = () => {
   const actionData = useActionData();
   const navigation = useNavigation();
-
+  const params = useParams();
+  console.log({ params });
+  if (params["*"] && params["*"].length > 0) {
+    console.log(params["*"]);
+  } else {
+    console.log("no params");
+  }
   if (navigation.state === "loading") {
     return <Spinner size={14} />;
   }
@@ -66,6 +82,7 @@ const RegisterPage: FC = () => {
         Sign Up <UserCircleIcon className="w-10 h-10" />
       </h2>
       <div className="w-full flex gap-2">
+        <input hidden name="teamId" value={params["*"]} readOnly />
         <TextInput
           name="firstName"
           placeholder="First Name"

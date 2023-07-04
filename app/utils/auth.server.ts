@@ -31,7 +31,11 @@ export async function createUserSession(userId: string, redirectTo: string) {
   });
 }
 
-export const Register = async (user: UserObj) => {
+interface RegisterArgs {
+  user: UserObj;
+  teamId: string | undefined;
+}
+export const Register = async ({ user, teamId }: RegisterArgs) => {
   const existsEmail = await prisma.user.count({ where: { email: user.email } });
   const existsUsername = await prisma.user.count({
     where: { username: user.username },
@@ -57,6 +61,21 @@ export const Register = async (user: UserObj) => {
       },
       { status: 400 }
     );
+  }
+  if (teamId) {
+    console.log("teamId", teamId);
+    const team = await prisma.team.findUnique({
+      where: {
+        id: teamId as string,
+      },
+      select: {
+        id: true,
+      },
+    });
+    if (team) {
+      await joinTeam(newUser.id, team.id);
+      return createUserSession(newUser.id, `/pending`);
+    }
   }
   return createUserSession(newUser.id, `/setup/${newUser.id}`);
 };

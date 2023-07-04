@@ -6,13 +6,13 @@ type Preplist = Awaited<ReturnType<typeof getPrepListById>>;
 export const getPdf = async (prepList: Preplist) => {
   if (!prepList) return null;
   const doc = new jsPDF();
-  doc.setFontSize(20);
-  doc.text(prepList?.name, 14, 16);
+  doc.setFontSize(24);
+  doc.text(prepList?.name, 14, 20);
 
   doc.setFontSize(12);
-  doc.text(new Date(prepList.date).toDateString(), 14, 24);
+  doc.text(new Date(prepList.date).toDateString(), 14, 28);
   const data = prepList.taskGroups.map((tg) => ({
-    head: [["", tg.name, "Unit", "Inv", "Need"]],
+    head: [["", tg.name, "Unit", "Inv", "Prep"]],
     body: tg.tasks.map((t) => [
       t.completed ? "X" : "",
       t.name,
@@ -29,8 +29,8 @@ export const getPdf = async (prepList: Preplist) => {
     autoTable(doc, {
       theme: "grid",
       ...data[i],
-      bodyStyles: { fontSize: 6 },
-      headStyles: { fontSize: 6 },
+      bodyStyles: { fontSize: 8 },
+      headStyles: { fontSize: 8 },
       columnStyles: {
         0: { cellWidth: 5 },
         1: { cellWidth: 50 },
@@ -39,7 +39,7 @@ export const getPdf = async (prepList: Preplist) => {
         4: { cellWidth: 10 },
       },
       margin: margin,
-      startY: i > 1 ? lastys[i - 2] + 5 : 28,
+      startY: i > 1 ? lastys[i - 2] + 5 : 32,
       showHead: "firstPage",
       styles: { overflow: "hidden" },
     });

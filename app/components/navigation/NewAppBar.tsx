@@ -12,7 +12,7 @@ import {
   UserPlus,
   Users,
 } from "lucide-react";
-import { useMatches, useNavigate, useSubmit } from "@remix-run/react";
+import { useNavigate, useSubmit } from "@remix-run/react";
 
 import {
   DropdownMenu,
@@ -30,7 +30,7 @@ import {
 } from "../ui/dropdown-menu";
 import { colorVariants } from "~/utils/staticLists";
 import { useRouteData } from "~/hooks/useRouteData";
-import { getUser } from "~/utils/auth.server";
+import { type getUser } from "~/utils/auth.server";
 
 interface Props {
   page: string;
@@ -47,7 +47,7 @@ const NewAppBar: FC<Props> = ({
 }: Props) => {
   const submit = useSubmit();
   const user = useRouteData<Awaited<ReturnType<typeof getUser>>>("routes/app");
-  console.log({ user });
+
   const navigate = useNavigate();
   return (
     <>

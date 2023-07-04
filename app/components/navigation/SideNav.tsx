@@ -25,6 +25,7 @@ interface Props {
 const SideNav: FC<Props> = ({ page, handleNav, user }) => {
   const submit = useSubmit();
   const navigation = useNavigation();
+
   return (
     <div className="  justify-end bottom-0 top-0 left-2    fixed my-1 md:flex hidden bg-zinc-100 dark:bg-zinc-900">
       <div className="  dark:bg-zinc-800 bg-zinc-200 rounded-2xl w-full ">
@@ -88,36 +89,38 @@ const SideNav: FC<Props> = ({ page, handleNav, user }) => {
             />
           </div>
           <div className="flex-col justify-between flex pb-4">
-            <div className="flex flex-col gap-2">
-              <BottomNavButton
-                active={page}
-                handleNav={handleNav}
-                tooltip
-                colorVariant={12}
-                tooltipText="Settings"
-                path="dashboard"
-                Icon={Settings}
-              />
-              <BottomNavButton
-                active={page}
-                colorVariant={13}
-                handleNav={handleNav}
-                tooltip
-                tooltipText="Team Members"
-                path="dashboard"
-                Icon={Users}
-              />
-              <BottomNavButton
-                active={page}
-                colorVariant={14}
-                handleNav={handleNav}
-                tooltip
-                tooltipText="Billing"
-                path="dashboard"
-                Icon={CreditCard}
-              />
-              <div className="w-full border-t border-zinc-300 dark:border-zinc-700 mb-2 "></div>
-            </div>
+            {user?.orgOwner && (
+              <div className="flex flex-col gap-2">
+                <BottomNavButton
+                  active={page}
+                  handleNav={handleNav}
+                  tooltip
+                  colorVariant={12}
+                  tooltipText="Settings"
+                  path="dashboard"
+                  Icon={Settings}
+                />
+                <BottomNavButton
+                  active={page}
+                  colorVariant={13}
+                  handleNav={handleNav}
+                  tooltip
+                  tooltipText="Team Members"
+                  path="dashboard"
+                  Icon={Users}
+                />
+                <BottomNavButton
+                  active={page}
+                  colorVariant={14}
+                  handleNav={handleNav}
+                  tooltip
+                  tooltipText="Billing"
+                  path="dashboard"
+                  Icon={CreditCard}
+                />
+                <div className="w-full border-t border-zinc-300 dark:border-zinc-700 mb-2 "></div>
+              </div>
+            )}
             <div className="flex flex-col gap-2">
               <BottomNavButton
                 active={page}
