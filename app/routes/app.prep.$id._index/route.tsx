@@ -19,11 +19,19 @@ import { updateTask } from "~/utils/prepList.server";
 import type { getPrepListById } from "~/utils/prepList.server";
 import SlideUpTransition from "~/components/animations/SlideUp";
 import { getPdf } from "~/utils/pdf";
-import { ClipboardCheckIcon, Printer, Trash2Icon } from "lucide-react";
+import {
+  ClipboardCheckIcon,
+  FileWarningIcon,
+  Printer,
+  Trash2Icon,
+  XIcon,
+} from "lucide-react";
 import { useToast } from "~/components/ui/use-toast";
 import ComboBox from "~/components/formInputs/ComboBox";
 import { getMembers } from "~/utils/teams.server";
 import { getUser } from "~/utils/auth.server";
+import CustomModal from "~/components/display/CustomModal";
+import DeleteModal from "~/components/display/DeleteModal";
 
 export async function loader({ request }: LoaderArgs) {
   const user = await getUser(request);
@@ -69,6 +77,7 @@ function PrepListRoute() {
   const [deleting, setDeleting] = useState(false);
   const [pdfLoading, setPdfLoading] = useState(false);
   const [openTaskFocus, setOpenTaskFocus] = useState<boolean>(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   if (!prepList) return <h1> No Prep List Found </h1>;
   const generatepdf = async () => {
     setPdfLoading(true);
@@ -141,6 +150,11 @@ function PrepListRoute() {
           </div>
         </div>
       )}
+      <DeleteModal
+        isOpen={openDeleteModal}
+        setIsOpen={setOpenDeleteModal}
+        deleteFn={handleDeleteList}
+      />
       <AppBar
         page={prepList.name}
         textSize="text-3xl md:text-4xl"
@@ -148,7 +162,7 @@ function PrepListRoute() {
       >
         <IconButton
           name="Goback"
-          onClick={() => handleDeleteList()}
+          onClick={() => setOpenDeleteModal(true)}
           Icon={Trash2Icon}
           loading={deleting}
         />

@@ -29,6 +29,7 @@ import {
 import Spinner from "~/components/LoadingSpinner";
 import { useToast } from "~/components/ui/use-toast";
 import { getUser } from "~/utils/auth.server";
+import DeleteModal from "~/components/display/DeleteModal";
 
 export const loader = async ({ request }: LoaderArgs) => {
   const user = await getUser(request);
@@ -65,6 +66,7 @@ const EditRecipeRoute: FC = () => {
   const data = useActionData();
   const formRef = useRef<HTMLFormElement>(null);
   const [imageLoading, setImageLoading] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const submit = useSubmit();
   const { toast } = useToast();
   const [imageList, setImageList] = useState<string[]>(
@@ -138,12 +140,17 @@ const EditRecipeRoute: FC = () => {
     <div>
       <Form method="post" ref={formRef} onSubmit={handleSubmit}>
         <div className="">
+          <DeleteModal
+            isOpen={openDeleteModal}
+            setIsOpen={setOpenDeleteModal}
+            deleteFn={handleDeleteRecipe}
+          />
           <AppBar page={``} textSize="text-3xl lg:text-4xl ">
             <IconButton
               Icon={TrashIcon}
               name="delete"
               type="button"
-              onClick={handleDeleteRecipe}
+              onClick={() => setOpenDeleteModal(true)}
             />
             <IconButton Icon={CheckCircleIcon} name="Submit" type="submit" />
             <IconButton
