@@ -32,7 +32,7 @@ import {
 import TextInput from "~/components/formInputs/TextInput";
 
 const RecipeIndex: FC = () => {
-  const { recipe } = useRecipe();
+  const { recipe, user } = useRecipe();
   const navigate = useNavigate();
   const [scaleFactor, setScaleFactor] = useState(1);
   console.log({ scaleFactor });
@@ -65,11 +65,13 @@ const RecipeIndex: FC = () => {
   return (
     <>
       <AppBar page="">
-        <IconButton
-          Icon={PencilIcon}
-          name="Edit Recipe"
-          onClick={() => navigate("edit", { replace: true })}
-        />
+        {user!.role !== "cook" && (
+          <IconButton
+            Icon={PencilIcon}
+            name="Edit Recipe"
+            onClick={() => navigate("edit", { replace: true })}
+          />
+        )}
         {recipe.images.length > 0 && (
           <IconButton
             Icon={PhotoIcon}

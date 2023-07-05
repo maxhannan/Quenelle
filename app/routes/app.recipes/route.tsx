@@ -35,6 +35,7 @@ export async function loader({ request }: LoaderArgs) {
     teamid: user!.teams.map((t) => t.id),
   });
   return {
+    user,
     recipes,
     filteredRecipes: getFilteredRecipes(recipes, search, category, allergyArr),
     categories: recipes ? [...new Set(recipes.map((r) => r.category))] : [],
@@ -57,6 +58,7 @@ type ContextType = {
     field: "searchValue" | "category" | "allergies";
     value: string | string[] | null;
   }) => void;
+  user: Awaited<ReturnType<typeof loader>>["user"];
 };
 
 const RecipesLayout = () => {
@@ -102,7 +104,7 @@ const RecipesLayout = () => {
     });
   }
 
-  const { recipes, filteredRecipes, categories } =
+  const { user, recipes, filteredRecipes, categories } =
     useLoaderData<typeof loader>();
 
   const navigate = useNavigate();
@@ -115,12 +117,14 @@ const RecipesLayout = () => {
             <div>
               <div className=" ">
                 <NewAppBar page={"Recipes"}>
-                  <button
-                    onClick={() => navigate("addrecipe")}
-                    className=" font-light  bg-indigo-500 rounded-xl text-zinc-100 px-2 py-2 hover:bg-opacity-90 transition-all duration-300 inline-flex gap-1 items-center "
-                  >
-                    <PlusIcon className="h-5 w-5" /> Add Recipe
-                  </button>
+                  {user!.role !== "cook" && (
+                    <button
+                      onClick={() => navigate("addrecipe")}
+                      className=" font-light  bg-indigo-500 rounded-xl text-zinc-100 px-2 py-2 hover:bg-opacity-90 transition-all duration-300 inline-flex gap-1 items-center "
+                    >
+                      <PlusIcon className="h-5 w-5" /> Add Recipe
+                    </button>
+                  )}
                 </NewAppBar>
               </div>
 
@@ -154,6 +158,7 @@ const RecipesLayout = () => {
             categories,
             changeSearchValues,
             searchValues,
+            user,
           }}
         />
       </div>

@@ -13,10 +13,22 @@ import { CheckCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useRecipes } from "../app.recipes/route";
 import RecipeForm from "~/components/forms/RecipeForm";
 import { uploadImage } from "~/utils/images";
-import type { ActionFunction } from "@remix-run/node";
+import {
+  redirect,
+  type ActionFunction,
+  type LoaderArgs,
+} from "@remix-run/node";
 import { getUser } from "~/utils/auth.server";
 import { createRecipe, extractRecipe } from "~/utils/recipes.server";
 import Spinner from "~/components/LoadingSpinner";
+
+export async function loader({ request }: LoaderArgs) {
+  const user = await getUser(request);
+  if (user!.role === "cook") {
+    return redirect("/app/recipes");
+  }
+  return null;
+}
 
 export const action: ActionFunction = async ({ request }) => {
   const user = await getUser(request);

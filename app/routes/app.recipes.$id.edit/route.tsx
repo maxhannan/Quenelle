@@ -20,7 +20,11 @@ import RecipeForm from "~/components/forms/RecipeForm";
 import AppBar from "~/components/navigation/AppBar";
 import { uploadImage } from "~/utils/images";
 import IconButton from "~/components/buttons/IconButton";
-import type { ActionFunction, LoaderArgs } from "@remix-run/node";
+import {
+  redirect,
+  type ActionFunction,
+  type LoaderArgs,
+} from "@remix-run/node";
 import {
   extractRecipe,
   getRecipes,
@@ -33,11 +37,15 @@ import DeleteModal from "~/components/display/DeleteModal";
 
 export const loader = async ({ request }: LoaderArgs) => {
   const user = await getUser(request);
+  if (user!.role === "cook") {
+    return redirect("/app/recipes");
+  }
 
   const recipes = await getRecipes({
     all: true,
     teamid: user!.teams.map((t) => t.id),
   });
+
   return {
     user,
     recipes,
@@ -55,9 +63,14 @@ export const action: ActionFunction = async ({ request, params }) => {
   return recipeId;
 };
 
+type LoaderDataType = {
+  user: Awaited<ReturnType<typeof getUser>>;
+  recipes: Awaited<ReturnType<typeof getRecipes>>;
+  categories: string[];
+};
 const EditRecipeRoute: FC = () => {
   const { recipe } = useRecipe();
-  const { user, recipes, categories } = useLoaderData<typeof loader>();
+  const { user, recipes, categories } = useLoaderData<LoaderDataType>();
 
   const navigate = useNavigate();
   const revalidator = useRevalidator();
