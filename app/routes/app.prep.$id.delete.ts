@@ -1,4 +1,4 @@
-import { type ActionArgs } from "@remix-run/node";
+import { redirect, type ActionArgs } from "@remix-run/node";
 import { prisma } from "~/utils/prisma.server";
 
 export async function action({ request, params }: ActionArgs) {
@@ -9,7 +9,7 @@ export async function action({ request, params }: ActionArgs) {
         id,
       },
     });
-    return 0;
+    return redirect(`/app/prep`);
   } catch (e) {
     console.log(e);
     return null;

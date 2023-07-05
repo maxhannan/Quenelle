@@ -35,7 +35,11 @@ const TaskGroup: FC<Props> = ({ handleDelete, tg, recipeList }) => {
   const [selectedLink, setSelectedLink] = useState<string | undefined>(
     tg.linkDish?.id
   );
-
+  const [controlledVal, setControlledVal] = useState(
+    tg.linkDish || tg.value.length > 0
+      ? { id: tg.value, value: tg.value }
+      : undefined
+  );
   const [tasks, setTasks] = useState<TaskType[]>(tg.tasks);
   const dishes = recipeList?.filter((recipe) => recipe.dish);
   const groupRef = useRef<HTMLDivElement>(null);
@@ -62,7 +66,11 @@ const TaskGroup: FC<Props> = ({ handleDelete, tg, recipeList }) => {
       setTgName(value?.value || "");
     } else {
       setTgName(value?.value || "");
-      if (!value?.value || value?.value === "") setTasks([]);
+      setControlledVal(undefined);
+      if ((!value?.value || value?.value === "") && selectedLink) {
+        setTasks([]);
+        setSelectedLink(undefined);
+      }
     }
   };
 
@@ -104,13 +112,10 @@ const TaskGroup: FC<Props> = ({ handleDelete, tg, recipeList }) => {
           placeholder="Select or Create a Dish"
           allowCustom
           required
+          controlledValue={controlledVal}
           selectedLinkId={selectedLink}
           changeHandler={handleDishSelect}
-          initValue={
-            tg.linkDish || tg.value.length > 0
-              ? { id: tg.value, value: tg.value }
-              : undefined
-          }
+          initValue={controlledVal}
           options={
             dishes
               ? dishes

@@ -109,16 +109,10 @@ function PrepListRoute() {
       action: `/app/prep/${prepList!.id}/delete`,
       method: "POST",
     });
-    if (fetcher.data) {
-      toast({
-        title: "Prep List Deleted",
-      });
-      navigate("/app/prep");
-    } else {
-      toast({
-        title: "Prep List Not Deleted",
-      });
-    }
+    toast({
+      title: "Prep List Deleted",
+    });
+
     setDeleting(false);
   };
   const handleAssignList = async (id: string | null) => {
