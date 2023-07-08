@@ -134,6 +134,7 @@ export async function getUser(request: Request) {
         id: true,
         role: true,
         email: true,
+        lastLogin: true,
         username: true,
         firstName: true,
         lastName: true,

@@ -38,7 +38,9 @@ interface Props {
   children?: ReactNode;
   bottomPadding?: string;
 }
-
+type RouteData = {
+  user: Awaited<ReturnType<typeof getUser>>;
+};
 const NewAppBar: FC<Props> = ({
   page,
   textSize = "text-4xl",
@@ -46,8 +48,8 @@ const NewAppBar: FC<Props> = ({
   children,
 }: Props) => {
   const submit = useSubmit();
-  const user = useRouteData<Awaited<ReturnType<typeof getUser>>>("routes/app");
-
+  const data = useRouteData<RouteData>("routes/app");
+  const { user } = data!;
   const navigate = useNavigate();
   return (
     <>

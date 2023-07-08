@@ -15,11 +15,87 @@ import { Toaster } from "~/components/ui/toaster";
 import Spinner from "~/components/LoadingSpinner";
 
 import SideNav from "~/components/navigation/SideNav";
+import { prisma } from "~/utils/prisma.server";
+import {
+  compareAsc,
+  differenceInDays,
+  differenceInMilliseconds,
+  differenceInMinutes,
+  formatDistance,
+  subDays,
+} from "date-fns";
 
 export function ErrorBoundary() {
   return <ErrorBoundaryLayout />;
 }
 
+export const getFeedMessages = async (userId: string) => {
+  const feedMessages = await prisma.feedMessage.findMany({
+    where: {
+      teams: {
+        some: {
+          members: {
+            some: {
+              id: userId,
+            },
+          },
+        },
+      },
+    },
+    take: 50,
+    orderBy: {
+      createdAt: "desc",
+    },
+    include: {
+      linkRecipe: {
+        include: {
+          _count: {
+            select: {
+              ingredients: true,
+              linkedIngredients: true,
+              menu: true,
+              section: true,
+            },
+          },
+          author: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              colorVariant: true,
+            },
+          },
+        },
+      },
+      linkMenu: {
+        include: {
+          author: {
+            select: {
+              firstName: true,
+              lastName: true,
+              colorVariant: true,
+            },
+          },
+          _count: {
+            select: {
+              sections: true,
+              dishes: true,
+            },
+          },
+        },
+      },
+      author: {
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          colorVariant: true,
+        },
+      },
+    },
+  });
+  return feedMessages;
+};
 export async function loader({ request }: LoaderArgs) {
   await requireUserId(request);
 
@@ -35,16 +111,44 @@ export async function loader({ request }: LoaderArgs) {
       return redirect("/pending");
     }
   }
+  const lastLoginDistance = differenceInMinutes(
+    new Date(),
+    new Date(user.lastLogin)
+  );
+  console.log({ lastLoginDistance });
 
-  return user;
+  const feedMessages = await getFeedMessages(user.id);
+
+  const assignedLists = user!.assignedLists;
+
+  return { user, feedMessages, assignedLists };
 }
-
+type RouteData = {
+  user: Awaited<ReturnType<typeof getUser>>;
+  feedMessages: Awaited<ReturnType<typeof getFeedMessages>>;
+};
 const AppLayout = () => {
   const location = useLocation();
-  const user = useLoaderData<Awaited<ReturnType<typeof getUser>>>();
+  const { user, feedMessages } = useLoaderData<RouteData>();
   const [page, setPage] = useState(location.pathname.split("/")[2]);
   const navigate = useNavigate();
   const navigation = useNavigation();
+  const [ping, setPing] = useState(false);
+  useEffect(() => {
+    if (
+      feedMessages.filter((m) => {
+        if (
+          compareAsc(new Date(m.createdAt), new Date(user!.lastLogin)) === 1
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      }).length > 0
+    ) {
+      setPing(true);
+    }
+  }, [feedMessages]);
 
   const handleNav = (path: string) => {
     const pathString = `/app/${path}`;
@@ -74,8 +178,17 @@ const AppLayout = () => {
             <Outlet />
           )}
         </div>
-        {/* @ts-expect-error  date mismatch, not used*/}
-        <SideNav handleNav={handleNav} page={page} user={user} />
+
+        <SideNav
+          handleNav={handleNav}
+          page={page}
+          setPing={setPing}
+          // @ts-ignore weird date type error
+          user={user}
+          // @ts-ignore weird date type error
+          feedMessages={feedMessages}
+          ping={ping}
+        />
         <div className="md:hidden">
           <BottomNav page={page} setPage={setPage} />
         </div>
