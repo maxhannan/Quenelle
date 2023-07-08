@@ -25,7 +25,8 @@ export const getPdf = async (prepList: Preplist) => {
   let lastys = [];
 
   for (let i = 0; i < data.length; i++) {
-    const margin = i % 2 === 0 ? { right: 109 } : { left: 109 };
+    const margin =
+      i % 2 === 0 ? { right: 108, bottom: 20 } : { left: 107, bottom: 20 };
     autoTable(doc, {
       theme: "grid",
       ...data[i],
@@ -38,9 +39,9 @@ export const getPdf = async (prepList: Preplist) => {
         3: { cellWidth: 10 },
         4: { cellWidth: 10 },
       },
-      margin: margin,
-      startY: i > 1 ? lastys[i - 2] + 5 : 32,
-      showHead: "firstPage",
+      margin,
+      startY: i > 1 ? lastys[i - 2] : 32,
+
       styles: { overflow: "hidden" },
     });
     // @ts-ignore: next line is a hack to get around a bug in jspdf-autotable

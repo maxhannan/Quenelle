@@ -1,10 +1,9 @@
-import { useRef, type FC, useState, Dispatch } from "react";
+import type { FC, Dispatch } from "react";
 import { colorVariants } from "~/utils/staticLists";
 import BottomNavButton from "./BottomNavButton";
 import {
   ClipboardCheckIcon,
   FolderIcon,
-  Newspaper,
   List,
   StickyNote,
   Settings,
@@ -12,7 +11,6 @@ import {
   CreditCard,
   HelpCircle,
   LogOut,
-  XIcon,
   ChevronLeftSquareIcon,
 } from "lucide-react";
 import { useFetcher, useNavigation, useSubmit } from "@remix-run/react";
@@ -20,7 +18,9 @@ import { type getUser } from "~/utils/auth.server";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import type { getFeedMessages } from "~/routes/app/route";
 import FeedMessageFeed from "../display/FeedMessageFeed";
-import { set } from "date-fns";
+import { isToday } from "date-fns";
+import NewAppBar from "./NewAppBar";
+import RecipeCard from "../display/RecipesCard";
 
 interface Props {
   page: string;
@@ -48,6 +48,9 @@ const SideNav: FC<Props> = ({
     data.set("userId", user!.id);
     fetcher.submit(data, { method: "POST", action: "/app/userNotifications" });
   };
+  const assignedListsToday = user!.assignedLists.filter((l) => {
+    return isToday(new Date(l.date));
+  });
   return (
     <div className="  justify-end bottom-0 top-0 left-2    fixed my-1 md:flex hidden bg-zinc-100 dark:bg-zinc-900">
       <div className="  dark:bg-zinc-800 bg-zinc-200 rounded-2xl w-full ">
@@ -81,8 +84,36 @@ const SideNav: FC<Props> = ({
                 side="right"
                 sideOffset={25}
                 alignOffset={10}
-                className=" mt-2 bg-zinc-200 dark:bg-zinc-900  rounded-2xl border-zinc-300 shadow-lg p-0  min-w-96 w-[30rem] max-h-[30rem] overflow-y-scroll dark:border-zinc-700 z-10  md:block scrollbar-none"
+                className=" mt-2 bg-zinc-200 dark:bg-zinc-900  rounded-2xl border-zinc-300 shadow-lg p-2  min-w-96 w-[30rem] max-h-[50rem] overflow-y-scroll dark:border-zinc-700 z-10  md:block scrollbar-none"
               >
+                <NewAppBar
+                  page={`Hi ${user!.firstName}!`}
+                  bottomPadding="2"
+                ></NewAppBar>
+
+                <div className="mb-2">
+                  {assignedListsToday.length > 0 && (
+                    <div className="w-full flex flex-col gap-1 bg-zinc-200 bg-opacity-40 dark:bg-opacity-40 dark:bg-zinc-900 rounded-2xl">
+                      <div className="text-lg text-indigo-500  ">
+                        Your prep list{assignedListsToday.length > 1 && "s"} for
+                        today.
+                      </div>
+
+                      {assignedListsToday.map((l) => (
+                        <RecipeCard
+                          key={l.id}
+                          to={`/app/prep/${l.id}`}
+                          subHeading={`Assigned By ${l.author.firstName} ${l.author.lastName}`}
+                          user={(
+                            l.author.firstName[0] + l.author.lastName[0]
+                          ).toLowerCase()}
+                          name={l.name}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+
                 <FeedMessageFeed feedMessages={feedMessages} />
               </PopoverContent>
             </Popover>

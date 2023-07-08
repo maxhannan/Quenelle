@@ -16,14 +16,7 @@ import Spinner from "~/components/LoadingSpinner";
 
 import SideNav from "~/components/navigation/SideNav";
 import { prisma } from "~/utils/prisma.server";
-import {
-  compareAsc,
-  differenceInDays,
-  differenceInMilliseconds,
-  differenceInMinutes,
-  formatDistance,
-  subDays,
-} from "date-fns";
+import { compareAsc } from "date-fns";
 
 export function ErrorBoundary() {
   return <ErrorBoundaryLayout />;
@@ -111,11 +104,6 @@ export async function loader({ request }: LoaderArgs) {
       return redirect("/pending");
     }
   }
-  const lastLoginDistance = differenceInMinutes(
-    new Date(),
-    new Date(user.lastLogin)
-  );
-  console.log({ lastLoginDistance });
 
   const feedMessages = await getFeedMessages(user.id);
 
@@ -148,6 +136,7 @@ const AppLayout = () => {
     ) {
       setPing(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [feedMessages]);
 
   const handleNav = (path: string) => {
