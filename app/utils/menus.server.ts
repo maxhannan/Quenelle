@@ -354,7 +354,6 @@ export const getSectionbyId = async (id: string) => {
                   select: {
                     firstName: true,
                     lastName: true,
-                    colorVariant: true,
                   },
                 },
               },
@@ -367,6 +366,7 @@ export const getSectionbyId = async (id: string) => {
                 section: true,
               },
             },
+
             author: {
               select: {
                 firstName: true,

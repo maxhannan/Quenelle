@@ -52,7 +52,7 @@ const SideNav: FC<Props> = ({
     return isToday(new Date(l.date));
   });
   return (
-    <div className="  justify-end bottom-0 top-0 left-2    fixed my-1 md:flex hidden bg-zinc-100 dark:bg-zinc-900">
+    <div className="  justify-end bottom-0 top-0 left-2    fixed my-1 md:flex hidden  dark:bg-zinc-900">
       <div className="  dark:bg-zinc-800 bg-zinc-200 rounded-2xl w-full ">
         <div className="flex flex-col  justify-between  items-center h-full my-1 ">
           <div className="flex flex-col gap-4 items-center pt-2 relative">
@@ -84,7 +84,7 @@ const SideNav: FC<Props> = ({
                 side="right"
                 sideOffset={25}
                 alignOffset={10}
-                className=" mt-2 bg-zinc-200 dark:bg-zinc-900  rounded-2xl border-zinc-300 shadow-lg p-2  min-w-96 w-[30rem] max-h-[50rem] overflow-y-scroll dark:border-zinc-700 z-10  md:block scrollbar-none"
+                className=" mt-2 bg-zinc-200 dark:bg-zinc-900  rounded-2xl border-zinc-300 shadow-lg p-2 px-3 min-w-96 w-[30rem] max-h-[50rem] overflow-y-scroll dark:border-zinc-700 z-10  md:block scrollbar-none"
               >
                 <NewAppBar
                   page={`Hi ${user!.firstName}!`}

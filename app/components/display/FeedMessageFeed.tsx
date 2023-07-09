@@ -12,7 +12,7 @@ interface Props {
 
 const FeedMessageFeed: FC<Props> = ({ feedMessages }) => {
   return (
-    <div className="flex flex-col gap-2 rounded-2xl bg-zinc-200 bg-opacity-40 dark:bg-opacity-40 dark:bg-zinc-800 p-2">
+    <div className="flex flex-col gap-2 rounded-2xl bg-zinc-200 bg-opacity-40 dark:bg-opacity-40 dark:bg-zinc-800 ">
       {feedMessages.map((m) => (
         <div
           key={m.id}

@@ -94,7 +94,7 @@ function MenuIndex() {
                 return (
                   <div
                     key={s.id}
-                    className="flex flex-col gap-2 bg-zinc-100 dark:bg-zinc-900 rounded-2xl p-2 border border-zinc-300 dark:border-zinc-700 "
+                    className="flex flex-col gap-2  dark:bg-zinc-900 rounded-2xl p-2 border border-zinc-300 dark:border-zinc-700 "
                   >
                     <div className="text-2xl border border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800 gap-3 bg-opacity-75 bg-zinc-200  px-4 w-full items-center flex justify-between dark:text-zinc-200 p-4  text-zinc-600 rounded-xl font-light ">
                       <div>{s.name}</div>
