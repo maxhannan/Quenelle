@@ -44,7 +44,7 @@ const BottomNavButton = ({
           className={` transition-all duration-300 w-12 h-12 sm:w-12 sm:h-12 flex items-center justify-center rounded-full ${
             active === path
               ? `${colorVariants[colorVariant]} text-zinc-800 xl:text-zinc-800    xl:bg-zinc-800    `
-              : "dark:bg-zinc-200 bg-zinc-800 text-zinc-200 dark:text-zinc-800 xl:dark:bg-zinc-800 xl:bg-zinc-200 xl:text-zinc-800 xl:dark:text-zinc-200 "
+              : "dark:bg-zinc-800 bg-zinc-50 md:bg-zinc-200 text-zinc-800 dark:text-zinc-200  "
           } `}
         >
           <Icon className={"  w-7 h-7   "} />
@@ -75,7 +75,7 @@ const BottomNavButton = ({
               className={` transition-all duration-300 w-12 h-12 sm:w-12 sm:h-12 flex items-center justify-center rounded-full ${
                 active === path
                   ? `${colorVariants[colorVariant]} text-zinc-800   `
-                  : "dark:bg-zinc-200 bg-zinc-800 text-zinc-200 dark:text-zinc-800 md:dark:bg-zinc-800 md:bg-zinc-200 md:text-zinc-800 md:dark:text-zinc-200 "
+                  : " dark:bg-zinc-800 bg-zinc-200 text-zinc-800 dark:text-zinc-200 "
               } `}
             >
               <Icon className={"  w-7 h-7   "} />

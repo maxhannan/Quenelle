@@ -112,7 +112,7 @@ const RecipesLayout = () => {
   return (
     <div className="flex">
       <div className="relative xl:w-1/3 2xl:w-1/4 border-r dark:border-zinc-800 h-screen bg-zinc-100  dark:bg-zinc-900 overflow-y-scroll flex-none hidden xl:flex scrollbar-none scrollbar-track-zinc-100 dark:scrollbar-track-zinc-900 scrollbar-thumb-zinc-600 dark:scrollbar-thumb-zinc-500 scrollbar-thumb-rounded-2xl">
-        <div className=" w-full px-3 ">
+        <div className=" w-full pr-3 pl-2 ">
           <div className="grid grid-cols-1   ">
             <div>
               <div className=" ">
