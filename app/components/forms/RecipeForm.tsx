@@ -17,6 +17,8 @@ import IngredientsSection from "./RecipeFormSections/IngredientsSection";
 import RecipeStepSection from "./RecipeFormSections/RecipeStepSection";
 import { v4 } from "uuid";
 import SlideUpTransition from "../animations/SlideUp";
+import ColorButton from "../buttons/ColorButton";
+import { Save } from "lucide-react";
 
 interface Props {
   recipe?: FullRecipe;
@@ -129,33 +131,19 @@ const RecipeForm: FC<Props> = ({
             ingredients={recipeValues.ingredients}
           />
           <RecipeStepSection stepsArr={recipeValues.steps} />
-          {recipe ? (
-            <LoadingButton
-              loading={
-                navigation.state === "submitting" ||
-                navigation.state === "loading" ||
-                formLoading
-              }
-              type="submit"
-              buttonName="updateRecipe"
-              buttonText="Update Recipe"
-              loadingText="Updating..."
-              Icon={ArrowPathIcon}
-            />
-          ) : (
-            <LoadingButton
-              loading={
-                navigation.state === "submitting" ||
-                navigation.state === "loading" ||
-                formLoading
-              }
-              type="submit"
-              buttonName="addRecipe"
-              buttonText="Add Recipe"
-              loadingText="Adding..."
-              Icon={PlusCircleIcon}
-            />
-          )}
+          <div className="w-full flex justify-end">
+            <ColorButton color={"green"}>
+              {recipe ? (
+                <>
+                  <ArrowPathIcon className="h-4 w-4" /> Update Recipe
+                </>
+              ) : (
+                <>
+                  <Save className="h-4 w-4" /> Save Recipe
+                </>
+              )}
+            </ColorButton>
+          </div>
         </div>
       </div>
     </SlideUpTransition>

@@ -34,6 +34,7 @@ import Spinner from "~/components/LoadingSpinner";
 import { useToast } from "~/components/ui/use-toast";
 import { getUser } from "~/utils/auth.server";
 import DeleteModal from "~/components/display/DeleteModal";
+import FormBar from "~/components/display/FormBar";
 
 export const loader = async ({ request }: LoaderArgs) => {
   const user = await getUser(request);
@@ -80,6 +81,8 @@ const EditRecipeRoute: FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const [imageLoading, setImageLoading] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const formBarRef = useRef<HTMLButtonElement>(null);
   const submit = useSubmit();
   const { toast } = useToast();
   const [imageList, setImageList] = useState<string[]>(
@@ -158,24 +161,9 @@ const EditRecipeRoute: FC = () => {
             setIsOpen={setOpenDeleteModal}
             deleteFn={handleDeleteRecipe}
           />
-          <AppBar page={``} textSize="text-3xl lg:text-4xl ">
-            <IconButton
-              Icon={TrashIcon}
-              name="delete"
-              type="button"
-              onClick={() => setOpenDeleteModal(true)}
-            />
-            <IconButton Icon={CheckCircleIcon} name="Submit" type="submit" />
-            <IconButton
-              Icon={XMarkIcon}
-              name="Go Back"
-              type="button"
-              onClick={() =>
-                navigate(`/app/recipes/${recipe!.id}`, { replace: true })
-              }
-            />
-          </AppBar>
+          <FormBar ref={formBarRef} setVisible={setVisible} saveText="Recipe" />
         </div>
+        <div className="h-20 md:h-0" />
         <div className="container mx-auto max-w-4xl lg:pl-2">
           <RecipeForm
             recipe={recipe}

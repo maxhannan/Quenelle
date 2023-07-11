@@ -63,7 +63,7 @@ const RecipeIndex: FC = () => {
   }
 
   return (
-    <>
+    <div className="container mx-auto max-w-6xl">
       <AppBar page="">
         {user!.role !== "cook" && (
           <IconButton
@@ -115,7 +115,7 @@ const RecipeIndex: FC = () => {
           onClick={() => navigate(-1)}
         />
       </AppBar>
-      <main className="pb-32 container mx-auto xl:pl-2">
+      <main className="pb-32  xl:pl-2">
         {recipe.images.length > 0 && (
           <Carousel
             isOpen={isOpen}
@@ -213,7 +213,7 @@ const RecipeIndex: FC = () => {
           </div>
         </SlideUpTransition>
       </main>
-    </>
+    </div>
   );
 };
 

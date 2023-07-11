@@ -11,8 +11,7 @@ import { extractMenu, getMenus, updateMenu } from "~/utils/menus.server";
 import { serviceList } from "~/utils/staticLists";
 
 import Spinner from "~/components/LoadingSpinner";
-import { CheckCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import IconButton from "~/components/buttons/IconButton";
+
 import MenuForm from "~/components/forms/MenuForm";
 import AppBar from "~/components/navigation/AppBar";
 import {
@@ -21,10 +20,10 @@ import {
   type LoaderArgs,
 } from "@remix-run/node";
 import { getUser } from "~/utils/auth.server";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useToast } from "~/components/ui/use-toast";
 import { Save, XCircle } from "lucide-react";
-import useScrollPosition from "~/hooks/useScroll";
+
 import { useIsVisible } from "~/hooks/useIsVisible";
 
 export async function loader({ request }: LoaderArgs) {
