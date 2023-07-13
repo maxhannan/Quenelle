@@ -61,7 +61,7 @@ const PrepCalendar: FC<Props> = ({ date, handleDateChange, size }) => {
         <Dialog
           open={isOpen}
           onClose={() => setIsOpen(false)}
-          className="relative z-50"
+          className="relative z-50 h-screen"
         >
           <Transition.Child
             as={React.Fragment}
@@ -72,7 +72,10 @@ const PrepCalendar: FC<Props> = ({ date, handleDateChange, size }) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black/90" aria-hidden="true" />
+            <div
+              className="fixed inset-0 bg-black/90 h-screen"
+              aria-hidden="true"
+            />
           </Transition.Child>
           <div className="fixed inset-0 flex items-center justify-center p-4">
             <Transition.Child
