@@ -1,11 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { FC, FormEventHandler } from "react";
 import { useRecipe } from "../app.recipes.$id/route";
-import {
-  CheckCircleIcon,
-  TrashIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+
 import {
   useNavigate,
   useNavigation,
@@ -17,9 +13,9 @@ import {
   useLoaderData,
 } from "@remix-run/react";
 import RecipeForm from "~/components/forms/RecipeForm";
-import AppBar from "~/components/navigation/AppBar";
+
 import { uploadImage } from "~/utils/images";
-import IconButton from "~/components/buttons/IconButton";
+
 import {
   redirect,
   type ActionFunction,

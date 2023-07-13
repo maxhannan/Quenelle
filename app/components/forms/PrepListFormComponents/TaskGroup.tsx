@@ -10,8 +10,9 @@ import type { FullRecipes } from "~/utils/recipes.server";
 import Task from "./Task";
 import { v4 } from "uuid";
 
-import { PlusIcon } from "lucide-react";
+import { PlusIcon, Trash2Icon } from "lucide-react";
 import type { TaskGroupType } from "../PrepListForm";
+import IconColorButton from "~/components/buttons/IconColorButton";
 
 interface Props {
   handleDelete: (id: string) => void;
@@ -106,7 +107,7 @@ const TaskGroup: FC<Props> = ({ handleDelete, tg, recipeList }) => {
       ref={groupRef}
       className="border border-zinc-300 dark:border-zinc-700 rounded-2xl col-span-5 flex flex-col gap-2 "
     >
-      <div className="flex gap-x-2 bg-zinc-200 dark:bg-zinc-800 p-2 h-16 rounded-tl-2xl rounded-tr-2xl  ">
+      <div className="flex gap-x-2 bg-zinc-200 dark:bg-zinc-800 p-2 h-16 rounded-tl-2xl rounded-tr-2xl items-center  ">
         <ComboBox
           name="dish"
           placeholder="Select or Create a Dish"
@@ -125,8 +126,9 @@ const TaskGroup: FC<Props> = ({ handleDelete, tg, recipeList }) => {
           }
         />
         <div className="flex justify-center items-center ml-auto">
-          <IconButton
-            Icon={XMarkIcon}
+          <IconColorButton
+            Icon={Trash2Icon}
+            color="rose"
             name="deleteRecipe"
             onClick={() => handleDelete(tg.id)}
           />

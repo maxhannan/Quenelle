@@ -7,6 +7,8 @@ import ComboBox from "~/components/formInputs/ComboBox";
 import TextInput from "~/components/formInputs/TextInput";
 import { unitsList } from "~/utils/staticLists";
 import type { FullRecipes } from "~/utils/recipes.server";
+import IconColorButton from "~/components/buttons/IconColorButton";
+import { XCircleIcon } from "lucide-react";
 
 interface Props {
   task: TaskType;
@@ -44,9 +46,9 @@ const Task: FC<Props> = ({
           />
         </div>
         <div className="flex justify-center items-center ml-auto">
-          <IconButton
-            Icon={XMarkIcon}
-            size={12}
+          <IconColorButton
+            Icon={XCircleIcon}
+            color="zinc"
             name="deleteRecipe"
             onClick={() => deleteTask(task.id)}
           />

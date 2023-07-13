@@ -101,11 +101,20 @@ const PrepListForm: FC<Props> = ({ recipeList, template }) => {
   return (
     <SlideUpTransition>
       <div className="flex flex-col gap-3 mt-2 relative">
-        <TextInput
-          name="listName"
-          placeholder="Prep List Name"
-          initValue={formValues.name}
-        />
+        <div className="flex flex-col gap-1">
+          <label
+            htmlFor="listName"
+            className=" text-zinc-700 dark:text-zinc-300 tetx-lg "
+          >
+            Title <span className="text-red-500">*</span>
+          </label>
+
+          <TextInput
+            name="listName"
+            placeholder="Prep List Name"
+            initValue={formValues.name}
+          />
+        </div>
         {!template && (
           <div className="flex  gap-2">
             <input type="hidden" name="date" value={date.toString()} />
@@ -146,8 +155,8 @@ const PrepListForm: FC<Props> = ({ recipeList, template }) => {
         )}
         <div className="grid grid-cols-5  gap-y-4 gap-x-2 w-full  z-20">
           <div className="flex gap-x-2 col-span-5">
-            <div className="grow h-14   inline-flex items-center border border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800 bg-zinc-200 transition-all duration-300   pl-3 font-light rounded-2xl text-lg text-zinc-800 dark:text-zinc-200  ">
-              <h4 className="text-3xl  ">Task Groups</h4>
+            <div className="grow h-12   inline-flex items-center border border-zinc-300 dark:border-zinc-700 dark:bg-zinc-800 bg-zinc-200 transition-all duration-300   pl-3 font-light rounded-2xl text-lg text-zinc-800 dark:text-zinc-200  ">
+              <h4 className="text-2xl  ">Task Groups</h4>
             </div>
           </div>
         </div>

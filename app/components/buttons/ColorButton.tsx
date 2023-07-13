@@ -44,7 +44,7 @@ export const buttonStyleVariants = {
   fuchsia:
     "bg-fuchsia-300 text-fuchsia-900 hover:bg-fuchsia-400 hover:text-fuchsia-900",
   rose: "bg-rose-300 text-rose-900 hover:bg-rose-400 hover:text-rose-900",
-  zinc: "bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-700 dark:text-zinc-300 dark:hover:text-zinc-200 text-zinc-700 hover:bg-zinc-300 hover:text-zinc-900",
+  zinc: "bg-zinc-200 bg-opacity-80 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:text-zinc-300 dark:hover:text-zinc-200 text-zinc-700 hover:bg-zinc-300 hover:text-zinc-900",
   amber: "bg-amber-300 text-amber-900 hover:bg-amber-400 hover:text-amber-900",
 };
 const ColorButton: FC<Props> = ({ color, loading, loadingText, ...rest }) => {

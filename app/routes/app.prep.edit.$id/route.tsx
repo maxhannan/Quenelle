@@ -23,6 +23,7 @@ import { getRecipes } from "~/utils/recipes.server";
 import { getUser } from "~/utils/auth.server";
 import { useEffect, useState } from "react";
 import { useToast } from "~/components/ui/use-toast";
+import FormControls from "~/components/display/FormControls";
 
 export async function loader({ params, request }: LoaderArgs) {
   const id = params.id;
@@ -83,7 +84,7 @@ function EditTemplateRoute() {
 
   if (!template) return <h1>No Template Found </h1>;
   return (
-    <div className="mb-28 container max-w-4xl mx-auto">
+    <div className="mb-28 container max-w-4xl mx-auto md:px-4">
       {navigation.state === "loading" ||
         (navigation.state === "submitting" && (
           <div
@@ -96,16 +97,8 @@ function EditTemplateRoute() {
           </div>
         ))}
       <Form method="post">
-        <AppBar textSize="text-3xl md:text-4xl" page={`Edit ${template.name}`}>
-          <IconButton Icon={CheckCircleIcon} name="Submit" type="submit" />
-          <IconButton
-            Icon={XMarkIcon}
-            name="Go Back"
-            type="button"
-            onClick={() => navigate(-1)}
-          />
-        </AppBar>
-
+        <FormControls saveText="Prep List" />
+        <div className="h-16 md:hidden" />
         <PrepListForm recipeList={allRecipes} template={template} />
       </Form>
     </div>

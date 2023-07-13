@@ -11,7 +11,6 @@ import Spinner from "~/components/LoadingSpinner";
 import Accordion from "~/components/display/Accordion";
 
 import AppBar from "~/components/navigation/AppBar";
-import IconButton from "~/components/buttons/IconButton";
 import { ArrowUturnLeftIcon } from "@heroicons/react/24/outline";
 import PrepListItem from "./components/PrepListItem";
 import type { ActionFunction, LoaderArgs } from "@remix-run/node";
@@ -19,18 +18,11 @@ import { updateTask } from "~/utils/prepList.server";
 import type { getPrepListById } from "~/utils/prepList.server";
 import SlideUpTransition from "~/components/animations/SlideUp";
 import { getPdf } from "~/utils/pdf";
-import {
-  ClipboardCheckIcon,
-  FileWarningIcon,
-  Printer,
-  Trash2Icon,
-  XIcon,
-} from "lucide-react";
+import { ClipboardCheckIcon, Printer, Trash2Icon } from "lucide-react";
 import { useToast } from "~/components/ui/use-toast";
 import ComboBox from "~/components/formInputs/ComboBox";
 import { getMembers } from "~/utils/teams.server";
 import { getUser } from "~/utils/auth.server";
-import CustomModal from "~/components/display/CustomModal";
 import DeleteModal from "~/components/display/DeleteModal";
 import IconColorButton from "~/components/buttons/IconColorButton";
 

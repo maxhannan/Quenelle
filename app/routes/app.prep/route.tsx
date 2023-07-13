@@ -189,10 +189,10 @@ function PrepListsLayout() {
                 </div>
               </div>
             </Form>
-            <div className="relative flex py-2 items-center">
-              <div className="flex-grow border-t border-zinc-700"></div>
-              <span className="flex-shrink mx-4 text-zinc-400">Or</span>
-              <div className="flex-grow border-t border-zinc-700"></div>
+            <div className="relative flex py-1 items-center">
+              <div className="flex-grow border-t border-zinc-500"></div>
+              <span className="flex-shrink mx-4 text-zinc-500">Or</span>
+              <div className="flex-grow border-t border-zinc-500"></div>
             </div>
             <div className="w-full flex flex-col gap-2  ">
               <ComboBox
@@ -226,10 +226,10 @@ function PrepListsLayout() {
                 <ArrowRightIcon className="h-6 w-6" />
               </ColorButton>
             </div>
-            <div className="relative flex py-2 items-center">
-              <div className="flex-grow border-t border-zinc-700"></div>
-              <span className="flex-shrink mx-4 text-zinc-400">Or</span>
-              <div className="flex-grow border-t border-zinc-700"></div>
+            <div className="relative flex py-1 items-center">
+              <div className="flex-grow border-t border-zinc-500"></div>
+              <span className="flex-shrink mx-4 text-zinc-500">Or</span>
+              <div className="flex-grow border-t border-zinc-500"></div>
             </div>
 
             <ColorButton
