@@ -24,14 +24,14 @@ const BottomNav = ({ page, setPage }: Props) => {
   };
 
   return (
-    <nav className="fixed z-50 w-[85vw] sm:w-96 py-3 transition-all duration-300  bottom-6 sm:bottom-6 inset-x-0 mx-auto px-2 dark:bg-zinc-800 rounded-full  bg-zinc-50 ">
+    <nav className="fixed z-50 w-[80vw] sm:w-96 py-3 transition-all duration-300  bottom-6 sm:bottom-6 inset-x-0 mx-auto px-2 dark:bg-zinc-800 rounded-2xl  bg-zinc-50 ">
       <div className="grid h-full max-w-lg  mx-auto grid-cols-5 gap-0">
         <BottomNavButton
           active={page}
           handleNav={handleNav}
           path="prep"
           tooltipPosition="top"
-          colorVariant={1}
+          color="red"
           Icon={ClipboardCheckIcon}
         />
         <BottomNavButton
@@ -39,7 +39,7 @@ const BottomNav = ({ page, setPage }: Props) => {
           handleNav={handleNav}
           path="recipes"
           tooltipPosition="top"
-          colorVariant={3}
+          color="amber"
           Icon={FolderIcon}
         />
 
@@ -48,7 +48,7 @@ const BottomNav = ({ page, setPage }: Props) => {
           handleNav={handleNav}
           path=""
           tooltipPosition="top"
-          colorVariant={5}
+          color="blue"
           Icon={NewspaperIcon}
         />
         <BottomNavButton
@@ -56,7 +56,7 @@ const BottomNav = ({ page, setPage }: Props) => {
           handleNav={handleNav}
           path="menus"
           tooltipPosition="top"
-          colorVariant={2}
+          color="green"
           Icon={QueueListIcon}
         />
 
@@ -64,7 +64,7 @@ const BottomNav = ({ page, setPage }: Props) => {
           active={page}
           handleNav={handleNav}
           path="chat"
-          colorVariant={11}
+          color="purple"
           Icon={StickyNote}
         />
       </div>

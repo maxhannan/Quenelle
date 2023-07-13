@@ -136,15 +136,8 @@ function HomeRoute() {
             key={m.id}
             className="flex flex-col gap-2 rounded-2xl bg-zinc-100 dark:bg-zinc-900 p-2 text-zinc-700"
           >
-            <div className="flex gap-2 items-center">
-              <Avatar
-                content={(
-                  m.author.firstName[0] + m.author.lastName[0]
-                ).toLowerCase()}
-                color={colorVariants[m.author.colorVariant]}
-              />
-
-              <h3 className=" dark:text-zinc-200 text-zinc-700 text-sm md:text-base">
+            <div className="flex gap-2 items-center px-2">
+              <h3 className=" dark:text-zinc-200 text-zinc-700 text-sm md:text-base ">
                 {m.content}
               </h3>
               {m.content.includes("updated") ? (

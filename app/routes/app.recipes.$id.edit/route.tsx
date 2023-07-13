@@ -82,7 +82,7 @@ const EditRecipeRoute: FC = () => {
   const [imageLoading, setImageLoading] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [visible, setVisible] = useState(true);
-  const formBarRef = useRef<HTMLButtonElement>(null);
+  const formBarRef = useRef<HTMLDivElement>(null);
   const submit = useSubmit();
   const { toast } = useToast();
   const [imageList, setImageList] = useState<string[]>(

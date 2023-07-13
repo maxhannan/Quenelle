@@ -20,6 +20,7 @@ import Spinner from "~/components/LoadingSpinner";
 import RecipeFeed from "../app.recipes._index/components/RecipeFeed";
 
 import { getUser } from "~/utils/auth.server";
+import ColorButton from "~/components/buttons/ColorButton";
 
 export async function loader({ request }: LoaderArgs) {
   const url = new URL(request.url);
@@ -118,12 +119,14 @@ const RecipesLayout = () => {
               <div className=" ">
                 <NewAppBar page={"Recipes"}>
                   {user!.role !== "cook" && (
-                    <button
+                    <ColorButton
+                      color="indigo"
+                      type="button"
                       onClick={() => navigate("addrecipe")}
-                      className=" font-light  bg-indigo-500 rounded-xl text-zinc-100 px-2 py-2 hover:bg-opacity-90 transition-all duration-300 inline-flex gap-1 items-center "
                     >
-                      <PlusIcon className="h-5 w-5" /> Add Recipe
-                    </button>
+                      <PlusIcon className="h-5 w-5" />
+                      Add Recipe
+                    </ColorButton>
                   )}
                 </NewAppBar>
               </div>

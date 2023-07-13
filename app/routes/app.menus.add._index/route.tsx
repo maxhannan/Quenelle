@@ -10,6 +10,7 @@ import { createMenu, extractMenu } from "~/utils/menus.server";
 import { redirect } from "@remix-run/node";
 import type { ActionFunction } from "@remix-run/node";
 import { getUser } from "~/utils/auth.server";
+import FormBar from "~/components/display/FormBar";
 
 export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData();
@@ -44,15 +45,7 @@ function AddMenuIndex() {
   }
   return (
     <Form method="post">
-      <AppBar page="Add a Menu">
-        <IconButton Icon={CheckCircleIcon} name="Submit" type="submit" />
-        <IconButton
-          Icon={XMarkIcon}
-          name="Go Back"
-          type="button"
-          onClick={() => navigate(-1)}
-        />
-      </AppBar>
+      <FormBar saveText="Menu" />
       <MenuForm dishes={dishes} services={services} />
     </Form>
   );

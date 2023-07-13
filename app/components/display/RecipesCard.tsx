@@ -2,6 +2,7 @@ import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "@remix-run/react";
 import type { FC } from "react";
 import { colorVariants } from "~/utils/staticLists";
+import { buttonStyleVariants } from "../buttons/ColorButton";
 
 interface Props {
   subHeading: string;
@@ -21,6 +22,10 @@ const RecipeCard: FC<Props> = ({
   colorVariant = 0,
 }) => {
   const navigate = useNavigate();
+  const colors = Object.values(buttonStyleVariants).filter(
+    (color) => !color.includes("zinc") || !color.includes("gray")
+  );
+  console.log({ colors });
   return (
     <div
       onClick={() => navigate(to)}
@@ -32,10 +37,8 @@ const RecipeCard: FC<Props> = ({
     >
       <div
         className={`${
-          active
-            ? "bg-indigo-500 text-zinc-200"
-            : `${colorVariants[colorVariant]}  text-zinc-700 dark:text-zinc-700 `
-        } trasition-all duration-300 inline-flex group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center mr-4 justify-center w-14 h-14 overflow-hidden group-hover:border-indigo-500 border-zinc-500 rounded-full   dark:border-zinc-700`}
+          active ? "bg-indigo-500 text-zinc-200" : colors[colorVariant]
+        } trasition-all duration-300 inline-flex group-hover:bg-indigo-500  group-hover:text-zinc-200  child flex-shrink-0 items-center mr-4 justify-center w-14 h-14 overflow-hidden group-hover:border-indigo-500 border-zinc-500 rounded-2xl   dark:border-zinc-700`}
       >
         <span className=" text-2xl lg:text-2xl ">{user.toLowerCase()}</span>
       </div>

@@ -7,6 +7,7 @@ import {
   TooltipTrigger,
 } from "../ui/Tooltip";
 import { colorVariants } from "~/utils/staticLists";
+import { ButtonColor, buttonStyleVariants } from "../buttons/ColorButton";
 
 interface Props {
   handleNav: (path: string) => void;
@@ -16,7 +17,7 @@ interface Props {
   tooltip?: boolean;
   tooltipText?: string;
   tooltipPosition?: "top" | "right";
-  colorVariant?: number;
+  color: ButtonColor;
 }
 
 const BottomNavButton = ({
@@ -27,7 +28,7 @@ const BottomNavButton = ({
   tooltip = false,
   tooltipText,
   tooltipPosition = "right",
-  colorVariant = 0,
+  color,
 }: Props) => {
   const navigation = useNavigation();
   if (!tooltip) {
@@ -41,9 +42,9 @@ const BottomNavButton = ({
         className="inline-flex flex-col items-center justify-center px-4 rounded-l-lg   group"
       >
         <div
-          className={` transition-all duration-300 w-12 h-12 sm:w-12 sm:h-12 flex items-center justify-center rounded-full ${
+          className={` transition-all duration-300 w-12 h-12 sm:w-12 sm:h-12 flex items-center justify-center rounded-2xl ${
             active === path
-              ? `${colorVariants[colorVariant]} text-zinc-800 xl:text-zinc-800    xl:bg-zinc-800    `
+              ? buttonStyleVariants[color]
               : "dark:bg-zinc-800 bg-zinc-50 md:bg-zinc-200 text-zinc-800 dark:text-zinc-200  "
           } `}
         >
@@ -72,9 +73,9 @@ const BottomNavButton = ({
             className="inline-flex flex-col items-center justify-center px-4 rounded-l-lg   group"
           >
             <div
-              className={` transition-all duration-300 w-12 h-12 sm:w-12 sm:h-12 flex items-center justify-center rounded-full ${
+              className={` transition-all duration-300 w-12 h-12 sm:w-12 sm:h-12 flex items-center justify-center rounded-2xl ${
                 active === path
-                  ? `${colorVariants[colorVariant]} text-zinc-800   `
+                  ? buttonStyleVariants[color]
                   : " dark:bg-zinc-800 bg-zinc-200 text-zinc-800 dark:text-zinc-200 "
               } `}
             >

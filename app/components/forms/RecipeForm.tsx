@@ -4,15 +4,9 @@ import TextInput from "../formInputs/TextInput";
 import ComboBox from "../formInputs/ComboBox";
 import ImageInput from "../formInputs/ImageInput";
 import { IMAGE_URL } from "~/utils/images";
-import {
-  ArrowPathIcon,
-  PlusCircleIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowPathIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { allergens, unitsList } from "~/utils/staticLists";
 import MultiSelect from "../formInputs/MultiSelect";
-import LoadingButton from "../buttons/LoadingButton";
-import { useNavigation } from "@remix-run/react";
 import IngredientsSection from "./RecipeFormSections/IngredientsSection";
 import RecipeStepSection from "./RecipeFormSections/RecipeStepSection";
 import { v4 } from "uuid";
@@ -38,7 +32,6 @@ const RecipeForm: FC<Props> = ({
   recipes,
   categories,
 }) => {
-  const navigation = useNavigation();
   const recipeValues = recipe
     ? formatRecipe(recipe)
     : {

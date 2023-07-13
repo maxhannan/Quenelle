@@ -1,6 +1,6 @@
 import { useState, type FC } from "react";
 
-import { ChevronDown, Trash } from "lucide-react";
+import { ChevronDown, Trash, Trash2Icon } from "lucide-react";
 
 import { Button } from "~/components/ui/button";
 
@@ -85,14 +85,13 @@ const ApprovedCard: FC<Props> = ({ m, teamId }) => {
         </div>
       </div>
       <div className="flex justify-end gap-2">
-        <Button
+        <button
           onClick={handleRemove}
-          variant="outline"
-          className="mr-auto bg-zinc-100 dark:bg-zinc-900 rounded-lg text-zinc-800 dark:text-zinc-200 border text-xs md:text-sm py-2 px-2 font-light border-red-400  h-8"
+          className="bg-red-300 text-red-800 hover:bg-red-400 hover:text-red-900 font-light rounded-lg text-sm px-2 py-2 transition-all duration-300 inline-flex gap-1.5 items-center  mr-auto  h-8"
         >
           Remove
-          <Trash className="ml-2 h-4 w-4 text-muted-foreground" />
-        </Button>
+          <Trash2Icon className="h-4 w-4 text-muted-foreground" />
+        </button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button

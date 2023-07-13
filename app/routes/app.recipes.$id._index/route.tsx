@@ -30,6 +30,9 @@ import {
   PopoverTrigger,
 } from "~/components/ui/popover";
 import TextInput from "~/components/formInputs/TextInput";
+import IconColorButton from "~/components/buttons/IconColorButton";
+import { Edit2Icon } from "lucide-react";
+import ColorButton from "~/components/buttons/ColorButton";
 
 const RecipeIndex: FC = () => {
   const { recipe, user } = useRecipe();
@@ -66,16 +69,20 @@ const RecipeIndex: FC = () => {
     <div className="container mx-auto max-w-6xl">
       <AppBar page="">
         {user!.role !== "cook" && (
-          <IconButton
-            Icon={PencilIcon}
+          <IconColorButton
+            Icon={Edit2Icon}
             name="Edit Recipe"
+            type="button"
+            color="amber"
             onClick={() => navigate("edit", { replace: true })}
           />
         )}
         {recipe.images.length > 0 && (
-          <IconButton
+          <IconColorButton
             Icon={PhotoIcon}
             name="Open Gallery"
+            type="button"
+            color="pink"
             onClick={() => setIsOpen(!isOpen)}
           />
         )}
@@ -83,9 +90,11 @@ const RecipeIndex: FC = () => {
         <Popover>
           <PopoverTrigger>
             {" "}
-            <IconButton
+            <IconColorButton
               Icon={ScaleIcon}
               name="Scale Recipe"
+              type="button"
+              color="purple"
               onClick={() => console.log("edit")}
             />
           </PopoverTrigger>
@@ -109,8 +118,10 @@ const RecipeIndex: FC = () => {
             />
           </PopoverContent>
         </Popover>
-        <IconButton
+        <IconColorButton
           Icon={ArrowUturnLeftIcon}
+          type="button"
+          color="zinc"
           name="Go Back"
           onClick={() => navigate(-1)}
         />
@@ -147,14 +158,14 @@ const RecipeIndex: FC = () => {
                   {recipe?.yieldAmt + " " + recipe?.yieldUnit}{" "}
                 </div>
                 <div>
-                  <div
+                  <ColorButton
                     onClick={() =>
                       navigate(`/app/recipes?category=${recipe.category}`)
                     }
-                    className=" flex items-center gap-2 border font-bold border-indigo-500 cursor-pointer hover:border-neutral-700 hover:text-neutral-700 hover:dark:border-neutral-200 hover:dark:text-neutral-200 p-2 px-4 rounded-xl text-lg text-indigo-500 dark:text-indigo-500 "
+                    color="indigo"
                   >
                     {recipe.category} <ArrowLongRightIcon className="w-5 h-5" />
-                  </div>
+                  </ColorButton>
                 </div>
               </div>
             </div>
@@ -183,17 +194,17 @@ const RecipeIndex: FC = () => {
                               : `/app/recipes/${li.recipe.id}`
                           }
                         >
-                          <div className=" flex items-center gap-2 border border-indigo-500 hover:bg-indigo-600 hover:text-zinc-200 p-2 px-3 font-bold  rounded-xl  text-base text-indigo-500 dark:text-indigo-500 ">
-                            {li.recipe.name}{" "}
+                          <ColorButton color="purple">
+                            {li.recipe.name}
                             <ArrowLongRightIcon className="w-5 h-5" />
-                          </div>
+                          </ColorButton>
                         </Link>
                       </div>
                     ))}
                   </div>
                 </div>
               )}
-              <div className="text-2xl bg-indigo-300 dark:bg-indigo-300 dark:text-zinc-700 p-4  text-zinc-700 rounded-xl font-light  ">
+              <div className="text-2xl bg-indigo-300 dark:bg-indigo-300 dark:text-indigo-800 p-4  text-indigo-800 rounded-xl font-light  ">
                 <div>
                   <b>Author: </b>
                   {recipe.author?.firstName + " " + recipe.author?.lastName}

@@ -122,7 +122,7 @@ const SideNav: FC<Props> = ({
               handleNav={handleNav}
               path="prep"
               tooltip
-              colorVariant={1}
+              color="red"
               tooltipText="Prep"
               Icon={ClipboardCheckIcon}
             />
@@ -131,7 +131,7 @@ const SideNav: FC<Props> = ({
               handleNav={handleNav}
               path="recipes"
               tooltip
-              colorVariant={3}
+              color="amber"
               tooltipText="Recipes"
               Icon={FolderIcon}
             />
@@ -140,7 +140,7 @@ const SideNav: FC<Props> = ({
               active={page}
               handleNav={handleNav}
               path="menus"
-              colorVariant={2}
+              color="green"
               tooltip
               tooltipText="Menus & Dishes"
               Icon={List}
@@ -149,7 +149,7 @@ const SideNav: FC<Props> = ({
             <BottomNavButton
               active={page}
               handleNav={handleNav}
-              colorVariant={11}
+              color="purple"
               path="chat"
               tooltip
               tooltipText="Team Messages"
@@ -163,14 +163,14 @@ const SideNav: FC<Props> = ({
                   active={page}
                   handleNav={handleNav}
                   tooltip
-                  colorVariant={12}
+                  color="fuchsia"
                   tooltipText="Settings"
                   path="dashboard"
                   Icon={Settings}
                 />
                 <BottomNavButton
                   active={page}
-                  colorVariant={13}
+                  color="cyan"
                   handleNav={handleNav}
                   tooltip
                   tooltipText="Team Members"
@@ -179,7 +179,7 @@ const SideNav: FC<Props> = ({
                 />
                 <BottomNavButton
                   active={page}
-                  colorVariant={14}
+                  color="pink"
                   handleNav={handleNav}
                   tooltip
                   tooltipText="Billing"
@@ -195,7 +195,7 @@ const SideNav: FC<Props> = ({
                 tooltip
                 tooltipText="Help"
                 handleNav={handleNav}
-                colorVariant={9}
+                color="yellow"
                 path="dashboard"
                 Icon={HelpCircle}
               />
