@@ -5,6 +5,7 @@ import { XCircleIcon } from "lucide-react";
 import { CheckCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { FC } from "react";
+import IconColorButton from "~/components/buttons/IconColorButton";
 import type { TaskType } from "~/utils/prepList.server";
 interface Props {
   task: TaskType;
@@ -84,7 +85,7 @@ const PrepListItem: FC<Props> = ({ task, fetcher }) => {
             name={"inv"}
             type="number"
             inputMode="decimal"
-            className={`rounded-xl bg-opacity-50 dark:bg-opacity-50  text-zinc-800 dark:text-zinc-50 border-zinc-300 dark:border-zinc-700  dark:bg-zinc-800 bg-zinc-200 rounded-bl-xl focus:ring-zinc-500  border relative    h-10 w-full p-2 pl-2 text-base font-light appearance-none  focus:ring-2 focus:outline-none focus:border-none     placeholder-zinc-500   dark:placeholder-zinc-400 `}
+            className={`rounded-lg bg-opacity-50 dark:bg-opacity-50  text-zinc-800 dark:text-zinc-50 border-zinc-300 dark:border-zinc-700  dark:bg-zinc-800 bg-zinc-200 rounded-bl-lg focus:ring-zinc-500  border relative    h-10 w-full p-2 pl-2 text-base font-light appearance-none  focus:ring-2 focus:outline-none focus:border-none     placeholder-zinc-500   dark:placeholder-zinc-400 `}
             placeholder={"Inv"}
             defaultValue={task.onHand ? task.onHand : ""}
           />
@@ -94,7 +95,7 @@ const PrepListItem: FC<Props> = ({ task, fetcher }) => {
             name={"prep"}
             type="number"
             inputMode="decimal"
-            className={`rounded-xl bg-opacity-50 dark:bg-opacity-50  text-zinc-800 dark:text-zinc-50 border-zinc-300 dark:border-zinc-700  dark:bg-zinc-800 bg-zinc-200 rounded-bl-xl focus:ring-zinc-500  border relative    h-10 w-full p-2 pl-2 text-base font-light appearance-none  focus:ring-2 focus:outline-none focus:border-none     placeholder-zinc-500   dark:placeholder-zinc-400 `}
+            className={`rounded-lg bg-opacity-50 dark:bg-opacity-50  text-zinc-800 dark:text-zinc-50 border-zinc-300 dark:border-zinc-700  dark:bg-zinc-800 bg-zinc-200 rounded-bl-lg focus:ring-zinc-500  border relative    h-10 w-full p-2 pl-2 text-base font-light appearance-none  focus:ring-2 focus:outline-none focus:border-none     placeholder-zinc-500   dark:placeholder-zinc-400 `}
             placeholder={"Prep"}
             defaultValue={task.prepQty ? task.prepQty : ""}
           />
@@ -106,22 +107,14 @@ const PrepListItem: FC<Props> = ({ task, fetcher }) => {
             value={completed === true ? "yes" : "no"}
             onChange={(e) => console.log("hello")}
           />
-
-          {completed ? (
-            <XCircleIcon
-              className="w-8 h-8  text-red-500 dark:text-red-400 "
-              onClick={() => {
-                setCompleted((completed) => !completed);
-              }}
-            />
-          ) : (
-            <CheckCircle
-              className="w-8 h-8 text-green-500 dark:text-green-400"
-              onClick={() => {
-                setCompleted((completed) => !completed);
-              }}
-            />
-          )}
+          <IconColorButton
+            Icon={completed ? XCircleIcon : CheckCircle}
+            color={completed ? "red" : "green"}
+            type="button"
+            onClick={() => {
+              setCompleted((completed) => !completed);
+            }}
+          />
         </div>
       </div>
     </fetcher.Form>

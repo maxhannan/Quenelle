@@ -28,6 +28,9 @@ import type { Dispatch } from "react";
 import { getUser } from "~/utils/auth.server";
 
 import PrepPage from "../app.prep._index/components/PrepPage";
+import IconColorButton from "~/components/buttons/IconColorButton";
+import ColorButton from "~/components/buttons/ColorButton";
+import { set } from "date-fns";
 
 export async function loader({ request }: LoaderArgs) {
   const user = await getUser(request);
@@ -77,7 +80,13 @@ function PrepListsLayout() {
 
   const [templateDate, setTemplateDate] = useState<Date>(date);
   const data = useActionData();
-  const [selectedTemplate, setSelectedTemplate] = useState<string | null>();
+  const [selectedTemplate, setSelectedTemplate] = useState<
+    string | undefined
+  >();
+  const [selectedEditTemplate, setSelectedEditTemplate] = useState<
+    string | undefined
+  >();
+  console.log({ selectedTemplate });
   useEffect(() => {
     if (data !== undefined) {
       console.log({ data, openDialog });
@@ -113,6 +122,18 @@ function PrepListsLayout() {
   ) => {
     if (value) {
       setSelectedTemplate(value.id);
+    } else {
+      setSelectedTemplate(undefined);
+    }
+  };
+
+  const handleEditTemplateChange = (
+    value: { id: string; value: string } | null
+  ) => {
+    if (value) {
+      setSelectedEditTemplate(value.id);
+    } else {
+      setSelectedEditTemplate(undefined);
     }
   };
 
@@ -121,7 +142,11 @@ function PrepListsLayout() {
       {navigation.state !== "loading" && (
         <CustomModal isOpen={openDialog} setIsOpen={setOpenDialog}>
           <div className=" p-4 flex flex-col  gap-2">
-            <Form method="POST" action="/app/prep/">
+            <Form
+              method="POST"
+              action="/app/prep/"
+              onSubmit={() => setSelectedTemplate(undefined)}
+            >
               <div className="flex gap-2 flex-col">
                 <ComboBox
                   name="template"
@@ -135,7 +160,7 @@ function PrepListsLayout() {
                   }
                   placeholder="Template"
                 />
-                <div className="w-full flex gap-2  ">
+                <div className="w-full flex gap-1  ">
                   <div className="grow">
                     <input
                       type="hidden"
@@ -148,15 +173,17 @@ function PrepListsLayout() {
                     />
                   </div>
                   <div className="flex-none">
-                    <IconButton
+                    <IconColorButton
                       Icon={ArrowRightIcon}
                       type="submit"
+                      color="green"
                       disabled={
                         navigation.state === "submitting" || !selectedTemplate
+                          ? true
+                          : false
                       }
                       loading={navigation.state === "submitting"}
                       name="create"
-                      onClick={() => console.log(false)}
                     />
                   </div>
                 </div>
@@ -171,8 +198,8 @@ function PrepListsLayout() {
               <ComboBox
                 name="template"
                 required
-                changeHandler={handleTemplateChange}
-                selectedLinkId={selectedTemplate ?? undefined}
+                changeHandler={handleEditTemplateChange}
+                selectedLinkId={selectedEditTemplate ?? undefined}
                 options={
                   templates
                     ? templates.map((t) => ({ id: t.id, value: t.name }))
@@ -180,41 +207,43 @@ function PrepListsLayout() {
                 }
                 placeholder="Template"
               />
-              <div className="grow">
-                <LoadingButton
-                  disabled={
-                    navigation.state === "submitting" || !selectedTemplate
-                  }
-                  buttonText="Edit Template"
-                  Icon={ArrowRightIcon}
-                  action={() => {
-                    setOpenDialog(false);
-                    selectedTemplate && navigate(`edit/${selectedTemplate}`);
-                    revalidator.revalidate();
-                  }}
-                  buttonName="Add list"
-                />
-              </div>
+
+              <ColorButton
+                disabled={
+                  navigation.state === "submitting" || !selectedEditTemplate
+                }
+                color="green"
+                onClick={() => {
+                  setOpenDialog(false);
+                  selectedEditTemplate &&
+                    navigate(`edit/${selectedEditTemplate}`);
+                  revalidator.revalidate();
+                  setSelectedEditTemplate(undefined);
+                }}
+                name="Add list"
+              >
+                Edit Template
+                <ArrowRightIcon className="h-6 w-6" />
+              </ColorButton>
             </div>
             <div className="relative flex py-2 items-center">
               <div className="flex-grow border-t border-zinc-700"></div>
               <span className="flex-shrink mx-4 text-zinc-400">Or</span>
               <div className="flex-grow border-t border-zinc-700"></div>
             </div>
-            <div className="w-full flex gap-2  ">
-              <div className="grow">
-                <LoadingButton
-                  disabled={navigation.state === "submitting"}
-                  buttonText="Create Custom List"
-                  Icon={ArrowRightIcon}
-                  action={() => {
-                    setOpenDialog(false);
-                    navigate("add");
-                  }}
-                  buttonName="Add list"
-                />
-              </div>
-            </div>
+
+            <ColorButton
+              disabled={navigation.state === "submitting"}
+              color="green"
+              onClick={() => {
+                setOpenDialog(false);
+                navigate("add");
+              }}
+              name="Add list"
+            >
+              Create Custom List
+              <ArrowRightIcon className="h-6 w-6" />
+            </ColorButton>
           </div>
         </CustomModal>
       )}

@@ -48,13 +48,14 @@ export const buttonStyleVariants = {
   amber: "bg-amber-300 text-amber-900 hover:bg-amber-400 hover:text-amber-900",
 };
 const ColorButton: FC<Props> = ({ color, loading, loadingText, ...rest }) => {
+  const disabledStyle =
+    "opacity-50 cursor-not-allowed bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-700 text-zinc-400";
   return (
     <button
       {...rest}
-      className={
-        buttonStyleVariants[color] +
-        "font-light rounded-xl text-sm h-10 px-3 py-2 transition-all duration-300 inline-flex gap-1.5 items-center  "
-      }
+      className={`
+      ${rest.disabled ? disabledStyle : buttonStyleVariants[color]} 
+        "font-light rounded-xl text-sm h-10 px-3 py-2 transition-all duration-300 inline-flex gap-1.5 justify-between items-center  `}
     >
       {loading ? (
         <>

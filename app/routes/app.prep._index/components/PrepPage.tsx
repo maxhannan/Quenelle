@@ -12,6 +12,7 @@ import type { getPrepLists } from "~/utils/prepList.server";
 import PrepCalendar from "./PrepCalendar";
 import IconButton from "~/components/buttons/IconButton";
 import RecipeCard from "~/components/display/RecipesCard";
+import IconColorButton from "~/components/buttons/IconColorButton";
 interface Props {
   date: Date | undefined;
   handleDateChange: (date: Date) => void;
@@ -44,10 +45,10 @@ const PrepPage: FC<Props> = ({
     <>
       <NewAppBar page="Prep" bottomPadding="1">
         <div>
-          <IconButton
+          <IconColorButton
             Icon={ClipboardEdit}
             name="Add"
-            size={10}
+            color="indigo"
             type="button"
             onClick={() => setOpenDialog(true)}
           />
@@ -55,13 +56,13 @@ const PrepPage: FC<Props> = ({
       </NewAppBar>
       <FadeIn>
         <div className="flex flex-col gap-2 mt-2">
-          <div className="flex w-full items-center justify-between bg-zinc-200 rounded-full border h-14 border-zinc-300  dark:bg-zinc-800 dark:bg-opacity-50 dark:border-zinc-700 overflow-hidden px-1">
-            <button
+          <div className="flex w-full items-center justify-between bg-zinc-200 rounded-2xl border h-14 border-zinc-300  dark:bg-zinc-800 dark:bg-opacity-50 dark:border-zinc-700 overflow-hidden px-1">
+            <IconColorButton
               onClick={() => date && handleDateChange(add(date, { days: -1 }))}
-              className="h-10 w-10 hover:text-zinc-600 hover:bg-opacity-70 text-zinc-700 dark:hover:text-zinc-400 dark:text-zinc-200 flex items-center justify-center border dark:border-zinc-700 border-zinc-300 rounded-full bg-zinc-300 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40"
-            >
-              <ArrowLeftIcon className="w-6 h-6 " />
-            </button>
+              color="zinc"
+              Icon={ArrowLeftIcon}
+            />
+
             <div>
               <PrepCalendar
                 date={date}
@@ -69,12 +70,11 @@ const PrepPage: FC<Props> = ({
                 size={10}
               />
             </div>
-            <button
+            <IconColorButton
               onClick={() => date && handleDateChange(add(date, { days: 1 }))}
-              className="h-10 w-10 hover:text-zinc-600 hover:bg-opacity-70 text-zinc-700 dark:text-zinc-300 flex items-center justify-center border dark:border-zinc-700 border-zinc-300 rounded-full bg-zinc-300 bg-opacity-40 dark:bg-zinc-800 dark:bg-opacity-40"
-            >
-              <ArrowRightIcon className="w-6 h-6" />
-            </button>
+              color="zinc"
+              Icon={ArrowRightIcon}
+            />
           </div>
           <div className="grid z-0 relative grid-flow-row  auto-rows-max gap-y-2  mx-auto mb-28 w-full ">
             {navigation.state === "loading" && !pageChangeLoading ? (

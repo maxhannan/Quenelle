@@ -35,6 +35,14 @@ import { useToast } from "~/components/ui/use-toast";
 import { getUser } from "~/utils/auth.server";
 import DeleteModal from "~/components/display/DeleteModal";
 import FormBar from "~/components/display/FormBar";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "~/components/ui/sheet";
 
 export const loader = async ({ request }: LoaderArgs) => {
   const user = await getUser(request);
@@ -161,8 +169,46 @@ const EditRecipeRoute: FC = () => {
             setIsOpen={setOpenDeleteModal}
             deleteFn={handleDeleteRecipe}
           />
-          <FormBar ref={formBarRef} setVisible={setVisible} saveText="Recipe" />
+          <div className="md:hidden">
+            <Sheet>
+              <FormBar
+                ref={formBarRef}
+                setVisible={setVisible}
+                saveText="Recipe"
+              />
+
+              <SheetContent side={"top"}>
+                <SheetHeader>
+                  <SheetTitle>Are you sure absolutely sure?</SheetTitle>
+                  <SheetDescription>
+                    This action cannot be undone. This will permanently delete
+                    your account and remove your data from our servers.
+                  </SheetDescription>
+                </SheetHeader>
+              </SheetContent>
+            </Sheet>
+          </div>
+          <div className="hidden md:block">
+            <Sheet>
+              <FormBar
+                ref={formBarRef}
+                setVisible={setVisible}
+                saveText="Recipe"
+              />
+
+              <SheetContent side={"right"}>
+                <SheetHeader>
+                  <SheetTitle>Are you sure absolutely sure?</SheetTitle>
+                  <SheetDescription>
+                    This action cannot be undone. This will permanently delete
+                    your account and remove your data from our servers.
+                  </SheetDescription>
+                </SheetHeader>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
+
         <div className="h-20 md:h-0" />
         <div className="container mx-auto max-w-4xl lg:pl-2">
           <RecipeForm

@@ -4,10 +4,11 @@ import { MoreHorizontal, Save, XCircle } from "lucide-react";
 import { useNavigate } from "@remix-run/react";
 import ColorButton from "../buttons/ColorButton";
 import IconColorButton from "../buttons/IconColorButton";
+import { SheetTrigger } from "../ui/sheet";
 
 type RefType = HTMLDivElement;
 type Props = {
-  setVisible: Dispatch<SetStateAction<boolean>>;
+  setVisible?: Dispatch<SetStateAction<boolean>>;
   saveText: string;
 };
 const FormBar = forwardRef<RefType, Props>(function FormBarComponent(
@@ -29,11 +30,13 @@ const FormBar = forwardRef<RefType, Props>(function FormBarComponent(
           <XCircle className="h-4 w-4" />
           Cancel
         </ColorButton>
-        <IconColorButton
-          type="button"
-          color="purple"
-          Icon={MoreHorizontal}
-        ></IconColorButton>
+        <SheetTrigger>
+          <IconColorButton
+            type="button"
+            color="purple"
+            Icon={MoreHorizontal}
+          ></IconColorButton>
+        </SheetTrigger>
       </AppBar>
     </div>
   );

@@ -32,6 +32,7 @@ import { getMembers } from "~/utils/teams.server";
 import { getUser } from "~/utils/auth.server";
 import CustomModal from "~/components/display/CustomModal";
 import DeleteModal from "~/components/display/DeleteModal";
+import IconColorButton from "~/components/buttons/IconColorButton";
 
 export async function loader({ request }: LoaderArgs) {
   const user = await getUser(request);
@@ -155,37 +156,38 @@ function PrepListRoute() {
         setIsOpen={setOpenDeleteModal}
         deleteFn={handleDeleteList}
       />
-      <AppBar
-        page={prepList.name}
-        textSize="text-3xl md:text-4xl"
-        bottomPadding="0"
-      >
-        <IconButton
-          name="Goback"
+      <AppBar page={""} textSize="text-3xl md:text-4xl" bottomPadding="2">
+        <IconColorButton
+          name="delete"
+          color="red"
           onClick={() => setOpenDeleteModal(true)}
           Icon={Trash2Icon}
           loading={deleting}
         />
-        <IconButton
-          name="Goback"
-          active={openTaskFocus}
+        <IconColorButton
+          name="task-focus"
+          color={openTaskFocus ? "green" : "amber"}
           onClick={() => setOpenTaskFocus(!openTaskFocus)}
           Icon={ClipboardCheckIcon}
         />
-        <IconButton
-          name="Goback"
+        <IconColorButton
+          color="violet"
+          name="print"
           onClick={generatepdf}
           loading={pdfLoading}
           Icon={Printer}
         />
-        <IconButton
+        <IconColorButton
           name="Goback"
+          color="zinc"
           onClick={() => navigate(-1)}
           Icon={ArrowUturnLeftIcon}
         />
       </AppBar>
-
-      <div className="mb-2 text-lg text-indigo-500 ">
+      <div className="md:text-4xl text-2xl text-zinc-800 dark:text-zinc-200 ">
+        {prepList.name}
+      </div>
+      <div className="mb-2 text-sm md:text-lg text-indigo-500 ">
         {new Date(prepList.date).toDateString()}
       </div>
 
