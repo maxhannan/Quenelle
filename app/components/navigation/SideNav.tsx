@@ -84,16 +84,13 @@ const SideNav: FC<Props> = ({
                 side="right"
                 sideOffset={25}
                 alignOffset={10}
-                className=" mt-2 bg-zinc-200 dark:bg-zinc-900  rounded-2xl border-zinc-300 shadow-lg p-2 px-3 min-w-96 w-[30rem] max-h-[50rem] overflow-y-scroll dark:border-zinc-700 z-10  md:block scrollbar-none"
+                className=" mt-2 bg-zinc-50/40 backdrop-blur-lg dark:bg-zinc-900/80  rounded-2xl border-zinc-300 shadow-lg p-2 px-3 min-w-96 w-[30rem] max-h-[55vh] overflow-y-scroll dark:border-zinc-700 z-10  md:block scrollbar-none"
               >
-                <NewAppBar
-                  page={`Hi ${user!.firstName}!`}
-                  bottomPadding="2"
-                ></NewAppBar>
+                <NewAppBar page={`Hi ${user!.firstName}!`} bottomPadding="1" />
 
-                <div className="mb-2">
+                <div className="mb-4">
                   {assignedListsToday.length > 0 && (
-                    <div className="w-full flex flex-col gap-1 bg-zinc-200 bg-opacity-40 dark:bg-opacity-40 dark:bg-zinc-900 rounded-2xl">
+                    <div className="w-full flex flex-col gap-1  bg-opacity-40 dark:bg-opacity-40  rounded-2xl">
                       <div className="text-lg text-indigo-500  ">
                         Your prep list{assignedListsToday.length > 1 && "s"} for
                         today.

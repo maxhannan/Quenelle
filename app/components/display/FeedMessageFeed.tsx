@@ -12,14 +12,14 @@ interface Props {
 
 const FeedMessageFeed: FC<Props> = ({ feedMessages }) => {
   return (
-    <div className="flex flex-col gap-2 rounded-2xl bg-zinc-200 bg-opacity-40 dark:bg-opacity-40 dark:bg-zinc-800 ">
+    <div className="flex flex-col gap-2 rounded-2xl  ">
       {feedMessages.map((m) => (
         <div
           key={m.id}
-          className="flex flex-col gap-2 rounded-2xl bg-zinc-100 dark:bg-zinc-900 p-2 text-zinc-700"
+          className="flex flex-col gap-2 rounded-2xl  text-zinc-700 "
         >
-          <div className="flex gap-2 items-center px-2">
-            <h3 className=" dark:text-zinc-200 text-zinc-700 text-sm md:text-base">
+          <div className="flex gap-2 items-center   ">
+            <h3 className=" dark:text-zinc-200 text-zinc-700 px-1 text-sm md:text-base">
               {m.content}
             </h3>
             {m.content.includes("updated") ? (
@@ -70,8 +70,10 @@ const FeedMessageFeed: FC<Props> = ({ feedMessages }) => {
               {formatDistance(new Date(m.createdAt), new Date()) + " ago"}
             </span>
           </div>
+          <div className="w-full h-[3px] bg-zinc-200 dark:bg-zinc-800 rounded-2xl"></div>
         </div>
       ))}
+      {/* divider span */}
     </div>
   );
 };
