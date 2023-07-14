@@ -28,11 +28,7 @@ const PrepListItem: FC<Props> = ({
   completedFlag,
   setCompletedTasks,
 }) => {
-  const [completed, setCompleted] = useState(completedFlag || false);
   const formRef = useRef<HTMLFormElement>(null);
-  useEffect(() => {
-    setCompleted(completedFlag || false);
-  }, [completedFlag]);
   const firstRender = useRef(true);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement> | undefined) {
@@ -45,15 +41,15 @@ const PrepListItem: FC<Props> = ({
     fetcher.submit(formRef.current!);
   }
 
-  useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
-      return;
-    }
+  // useEffect(() => {
+  //   if (firstRender.current) {
+  //     firstRender.current = false;
+  //     return;
+  //   }
 
-    handleSubmit(undefined);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [completed]);
+  //   handleSubmit(undefined);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [completed]);
 
   if (!task) return null;
 
@@ -67,7 +63,7 @@ const PrepListItem: FC<Props> = ({
     >
       <div
         className={`max-w-full border transition-all duration-300  bg-opacity-50 dark:bg-opacity-50 rounded-xl  py-2 px-2 grid grid-cols-10 gap-1     ${
-          completed
+          completedFlag
             ? " border-green-400 dark:border-green-400 bg-green-200 dark:bg-green-800  "
             : "border-zinc-300  dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800  "
         }`}
@@ -77,29 +73,25 @@ const PrepListItem: FC<Props> = ({
             <input
               type="hidden"
               name="completed"
-              value={completed === true ? "yes" : "no"}
+              value={completedFlag === true ? "yes" : "no"}
               onChange={(e) => console.log("hello")}
             />
             <button
               className=""
               type="button"
               onClick={() => {
-                setCompleted((completed) => !completed);
-                setCompletedTasks((tasks) => {
-                  if (!tasks) return undefined;
-                  return tasks.map((t) => {
+                handleSubmit(undefined);
+                setCompletedTasks((completedTasks) =>
+                  completedTasks?.map((t) => {
                     if (t.id === task.id) {
-                      return {
-                        id: task.id,
-                        completed: !completed,
-                      };
+                      t.completed = !t.completed;
                     }
                     return t;
-                  });
-                });
+                  })
+                );
               }}
             >
-              {completed ? (
+              {completedFlag ? (
                 <XCircleIcon className="w-5 h-5 md:w-7 md:h-7 text-red-500" />
               ) : (
                 <CheckCircle className="w-5 h-5 md:w-7 md:h-7 text-green-500" />
