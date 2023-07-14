@@ -100,6 +100,7 @@ const TaskGroupAccordion: FC<Props> = ({ taskGroup, fetcher }) => {
           fetcher={fetcher}
           key={item.id}
           task={item}
+          setCompletedTasks={setCompletedTasks}
           completedFlag={
             completedTasks?.find((t) => t.id === item.id)?.completed
           }

@@ -4,16 +4,30 @@ import type { FetcherWithComponents } from "@remix-run/react";
 import { XCircleIcon } from "lucide-react";
 import { CheckCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import type { FC } from "react";
+import type { Dispatch, FC } from "react";
 import IconColorButton from "~/components/buttons/IconColorButton";
 import type { TaskType } from "~/utils/prepList.server";
 interface Props {
   task: TaskType;
   fetcher: FetcherWithComponents<any>;
   completedFlag?: boolean;
+  setCompletedTasks: Dispatch<
+    React.SetStateAction<
+      | {
+          id: string;
+          completed: boolean;
+        }[]
+      | undefined
+    >
+  >;
 }
 
-const PrepListItem: FC<Props> = ({ task, fetcher, completedFlag }) => {
+const PrepListItem: FC<Props> = ({
+  task,
+  fetcher,
+  completedFlag,
+  setCompletedTasks,
+}) => {
   const [completed, setCompleted] = useState(completedFlag || false);
   const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
@@ -36,6 +50,7 @@ const PrepListItem: FC<Props> = ({ task, fetcher, completedFlag }) => {
       firstRender.current = false;
       return;
     }
+
     handleSubmit(undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [completed]);
@@ -70,6 +85,18 @@ const PrepListItem: FC<Props> = ({ task, fetcher, completedFlag }) => {
               type="button"
               onClick={() => {
                 setCompleted((completed) => !completed);
+                setCompletedTasks((tasks) => {
+                  if (!tasks) return undefined;
+                  return tasks.map((t) => {
+                    if (t.id === task.id) {
+                      return {
+                        id: task.id,
+                        completed: !completed,
+                      };
+                    }
+                    return t;
+                  });
+                });
               }}
             >
               {completed ? (
