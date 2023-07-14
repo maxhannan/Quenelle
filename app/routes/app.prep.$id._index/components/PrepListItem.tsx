@@ -32,10 +32,6 @@ const PrepListItem: FC<Props> = ({
   const firstRender = useRef(true);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement> | undefined) {
-    if (firstRender.current) {
-      firstRender.current = false;
-      return;
-    }
     e && e.preventDefault();
 
     fetcher.submit(formRef.current!);
