@@ -86,7 +86,7 @@ function PrepListsLayout() {
   const [selectedEditTemplate, setSelectedEditTemplate] = useState<
     string | undefined
   >();
-  console.log({ selectedTemplate });
+
   useEffect(() => {
     if (data !== undefined) {
       console.log({ data, openDialog });

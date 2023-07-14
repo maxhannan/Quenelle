@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useEffect, useRef, useState } from "react";
 import type { FC } from "react";
-import IconButton from "~/components/buttons/IconButton";
 
 import ComboBox from "~/components/formInputs/ComboBox";
 import type { ComboBoxOption } from "~/components/formInputs/ComboBox";

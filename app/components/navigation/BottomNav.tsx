@@ -26,7 +26,7 @@ const BottomNav = ({ page, setPage }: Props) => {
   return (
     <nav
       style={{
-        WebkitBackdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(4px)",
       }}
       className="fixed z-50 w-[90vw] sm:w-96 py-3 transition-all duration-300  bottom-6 sm:bottom-6 inset-x-0 mx-auto px-2 dark:bg-zinc-800/70 rounded-2xl  bg-zinc-50/70 backdrop-blur-sm backdrop-saturate-200 "
     >

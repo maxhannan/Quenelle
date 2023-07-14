@@ -70,7 +70,6 @@ const FeedMessageFeed: FC<Props> = ({ feedMessages }) => {
               {formatDistance(new Date(m.createdAt), new Date()) + " ago"}
             </span>
           </div>
-          <div className="w-full h-[3px] bg-zinc-200 dark:bg-zinc-800 rounded-2xl"></div>
         </div>
       ))}
       {/* divider span */}

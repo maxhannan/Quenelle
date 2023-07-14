@@ -532,3 +532,38 @@ export const updateTask = async (id: string, updatedTask: updatedTask) => {
     return null;
   }
 };
+
+export type TaskGroup = Prisma.PromiseReturnType<typeof getTaskGroupById>;
+const getTaskGroupById = async (id: string) => {
+  try {
+    const taskGroup = await prisma.taskGroup.findUnique({
+      where: { id },
+
+      include: {
+        linkRecipe: {
+          select: {
+            name: true,
+            id: true,
+          },
+        },
+        _count: true,
+        tasks: {
+          orderBy: {
+            name: "asc",
+          },
+          include: {
+            linkRecipe: {
+              select: {
+                name: true,
+                id: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    return taskGroup;
+  } catch (error) {
+    return null;
+  }
+};

@@ -10,12 +10,15 @@ import type { TaskType } from "~/utils/prepList.server";
 interface Props {
   task: TaskType;
   fetcher: FetcherWithComponents<any>;
+  completedFlag?: boolean;
 }
 
-const PrepListItem: FC<Props> = ({ task, fetcher }) => {
-  const [completed, setCompleted] = useState(task?.completed || false);
+const PrepListItem: FC<Props> = ({ task, fetcher, completedFlag }) => {
+  const [completed, setCompleted] = useState(completedFlag || false);
   const formRef = useRef<HTMLFormElement>(null);
-
+  useEffect(() => {
+    setCompleted(completedFlag || false);
+  }, [completedFlag]);
   const firstRender = useRef(true);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement> | undefined) {
@@ -63,19 +66,19 @@ const PrepListItem: FC<Props> = ({ task, fetcher }) => {
               onChange={(e) => console.log("hello")}
             />
             <button
-              className="md:hidden"
+              className=""
               type="button"
               onClick={() => {
                 setCompleted((completed) => !completed);
               }}
             >
               {completed ? (
-                <XCircleIcon className="w-5 h-5 text-red-500" />
+                <XCircleIcon className="w-5 h-5 md:w-7 md:h-7 text-red-500" />
               ) : (
-                <CheckCircle className="w-5 h-5  text-green-500" />
+                <CheckCircle className="w-5 h-5 md:w-7 md:h-7 text-green-500" />
               )}
             </button>
-            <div className="hidden md:block">
+            {/* <div className="hidden md:block">
               <IconColorButton
                 Icon={completed ? XCircleIcon : CheckCircle}
                 color={completed ? "red" : "green"}
@@ -84,7 +87,7 @@ const PrepListItem: FC<Props> = ({ task, fetcher }) => {
                   setCompleted((completed) => !completed);
                 }}
               />
-            </div>
+            </div> */}
           </div>
           <div className="  col-span-5 lg:col-span-7 flex gap-2 items-center mr-2">
             <div>

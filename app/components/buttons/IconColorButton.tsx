@@ -11,7 +11,7 @@ interface Props extends ComponentPropsWithoutRef<"button"> {
 const IconColorButton: FC<Props> = ({ Icon, color, loading, ...rest }) => {
   const disabledStyle =
     "opacity-50 cursor-not-allowed bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-700 text-zinc-400";
-  console.log({ disabled: rest.disabled });
+
   return (
     <button
       {...rest}

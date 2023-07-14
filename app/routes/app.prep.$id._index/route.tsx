@@ -33,6 +33,8 @@ import { getUser } from "~/utils/auth.server";
 import DeleteModal from "~/components/display/DeleteModal";
 import IconColorButton from "~/components/buttons/IconColorButton";
 import ColorButton from "~/components/buttons/ColorButton";
+import { prisma } from "~/utils/prisma.server";
+import TaskGroupAccordion from "./components/TaskGroupAccordion";
 
 export async function loader({ request }: LoaderArgs) {
   const user = await getUser(request);
@@ -52,12 +54,36 @@ export async function loader({ request }: LoaderArgs) {
 }
 
 export const action: ActionFunction = async ({ request }) => {
+  console.log("action");
   const data = await request.formData();
   const id = data.get("id") as string;
   const inv = data.get("inv") as string;
   const prep = data.get("prep") as string;
   const completed = data.get("completed") as string;
-
+  const all = data.get("all") as string;
+  console.log({ all });
+  if (all === "yes") {
+    console.log("all");
+    const ids = data.get("ids") as string;
+    const completedAll = data.get("completedAll") as string;
+    if (ids) {
+      console.log({ ids });
+      console.log({ completedAll });
+      const updatedTasks = await prisma.tasks.updateMany({
+        where: {
+          id: {
+            in: ids.split(","),
+          },
+        },
+        data: {
+          completed: completedAll === "yes" ? true : false,
+        },
+      });
+      console.log({ updatedTasks });
+      if (!updatedTasks) return null;
+      return updatedTasks;
+    }
+  }
   const updatedTask = await updateTask(id, {
     onHand: inv,
     prepQty: prep,
@@ -75,7 +101,7 @@ function PrepListRoute() {
   const fetcher = useFetcher();
   const location = useLocation();
   let prepList = usePrepList();
-  const [completed, setCompleted] = useState(false);
+
   const [deleting, setDeleting] = useState(false);
   const [pdfLoading, setPdfLoading] = useState(false);
   const [openTaskFocus, setOpenTaskFocus] = useState<boolean>(false);
@@ -94,14 +120,14 @@ function PrepListRoute() {
     });
     return pdf;
   };
-  const activeTaskView = prepList.taskGroups
-    .map((tg) => ({
-      ...tg,
-      tasks: tg.tasks.filter(
-        (t) => t.prepQty && parseInt(t.prepQty) > 0 && !t.completed
-      ),
-    }))
-    .filter((tg) => tg.tasks.length > 0);
+  // const activeTaskView = prepList.taskGroups
+  //   .map((tg) => ({
+  //     ...tg,
+  //     tasks: tg.tasks.filter(
+  //       (t) => t.prepQty && parseInt(t.prepQty) > 0 && !t.completed
+  //     ),
+  //   }))
+  //   .filter((tg) => tg.tasks.length > 0);
 
   const pageChangeLoading =
     navigation.state === "loading" &&
@@ -140,6 +166,7 @@ function PrepListRoute() {
       method: "POST",
     });
   };
+
   return (
     <div className=" container mx-auto max-w-5xl mb-28 xl:pl-2">
       {deleting && (
@@ -165,12 +192,7 @@ function PrepListRoute() {
           Icon={Trash2Icon}
           loading={deleting}
         />
-        <IconColorButton
-          name="task-focus"
-          color={openTaskFocus ? "green" : "amber"}
-          onClick={() => setOpenTaskFocus(!openTaskFocus)}
-          Icon={ClipboardCheckIcon}
-        />
+
         <IconColorButton
           color="violet"
           name="print"
@@ -209,100 +231,13 @@ function PrepListRoute() {
             />
           </div>
           <div className="flex flex-col gap-2">
-            {openTaskFocus ? (
-              activeTaskView.length > 0 ? (
-                activeTaskView?.map((tg) => (
-                  <Accordion
-                    key={tg.id}
-                    name={tg.name}
-                    link={
-                      tg.linkRecipeId
-                        ? `/app/menus/dishes/${tg.linkRecipeId}`
-                        : undefined
-                    }
-                  >
-                    <div className="  max-w-full  bg-zinc-100 border-zinc-300    rounded-xl   px-2 grid grid-cols-10  gap-1   dark:bg-zinc-800 ">
-                      <div className=" font-light col-span-5 lg:col-span-7 flex gap-2 items-center mr-1">
-                        <div>
-                          <h5 className="text-lg text-zinc-700 dark:text-zinc-100 ">
-                            Task
-                          </h5>
-                        </div>
-                      </div>
-                      <div className="col-span-2 lg:col-span-1 flex items-center justify-start pl-1   text-lg text-zinc-700 dark:text-zinc-100 font-light">
-                        <span>Inv</span>
-                      </div>
-                      <div className="col-span-2 lg:col-span-1 flex items-center justify-start pl-1  text-lg text-zinc-700 dark:text-zinc-100 font-light">
-                        <span>Prep</span>
-                      </div>
-                    </div>
-
-                    {tg.tasks.map((item) => (
-                      <PrepListItem
-                        fetcher={fetcher}
-                        key={item.id}
-                        task={item}
-                      />
-                    ))}
-                  </Accordion>
-                ))
-              ) : (
-                <div className="w-full flex  text-xl text-zinc-700 dark:text-zinc-200">
-                  Looks like you're all caught up!
-                </div>
-              )
-            ) : (
-              prepList?.taskGroups.map((tg) => (
-                <Accordion
-                  key={tg.id}
-                  name={tg.name}
-                  link={
-                    tg.linkRecipeId
-                      ? `/app/menus/dishes/${tg.linkRecipeId}`
-                      : undefined
-                  }
-                >
-                  <div className="  max-w-full  bg-zinc-100 border-zinc-300    rounded-xl   p-2 grid grid-cols-10  gap-1   dark:bg-zinc-800 ">
-                    <div className=" font-light col-span-6   lg:col-span-6 flex gap-2 items-center mr-1">
-                      <div className="col-span-1  flex items-center justify-center ">
-                        <input
-                          type="hidden"
-                          name="completed"
-                          value={completed === true ? "yes" : "no"}
-                          onChange={(e) => console.log("hello")}
-                        />
-
-                        <ColorButton
-                          color={completed ? "red" : "green"}
-                          type="button"
-                          onClick={() => {
-                            setCompleted((completed) => !completed);
-                          }}
-                        >
-                          {" "}
-                          {completed ? (
-                            <XCircleIcon className="w-5 h-5" />
-                          ) : (
-                            <CheckCircle className="w-5 h-5" />
-                          )}
-                          {completed ? "Uncheck All" : "Check All"}
-                        </ColorButton>
-                      </div>
-                    </div>
-                    <div className="col-span-2 lg:col-span-1 lg:col-start-9  flex items-center justify-start pl-1   text-lg text-zinc-700 dark:text-zinc-100 font-light">
-                      <span>Inv</span>
-                    </div>
-                    <div className="col-span-2 lg:col-span-1 lg:col-start-10 flex items-center justify-start pl-1  text-lg text-zinc-700 dark:text-zinc-100 font-light">
-                      <span>Prep</span>
-                    </div>
-                  </div>
-
-                  {tg.tasks.map((item) => (
-                    <PrepListItem fetcher={fetcher} key={item.id} task={item} />
-                  ))}
-                </Accordion>
-              ))
-            )}
+            {prepList?.taskGroups.map((tg) => (
+              <TaskGroupAccordion
+                key={tg.id}
+                taskGroup={tg}
+                fetcher={fetcher}
+              />
+            ))}
           </div>
         </div>
       </SlideUpTransition>

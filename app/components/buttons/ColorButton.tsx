@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, FC, ReactNode } from "react";
+import type { ComponentPropsWithoutRef, FC } from "react";
 import Spinner from "../LoadingSpinner";
 
 interface Props extends ComponentPropsWithoutRef<"button"> {

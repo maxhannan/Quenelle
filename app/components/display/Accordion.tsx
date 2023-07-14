@@ -15,7 +15,7 @@ const Accordion = ({ name, children, link }: Props) => {
         {({ open }) => (
           <>
             <div className="flex items-center gap-4">
-              <Disclosure.Button className="dark:bg-opacity-50 transition-all duration-300 flex w-full items-center justify-between  rounded-xl  bg-zinc-200 font-normal dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 px-3 py-2 text-left text-lg lg:text-2xl  text-zinc-700 dark:text-zinc-200  focus:outline-none focus-visible:ring focus-visible:ring-violet-500 focus-visible:ring-opacity-75">
+              <Disclosure.Button className="dark:bg-opacity-50 transition-all duration-300 flex w-full items-center justify-between  rounded-xl  bg-zinc-100 font-normal dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 px-3 py-2 text-left text-lg lg:text-2xl  text-zinc-700 dark:text-zinc-200  focus:outline-none focus-visible:ring focus-visible:ring-violet-500 focus-visible:ring-opacity-75">
                 {link ? (
                   <Link
                     to={link}

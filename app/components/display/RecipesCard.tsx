@@ -25,7 +25,7 @@ const RecipeCard: FC<Props> = ({
   const colors = Object.values(buttonStyleVariants).filter(
     (color) => !color.includes("zinc") || !color.includes("gray")
   );
-  console.log({ colors });
+
   return (
     <div
       onClick={() => navigate(to)}

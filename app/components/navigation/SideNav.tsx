@@ -85,7 +85,7 @@ const SideNav: FC<Props> = ({
                 sideOffset={25}
                 alignOffset={10}
                 style={{
-                  WebkitBackdropFilter: "blur(10px)",
+                  WebkitBackdropFilter: "blur(6px)",
                 }}
                 className=" mt-2 bg-zinc-50/40 backdrop-blur-lg dark:bg-zinc-900/80 [-webkit-backdrop-filter: blur(10px);] rounded-2xl border-zinc-300 shadow-lg p-2 px-3 min-w-96 w-[30rem] max-h-[55vh] overflow-y-scroll dark:border-zinc-700 z-10  md:block scrollbar-none"
               >
