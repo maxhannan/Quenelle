@@ -24,7 +24,12 @@ const BottomNav = ({ page, setPage }: Props) => {
   };
 
   return (
-    <nav className="fixed z-50 w-[90vw] sm:w-96 py-3 transition-all duration-300  bottom-6 sm:bottom-6 inset-x-0 mx-auto px-2 dark:bg-zinc-800/70 rounded-2xl  bg-zinc-50/70 backdrop-blur-sm backdrop-saturate-200 ">
+    <nav
+      style={{
+        WebkitBackdropFilter: "blur(10px)",
+      }}
+      className="fixed z-50 w-[90vw] sm:w-96 py-3 transition-all duration-300  bottom-6 sm:bottom-6 inset-x-0 mx-auto px-2 dark:bg-zinc-800/70 rounded-2xl  bg-zinc-50/70 backdrop-blur-sm backdrop-saturate-200 "
+    >
       <div className="grid h-full max-w-lg  mx-auto grid-cols-5 gap-0">
         <BottomNavButton
           active={page}
