@@ -18,13 +18,21 @@ import { updateTask } from "~/utils/prepList.server";
 import type { getPrepListById } from "~/utils/prepList.server";
 import SlideUpTransition from "~/components/animations/SlideUp";
 import { getPdf } from "~/utils/pdf";
-import { ClipboardCheckIcon, Printer, Trash2Icon } from "lucide-react";
+import {
+  CheckCircle,
+  ClipboardCheckIcon,
+  Printer,
+  Trash2Icon,
+  X,
+  XCircleIcon,
+} from "lucide-react";
 import { useToast } from "~/components/ui/use-toast";
 import ComboBox from "~/components/formInputs/ComboBox";
 import { getMembers } from "~/utils/teams.server";
 import { getUser } from "~/utils/auth.server";
 import DeleteModal from "~/components/display/DeleteModal";
 import IconColorButton from "~/components/buttons/IconColorButton";
+import ColorButton from "~/components/buttons/ColorButton";
 
 export async function loader({ request }: LoaderArgs) {
   const user = await getUser(request);
@@ -67,6 +75,7 @@ function PrepListRoute() {
   const fetcher = useFetcher();
   const location = useLocation();
   let prepList = usePrepList();
+  const [completed, setCompleted] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [pdfLoading, setPdfLoading] = useState(false);
   const [openTaskFocus, setOpenTaskFocus] = useState<boolean>(false);
@@ -132,7 +141,7 @@ function PrepListRoute() {
     });
   };
   return (
-    <div className=" container mx-auto mb-28 xl:pl-2">
+    <div className=" container mx-auto max-w-5xl mb-28 xl:pl-2">
       {deleting && (
         <div
           className="fixed inset-0 bg-white/90 dark:bg-black/90 z-50"
@@ -253,18 +262,37 @@ function PrepListRoute() {
                       : undefined
                   }
                 >
-                  <div className="  max-w-full  bg-zinc-100 border-zinc-300    rounded-xl   px-2 grid grid-cols-10  gap-1   dark:bg-zinc-800 ">
-                    <div className=" font-light col-span-5 lg:col-span-7 flex gap-2 items-center mr-1">
-                      <div>
-                        <h5 className="text-lg text-zinc-700 dark:text-zinc-100 ">
-                          Task
-                        </h5>
+                  <div className="  max-w-full  bg-zinc-100 border-zinc-300    rounded-xl   p-2 grid grid-cols-10  gap-1   dark:bg-zinc-800 ">
+                    <div className=" font-light col-span-6   lg:col-span-6 flex gap-2 items-center mr-1">
+                      <div className="col-span-1  flex items-center justify-center ">
+                        <input
+                          type="hidden"
+                          name="completed"
+                          value={completed === true ? "yes" : "no"}
+                          onChange={(e) => console.log("hello")}
+                        />
+
+                        <ColorButton
+                          color={completed ? "red" : "green"}
+                          type="button"
+                          onClick={() => {
+                            setCompleted((completed) => !completed);
+                          }}
+                        >
+                          {" "}
+                          {completed ? (
+                            <XCircleIcon className="w-5 h-5" />
+                          ) : (
+                            <CheckCircle className="w-5 h-5" />
+                          )}
+                          {completed ? "Uncheck All" : "Check All"}
+                        </ColorButton>
                       </div>
                     </div>
-                    <div className="col-span-2 lg:col-span-1 flex items-center justify-start pl-1   text-lg text-zinc-700 dark:text-zinc-100 font-light">
+                    <div className="col-span-2 lg:col-span-1 lg:col-start-9  flex items-center justify-start pl-1   text-lg text-zinc-700 dark:text-zinc-100 font-light">
                       <span>Inv</span>
                     </div>
-                    <div className="col-span-2 lg:col-span-1 flex items-center justify-start pl-1  text-lg text-zinc-700 dark:text-zinc-100 font-light">
+                    <div className="col-span-2 lg:col-span-1 lg:col-start-10 flex items-center justify-start pl-1  text-lg text-zinc-700 dark:text-zinc-100 font-light">
                       <span>Prep</span>
                     </div>
                   </div>

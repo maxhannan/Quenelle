@@ -42,10 +42,10 @@ const BottomNavButton = ({
         className="inline-flex flex-col items-center justify-center px-4 rounded-l-lg   group"
       >
         <div
-          className={` transition-all duration-300 w-12 h-12 sm:w-12 sm:h-12 flex items-center justify-center rounded-2xl ${
+          className={` transition-all duration-300 w-12 h-12 sm:w-12 sm:h-12 flex items-center justify-center rounded-2xl   ${
             active === path
               ? buttonStyleVariants[color]
-              : "dark:bg-zinc-800 bg-zinc-50 md:bg-zinc-200 text-zinc-800 dark:text-zinc-200  "
+              : "bg-transparent   text-zinc-800 dark:text-zinc-200  "
           } `}
         >
           <Icon className={"  w-7 h-7   "} />
