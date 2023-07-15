@@ -1,4 +1,4 @@
-import type { FC, ReactNode } from "react";
+import { useContext, type FC, type ReactNode } from "react";
 import SlideDownTransition from "../animations/SlideDown";
 import {
   ChevronLeftSquareIcon,
@@ -44,6 +44,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { isToday } from "date-fns";
 import RecipeCard from "../display/RecipesCard";
 import FeedMessageFeed from "../display/FeedMessageFeed";
+import PingContext from "~/context/PingContext";
 
 interface Props {
   page: string;
@@ -67,14 +68,16 @@ const NewAppBar: FC<Props> = ({
   const assignedListsToday = user!.assignedLists.filter((l) => {
     return isToday(new Date(l.date));
   });
+  const context = useContext(PingContext);
+  const { ping, setPing } = context!;
   const fetcher = useFetcher();
   const handleUpdateLastSeen = async () => {
-    // setPing(false);
+    setPing(false);
     const data = new FormData();
     data.set("userId", user!.id);
     fetcher.submit(data, { method: "POST", action: "/app/userNotifications" });
   };
-  const ping = true;
+
   console.log({ feedMessages });
   const navigate = useNavigate();
   const colors = Object.values(buttonStyleVariants).filter(
@@ -118,7 +121,7 @@ const NewAppBar: FC<Props> = ({
                 style={{
                   WebkitBackdropFilter: "blur(10px)",
                 }}
-                className=" md:hidden md:opacity-0 md:h-0 md:-z-50 ml-2 bg-zinc-50/40 backdrop-blur-lg dark:bg-zinc-900/80 [-webkit-backdrop-filter: blur(10px);] rounded-2xl border-zinc-300 shadow-lg p-2 px-3 w-[90vw]  max-h-[55vh] overflow-y-scroll dark:border-zinc-700 z-10  md:block scrollbar-none"
+                className=" md:hidden md:opacity-0 md:h-0 md:-z-50 ml-2 mt-1 bg-zinc-50/40 backdrop-blur-lg dark:bg-zinc-900/80 [-webkit-backdrop-filter: blur(10px);] rounded-2xl border-zinc-300 shadow-lg p-2 px-3 w-[90vw]  max-h-[55vh] overflow-y-scroll dark:border-zinc-700 z-10  md:block scrollbar-none"
               >
                 <SlideDownTransition>
                   <h3 className="text-3xl dark:text-zinc-200 mb-2">

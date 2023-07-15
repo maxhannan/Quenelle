@@ -5,7 +5,7 @@ import {
   useNavigate,
   useNavigation,
 } from "@remix-run/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import BottomNav from "~/components/navigation/BottomNav";
 import ErrorBoundaryLayout from "./ErrorBoundary";
 import { redirect, type LoaderArgs } from "@remix-run/node";
@@ -17,6 +17,7 @@ import Spinner from "~/components/LoadingSpinner";
 import SideNav from "~/components/navigation/SideNav";
 import { prisma } from "~/utils/prisma.server";
 import { compareAsc } from "date-fns";
+import PingContext, { PingContextProvider } from "~/context/PingContext";
 
 export function ErrorBoundary() {
   return <ErrorBoundaryLayout />;
@@ -121,7 +122,9 @@ const AppLayout = () => {
   const [page, setPage] = useState(location.pathname.split("/")[2]);
   const navigate = useNavigate();
   const navigation = useNavigation();
-  const [ping, setPing] = useState(false);
+  const context = useContext(PingContext);
+  const { ping, setPing } = context!;
+
   useEffect(() => {
     if (
       feedMessages.filter((m) => {

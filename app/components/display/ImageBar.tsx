@@ -19,7 +19,7 @@ const ImageBar: FC<Props> = ({ imgSrcs, setIsOpen }) => {
     }
   }, [loadList]);
   return (
-    <div className="w-full flex flex-wrap  items-center justify-start gap-2 py-2 ">
+    <div className="w-full flex flex-wrap  items-center justify-start gap-2 pb-2 ">
       {imgSrcs.map((image, i) => (
         <div key={image} className="relative ">
           <Link key={i} to={`#item${i}`}>

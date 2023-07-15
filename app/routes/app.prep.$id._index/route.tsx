@@ -16,7 +16,7 @@ import { updateTask } from "~/utils/prepList.server";
 import type { getPrepListById } from "~/utils/prepList.server";
 import SlideUpTransition from "~/components/animations/SlideUp";
 import { getPdf } from "~/utils/pdf";
-import { Printer, Trash2Icon } from "lucide-react";
+import { ClipboardCheckIcon, Printer, Trash2Icon } from "lucide-react";
 import { useToast } from "~/components/ui/use-toast";
 import ComboBox from "~/components/formInputs/ComboBox";
 import { getMembers } from "~/utils/teams.server";
@@ -85,6 +85,7 @@ function PrepListRoute() {
   const fetcher = useFetcher();
   const location = useLocation();
   let prepList = usePrepList();
+  const [taskFocus, setTaskFocus] = useState<boolean>(false);
 
   const [deleting, setDeleting] = useState(false);
   const [pdfLoading, setPdfLoading] = useState(false);
@@ -177,6 +178,12 @@ function PrepListRoute() {
           Icon={Printer}
         />
         <IconColorButton
+          name="focu"
+          color={taskFocus ? "amber" : "zinc"}
+          onClick={() => setTaskFocus(!taskFocus)}
+          Icon={ClipboardCheckIcon}
+        />
+        <IconColorButton
           name="Goback"
           color="zinc"
           onClick={() => navigate(-1)}
@@ -209,6 +216,7 @@ function PrepListRoute() {
           <div className="flex flex-col gap-2">
             {prepList?.taskGroups.map((tg) => (
               <TaskGroupAccordion
+                taskFocus={taskFocus}
                 key={tg.id}
                 taskGroup={tg}
                 fetcher={fetcher}
