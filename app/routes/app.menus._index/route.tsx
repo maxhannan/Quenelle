@@ -9,6 +9,7 @@ import MenuButtons from "../app.menus/components/MenuButtons";
 import { useMenuContext } from "../app.menus/route";
 import MenuPages from "../app.menus/components/MenuPages";
 import { PlusIcon } from "lucide-react";
+import ColorButton from "~/components/buttons/ColorButton";
 
 function MenuIndex() {
   const navigation = useNavigation();
@@ -45,7 +46,9 @@ function MenuIndex() {
           <nav className=" flex pt-3 pb-1 mx-auto max-h-full items-center justify-between  duration-300 font-light  w-full top-0 left-0  ">
             <MenuButtons activeTab={activeTab} setActiveTab={setActiveTab} />
             <div className="grow flex justify-end gap-2">
-              <button
+              <ColorButton
+                type="button"
+                color="indigo"
                 onClick={() =>
                   navigate(`${activeTab === "Dishes" ? "dishes/" : ""}add`)
                 }
@@ -53,7 +56,7 @@ function MenuIndex() {
               >
                 <PlusIcon className="h-5 w-5" /> Add{" "}
                 {activeTab === "Dishes" ? "Dish" : "Menu"}
-              </button>
+              </ColorButton>
             </div>
           </nav>
         </SlideDownTransition>

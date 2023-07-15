@@ -24,7 +24,7 @@ const ImageBar: FC<Props> = ({ imgSrcs, setIsOpen }) => {
         <div key={image} className="relative ">
           <Link key={i} to={`#item${i}`}>
             <div
-              className="relative  w-[100px] flex items-center justify-center  overflow-hidden  rounded-xl group "
+              className="relative  w-[125px] h-[100px] flex items-center justify-center  overflow-hidden  rounded-xl group "
               onClick={() => setIsOpen(true)}
             >
               {!loaded && <Spinner size={6} />}

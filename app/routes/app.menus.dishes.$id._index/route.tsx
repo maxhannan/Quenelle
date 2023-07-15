@@ -13,6 +13,7 @@ import {
   ArrowLongRightIcon,
   ArrowUturnLeftIcon,
   PencilIcon,
+  PencilSquareIcon,
   PhotoIcon,
   PuzzlePieceIcon,
 } from "@heroicons/react/24/outline";
@@ -24,6 +25,7 @@ import SlideUpTransition from "~/components/animations/SlideUp";
 import RecipeCard from "~/components/display/RecipesCard";
 import { colorVariants } from "~/utils/staticLists";
 import ImageBar from "~/components/display/ImageBar";
+import IconColorButton from "~/components/buttons/IconColorButton";
 
 function DishIndex() {
   const dish = useDish();
@@ -49,21 +51,24 @@ function DishIndex() {
   return (
     <main className="mb-28 container mx-auto xl:pl-2">
       <AppBar page="">
-        <IconButton
-          Icon={PencilIcon}
+        <IconColorButton
+          Icon={PencilSquareIcon}
+          color="amber"
           name="Edit Recipe"
           onClick={() => navigate("edit", { replace: true })}
         />
         {dish.images.length > 0 && (
-          <IconButton
+          <IconColorButton
             Icon={PhotoIcon}
+            color="rose"
             name="Open Gallery"
             onClick={() => setIsOpen(!isOpen)}
           />
         )}
 
-        <IconButton
+        <IconColorButton
           Icon={ArrowUturnLeftIcon}
+          color="zinc"
           name="Go Back"
           onClick={() => navigate(-1)}
         />
@@ -84,7 +89,9 @@ function DishIndex() {
                 ))}
               </div>
             )}
-
+            {dish.images.length > 0 && (
+              <ImageBar imgSrcs={dish.images} setIsOpen={setIsOpen} />
+            )}
             <div className="text-2xl lg:text-3xl border  border-zinc-300 dark:border-zinc-700 gap-2 bg-zinc-200 dark:bg-zinc-800 px-4 w-full items-center flex justify-between dark:text-zinc-200 p-2  text-zinc-600 rounded-xl font-light ">
               <div>Components</div>
             </div>
@@ -142,9 +149,7 @@ function DishIndex() {
                   <p className="text-lg font-light ">{s}</p>
                 </div>
               ))}
-            {dish.images.length > 0 && (
-              <ImageBar imgSrcs={dish.images} setIsOpen={setIsOpen} />
-            )}
+
             {dish.menu && dish.menu.length > 0 && (
               <div className="text-xl bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200  p-4  text-zinc-700 rounded-xl font-light  ">
                 Menus

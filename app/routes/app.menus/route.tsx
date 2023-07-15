@@ -21,6 +21,8 @@ import { getDishes } from "~/utils/dishes.server";
 import DishesPages from "./components/DishesPages";
 import MenuSearch from "../app.menus._index/Components/MenuSearch";
 import { getUser } from "~/utils/auth.server";
+import ColorButton from "~/components/buttons/ColorButton";
+import { PlusIcon } from "lucide-react";
 
 function filterDishes(
   dishes: Awaited<ReturnType<typeof getDishes>>,
@@ -115,14 +117,17 @@ export default function MenusLayout() {
             <nav className=" flex pt-3 pb-1 mx-auto max-h-full items-center justify-between  duration-300 font-light  w-full top-0 left-0  ">
               <MenuButtons activeTab={activeTab} setActiveTab={setActiveTab} />
               <div className="grow flex justify-end gap-2">
-                <IconButton
-                  Icon={DocumentPlusIcon}
-                  name="Add"
+                <ColorButton
                   type="button"
+                  color="indigo"
                   onClick={() =>
                     navigate(`${activeTab === "Dishes" ? "dishes/" : ""}add`)
                   }
-                />
+                  className=" font-light  bg-indigo-500 rounded-xl text-zinc-100 px-3 py-2 text-sm hover:bg-opacity-90 transition-all duration-300 inline-flex gap-1 items-center "
+                >
+                  <PlusIcon className="h-5 w-5" /> Add{" "}
+                  {activeTab === "Dishes" ? "Dish" : "Menu"}
+                </ColorButton>
               </div>
             </nav>
           </SlideDownTransition>

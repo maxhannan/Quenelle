@@ -21,6 +21,7 @@ import FeedMessageFeed from "../display/FeedMessageFeed";
 import { isToday } from "date-fns";
 import NewAppBar from "./NewAppBar";
 import RecipeCard from "../display/RecipesCard";
+import { buttonStyleVariants } from "../buttons/ColorButton";
 
 interface Props {
   page: string;
@@ -51,6 +52,10 @@ const SideNav: FC<Props> = ({
   const assignedListsToday = user!.assignedLists.filter((l) => {
     return isToday(new Date(l.date));
   });
+  const colors = Object.values(buttonStyleVariants).filter(
+    (color) => !color.includes("zinc") || !color.includes("gray")
+  );
+
   return (
     <div className="  justify-end bottom-0 top-0 left-2    fixed my-1 md:flex hidden  dark:bg-zinc-900">
       <div className="  dark:bg-zinc-800 bg-zinc-200 rounded-2xl w-full ">
@@ -61,8 +66,8 @@ const SideNav: FC<Props> = ({
                 <div
                   onClick={handleUpdateLastSeen}
                   className={`${
-                    colorVariants[user!.colorVariant ? user!.colorVariant : 0]
-                  } relative data-[state=open]:bg-opacity-90 text-zinc-800 trasition-all z-0 cursor-pointer duration-300 inline-flex group group-hover:bg-indigo-500  group-hover:text-zinc-200 items-center  child flex-shrink-0 justify-center w-14 h-14  group-hover:border-indigo-500  rounded-2xl   `}
+                    colors[user!.colorVariant ? user!.colorVariant : 0]
+                  } relative data-[state=open]:bg-opacity-90  trasition-all z-0 cursor-pointer duration-300 inline-flex group group-hover:bg-indigo-500  group-hover:text-zinc-200 items-center  child flex-shrink-0 justify-center w-14 h-14  group-hover:border-indigo-500  rounded-2xl   `}
                 >
                   {/* a notification badge on the corner of box */}
 
@@ -76,7 +81,7 @@ const SideNav: FC<Props> = ({
                     {(user!.firstName[0] + user!.lastName[0]).toLowerCase()}
                   </span>
                   <span className=" text-2xl lg:text-2xl group-data-[state=closed]:hidden ">
-                    <ChevronLeftSquareIcon className="w-7 h-7 text-zinc-700" />
+                    <ChevronLeftSquareIcon className="w-7 h-7 " />
                   </span>
                 </div>
               </PopoverTrigger>
@@ -87,7 +92,7 @@ const SideNav: FC<Props> = ({
                 style={{
                   WebkitBackdropFilter: "blur(6px)",
                 }}
-                className=" mt-2 bg-zinc-50/40 backdrop-blur-lg dark:bg-zinc-900/80 [-webkit-backdrop-filter: blur(10px);] rounded-2xl border-zinc-300 shadow-lg p-2 px-3 min-w-96 w-[30rem] max-h-[55vh] overflow-y-scroll dark:border-zinc-700 z-10  md:block scrollbar-none"
+                className=" mt-2 hidden opacity-0 h-0 md:h-[55vh]  md:opacity-100 md:block bg-zinc-50/40 backdrop-blur-lg dark:bg-zinc-900/80 [-webkit-backdrop-filter: blur(10px);] rounded-2xl border-zinc-300 shadow-lg p-2 px-3 min-w-96 w-[30rem] max-h-[55vh] overflow-y-scroll dark:border-zinc-700 z-10  md:block scrollbar-none"
               >
                 <NewAppBar page={`Hi ${user!.firstName}!`} bottomPadding="1" />
 

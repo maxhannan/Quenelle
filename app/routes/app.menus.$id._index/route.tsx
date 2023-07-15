@@ -14,6 +14,7 @@ import MultiSelect from "~/components/formInputs/MultiSelect";
 import { allergens } from "~/utils/staticLists";
 import SlideUpTransition from "~/components/animations/SlideUp";
 import RecipeCard from "~/components/display/RecipesCard";
+import IconColorButton from "~/components/buttons/IconColorButton";
 
 function MenuIndex() {
   const menu = useMenu();
@@ -58,12 +59,16 @@ function MenuIndex() {
   return (
     <div className=" mb-28 container mx-auto xl:pl-2 ">
       <AppBar page={""}>
-        <IconButton
+        <IconColorButton
           name="Edit"
+          color="amber"
+          type="button"
           onClick={() => navigate("edit", { replace: true })}
           Icon={PencilSquareIcon}
         />
-        <IconButton
+        <IconColorButton
+          color="zinc"
+          type="button"
           name="goBack"
           onClick={() => navigate(-1)}
           Icon={ArrowUturnLeftIcon}
