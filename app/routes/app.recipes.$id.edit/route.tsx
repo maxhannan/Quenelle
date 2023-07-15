@@ -39,6 +39,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "~/components/ui/sheet";
+import FormControls from "~/components/display/FormControls";
 
 export const loader = async ({ request }: LoaderArgs) => {
   const user = await getUser(request);
@@ -168,44 +169,7 @@ const EditRecipeRoute: FC = () => {
         </div>
 
         <div className="container mx-auto max-w-5xl lg:pl-2">
-          <div className="md:hidden">
-            <Sheet>
-              <FormBar
-                ref={formBarRef}
-                setVisible={setVisible}
-                saveText="Recipe"
-              />
-
-              <SheetContent side={"top"}>
-                <SheetHeader>
-                  <SheetTitle>Are you sure absolutely sure?</SheetTitle>
-                  <SheetDescription>
-                    This action cannot be undone. This will permanently delete
-                    your account and remove your data from our servers.
-                  </SheetDescription>
-                </SheetHeader>
-              </SheetContent>
-            </Sheet>
-          </div>
-          <div className="hidden md:block">
-            <Sheet>
-              <FormBar
-                ref={formBarRef}
-                setVisible={setVisible}
-                saveText="Recipe"
-              />
-
-              <SheetContent side={"right"}>
-                <SheetHeader>
-                  <SheetTitle>Are you sure absolutely sure?</SheetTitle>
-                  <SheetDescription>
-                    This action cannot be undone. This will permanently delete
-                    your account and remove your data from our servers.
-                  </SheetDescription>
-                </SheetHeader>
-              </SheetContent>
-            </Sheet>
-          </div>
+          <FormControls saveText="Recipe" />
           <div className="h-20 md:h-2" />
           <RecipeForm
             recipe={recipe}

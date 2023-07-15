@@ -5,6 +5,7 @@ import {
   useLocation,
   useNavigate,
   useNavigation,
+  useRevalidator,
 } from "@remix-run/react";
 import AppBar from "~/components/navigation/AppBar";
 import IconButton from "~/components/buttons/IconButton";
@@ -22,12 +23,14 @@ import Chip from "~/components/display/Chip";
 import SlideUpTransition from "~/components/animations/SlideUp";
 import RecipeCard from "~/components/display/RecipesCard";
 import { colorVariants } from "~/utils/staticLists";
+import ImageBar from "~/components/display/ImageBar";
 
 function DishIndex() {
   const dish = useDish();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const navigation = useNavigation();
+
   const location = useLocation();
   if (
     navigation.state === "loading" &&
@@ -81,6 +84,7 @@ function DishIndex() {
                 ))}
               </div>
             )}
+
             <div className="text-2xl lg:text-3xl border  border-zinc-300 dark:border-zinc-700 gap-2 bg-zinc-200 dark:bg-zinc-800 px-4 w-full items-center flex justify-between dark:text-zinc-200 p-2  text-zinc-600 rounded-xl font-light ">
               <div>Components</div>
             </div>
@@ -138,6 +142,9 @@ function DishIndex() {
                   <p className="text-lg font-light ">{s}</p>
                 </div>
               ))}
+            {dish.images.length > 0 && (
+              <ImageBar imgSrcs={dish.images} setIsOpen={setIsOpen} />
+            )}
             {dish.menu && dish.menu.length > 0 && (
               <div className="text-xl bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200  p-4  text-zinc-700 rounded-xl font-light  ">
                 Menus
@@ -154,6 +161,7 @@ function DishIndex() {
                 </div>
               </div>
             )}
+
             <div className="text-2xl bg-zinc-200 dark:bg-zinc-800  dark:text-zinc-200 p-4  text-zinc-700 rounded-xl font-light  ">
               <div>
                 <b>Author: </b>

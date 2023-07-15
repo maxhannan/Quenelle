@@ -33,6 +33,8 @@ import TextInput from "~/components/formInputs/TextInput";
 import IconColorButton from "~/components/buttons/IconColorButton";
 import { Edit2Icon } from "lucide-react";
 import ColorButton from "~/components/buttons/ColorButton";
+import { IMAGE_URL } from "~/utils/images";
+import ImageBar from "~/components/display/ImageBar";
 
 const RecipeIndex: FC = () => {
   const { recipe, user } = useRecipe();
@@ -151,6 +153,9 @@ const RecipeIndex: FC = () => {
                 ingredients={recipe.ingredients}
                 scaleFactor={scaleFactor}
               />
+              {recipe.images.length > 0 && (
+                <ImageBar imgSrcs={recipe.images} setIsOpen={setIsOpen} />
+              )}
               <div className="text-lg bg-zinc-200 dark:bg-zinc-950   px-3  items-center flex gap-4 justify-between dark:text-neutral-200 p-4 mb-1 text-neutral-700 rounded-xl font-light ">
                 <div>
                   {" "}

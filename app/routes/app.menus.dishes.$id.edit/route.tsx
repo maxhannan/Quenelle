@@ -10,6 +10,7 @@ import {
   useLocation,
   useNavigate,
   useNavigation,
+  useRevalidator,
   useSubmit,
 } from "@remix-run/react";
 import { uploadImage } from "~/utils/images";
@@ -64,6 +65,7 @@ function EditDishRoute() {
   const fetcher = useFetcher();
   const data = useActionData();
   const formRef = useRef<HTMLFormElement>(null);
+  const revalidator = useRevalidator();
   const [imageLoading, setImageLoading] = useState(false);
   const submit = useSubmit();
   const [imageList, setImageList] = useState<string[]>(
@@ -115,6 +117,7 @@ function EditDishRoute() {
       toast({
         title: `${dish!.name} has been updated`,
       });
+      revalidator.revalidate();
       navigate(`/app/menus/dishes/${data}`, { replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
