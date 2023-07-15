@@ -115,12 +115,14 @@ const NewAppBar: FC<Props> = ({
               <PopoverContent
                 side="bottom"
                 style={{
-                  WebkitBackdropFilter: "blur(3px)",
+                  WebkitBackdropFilter: "blur(10px)",
                 }}
                 className=" md:hidden md:opacity-0 md:h-0 md:-z-50 ml-2 bg-zinc-50/40 backdrop-blur-lg dark:bg-zinc-900/80 [-webkit-backdrop-filter: blur(10px);] rounded-2xl border-zinc-300 shadow-lg p-2 px-3 w-[90vw]  max-h-[55vh] overflow-y-scroll dark:border-zinc-700 z-10  md:block scrollbar-none"
               >
                 <SlideDownTransition>
-                  <h3 className="text-3xl mb-2">Hi {user?.firstName}!</h3>
+                  <h3 className="text-3xl dark:text-zinc-200 mb-2">
+                    Hi {user?.firstName}!
+                  </h3>
                 </SlideDownTransition>
 
                 {assignedListsToday.length > 0 && (
