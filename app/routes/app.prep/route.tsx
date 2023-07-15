@@ -20,8 +20,7 @@ import {
   getTemplates,
 } from "~/utils/prepList.server";
 import PrepCalendar from "../app.prep._index/components/PrepCalendar";
-import IconButton from "~/components/buttons/IconButton";
-import LoadingButton from "~/components/buttons/LoadingButton";
+
 import { ArrowRightIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { Dispatch } from "react";
@@ -30,7 +29,6 @@ import { getUser } from "~/utils/auth.server";
 import PrepPage from "../app.prep._index/components/PrepPage";
 import IconColorButton from "~/components/buttons/IconColorButton";
 import ColorButton from "~/components/buttons/ColorButton";
-import { set } from "date-fns";
 
 export async function loader({ request }: LoaderArgs) {
   const user = await getUser(request);

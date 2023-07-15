@@ -53,6 +53,7 @@ const RecipeForm: FC<Props> = ({
               <TextInput
                 name="recipeName"
                 placeholder="Recipe Name"
+                required
                 initValue={recipeValues.name}
               />
             </div>
@@ -97,6 +98,7 @@ const RecipeForm: FC<Props> = ({
                 <TextInput
                   placeholder="Yield"
                   type="number"
+                  required
                   name="yieldAmt"
                   initValue={recipeValues.yieldAmt}
                 />
@@ -105,6 +107,7 @@ const RecipeForm: FC<Props> = ({
                 <ComboBox
                   name="yieldUnit"
                   placeholder="Unit"
+                  required
                   allowCustom
                   initValue={recipeValues.yieldUnit}
                   options={unitsList}

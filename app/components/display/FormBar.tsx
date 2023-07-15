@@ -20,7 +20,8 @@ const FormBar = forwardRef<RefType, Props>(function FormBarComponent(
   return (
     <div
       ref={ref}
-      className="w-screen fixed top-0 left-0 right-0 px-3  dark:bg-zinc-900 bg-zinc-100 md:bg-transparent border-zinc-300 dark:border-zinc-800 z-40 md:relative md:w-auto pb-1 md:border-none md:p-0 shadow-sm dark:border-b md:shadow-none"
+      style={{ WebkitBackdropFilter: "blur(4px)" }}
+      className="w-screen fixed top-0 left-0 right-0 px-3  dark:bg-zinc-900/70 bg-zinc-100/50 backdrop-blur-sm md:bg-transparent border-zinc-300 dark:border-zinc-800 z-40 md:relative md:w-auto pb-1 md:border-none md:p-0 shadow-sm dark:border-b md:shadow-none"
     >
       <AppBar page="">
         <ColorButton type="submit" color="green">

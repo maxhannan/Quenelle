@@ -21,6 +21,7 @@ import {
 import { getUser } from "~/utils/auth.server";
 import { createRecipe, extractRecipe } from "~/utils/recipes.server";
 import Spinner from "~/components/LoadingSpinner";
+import FormControls from "~/components/display/FormControls";
 
 export async function loader({ request }: LoaderArgs) {
   const user = await getUser(request);
@@ -95,23 +96,15 @@ const AddRecipeRoute: FC = () => {
 
   return (
     <>
-      <AppBar page="">
-        <IconButton Icon={CheckCircleIcon} name="Submit" type="submit" />
-        <IconButton
-          Icon={XMarkIcon}
-          name="Go Back"
-          type="button"
-          onClick={() => navigate("/app/recipes")}
-        />
-      </AppBar>
-
-      <div className="container mx-auto max-w-3xl xl:mt-1 lg:pl-2">
+      <div className="container mx-auto max-w-5xl xl:mt-1 lg:pl-2">
         <Form
           ref={formRef}
           method="post"
           encType="multipart/form-data"
           onSubmit={handleSubmit}
         >
+          <FormControls saveText="Recipe" />
+          <div className="h-20 md:h-2" />
           <RecipeForm
             categories={categories}
             recipes={recipes}

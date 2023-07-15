@@ -1,7 +1,6 @@
 import type { FC } from "react";
 import { type getFeedMessages } from "~/routes/app/route";
-import { colorVariants } from "~/utils/staticLists";
-import Avatar from "./Avatar";
+
 import { BadgePlusIcon, DeleteIcon, FileEdit } from "lucide-react";
 import RecipeCard from "./RecipesCard";
 import { formatDistance } from "date-fns";

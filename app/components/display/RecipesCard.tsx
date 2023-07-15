@@ -1,7 +1,7 @@
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "@remix-run/react";
 import type { FC } from "react";
-import { colorVariants } from "~/utils/staticLists";
+
 import { buttonStyleVariants } from "../buttons/ColorButton";
 
 interface Props {

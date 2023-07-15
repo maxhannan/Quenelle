@@ -165,6 +165,9 @@ const EditRecipeRoute: FC = () => {
             setIsOpen={setOpenDeleteModal}
             deleteFn={handleDeleteRecipe}
           />
+        </div>
+
+        <div className="container mx-auto max-w-5xl lg:pl-2">
           <div className="md:hidden">
             <Sheet>
               <FormBar
@@ -203,10 +206,7 @@ const EditRecipeRoute: FC = () => {
               </SheetContent>
             </Sheet>
           </div>
-        </div>
-
-        <div className="h-20 md:h-0" />
-        <div className="container mx-auto max-w-4xl lg:pl-2">
+          <div className="h-20 md:h-2" />
           <RecipeForm
             recipe={recipe}
             imageList={imageList}
