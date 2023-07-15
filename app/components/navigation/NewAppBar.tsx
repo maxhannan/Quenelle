@@ -12,6 +12,7 @@ import {
   User,
   UserPlus,
   Users,
+  XCircle,
 } from "lucide-react";
 import {
   useFetcher,
@@ -99,16 +100,16 @@ const NewAppBar: FC<Props> = ({
                   {/* a notification badge on the corner of box */}
 
                   {ping && (
-                    <span className="absolute top-0 right-0 z-50">
-                      <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full animate-ping"></span>
-                      <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full"></span>
+                    <span className="absolute -top-[1px] -right-[1px]  z-50">
+                      <span className="absolute -top-[1px] -right-[1px] w-2 h-2 bg-red-500 rounded-full animate-ping"></span>
+                      <span className="absolute -top-[1px] -right-[1px] w-2 h-2 bg-red-500 rounded-full"></span>
                     </span>
                   )}
                   <span className=" text-base group-data-[state=open]:hidden ">
                     {(user!.firstName[0] + user!.lastName[0]).toLowerCase()}
                   </span>
                   <span className=" text-base group-data-[state=closed]:hidden ">
-                    <ChevronLeftSquareIcon className="w-7 h-7 " />
+                    <XCircle className="w-5 h-5 " />
                   </span>
                 </div>
               </PopoverTrigger>
