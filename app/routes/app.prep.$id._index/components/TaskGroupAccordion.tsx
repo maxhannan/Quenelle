@@ -1,11 +1,11 @@
-import { FetcherWithComponents, useRevalidator } from "@remix-run/react";
+import { type FetcherWithComponents } from "@remix-run/react";
 import { CheckCircle, XCircleIcon } from "lucide-react";
-import { useState, type FC, useEffect } from "react";
+import { useState, type FC } from "react";
 import ColorButton from "~/components/buttons/ColorButton";
 import Accordion from "~/components/display/Accordion";
-import { TaskGroup } from "~/utils/prepList.server";
-import PrepListItem from "./PrepListItem";
-import { v4 } from "uuid";
+import { type TaskGroup } from "~/utils/prepList.server";
+
+import PrepTask from "./PrepTask";
 
 interface Props {
   fetcher: FetcherWithComponents<any>;
@@ -13,44 +13,65 @@ interface Props {
 }
 
 const TaskGroupAccordion: FC<Props> = ({ taskGroup, fetcher }) => {
-  const [loading, setLoading] = useState(false);
-  const [completedAll, setCompletedAll] = useState(
-    taskGroup?.tasks.reduce((acc, curr) => acc && curr.completed, true)
-  );
-  const [completedTasks, setCompletedTasks] = useState(
-    taskGroup?.tasks.map((t) => ({ id: t.id, completed: t.completed }))
-  );
-  useEffect(() => {
-    setCompletedAll(
-      taskGroup?.tasks.reduce((acc, curr) => acc && curr.completed, true)
-    );
-    setCompletedTasks(
-      taskGroup?.tasks.map((t) => ({ id: t.id, completed: t.completed }))
-    );
-  }, [taskGroup]);
-  if (!taskGroup) return null;
+  const [tasksState, setTasksState] = useState(taskGroup!.tasks);
 
-  const handleCompleteAll = async (id: string) => {
-    if (!taskGroup) return;
-
-    const taskIds = taskGroup.tasks.map((t) => t.id);
-    const data = new FormData();
-    data.set("all", "yes");
-    data.set("ids", taskIds.join(","));
-    data.set("completedAll", completedAll ? "no" : "yes");
-
-    await fetcher.submit(data, {
-      method: "POST",
+  const handleChangeTask = (
+    id: string,
+    field: string,
+    value: string | boolean
+  ) => {
+    const newTasks = tasksState.map((t) => {
+      if (t.id === id) {
+        return { ...t, [field]: value };
+      }
+      return t;
     });
-
-    setCompletedAll(!completedAll);
-    setCompletedTasks(
-      completedTasks?.map((t) => ({
-        id: t.id,
-        completed: !completedAll,
-      }))
-    );
+    setTasksState(newTasks);
+    if (field === "completed") handleComplete(id, value as boolean);
   };
+
+  const handleUpdate = async (id: string) => {
+    const newTask = tasksState.find((t) => t.id === id);
+    if (!newTask) return;
+
+    const data = new FormData();
+    data.append("id", id);
+    data.append("completed", newTask.completed ? "yes" : "no");
+    data.append("inv", newTask.onHand ?? "");
+    data.append("prep", newTask.prepQty ?? "");
+    await fetcher.submit(data, { method: "POST" });
+  };
+  const handleComplete = async (id: string, completed: boolean) => {
+    const newTask = tasksState.find((t) => t.id === id);
+    if (!newTask) return;
+
+    const data = new FormData();
+    data.append("id", id);
+    data.append("completed", completed ? "yes" : "no");
+    data.append("inv", newTask.onHand ?? "");
+    data.append("prep", newTask.prepQty ?? "");
+    await fetcher.submit(data, { method: "POST" });
+  };
+
+  const handleCompleteAll = () => {
+    const data = new FormData();
+    if (completedAll) {
+      setTasksState(tasksState.map((t) => ({ ...t, completed: false })));
+
+      data.set("completeAll", "yes");
+      data.set("completedAll", "no");
+      data.set("ids", tasksState.map((t) => t.id).join(","));
+    } else {
+      setTasksState(tasksState.map((t) => ({ ...t, completed: true })));
+      data.set("completeAll", "yes");
+      data.set("completedAll", "yes");
+      data.set("ids", tasksState.map((t) => t.id).join(","));
+    }
+    fetcher.submit(data, { method: "POST" });
+  };
+
+  const completedAll = tasksState?.reduce((acc, t) => acc && t.completed, true);
+  if (!taskGroup) return null;
   return (
     <Accordion
       key={taskGroup.id}
@@ -64,18 +85,10 @@ const TaskGroupAccordion: FC<Props> = ({ taskGroup, fetcher }) => {
       <div className="  max-w-full      rounded-xl   pr-2 py-1 grid grid-cols-10  gap-1   dark:bg-zinc-800 ">
         <div className=" font-light col-span-6   lg:col-span-6 flex gap-2 items-center mr-1">
           <div className="col-span-1  flex items-center justify-center ">
-            <input
-              type="hidden"
-              name="completed"
-              value={completedAll === true ? "no" : "yes"}
-              onChange={(e) => console.log("hello")}
-            />
-
             <ColorButton
               color={completedAll ? "red" : "green"}
-              loading={loading}
               type="button"
-              onClick={() => handleCompleteAll(taskGroup.id)}
+              onClick={handleCompleteAll}
             >
               {" "}
               {completedAll ? (
@@ -95,15 +108,12 @@ const TaskGroupAccordion: FC<Props> = ({ taskGroup, fetcher }) => {
         </div>
       </div>
 
-      {taskGroup.tasks.map((item) => (
-        <PrepListItem
-          fetcher={fetcher}
-          key={item.id}
-          task={item}
-          setCompletedTasks={setCompletedTasks}
-          completedFlag={
-            completedTasks?.find((t) => t.id === item.id)?.completed
-          }
+      {tasksState.map((task) => (
+        <PrepTask
+          key={task.id}
+          task={task}
+          handleChangeTask={handleChangeTask}
+          handleUpdate={handleUpdate}
         />
       ))}
     </Accordion>

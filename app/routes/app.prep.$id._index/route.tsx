@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { usePrepList } from "../app.prep.$id/route";
 import {
   useFetcher,
@@ -8,31 +8,21 @@ import {
   useNavigation,
 } from "@remix-run/react";
 import Spinner from "~/components/LoadingSpinner";
-import Accordion from "~/components/display/Accordion";
 
 import AppBar from "~/components/navigation/AppBar";
 import { ArrowUturnLeftIcon } from "@heroicons/react/24/outline";
-import PrepListItem from "./components/PrepListItem";
 import type { ActionFunction, LoaderArgs } from "@remix-run/node";
 import { updateTask } from "~/utils/prepList.server";
 import type { getPrepListById } from "~/utils/prepList.server";
 import SlideUpTransition from "~/components/animations/SlideUp";
 import { getPdf } from "~/utils/pdf";
-import {
-  CheckCircle,
-  ClipboardCheckIcon,
-  Printer,
-  Trash2Icon,
-  X,
-  XCircleIcon,
-} from "lucide-react";
+import { Printer, Trash2Icon } from "lucide-react";
 import { useToast } from "~/components/ui/use-toast";
 import ComboBox from "~/components/formInputs/ComboBox";
 import { getMembers } from "~/utils/teams.server";
 import { getUser } from "~/utils/auth.server";
 import DeleteModal from "~/components/display/DeleteModal";
 import IconColorButton from "~/components/buttons/IconColorButton";
-import ColorButton from "~/components/buttons/ColorButton";
 import { prisma } from "~/utils/prisma.server";
 import TaskGroupAccordion from "./components/TaskGroupAccordion";
 
@@ -60,30 +50,24 @@ export const action: ActionFunction = async ({ request }) => {
   const inv = data.get("inv") as string;
   const prep = data.get("prep") as string;
   const completed = data.get("completed") as string;
-  const all = data.get("all") as string;
-  console.log({ all });
-  if (all === "yes") {
-    console.log("all");
+  const completeAll = data.get("completeAll") as string;
+  if (completeAll === "yes") {
     const ids = data.get("ids") as string;
-    const completedAll = data.get("completedAll") as string;
-    if (ids) {
-      console.log({ ids });
-      console.log({ completedAll });
-      const updatedTasks = await prisma.tasks.updateMany({
-        where: {
-          id: {
-            in: ids.split(","),
-          },
+
+    const completedAll = data.get("completedAll");
+    const updatedTasks = await prisma.tasks.updateMany({
+      where: {
+        id: {
+          in: ids.split(","),
         },
-        data: {
-          completed: completedAll === "yes" ? true : false,
-        },
-      });
-      console.log({ updatedTasks });
-      if (!updatedTasks) return null;
-      return updatedTasks;
-    }
+      },
+      data: {
+        completed: completedAll === "yes" ? true : false,
+      },
+    });
+    return updatedTasks;
   }
+
   const updatedTask = await updateTask(id, {
     onHand: inv,
     prepQty: prep,
@@ -104,7 +88,7 @@ function PrepListRoute() {
 
   const [deleting, setDeleting] = useState(false);
   const [pdfLoading, setPdfLoading] = useState(false);
-  const [openTaskFocus, setOpenTaskFocus] = useState<boolean>(false);
+
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   if (!prepList) return <h1> No Prep List Found </h1>;
   const generatepdf = async () => {
@@ -120,14 +104,6 @@ function PrepListRoute() {
     });
     return pdf;
   };
-  // const activeTaskView = prepList.taskGroups
-  //   .map((tg) => ({
-  //     ...tg,
-  //     tasks: tg.tasks.filter(
-  //       (t) => t.prepQty && parseInt(t.prepQty) > 0 && !t.completed
-  //     ),
-  //   }))
-  //   .filter((tg) => tg.tasks.length > 0);
 
   const pageChangeLoading =
     navigation.state === "loading" &&
