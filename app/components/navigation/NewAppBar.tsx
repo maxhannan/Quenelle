@@ -105,11 +105,11 @@ const NewAppBar: FC<Props> = ({
                       <span className="absolute -top-[1px] -right-[1px] w-2 h-2 bg-red-500 rounded-full"></span>
                     </span>
                   )}
-                  <span className=" text-base group-data-[state=open]:hidden ">
+                  <span className=" text-lg group-data-[state=open]:hidden ">
                     {(user!.firstName[0] + user!.lastName[0]).toLowerCase()}
                   </span>
                   <span className=" text-base group-data-[state=closed]:hidden ">
-                    <XCircle className="w-5 h-5 " />
+                    <XCircle className="w-6 h-6 " />
                   </span>
                 </div>
               </PopoverTrigger>

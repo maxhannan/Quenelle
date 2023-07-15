@@ -18,6 +18,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "~/components/ui/sheet";
+import FormControls from "~/components/display/FormControls";
 
 export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData();
@@ -52,36 +53,8 @@ function AddMenuIndex() {
   }
   return (
     <Form method="post">
-      <div className="md:hidden">
-        <Sheet>
-          <FormBar saveText="Menu" />
+      <FormControls saveText="Menu" />
 
-          <SheetContent side={"top"}>
-            <SheetHeader>
-              <SheetTitle>Are you sure absolutely sure?</SheetTitle>
-              <SheetDescription>
-                This action cannot be undone. This will permanently delete your
-                account and remove your data from our servers.
-              </SheetDescription>
-            </SheetHeader>
-          </SheetContent>
-        </Sheet>
-      </div>
-      <div className="hidden md:block">
-        <Sheet>
-          <FormBar saveText="Menu" />
-
-          <SheetContent side={"right"}>
-            <SheetHeader>
-              <SheetTitle>Are you sure absolutely sure?</SheetTitle>
-              <SheetDescription>
-                This action cannot be undone. This will permanently delete your
-                account and remove your data from our servers.
-              </SheetDescription>
-            </SheetHeader>
-          </SheetContent>
-        </Sheet>
-      </div>
       <div className="h-16 md:h-0" />
 
       <MenuForm dishes={dishes} services={services} />

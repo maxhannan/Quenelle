@@ -2,7 +2,14 @@ import BottomNavButton from "./BottomNavButton";
 import { useNavigate, useLocation } from "@remix-run/react";
 import { QueueListIcon } from "@heroicons/react/24/outline";
 import type { Dispatch, SetStateAction } from "react";
-import { ClipboardCheckIcon, NewspaperIcon, StickyNote } from "lucide-react";
+import {
+  ClipboardCheckIcon,
+  List,
+  NewspaperIcon,
+  StickyNote,
+  UserCircle,
+  UserCircle2Icon,
+} from "lucide-react";
 import { FolderIcon } from "lucide-react";
 interface Props {
   page: string;
@@ -51,10 +58,10 @@ const BottomNav = ({ page, setPage }: Props) => {
         <BottomNavButton
           active={page}
           handleNav={handleNav}
-          path=""
+          path="dashboard"
           tooltipPosition="top"
           color="blue"
-          Icon={NewspaperIcon}
+          Icon={UserCircle}
         />
         <BottomNavButton
           active={page}
@@ -62,7 +69,7 @@ const BottomNav = ({ page, setPage }: Props) => {
           path="menus"
           tooltipPosition="top"
           color="green"
-          Icon={QueueListIcon}
+          Icon={List}
         />
 
         <BottomNavButton

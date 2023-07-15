@@ -27,6 +27,7 @@ import type { ActionFunction, LoaderArgs } from "@remix-run/node";
 import { extractDish, updateDish } from "~/utils/dishes.server";
 import { useToast } from "~/components/ui/use-toast";
 import { getUser } from "~/utils/auth.server";
+import FormControls from "~/components/display/FormControls";
 
 export async function loader({ request }: LoaderArgs) {
   const user = await getUser(request);
@@ -139,23 +140,8 @@ function EditDishRoute() {
   return (
     <div className="container mx-auto xl:pl-2">
       <Form method="post" ref={formRef} onSubmit={handleSubmit}>
-        <AppBar page={`Edit Recipe`} textSize="text-3xl">
-          <IconButton
-            Icon={TrashIcon}
-            name="delete"
-            type="button"
-            onClick={handleDeleteDish}
-          />
-          <IconButton Icon={CheckCircleIcon} name="Submit" type="submit" />
-          <IconButton
-            Icon={XMarkIcon}
-            name="Go Back"
-            type="button"
-            onClick={() =>
-              navigate(`/app/menus/dishes/${dish!.id}`, { replace: true })
-            }
-          />
-        </AppBar>
+        <FormControls saveText="dish" />
+        <div className="h-16 md:h-0" />
         <DishForm
           dish={dish}
           imageList={imageList}
